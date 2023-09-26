@@ -2,12 +2,23 @@
 <gpx version="1.1" creator="Xcode">
     <wpt lat="37.517742" lon="126.886463">
         <name>청취사</name>
+        <time>2023-09-26T23:28:5Z</time>
     </wpt>
+    
     <wpt lat="37.518594" lon="126.894798">
         <name>문래역</name>
+        <time>2023-09-26T23:28:15Z</time>
     </wpt>
     
     <wpt lat="37.517412" lon="126.889103">
         <name>문래편의점</name>
+        <time>2023-09-26T23:28:25Z</time>
     </wpt>
+    
+    <wpt lat="37.517742" lon="126.886463">
+        <name>청취사</name>
+        <time>2023-09-26T23:28:35Z</time>
+    </wpt>
+    
+   
 </gpx>
