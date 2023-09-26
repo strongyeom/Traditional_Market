@@ -8,6 +8,7 @@
 import UIKit
 import CoreLocation
 import MapKit
+import Toast
 
 class ViewController: UIViewController {
     
@@ -18,6 +19,9 @@ class ViewController: UIViewController {
         location.allowsBackgroundLocationUpdates = true
         return location
     }()
+    
+    var trigger: UNLocationNotificationTrigger?
+    var request: UNNotificationRequest?
     
     // 권한 상태
     var authorization: CLAuthorizationStatus = .notDetermined
@@ -32,6 +36,8 @@ class ViewController: UIViewController {
         locationManger.delegate = self
         checkDeviceLocationAuthorization()
     }
+    
+
  
     /// 해당 지역에 들어왔을때 로컬 알림 메서드
     func registLocation() {
@@ -40,17 +46,36 @@ class ViewController: UIViewController {
         let 문래역 = CLLocationCoordinate2D(latitude: 37.518594, longitude: 126.894798)
         let 문래편의점 = CLLocationCoordinate2D(latitude: 37.517412, longitude: 126.889103)
         
-        
-        // radius : 중심으로부터 반경이 될 거리를 설정합니다(m 단위)
         let region = CLCircularRegion(center: 청취사, radius: 1.0, identifier: "청취사")
-        
         region.notifyOnEntry = true
         region.notifyOnExit = true
+        
+        let region1 = CLCircularRegion(center: 문래역, radius: 1.0, identifier: "문래역")
+        region1.notifyOnEntry = true
+        region1.notifyOnExit = true
+        
+        let region2 = CLCircularRegion(center: 문래편의점, radius: 1.0, identifier: "문래편의점")
+        region2.notifyOnEntry = true
+        region2.notifyOnExit = true
+        
+        
         locationManger.allowsBackgroundLocationUpdates = true
         locationManger.pausesLocationUpdatesAutomatically = false
+        
         locationManger.startMonitoring(for: region)
+        locationManger.startMonitoring(for: region1)
+        locationManger.startMonitoring(for: region2)
        // let trigger = UNLocationNotificationTrigger(region: region, repeats: false)
         print("region regist: \(region)")
+    }
+    
+    
+    func addAnnotation() {
+        let aPin = CustomAnnotation(title: "청취사", coordinate: CLLocationCoordinate2D(latitude: 37.517742, longitude: 126.886463))
+        let bPin = CustomAnnotation(title: "문래역", coordinate: CLLocationCoordinate2D(latitude: 37.518594, longitude: 126.894798))
+        let cPin = CustomAnnotation(title: "문래편의점", coordinate: CLLocationCoordinate2D(latitude: 37.517412, longitude: 126.889103))
+        
+        mapView.mapBaseView.addAnnotations([aPin, bPin, cPin])
     }
  
     /// 권한 - 허용안함을 눌렀을때 Alert을 띄우고 iOS 설정 화면으로 이동
@@ -110,7 +135,7 @@ class ViewController: UIViewController {
         case .authorizedWhenInUse:
             print("한번만 권한 허용")
             locationManger.startUpdatingLocation()
-            registLocation()
+             registLocation()
         case .authorized:
             print("권한 허용 됨")
         @unknown default:
@@ -125,7 +150,8 @@ class ViewController: UIViewController {
 extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         mapView.mapBaseView.userTrackingMode = .followWithHeading
-        print("위치를 성공적으로 받아왔을때 - \(locations)")
+        addAnnotation()
+       // print("위치를 성공적으로 받아왔을때 - \(locations)")
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -138,9 +164,20 @@ extension ViewController: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion) {
+        print("여기의 위 경도는 어떻게 될까? \(region)")
         switch state {
         case .inside:
-            print("들어왔습니다.")
+            print(" \(region.identifier) 들어왔습니다.")
+            // 이때 노티를 띄어주면 되지 않을까?
+            
+            // 노티가 안되기때문에 토스트 해줬는데... 노티 띄어주고 싶다 ㅠㅠ
+            self.view.makeToast("여기는 청취사입니다", duration: 10.0, position: .bottom) { didTap in
+                if didTap {
+                    print("토스트가 터치되었습니다.")
+                } else {
+                    print("completion without tap")
+                }
+            }
         case .outside:
             print("나왔습니다.")
         case .unknown:

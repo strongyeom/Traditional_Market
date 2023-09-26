@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -13,7 +14,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        // 알림 권한 설정
+       UNUserNotificationCenter.current().delegate = self
+        // requestAuthorization(options: ) - 알림이 왔을때 어떠한 형식으로 보여주게 할 것인지
+        // completionHandler: Bool - 사용자가 권한을 설정 했는지 안했는지
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { success, error in
+            print(success, error)
+        }
         return true
     }
 
@@ -34,3 +41,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    // willPresent: 포그라운드 상태에서 알림 받을 수 있는 메서드
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        // 알림 갯수 제한 : 64개로 제한
+        completionHandler([.sound, .badge, .banner, .list])
+    }
+}
