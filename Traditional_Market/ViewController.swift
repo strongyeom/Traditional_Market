@@ -35,6 +35,7 @@ class ViewController: UIViewController {
         mapView.mapBaseView.delegate = self
         locationManger.delegate = self
         checkDeviceLocationAuthorization()
+        registLocation()
     }
     
 
@@ -45,7 +46,7 @@ class ViewController: UIViewController {
         let 청취사 = CLLocationCoordinate2D(latitude: 37.517742, longitude: 126.886463)
         let 문래역 = CLLocationCoordinate2D(latitude: 37.518594, longitude: 126.894798)
         let 문래편의점 = CLLocationCoordinate2D(latitude: 37.517412, longitude: 126.889103)
-        
+         // 37.518594 - 37.517412
         let region = CLCircularRegion(center: 청취사, radius: 1.0, identifier: "청취사")
         region.notifyOnEntry = true
         region.notifyOnExit = true
@@ -65,7 +66,8 @@ class ViewController: UIViewController {
         locationManger.startMonitoring(for: region)
         locationManger.startMonitoring(for: region1)
         locationManger.startMonitoring(for: region2)
-       // let trigger = UNLocationNotificationTrigger(region: region, repeats: false)
+       
+        // 🧐 UNLocationNotificationTrigger 고민해보기
         print("region regist: \(region)")
     }
     
@@ -164,28 +166,94 @@ extension ViewController: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion) {
-        print("여기의 위 경도는 어떻게 될까? \(region)")
-        switch state {
-        case .inside:
-            print(" \(region.identifier) 들어왔습니다.")
-            // 이때 노티를 띄어주면 되지 않을까?
-            
-            // 노티가 안되기때문에 토스트 해줬는데... 노티 띄어주고 싶다 ㅠㅠ
-            self.view.makeToast("여기는 청취사입니다", duration: 10.0, position: .bottom) { didTap in
-                if didTap {
-                    print("토스트가 터치되었습니다.")
-                } else {
-                    print("completion without tap")
-                }
-            }
-        case .outside:
-            print("나왔습니다.")
-        case .unknown:
-            break
-        }
+       // print("여기의 위, 경도는 어떻게 될까? \(region)")
+//
+//        switch state {
+//        case .inside:
+//            print(" \(region.identifier) 들어왔습니다.")
+//            // 이때 노티를 띄어주면 되지 않을까?
+//
+//            // 노티가 안되기때문에 토스트 해줬는데... 노티 띄어주고 싶다 ㅠㅠ
+//            self.view.makeToast("여기는 \(region.identifier) 입니다", duration: 10.0, position: .bottom) { didTap in
+//                if didTap {
+//                    print("토스트가 터치되었습니다.")
+//                } else {
+//                    print("completion without tap")
+//                }
+//            }
+//        case .outside:
+//            print("\(region.identifier)을 나왔습니다.")
+//        case .unknown:
+//            break
+//        }
     }
+    
+        func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+            guard let region = region as? CLCircularRegion else { return }
+            showAlert(title: "\(region.identifier)", message: "\(region.identifier) 해당 지역에 들어왔습니다.")
+        }
+        
+        func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+            guard let region = region as? CLCircularRegion else { return }
+            showAlert(title: "\(region.identifier)", message: "\(region.identifier) 해당 지역에서 나갔습니다.")
+        }
+    
+    
+    // Geofencing Error 처리
+    func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
+        guard let region = region else {
+            print("지역을 모니터링할 수 없으며, 실패 원인을 알 수 없습니다.")
+            return
+        }
+        print("식별자를 사용하여 지역을 모니터링하는 동안 오류가 발생했습니다: \(region.identifier)")
+    }
+    
 }
 
 extension ViewController: MKMapViewDelegate {
     
 }
+
+
+/*
+ class ViewController: UIViewController {
+    
+     private func setupGeofencing() {
+         guard CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) else {
+             showAlert(message: "Geofencing is not supported on this device")
+             return
+         }
+         
+         guard locationManager?.authorizationStatus == .authorizedAlways else {
+             showAlert(message: "App does not have correct location authorization")
+             return
+         }
+         
+         startMonitoring()
+     }
+
+     private func startMonitoring() {
+         let regionCoordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 37.3346438, longitude: -122.008972)
+         let geofenceRegion: CLCircularRegion = CLCircularRegion(
+             center: regionCoordinate,
+             radius: 100, // Radius in Meter
+             identifier: "apple_park" // unique identifier
+         )
+         
+         
+         geofenceRegion.notifyOnEntry = true
+         geofenceRegion.notifyOnExit = true
+         
+         // Start monitoring
+         locationManager?.startMonitoring(for: geofenceRegion)
+     }
+     
+     private func showAlert(message: String) {
+         let alertController = UIAlertController(title: "Information", message: message, preferredStyle: .alert)
+         alertController.addAction(UIAlertAction(title: "OK", style: .cancel))
+         self.present(alertController, animated: true, completion: nil)
+     }
+ }
+ 
+
+ */
