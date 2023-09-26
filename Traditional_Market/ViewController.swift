@@ -13,7 +13,11 @@ class ViewController: UIViewController {
     
     let mapView = MapView()
     
-    let locationManger = CLLocationManager()
+    var locationManger = {
+       var location = CLLocationManager()
+        location.allowsBackgroundLocationUpdates = true
+        return location
+    }()
     
     // 권한 상태
     var authorization: CLAuthorizationStatus = .notDetermined
@@ -28,7 +32,27 @@ class ViewController: UIViewController {
         locationManger.delegate = self
         checkDeviceLocationAuthorization()
     }
+ 
+    /// 해당 지역에 들어왔을때 로컬 알림 메서드
+    func registLocation() {
 
+        let 청취사 = CLLocationCoordinate2D(latitude: 37.517742, longitude: 126.886463)
+        let 문래역 = CLLocationCoordinate2D(latitude: 37.518594, longitude: 126.894798)
+        let 문래편의점 = CLLocationCoordinate2D(latitude: 37.517412, longitude: 126.889103)
+        
+        
+        // radius : 중심으로부터 반경이 될 거리를 설정합니다(m 단위)
+        let region = CLCircularRegion(center: 청취사, radius: 1.0, identifier: "청취사")
+        
+        region.notifyOnEntry = true
+        region.notifyOnExit = true
+        locationManger.allowsBackgroundLocationUpdates = true
+        locationManger.pausesLocationUpdatesAutomatically = false
+        locationManger.startMonitoring(for: region)
+       // let trigger = UNLocationNotificationTrigger(region: region, repeats: false)
+        print("region regist: \(region)")
+    }
+ 
     /// 권한 - 허용안함을 눌렀을때 Alert을 띄우고 iOS 설정 화면으로 이동
     func showLocationSettingAlert() {
         let alert = UIAlertController(title: "위치 정보 설정", message: "설정>개인 정보 보호> 위치 여기로 이동해서 위치 권한 설정해주세요", preferredStyle: .alert)
@@ -86,6 +110,7 @@ class ViewController: UIViewController {
         case .authorizedWhenInUse:
             print("한번만 권한 허용")
             locationManger.startUpdatingLocation()
+            registLocation()
         case .authorized:
             print("권한 허용 됨")
         @unknown default:
@@ -110,6 +135,17 @@ extension ViewController: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         print("위치 권한이 바뀔때 마다 호출 - ")
         checkDeviceLocationAuthorization()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion) {
+        switch state {
+        case .inside:
+            print("들어왔습니다.")
+        case .outside:
+            print("나왔습니다.")
+        case .unknown:
+            break
+        }
     }
 }
 
