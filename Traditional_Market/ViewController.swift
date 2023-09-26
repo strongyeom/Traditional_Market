@@ -24,11 +24,28 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        mapView.mapView.delegate = self
+        mapView.mapBaseView.delegate = self
         locationManger.delegate = self
+        checkDeviceLocationAuthorization()
     }
-    
-    // 상태가 바뀔때 마다 권한 확인
+
+    /// 권한 - 허용안함을 눌렀을때 Alert을 띄우고 iOS 설정 화면으로 이동
+    func showLocationSettingAlert() {
+        let alert = UIAlertController(title: "위치 정보 설정", message: "설정>개인 정보 보호> 위치 여기로 이동해서 위치 권한 설정해주세요", preferredStyle: .alert)
+        let goSetting = UIAlertAction(title: "위치 설정하기", style: .default) { _ in
+            // iOS 설정 페이지로 이동 : openSettingURLString
+            if let appSetting = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(appSetting)
+            }
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        
+        alert.addAction(goSetting)
+        alert.addAction(cancel)
+        present(alert, animated: true)
+    }
+
+    /// 상태가 바뀔때 마다 권한 확인
     func checkDeviceLocationAuthorization() {
         DispatchQueue.global().async {
             // 위치 서비스를 이용하고 있다면
@@ -48,8 +65,9 @@ class ViewController: UIViewController {
         }
     }
     
-    
-    // 권한 설정에 따른 메서드
+
+    /// 권한 설정에 따른 메서드
+    /// - Parameter status: 권한 상태
     func checkStatuesDeviceLocationAuthorization(status: CLAuthorizationStatus) {
         switch status {
         case .notDetermined:
@@ -58,8 +76,10 @@ class ViewController: UIViewController {
             locationManger.requestWhenInUseAuthorization()
         case .restricted:
             print("권한 설정 거부함")
+            showLocationSettingAlert()
         case .denied:
             print("권한 설정 거부함")
+            showLocationSettingAlert()
         case .authorizedAlways:
             print("항상 권한 허용")
             locationManger.startUpdatingLocation()
@@ -79,11 +99,17 @@ class ViewController: UIViewController {
 
 extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("위치를 성공적으로 받아왔을때 : \(locations)")
+        mapView.mapBaseView.userTrackingMode = .followWithHeading
+        print("위치를 성공적으로 받아왔을때 - \(locations)")
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("위치를 받아오지 못했을때 : \(error.localizedDescription)")
+        print("위치를 받아오지 못했을때 - \(error.localizedDescription)")
+    }
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        print("위치 권한이 바뀔때 마다 호출 - ")
+        checkDeviceLocationAuthorization()
     }
 }
 

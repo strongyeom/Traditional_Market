@@ -23,7 +23,10 @@ class MapView : UIView {
         return view
     }()
     
-    var mapView = MKMapView()
+    var mapBaseView = {
+        let view = MKMapView()
+        return view
+    }()
     
     
     lazy var stackView = {
@@ -48,12 +51,12 @@ class MapView : UIView {
     
     func configureView() {
         //self.addSubview(searchBar)
-        self.addSubview(mapView)
-        mapView.addSubview(stackView)
+        self.addSubview(mapBaseView)
+        mapBaseView.addSubview(stackView)
     }
     
     func setConstraints() {
-        mapView.snp.makeConstraints { make in
+        mapBaseView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
