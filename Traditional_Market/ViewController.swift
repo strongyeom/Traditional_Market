@@ -25,7 +25,9 @@ class ViewController: UIViewController {
     var trigger: UNLocationNotificationTrigger?
     var request: UNNotificationRequest?
     
-    var currentLocation: CLLocationCoordinate2D?
+    var startLocation: CLLocationCoordinate2D?
+    
+    var previousCoordinate: CLLocationCoordinate2D?
     
     // 권한 상태
     var authorization: CLAuthorizationStatus = .notDetermined
@@ -62,18 +64,24 @@ class ViewController: UIViewController {
     }
     
     // 첫 로드시 내 위치 범위 산정
-    func setRegion() {
-        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.518024, longitude: 126.889798), latitudinalMeters: 200, longitudinalMeters: 200)
+    func setRegion(center: CLLocationCoordinate2D) {
+        let region = MKCoordinateRegion(center: center, latitudinalMeters: 500, longitudinalMeters: 500)
         
+        print("내 위치 반경 \(region)")
         mapView.mapBaseView.setRegion(region, animated: true)
         
     }
     
+    // 집: 37.503685, 127.140901
+    
+    // 37.504721, 127.140886 거여초
+    // 37.501638, 127.138247 홍팥집
+    // 37.502610, 127.140219 우진약구
     /// 어노테이션 추가
     func addAnnotation() {
-        let aPin = CustomAnnotation(title: "청취사", coordinate: CLLocationCoordinate2D(latitude: 37.517742, longitude: 126.886463))
-        let bPin = CustomAnnotation(title: "문래역", coordinate: CLLocationCoordinate2D(latitude: 37.518594, longitude: 126.894798))
-        let cPin = CustomAnnotation(title: "문래편의점", coordinate: CLLocationCoordinate2D(latitude: 37.517412, longitude: 126.889103))
+        let aPin = CustomAnnotation(title: "거여초", coordinate: CLLocationCoordinate2D(latitude: 37.504721, longitude: 127.140886))
+        let bPin = CustomAnnotation(title: "홍팥집", coordinate: CLLocationCoordinate2D(latitude: 37.501638, longitude: 127.138247))
+        let cPin = CustomAnnotation(title: "우진약국", coordinate: CLLocationCoordinate2D(latitude: 37.502610, longitude: 127.140219))
         
         mapView.mapBaseView.addAnnotations([aPin, bPin, cPin])
     }
@@ -135,9 +143,9 @@ class ViewController: UIViewController {
         case .authorizedWhenInUse:
             print("한번만 권한 허용")
             locationManger.startUpdatingLocation()
-             registLocation()
             addAnnotation()
-            setRegion()
+            registLocation()
+            setRegion(center: startLocation ?? CLLocationCoordinate2D(latitude: 37.503685, longitude: 127.140901))
         case .authorized:
             print("권한 허용 됨")
         @unknown default:
@@ -151,13 +159,43 @@ class ViewController: UIViewController {
 
 extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        mapView.mapBaseView.userTrackingMode = .followWithHeading
-        
+        // mapView.mapBaseView.userTrackingMode = .followWithHeading
+        mapView.mapBaseView.userTrackingMode = .follow
         if let location = locations.first?.coordinate {
-            currentLocation = location
+            startLocation = location
+            print("시작 위치를 받아오고 있습니다 \(location)")
+           // locationManger.stopUpdatingLocation()
         }
-       
-    }
+        
+        
+        
+        if let previousCoordinate = self.previousCoordinate {
+            let preLatitude = round(previousCoordinate.latitude * 10000)
+            let preLotitude = round(previousCoordinate.longitude * 10000)
+            let previousArray = [String(preLatitude), String(preLotitude)]
+            
+            let currentLatitude = round(locations.last!.coordinate.latitude * 10000)
+            let currentLotitude = round(locations.last!.coordinate.longitude * 10000)
+            let currentArray = [String(currentLatitude), String(currentLotitude)]
+            
+            print("이전 --",previousArray)
+            print("이전 -- 현재",currentArray)
+            if previousArray[0] == currentArray[0] && previousArray[1] == currentArray[1] {
+                print("값이 같기 때문에 중지")
+                locationManger.stopUpdatingLocation()
+                print("중지 된 현재 위치 -- \(locations.last!.coordinate)")
+                showAlert(title: "중지", message: "\(locations.last!.coordinate)")
+            } else if previousArray[0] != currentArray[0] || previousArray[1] != currentArray[1] {
+                print("값이 다르기 때문에 다시 불러오기")
+                locationManger.startUpdatingLocation()
+                print("변경되고 있는  현재 위치 -- \(locations.last!.coordinate)")
+                showAlert(title: "위치 변경중", message: "\(locations.last!.coordinate)")
+            }
+        }
+        
+        self.previousCoordinate = locations.last!.coordinate
+        
+    }    
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("위치를 받아오지 못했을때 - \(error.localizedDescription)")
@@ -170,12 +208,12 @@ extension ViewController: CLLocationManagerDelegate {
     
         func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
             guard let region = region as? CLCircularRegion else { return }
-            showAlert(title: "\(region.identifier)", message: "\(region.identifier) 해당 지역에 들어왔습니다.")
+           // showAlert(title: "\(region.identifier)", message: "\(region.identifier) 해당 지역에 들어왔습니다.")
         }
         
         func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
             guard let region = region as? CLCircularRegion else { return }
-            showAlert(title: "\(region.identifier)", message: "\(region.identifier) 해당 지역에서 나갔습니다.")
+           // showAlert(title: "\(region.identifier)", message: "\(region.identifier) 해당 지역에서 나갔습니다.")
         }
     
     

@@ -23,8 +23,20 @@ class MapView : UIView {
         return view
     }()
     
+    let currentLocationButton = {
+       let view = UIButton()
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 50, weight: .light)
+        let image = UIImage(systemName: "play.circle", withConfiguration: imageConfig)
+        view.setTitle("", for: .normal)
+        view.setImage(image, for: .normal)
+        view.tintColor = .red
+        return view
+    }()
+    
     var mapBaseView = {
         let view = MKMapView()
+        view.showsUserLocation = true
+      //  view.userTrackingMode = .follow
         return view
     }()
     
@@ -53,6 +65,7 @@ class MapView : UIView {
         //self.addSubview(searchBar)
         self.addSubview(mapBaseView)
         mapBaseView.addSubview(stackView)
+        mapBaseView.addSubview(currentLocationButton)
     }
     
     func setConstraints() {
@@ -62,6 +75,11 @@ class MapView : UIView {
         
         stackView.snp.makeConstraints { make in
             make.top.leading.equalTo(self.safeAreaLayoutGuide).inset(10)
+        }
+        
+        currentLocationButton.snp.makeConstraints { make in
+            make.size.equalTo(50)
+            make.bottom.trailing.equalToSuperview().inset(50)
         }
     }
 }
