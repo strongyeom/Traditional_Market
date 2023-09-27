@@ -73,7 +73,7 @@ class MapView : UIView {
         sender.isSelected.toggle()
         let isCurrent = sender.isSelected
         
-        currentLocationButton.tintColor = isCurrent ? .blue : .red
+        currentLocationButton.tintColor = isCurrent ? .systemBlue : .red
         
         completion?(isCurrent)
     }
