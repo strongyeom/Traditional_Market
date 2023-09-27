@@ -42,8 +42,9 @@ final class MapViewController: UIViewController {
     // 내 위치 안에 있는 Annotation 담는 배열
     var myRangeAnnotation: [MKAnnotation] = []
     
-    // let pages = Array(1...16)
     let page = 1
+    
+    var list: [Item] = []
     override func loadView() {
         self.view = mapView
     }
@@ -56,6 +57,8 @@ final class MapViewController: UIViewController {
         checkDeviceLocationAuthorization()
         registLocation()
         buttonEvent()
+        
+        
 //        for page in pages {
 //            NetworkManager.shared.request(page: page) { response in
 //                dump(response)
@@ -64,6 +67,7 @@ final class MapViewController: UIViewController {
 //
         NetworkManager.shared.request(page: page) { response in
             dump(response)
+            self.list = response
         }
 
 //        NetworkManager.shared.requestExample(api: IntegrationAPI.traditional(pageNo: String(page), numberOfRow: "100", type: "json")) { response in
@@ -146,8 +150,19 @@ final class MapViewController: UIViewController {
         bPin.title = "홍팥집"
         let cPin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: 37.502610, longitude: 127.140219))
         cPin.title = "우진약국"
-    
-        mapView.mapBaseView.addAnnotations([aPin, bPin, cPin])
+        
+        
+        let aa = list.map { (item) -> MKAnnotation in
+            let pin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: Double(item.latitude)!, longitude: Double(item.longitude)!))
+            pin.title = item.marketName
+            return pin
+        }
+
+        
+        
+        
+        mapView.mapBaseView.addAnnotations(aa)
+        print(mapView.mapBaseView.annotations.count)
     }
     
     func myRegionFilterAnnotation() {

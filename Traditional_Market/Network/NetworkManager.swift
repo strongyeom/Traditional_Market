@@ -14,14 +14,14 @@ class NetworkManager {
     private init() { }
     
     
-    func request(page: Int, completionHandler: @escaping((TraditionalMarket) -> Void)) {
+    func request(page: Int, completionHandler: @escaping(([Item]) -> Void)) {
         
         let url = URL(string: "http://api.data.go.kr/openapi/tn_pubr_public_trdit_mrkt_api?serviceKey=UQybVf%2FBVAsYaLeP9xLFftf6XvnhuY3nWPU72kKjfSPporofcAGn6UQp%2BG9ftv2cI9VQxA9Fq0B%2FtIWxZ2lavg%3D%3D&pageNo=\(page)&numOfRows=100&type=json")!
         AF.request(url)
             .responseDecodable(of: TraditionalMarket.self) { response in
                 switch response.result {
                 case .success(let data):
-                    completionHandler(data)
+                    completionHandler(data.response.body.items)
                 case .failure(let error):
                     dump(error.localizedDescription)
                 }
