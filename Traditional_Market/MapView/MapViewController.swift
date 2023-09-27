@@ -42,7 +42,8 @@ final class MapViewController: UIViewController {
     // 내 위치 안에 있는 Annotation 담는 배열
     var myRangeAnnotation: [MKAnnotation] = []
     
-    
+    // let pages = Array(1...16)
+    let page = 1
     override func loadView() {
         self.view = mapView
     }
@@ -55,8 +56,26 @@ final class MapViewController: UIViewController {
         checkDeviceLocationAuthorization()
         registLocation()
         buttonEvent()
-        
+//        for page in pages {
+//            NetworkManager.shared.request(page: page) { response in
+//                dump(response)
+//            }
+//        }
+//
+        NetworkManager.shared.request(page: page) { response in
+            dump(response)
+        }
 
+//        NetworkManager.shared.requestExample(api: IntegrationAPI.traditional(pageNo: String(page), numberOfRow: "100", type: "json")) { response in
+//            dump(response)
+//        }
+//
+//
+
+//        NetworkManager.shared.requstConvertible(api: .allMarket(pageNo: "1", numberOfRow: "100", type: "json")) { response in
+//            dump(response)
+//        }
+        
     }
     
     /// 버튼의 이벤트를 받아 start와 stop 할 수 있음

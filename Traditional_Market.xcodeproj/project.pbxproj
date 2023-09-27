@@ -12,6 +12,13 @@
 		26A9C4FC2AC324EE004F955A /* Ext+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A9C4FB2AC324EE004F955A /* Ext+UIViewController.swift */; };
 		26AAD8A42AC44B07002E5DD4 /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8A32AC44B07002E5DD4 /* CustomAnnotationView.swift */; };
 		26AAD8A92AC44FCD002E5DD4 /* TraditionalMarket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8A82AC44FCD002E5DD4 /* TraditionalMarket.swift */; };
+		26AAD8AC2AC4554C002E5DD4 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 26AAD8AB2AC4554C002E5DD4 /* RealmSwift */; };
+		26AAD8AE2AC4559B002E5DD4 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8AD2AC4559B002E5DD4 /* NetworkManager.swift */; };
+		26AAD8B12AC4560D002E5DD4 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 26AAD8B02AC4560D002E5DD4 /* Alamofire */; };
+		26AAD8B32AC45B69002E5DD4 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8B22AC45B69002E5DD4 /* Router.swift */; };
+		26AAD8B62AC46203002E5DD4 /* TraditionalMarketViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8B52AC46203002E5DD4 /* TraditionalMarketViewModel.swift */; };
+		26AAD8B82AC46218002E5DD4 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8B72AC46218002E5DD4 /* Observable.swift */; };
+		26AAD8BA2AC46EDE002E5DD4 /* IntegrationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8B92AC46EDE002E5DD4 /* IntegrationAPI.swift */; };
 		26EA66442AC2AB4400F6FE6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA66432AC2AB4400F6FE6A /* AppDelegate.swift */; };
 		26EA66462AC2AB4400F6FE6A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA66452AC2AB4400F6FE6A /* SceneDelegate.swift */; };
 		26EA66482AC2AB4400F6FE6A /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA66472AC2AB4400F6FE6A /* MapViewController.swift */; };
@@ -28,6 +35,11 @@
 		26A9C4FD2AC326D5004F955A /* ExampleLocation.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ExampleLocation.gpx; sourceTree = "<group>"; };
 		26AAD8A32AC44B07002E5DD4 /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		26AAD8A82AC44FCD002E5DD4 /* TraditionalMarket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraditionalMarket.swift; sourceTree = "<group>"; };
+		26AAD8AD2AC4559B002E5DD4 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		26AAD8B22AC45B69002E5DD4 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		26AAD8B52AC46203002E5DD4 /* TraditionalMarketViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraditionalMarketViewModel.swift; sourceTree = "<group>"; };
+		26AAD8B72AC46218002E5DD4 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		26AAD8B92AC46EDE002E5DD4 /* IntegrationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationAPI.swift; sourceTree = "<group>"; };
 		26EA66402AC2AB4400F6FE6A /* Traditional_Market.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Traditional_Market.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26EA66432AC2AB4400F6FE6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		26EA66452AC2AB4400F6FE6A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -44,6 +56,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26AAD8AC2AC4554C002E5DD4 /* RealmSwift in Frameworks */,
+				26AAD8B12AC4560D002E5DD4 /* Alamofire in Frameworks */,
 				26A9C4FA2AC2E77D004F955A /* Toast in Frameworks */,
 				26EA665B2AC2AE0F00F6FE6A /* SnapKit in Frameworks */,
 			);
@@ -67,6 +81,9 @@
 		26AAD8A62AC44DA6002E5DD4 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				26AAD8AD2AC4559B002E5DD4 /* NetworkManager.swift */,
+				26AAD8B22AC45B69002E5DD4 /* Router.swift */,
+				26AAD8B92AC46EDE002E5DD4 /* IntegrationAPI.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -77,6 +94,15 @@
 				26AAD8A82AC44FCD002E5DD4 /* TraditionalMarket.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		26AAD8B42AC461E7002E5DD4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				26AAD8B72AC46218002E5DD4 /* Observable.swift */,
+				26AAD8B52AC46203002E5DD4 /* TraditionalMarketViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		26EA66372AC2AB4400F6FE6A = {
@@ -98,6 +124,7 @@
 		26EA66422AC2AB4400F6FE6A /* Traditional_Market */ = {
 			isa = PBXGroup;
 			children = (
+				26AAD8B42AC461E7002E5DD4 /* ViewModel */,
 				26AAD8A72AC44DAD002E5DD4 /* Model */,
 				26AAD8A62AC44DA6002E5DD4 /* Network */,
 				26AAD8A52AC44D9B002E5DD4 /* MapView */,
@@ -139,6 +166,8 @@
 			packageProductDependencies = (
 				26EA665A2AC2AE0F00F6FE6A /* SnapKit */,
 				26A9C4F92AC2E77D004F955A /* Toast */,
+				26AAD8AB2AC4554C002E5DD4 /* RealmSwift */,
+				26AAD8B02AC4560D002E5DD4 /* Alamofire */,
 			);
 			productName = Traditional_Market;
 			productReference = 26EA66402AC2AB4400F6FE6A /* Traditional_Market.app */;
@@ -171,6 +200,8 @@
 			packageReferences = (
 				26EA66592AC2AE0F00F6FE6A /* XCRemoteSwiftPackageReference "SnapKit" */,
 				26A9C4F82AC2E77D004F955A /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+				26AAD8AA2AC4554C002E5DD4 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				26AAD8AF2AC4560D002E5DD4 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 26EA66412AC2AB4400F6FE6A /* Products */;
 			projectDirPath = "";
@@ -198,8 +229,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26AAD8B82AC46218002E5DD4 /* Observable.swift in Sources */,
+				26AAD8B62AC46203002E5DD4 /* TraditionalMarketViewModel.swift in Sources */,
+				26AAD8B32AC45B69002E5DD4 /* Router.swift in Sources */,
 				26EA66482AC2AB4400F6FE6A /* MapViewController.swift in Sources */,
 				26EA66582AC2ADED00F6FE6A /* MapView.swift in Sources */,
+				26AAD8BA2AC46EDE002E5DD4 /* IntegrationAPI.swift in Sources */,
+				26AAD8AE2AC4559B002E5DD4 /* NetworkManager.swift in Sources */,
 				26EA665E2AC2AEB900F6FE6A /* Ext+MapButton.swift in Sources */,
 				26EA66442AC2AB4400F6FE6A /* AppDelegate.swift in Sources */,
 				26EA66462AC2AB4400F6FE6A /* SceneDelegate.swift in Sources */,
@@ -434,6 +470,22 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		26AAD8AA2AC4554C002E5DD4 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		26AAD8AF2AC4560D002E5DD4 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		26EA66592AC2AE0F00F6FE6A /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -449,6 +501,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 26A9C4F82AC2E77D004F955A /* XCRemoteSwiftPackageReference "Toast-Swift" */;
 			productName = Toast;
+		};
+		26AAD8AB2AC4554C002E5DD4 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 26AAD8AA2AC4554C002E5DD4 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+		26AAD8B02AC4560D002E5DD4 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 26AAD8AF2AC4560D002E5DD4 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 		26EA665A2AC2AE0F00F6FE6A /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
