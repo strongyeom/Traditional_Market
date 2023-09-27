@@ -10,7 +10,7 @@ import CoreLocation
 import MapKit
 import Toast
 
-final class ViewController: UIViewController {
+final class MapViewController: UIViewController {
 
     let mapView = MapView()
     
@@ -206,7 +206,7 @@ final class ViewController: UIViewController {
     
 }
 
-extension ViewController: CLLocationManagerDelegate {
+extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first?.coordinate {
             startLocation = location
@@ -255,7 +255,7 @@ extension ViewController: CLLocationManagerDelegate {
     
 }
 
-extension ViewController: MKMapViewDelegate {
+extension MapViewController: MKMapViewDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         locationManger.stopUpdatingLocation()
         mapView.currentLocationButton.isSelected = false

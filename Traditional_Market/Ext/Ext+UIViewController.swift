@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension ViewController {
+extension MapViewController {
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let ok = UIAlertAction(title: "확인", style: .default)

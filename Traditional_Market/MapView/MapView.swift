@@ -56,6 +56,7 @@ class MapView : UIView {
         super.init(frame: frame)
         configureView()
         setConstraints()
+    
     }
     
     required init?(coder: NSCoder) {
