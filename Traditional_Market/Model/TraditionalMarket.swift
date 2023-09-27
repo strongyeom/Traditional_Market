@@ -9,17 +9,17 @@ import Foundation
 
 // MARK: - TraditionalMarket
 struct TraditionalMarket: Decodable, Hashable {
-    let response: Response
+    var response: Response
 }
 
 // MARK: - Response
 struct Response: Decodable, Hashable {
-    let body: Body
+    var body: Body
 }
 
 // MARK: - Body
 struct Body: Decodable, Hashable {
-    let items: [Item]
+    var items: [Item]
     let totalCount, numOfRows, pageNo: String
 }
 

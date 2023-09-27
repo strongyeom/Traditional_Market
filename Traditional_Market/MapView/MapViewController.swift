@@ -14,6 +14,8 @@ final class MapViewController: UIViewController {
 
     let mapView = MapView()
     
+    let marketAPIManager = MarketAPIManager.shared
+    
     var locationManger = {
        var location = CLLocationManager()
         location.allowsBackgroundLocationUpdates = true
@@ -41,10 +43,7 @@ final class MapViewController: UIViewController {
     
     // 내 위치 안에 있는 Annotation 담는 배열
     var myRangeAnnotation: [MKAnnotation] = []
-    
-    let page = 1
-    
-    var list: [Item] = []
+ 
     override func loadView() {
         self.view = mapView
     }
@@ -57,29 +56,10 @@ final class MapViewController: UIViewController {
         checkDeviceLocationAuthorization()
         registLocation()
         buttonEvent()
-        
-        
-//        for page in pages {
-//            NetworkManager.shared.request(page: page) { response in
-//                dump(response)
-//            }
-//        }
-//
-        NetworkManager.shared.request(page: page) { response in
-            dump(response)
-            self.list = response
+
+        marketAPIManager.request { item in
+            print("총 시장 갯수",item.response.body.items.count)
         }
-
-//        NetworkManager.shared.requestExample(api: IntegrationAPI.traditional(pageNo: String(page), numberOfRow: "100", type: "json")) { response in
-//            dump(response)
-//        }
-//
-//
-
-//        NetworkManager.shared.requstConvertible(api: .allMarket(pageNo: "1", numberOfRow: "100", type: "json")) { response in
-//            dump(response)
-//        }
-        
     }
     
     /// 버튼의 이벤트를 받아 start와 stop 할 수 있음
@@ -144,24 +124,16 @@ final class MapViewController: UIViewController {
     
     /// 어노테이션 추가
     func addAnnotation() {
-        let aPin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: 37.504721, longitude: 127.140886))
-        aPin.title = "거여초"
-        let bPin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: 37.501638, longitude: 127.138247))
-        bPin.title = "홍팥집"
-        let cPin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: 37.502610, longitude: 127.140219))
-        cPin.title = "우진약국"
-        
-        
-        let aa = list.map { (item) -> MKAnnotation in
-            let pin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: Double(item.latitude)!, longitude: Double(item.longitude)!))
-            pin.title = item.marketName
-            return pin
-        }
 
+        let marketAnnotations = marketAPIManager.exampleList.response.body.items.map {
+            (item) -> MKAnnotation in
+            let pin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: Double(item.latitude) ?? 0.0, longitude: Double(item.longitude) ?? 0.0))
+                pin.title = item.marketName
+                return pin
+        }
         
         
-        
-        mapView.mapBaseView.addAnnotations(aa)
+        mapView.mapBaseView.addAnnotations(marketAnnotations)
         print(mapView.mapBaseView.annotations.count)
     }
     
