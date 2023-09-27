@@ -19,9 +19,8 @@ class CustomAnnotation: NSObject, MKAnnotation {
     
     var imageName: String?
     
-    init(title: String, coordinate: CLLocationCoordinate2D) {
+    init(coordinate: CLLocationCoordinate2D) {
         self.coordinate = coordinate
-        self.title = title
         super.init()
     }
 }

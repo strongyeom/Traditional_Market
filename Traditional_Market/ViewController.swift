@@ -10,8 +10,8 @@ import CoreLocation
 import MapKit
 import Toast
 
-class ViewController: UIViewController {
-    
+final class ViewController: UIViewController {
+
     let mapView = MapView()
     
     var locationManger = {
@@ -25,7 +25,11 @@ class ViewController: UIViewController {
     var trigger: UNLocationNotificationTrigger?
     var request: UNNotificationRequest?
     
-    var startLocation: CLLocationCoordinate2D?
+    var startLocation: CLLocationCoordinate2D? {
+        didSet {
+            setMyRegion(center: startLocation ?? CLLocationCoordinate2D(latitude: 37.504721, longitude: 127.140886))
+        }
+    }
     
     var previousCoordinate: CLLocationCoordinate2D?
     
@@ -50,8 +54,13 @@ class ViewController: UIViewController {
         locationManger.desiredAccuracy = kCLLocationAccuracyBest // 정확성
         checkDeviceLocationAuthorization()
         registLocation()
+        buttonEvent()
         
-        
+
+    }
+    
+    /// 버튼의 이벤트를 받아 start와 stop 할 수 있음
+    func buttonEvent() {
         mapView.completion = { isCurrent in
             
             self.isCurrentLocation = isCurrent
@@ -59,94 +68,66 @@ class ViewController: UIViewController {
            
             if isCurrent {
                 self.locationManger.startUpdatingLocation()
-                self.setRegion(center: self.startLocation ?? CLLocationCoordinate2D(latitude: 37.503685, longitude: 127.140901))
             } else {
                 self.locationManger.stopUpdatingLocation()
             }
         }
     }
-    
 
  
     /// 해당 지역에 들어왔을때 로컬 알림 메서드
     func registLocation() {
-        print(mapView.mapBaseView.annotations.count)
-        // 어차피 어노테이션이 찍히면 해당 어노테이션의 coordinate 값 생김
+        
         print("범위에 속하는 어노테이션 갯수",myRangeAnnotation.count)
+        // 내 위치 반경에 해당하는 어노테이션만 가져오기
         for i in myRangeAnnotation {
-           
-            
-            
-                /*
-                 let range = 200.0
-                 let regionCenter = CLLocationCoordinate2DMake(center.latitude, center.longitude)
-                 let region = MKCoordinateRegion(center: center, latitudinalMeters: 500, longitudinalMeters: 500)
-                 let regionRange = CLCircularRegion(center: center, radius: range, identifier: "내 위치")
-                 let circle = MKCircle(center: regionCenter, radius: range)
-                 mapView.mapBaseView.addOverlay(circle)
-                 */
-            
             let regionCenter = CLLocationCoordinate2DMake(i.coordinate.latitude, i.coordinate.longitude)
-            let exampleRegion = CLCircularRegion(center: i.coordinate, radius: 50.0, identifier: "\(i.coordinate.latitude) + \(i.coordinate.longitude)")
-            let circleRagne = MKCircle(center: regionCenter, radius: 100.0)
+            let exampleRegion = CLCircularRegion(center: i.coordinate, radius: 50.0, identifier: "\(i.title! ?? "내위치")")
+            let circleRagne = MKCircle(center: regionCenter, radius: 50.0)
             mapView.mapBaseView.addOverlay(circleRagne)
             
             exampleRegion.notifyOnEntry = true
             exampleRegion.notifyOnExit = true
             locationManger.startMonitoring(for: exampleRegion)
-            print("region regist: \(exampleRegion)")
         }
         // 🧐 UNLocationNotificationTrigger 고민해보기
     }
     
-    // 첫 로드시 내 위치 범위 산정
-    func setRegion(center: CLLocationCoordinate2D) {
+    // 내 위치 범위 산정
+    func setMyRegion(center: CLLocationCoordinate2D) {
         myRangeAnnotation = []
-        /*
-         let 홍대입구역중앙 = CLLocationCoordinate2DMake(37.55769, 126.92450)
-          let 범위 = 100.0 //100meter를 뜻함
-          
-          let 홍대입구역범위 = CLCircularRegion(center: CLLocationCoordinate2D(latitude: 홍대입구역중앙.latitude,
-                                                                       longitude: 홍대입구역중앙.longitude), radius: 범위, identifier: "홍대입구역")
-          let 원모양 = MKCircle(center: 홍대입구역중앙, radius: 범위)
-          mapView.addOverlay(원모양)
-          
-          ...
-         */
+      
         let range = 200.0
         let regionCenter = CLLocationCoordinate2DMake(center.latitude, center.longitude)
         let region = MKCoordinateRegion(center: center, latitudinalMeters: 500, longitudinalMeters: 500)
         let regionRange = CLCircularRegion(center: center, radius: range, identifier: "내 위치")
         let circle = MKCircle(center: regionCenter, radius: range)
         mapView.mapBaseView.addOverlay(circle)
-        print("내 위치 반경 \(region)")
+        // print("내 위치 반경 \(region)")
         mapView.mapBaseView.setRegion(region, animated: true)
         
         for i in mapView.mapBaseView.annotations {
             if regionRange.contains(i.coordinate) {
-                print("\(i.title ?? "")가 내 위치에 포함되어 있습니다.")
+                print("\(i.title! ?? "")가 내 위치에 포함되어 있습니다.")
                 // 범위안에 있는 것만 따로 배열에 담아서 registLocation타게 하기
                 myRangeAnnotation.append(i)
             } else {
-                print("\(i.title ?? "")가 내 위치에 포함되어 있지 않습니다.")
+                print("\(i.title! ?? "")가 내 위치에 포함되어 있지 않습니다.")
             }
         }
+        
         registLocation()
     }
     
-    // 집: 37.503685, 127.140901
-    
-    // 37.504721, 127.140886 거여초
-    // 37.501638, 127.138247 홍팥집
-    // 37.502610, 127.140219 우진약구
     /// 어노테이션 추가
     func addAnnotation() {
-        let aPin = CustomAnnotation(title: "거여초", coordinate: CLLocationCoordinate2D(latitude: 37.504721, longitude: 127.140886))
-        let bPin = CustomAnnotation(title: "홍팥집", coordinate: CLLocationCoordinate2D(latitude: 37.501638, longitude: 127.138247))
-        let cPin = CustomAnnotation(title: "우진약국", coordinate: CLLocationCoordinate2D(latitude: 37.502610, longitude: 127.140219))
-        
-
-        
+        let aPin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: 37.504721, longitude: 127.140886))
+        aPin.title = "거여초"
+        let bPin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: 37.501638, longitude: 127.138247))
+        bPin.title = "홍팥집"
+        let cPin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: 37.502610, longitude: 127.140219))
+        cPin.title = "우진약국"
+    
         mapView.mapBaseView.addAnnotations([aPin, bPin, cPin])
     }
     
@@ -212,8 +193,7 @@ class ViewController: UIViewController {
             print("한번만 권한 허용")
             locationManger.startUpdatingLocation()
             addAnnotation()
-            // registLocation()
-            setRegion(center: startLocation ?? CLLocationCoordinate2D(latitude: 37.503685, longitude: 127.140901))
+            setMyRegion(center: startLocation ?? CLLocationCoordinate2D(latitude: 37.503685, longitude: 127.140901))
             mapView.currentLocationButton.isSelected = true
         case .authorized:
             print("권한 허용 됨")

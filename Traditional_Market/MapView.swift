@@ -36,6 +36,7 @@ class MapView : UIView {
         let view = MKMapView()
         view.showsUserLocation = true
         view.userTrackingMode = .follow
+        view.cameraZoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: 1000000)
         return view
     }()
     
