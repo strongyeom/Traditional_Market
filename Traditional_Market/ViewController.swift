@@ -32,6 +32,8 @@ class ViewController: UIViewController {
     // 권한 상태
     var authorization: CLAuthorizationStatus = .notDetermined
 
+    var isCurrentLocation: Bool = false
+    
     override func loadView() {
         self.view = mapView
     }
@@ -43,6 +45,20 @@ class ViewController: UIViewController {
         locationManger.desiredAccuracy = kCLLocationAccuracyBest // 정확성
         checkDeviceLocationAuthorization()
         registLocation()
+        
+        
+        mapView.completion = { isCurrent in
+            
+            self.isCurrentLocation = isCurrent
+            print("isCurrentLocation",self.isCurrentLocation)
+           
+            if isCurrent {
+                self.locationManger.startUpdatingLocation()
+                self.setRegion(center: self.startLocation ?? CLLocationCoordinate2D(latitude: 37.503685, longitude: 127.140901))
+            } else {
+                self.locationManger.stopUpdatingLocation()
+            }
+        }
     }
     
 
@@ -160,40 +176,23 @@ class ViewController: UIViewController {
 extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         // mapView.mapBaseView.userTrackingMode = .followWithHeading
-        mapView.mapBaseView.userTrackingMode = .follow
+       // mapView.mapBaseView.userTrackingMode = .follow
         if let location = locations.first?.coordinate {
             startLocation = location
             print("시작 위치를 받아오고 있습니다 \(location)")
-           // locationManger.stopUpdatingLocation()
+           
         }
         
         
-        
-        if let previousCoordinate = self.previousCoordinate {
-            let preLatitude = round(previousCoordinate.latitude * 10000)
-            let preLotitude = round(previousCoordinate.longitude * 10000)
-            let previousArray = [String(preLatitude), String(preLotitude)]
-            
-            let currentLatitude = round(locations.last!.coordinate.latitude * 10000)
-            let currentLotitude = round(locations.last!.coordinate.longitude * 10000)
-            let currentArray = [String(currentLatitude), String(currentLotitude)]
-            
-            print("이전 --",previousArray)
-            print("이전 -- 현재",currentArray)
-            if previousArray[0] == currentArray[0] && previousArray[1] == currentArray[1] {
-                print("값이 같기 때문에 중지")
-                locationManger.stopUpdatingLocation()
-                print("중지 된 현재 위치 -- \(locations.last!.coordinate)")
-                showAlert(title: "중지", message: "\(locations.last!.coordinate)")
-            } else if previousArray[0] != currentArray[0] || previousArray[1] != currentArray[1] {
-                print("값이 다르기 때문에 다시 불러오기")
-                locationManger.startUpdatingLocation()
-                print("변경되고 있는  현재 위치 -- \(locations.last!.coordinate)")
-                showAlert(title: "위치 변경중", message: "\(locations.last!.coordinate)")
-            }
-        }
-        
-        self.previousCoordinate = locations.last!.coordinate
+//        print("isCurrentLocation",isCurrentLocation)
+//        if isCurrentLocation {
+//            print("실행")
+//            locationManger.startUpdatingLocation()
+//        } else {
+//            print("중지")
+//            locationManger.stopUpdatingLocation()
+//        }
+ 
         
     }    
     
@@ -208,12 +207,12 @@ extension ViewController: CLLocationManagerDelegate {
     
         func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
             guard let region = region as? CLCircularRegion else { return }
-           // showAlert(title: "\(region.identifier)", message: "\(region.identifier) 해당 지역에 들어왔습니다.")
+            showAlert(title: "\(region.identifier)", message: "\(region.identifier) 해당 지역에 들어왔습니다.")
         }
         
         func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
             guard let region = region as? CLCircularRegion else { return }
-           // showAlert(title: "\(region.identifier)", message: "\(region.identifier) 해당 지역에서 나갔습니다.")
+            showAlert(title: "\(region.identifier)", message: "\(region.identifier) 해당 지역에서 나갔습니다.")
         }
     
     
@@ -229,5 +228,9 @@ extension ViewController: CLLocationManagerDelegate {
 }
 
 extension ViewController: MKMapViewDelegate {
-    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        locationManger.stopUpdatingLocation()
+        mapView.currentLocationButton.isSelected = false
+        mapView.currentLocationButton.tintColor = .red
+    }
 }

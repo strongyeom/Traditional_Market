@@ -29,14 +29,13 @@ class MapView : UIView {
         let image = UIImage(systemName: "play.circle", withConfiguration: imageConfig)
         view.setTitle("", for: .normal)
         view.setImage(image, for: .normal)
-        view.tintColor = .red
         return view
     }()
     
     var mapBaseView = {
         let view = MKMapView()
         view.showsUserLocation = true
-      //  view.userTrackingMode = .follow
+        view.userTrackingMode = .follow
         return view
     }()
     
@@ -50,6 +49,7 @@ class MapView : UIView {
         return stack
     }()
     
+    var completion: ((Bool) -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -66,6 +66,16 @@ class MapView : UIView {
         self.addSubview(mapBaseView)
         mapBaseView.addSubview(stackView)
         mapBaseView.addSubview(currentLocationButton)
+        self.currentLocationButton.addTarget(self, action: #selector(currentBtnClicked), for: .touchUpInside)
+    }
+    
+    @objc func currentBtnClicked(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        let isCurrent = sender.isSelected
+        
+        currentLocationButton.tintColor = isCurrent ? .blue : .red
+        
+        completion?(isCurrent)
     }
     
     func setConstraints() {
