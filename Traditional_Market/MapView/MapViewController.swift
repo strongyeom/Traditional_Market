@@ -128,7 +128,7 @@ final class MapViewController: UIViewController {
     /// 어노테이션 추가
     func addAnnotation() {
 
-        let marketAnnotations = marketAPIManager.exampleList.response.body.items.map {
+        let marketAnnotations = marketAPIManager.exampleList.response.body.items.filter { $0.address.contains("서울특별시")}.map {
             (item) -> MKAnnotation in
             let pin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: Double(item.latitude) ?? 0.0, longitude: Double(item.longitude) ?? 0.0))
                 pin.title = item.marketName

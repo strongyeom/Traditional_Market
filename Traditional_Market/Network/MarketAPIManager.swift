@@ -21,6 +21,7 @@ class MarketAPIManager {
         for page in pageCount {
             NetworkManager.shared.request(page: page) { response in
                 self.exampleList.response.body.items.append(contentsOf: response)
+               
                 completionHandler(self.exampleList)
             }
         }
