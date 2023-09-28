@@ -49,7 +49,7 @@ class RealmManager {
     /// - Parameter region: 해당 지역
     /// - Returns: 필터된 지역
     func filterData(region: String) -> Results<TraditionalMarketRealm> {
-        let result = realm.objects(TraditionalMarketRealm.self).where { $0.marketName.contains(region)
+        let result = realm.objects(TraditionalMarketRealm.self).where { $0.address.contains(region)
         }
         return result
     }

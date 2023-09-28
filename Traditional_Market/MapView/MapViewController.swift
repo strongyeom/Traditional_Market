@@ -11,7 +11,7 @@ import MapKit
 import Toast
 import RealmSwift
 
-final class MapViewController: UIViewController {
+final class MapViewController: BaseViewController {
 
     let mapView = MapView()
     var realm = try! Realm()
@@ -53,6 +53,10 @@ final class MapViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+    }
+    
+    override func configureView() {
         mapView.mapBaseView.delegate = self
         locationManger.delegate = self
         locationManger.desiredAccuracy = kCLLocationAccuracyBest // 정확성
@@ -65,7 +69,6 @@ final class MapViewController: UIViewController {
         }
 
         print("Realm파일 경로",realm.configuration.fileURL!)
-        
     }
     
     /// 버튼의 이벤트를 받아 start와 stop 할 수 있음
@@ -145,12 +148,14 @@ final class MapViewController: UIViewController {
         // LazyMapSequence<Results<TraditionalMarketRealm>, MKAnnotation>로 나온것을 배열로 만들어주기 위해 변수 설정
         var mkAnnotationConvert: [MKAnnotation] = []
         
-        let realmAnnotation = realmManager.fetch().map {
+        
+        let realmAnnotation = realmManager.filterData(region: "서울특별시").map {
             (realItem) -> MKAnnotation in
             let pin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: Double(realItem.latitude!) ?? 0.0, longitude: Double(realItem.longitude!) ?? 0.0))
             pin.title = realItem.marketName
             return pin
         }
+        
         
         // 반복문을 사용하여 배열 안에 담아주기
         for i in realmAnnotation {
