@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		26229B9D2AC57528002FBE59 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26229B9C2AC57528002FBE59 /* RealmManager.swift */; };
+		26229B9F2AC575AD002FBE59 /* TraditionalMarketRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26229B9E2AC575AD002FBE59 /* TraditionalMarketRealm.swift */; };
 		26A9C4F72AC2E607004F955A /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A9C4F62AC2E607004F955A /* CustomAnnotation.swift */; };
 		26A9C4FA2AC2E77D004F955A /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 26A9C4F92AC2E77D004F955A /* Toast */; };
 		26A9C4FC2AC324EE004F955A /* Ext+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A9C4FB2AC324EE004F955A /* Ext+UIViewController.swift */; };
@@ -31,6 +33,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		26229B9C2AC57528002FBE59 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		26229B9E2AC575AD002FBE59 /* TraditionalMarketRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraditionalMarketRealm.swift; sourceTree = "<group>"; };
 		26A9C4F62AC2E607004F955A /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		26A9C4FB2AC324EE004F955A /* Ext+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIViewController.swift"; sourceTree = "<group>"; };
 		26A9C4FD2AC326D5004F955A /* ExampleLocation.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ExampleLocation.gpx; sourceTree = "<group>"; };
@@ -68,6 +72,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		26229B9B2AC57518002FBE59 /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				26229B9E2AC575AD002FBE59 /* TraditionalMarketRealm.swift */,
+				26229B9C2AC57528002FBE59 /* RealmManager.swift */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
 		26AAD8A52AC44D9B002E5DD4 /* MapView */ = {
 			isa = PBXGroup;
 			children = (
@@ -127,6 +140,7 @@
 		26EA66422AC2AB4400F6FE6A /* Traditional_Market */ = {
 			isa = PBXGroup;
 			children = (
+				26229B9B2AC57518002FBE59 /* Realm */,
 				26AAD8B42AC461E7002E5DD4 /* ViewModel */,
 				26AAD8A72AC44DAD002E5DD4 /* Model */,
 				26AAD8A62AC44DA6002E5DD4 /* Network */,
@@ -232,6 +246,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26229B9F2AC575AD002FBE59 /* TraditionalMarketRealm.swift in Sources */,
 				26AAD8C12AC48574002E5DD4 /* MarketAPIManager.swift in Sources */,
 				26AAD8B82AC46218002E5DD4 /* Observable.swift in Sources */,
 				26AAD8B62AC46203002E5DD4 /* TraditionalMarketViewModel.swift in Sources */,
@@ -241,6 +256,7 @@
 				26AAD8BA2AC46EDE002E5DD4 /* IntegrationAPI.swift in Sources */,
 				26AAD8AE2AC4559B002E5DD4 /* NetworkManager.swift in Sources */,
 				26EA665E2AC2AEB900F6FE6A /* Ext+MapButton.swift in Sources */,
+				26229B9D2AC57528002FBE59 /* RealmManager.swift in Sources */,
 				26EA66442AC2AB4400F6FE6A /* AppDelegate.swift in Sources */,
 				26EA66462AC2AB4400F6FE6A /* SceneDelegate.swift in Sources */,
 				26A9C4FC2AC324EE004F955A /* Ext+UIViewController.swift in Sources */,

@@ -9,13 +9,15 @@ import UIKit
 import CoreLocation
 import MapKit
 import Toast
+import RealmSwift
 
 final class MapViewController: UIViewController {
 
     let mapView = MapView()
-    
+    var realm = try! Realm()
     let marketAPIManager = MarketAPIManager.shared
     
+    let realmManager = RealmManager()
     var locationManger = {
        var location = CLLocationManager()
         location.allowsBackgroundLocationUpdates = true
@@ -55,10 +57,17 @@ final class MapViewController: UIViewController {
         checkDeviceLocationAuthorization()
         registLocation()
         buttonEvent()
-
+        
         marketAPIManager.request { item in
-            print("총 시장 갯수",item.response.body.items.count)
+            print("총 시장 갯수",item.response.body.items)
         }
+        
+//        NetworkManager.shared.requestItem(page: 1) { item in
+//            print("여기만 타면 된다 어떻게 타나 보자 \(item)")
+//        }
+//
+        print("Realm파일 경로",realm.configuration.fileURL!)
+        
     }
     
     /// 버튼의 이벤트를 받아 start와 stop 할 수 있음
@@ -128,12 +137,23 @@ final class MapViewController: UIViewController {
     /// 어노테이션 추가
     func addAnnotation() {
 
-        let marketAnnotations = marketAPIManager.exampleList.response.body.items.filter { $0.address.contains("서울특별시")}.map {
+        let items = marketAPIManager.exampleList.response.body.items
+        
+        let marketAnnotations = items.map {
             (item) -> MKAnnotation in
             let pin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: Double(item.latitude) ?? 0.0, longitude: Double(item.longitude) ?? 0.0))
                 pin.title = item.marketName
                 return pin
+            
+            
         }
+        
+        let _ = items.map {
+            realmManager.addData(market: $0)
+        }
+        
+        
+        
         
         
         mapView.mapBaseView.addAnnotations(marketAnnotations)

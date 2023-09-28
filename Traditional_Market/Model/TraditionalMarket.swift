@@ -26,9 +26,9 @@ struct Body: Decodable, Hashable {
 // MARK: - Item
 struct Item: Decodable, Hashable {
     let marketName: String // 시장 이름
-    let marketType: MrktType // 상설장 or 5일장
+    let marketType: String // 상설장 or 5일장
     let loadNameAddress, address: String // 지번, 도로명
-    let marketOpenCycle: MrktEstblCycle // 매일 or 1일, 3일, 5일
+    let marketOpenCycle: String // 매일 or 1일, 3일, 5일
     let publicToilet: String
     let latitude, longitude: String
     let popularProducts: String
@@ -48,17 +48,17 @@ struct Item: Decodable, Hashable {
     }
 }
 
-enum MrktEstblCycle: String, Decodable, Hashable {
-    case twoAndSevenDay = "2일+7일"
-    case threeAndEightDay = "3일+8일"
-    case fourAndNineDay = "4일+9일"
-    case fiveAndTenDay = "5일+10일"
-    case everyDay = "매일"
-    case everyAndSixDay = "매일+6일"
-}
-
-enum MrktType: String, Decodable, Hashable {
-    case fiveDay_Market = "5일장"
-    case everyDay_Market = "상설장"
-    case everyDayAndFiveDay_Market = "상설장+5일장"
-}
+//enum MrktEstblCycle: String, Decodable, Hashable {
+//    case twoAndSevenDay = "2일+7일"
+//    case threeAndEightDay = "3일+8일"
+//    case fourAndNineDay = "4일+9일"
+//    case fiveAndTenDay = "5일+10일"
+//    case everyDay = "매일"
+//    case everyAndSixDay = "매일+6일"
+//}
+//
+//enum MrktType: String, Decodable, Hashable {
+//    case fiveDay_Market = "5일장"
+//    case everyDay_Market = "상설장"
+//    case everyDayAndFiveDay_Market = "상설장+5일장"
+//}
