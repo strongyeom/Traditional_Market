@@ -20,7 +20,6 @@ final class MapViewController: UIViewController {
        var location = CLLocationManager()
         location.allowsBackgroundLocationUpdates = true
         location.pausesLocationUpdatesAutomatically = false
-       
         return location
     }()
     
@@ -80,10 +79,13 @@ final class MapViewController: UIViewController {
  
     /// 해당 지역에 들어왔을때 로컬 알림 메서드
     func registLocation() {
-        
         print("범위에 속하는 어노테이션 갯수",myRangeAnnotation.count)
+        print("myRangeAnnotation",myRangeAnnotation)
+        // 내 범위에서 내 위치는 렌더링 하지 않기
+        let myLocationRangeRemoveMyLocation = myRangeAnnotation.filter { $0.title!! != "My Location"}
         // 내 위치 반경에 해당하는 어노테이션만 가져오기
-        for i in myRangeAnnotation {
+        for i in myLocationRangeRemoveMyLocation {
+            print("iii",i)
             let regionCenter = CLLocationCoordinate2DMake(i.coordinate.latitude, i.coordinate.longitude)
             let exampleRegion = CLCircularRegion(center: i.coordinate, radius: 50.0, identifier: "\(i.title! ?? "내위치")")
             let circleRagne = MKCircle(center: regionCenter, radius: 50.0)
@@ -99,7 +101,7 @@ final class MapViewController: UIViewController {
     // 내 위치 범위 산정
     func setMyRegion(center: CLLocationCoordinate2D) {
         myRangeAnnotation = []
-      
+        
         let range = 200.0
         let regionCenter = CLLocationCoordinate2DMake(center.latitude, center.longitude)
         let region = MKCoordinateRegion(center: center, latitudinalMeters: 500, longitudinalMeters: 500)
@@ -108,6 +110,7 @@ final class MapViewController: UIViewController {
         mapView.mapBaseView.addOverlay(circle)
         // print("내 위치 반경 \(region)")
         mapView.mapBaseView.setRegion(region, animated: true)
+        
         
         for i in mapView.mapBaseView.annotations {
             if regionRange.contains(i.coordinate) {
@@ -217,7 +220,6 @@ extension MapViewController: CLLocationManagerDelegate {
         if let location = locations.first?.coordinate {
             startLocation = location
             print("시작 위치를 받아오고 있습니다 \(location)")
-           //  집: 37.503685, 127.140901
         }
     }    
     
@@ -252,6 +254,7 @@ extension MapViewController: CLLocationManagerDelegate {
     
     // rendering
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        
         let circleRenderer = MKCircleRenderer(overlay: overlay)
                 circleRenderer.strokeColor = .red
                 circleRenderer.fillColor = UIColor.yellow.withAlphaComponent(0.3)
