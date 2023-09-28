@@ -12,6 +12,7 @@ class RealmManager {
 
     private let realm = try! Realm()
 
+    var marketList: Results<TraditionalMarketRealm>!
 
     /// Realm에 데이터 추가하기
     /// - Parameter market: 추가할 데이터
@@ -31,15 +32,16 @@ class RealmManager {
 
     /// Realm 불러오기
     /// - Returns: 모든 데이터 불러오기
-    func fetch() {
+    func fetch() -> Results<TraditionalMarketRealm> {
+        
         do {
             try realm.write {
-                realm.objects(TraditionalMarketRealm.self)
+               marketList = realm.objects(TraditionalMarketRealm.self)
             }
         } catch {
             print(error.localizedDescription)
         }
-        
+        return marketList
     }
 
 
@@ -51,6 +53,7 @@ class RealmManager {
         }
         return result
     }
+    
 
 
 }

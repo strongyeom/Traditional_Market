@@ -17,6 +17,8 @@ final class MapViewController: UIViewController {
     var realm = try! Realm()
     let marketAPIManager = MarketAPIManager.shared
     
+    var marketRealmList: TraditionalMarketRealm = TraditionalMarketRealm(marketName: "", marketType: "", loadNameAddress: "", address: "", marketOpenCycle: "", publicToilet: "", latitude: "", longitude: "", popularProducts: "", phoneNumber: "")
+    
     let realmManager = RealmManager()
     var locationManger = {
        var location = CLLocationManager()
@@ -57,15 +59,11 @@ final class MapViewController: UIViewController {
         checkDeviceLocationAuthorization()
         registLocation()
         buttonEvent()
-        
+       
         marketAPIManager.request { item in
-            print("총 시장 갯수",item.response.body.items)
+            print("총 시장 갯수",item.response.body.items.count)
         }
-        
-//        NetworkManager.shared.requestItem(page: 1) { item in
-//            print("여기만 타면 된다 어떻게 타나 보자 \(item)")
-//        }
-//
+
         print("Realm파일 경로",realm.configuration.fileURL!)
         
     }
@@ -138,32 +136,31 @@ final class MapViewController: UIViewController {
     func addAnnotation() {
 
         let items = marketAPIManager.exampleList.response.body.items
-        
-        let marketAnnotations = items.map {
-            (item) -> MKAnnotation in
-            let pin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: Double(item.latitude) ?? 0.0, longitude: Double(item.longitude) ?? 0.0))
-                pin.title = item.marketName
-                return pin
-            
-            
-        }
-        
+ 
+        // Realm에 데이터 추가
         let _ = items.map {
             realmManager.addData(market: $0)
         }
         
+        // LazyMapSequence<Results<TraditionalMarketRealm>, MKAnnotation>로 나온것을 배열로 만들어주기 위해 변수 설정
+        var mkAnnotationConvert: [MKAnnotation] = []
         
+        let realmAnnotation = realmManager.fetch().map {
+            (realItem) -> MKAnnotation in
+            let pin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: Double(realItem.latitude!) ?? 0.0, longitude: Double(realItem.longitude!) ?? 0.0))
+            pin.title = realItem.marketName
+            return pin
+        }
         
-        
-        
-        mapView.mapBaseView.addAnnotations(marketAnnotations)
+        // 반복문을 사용하여 배열 안에 담아주기
+        for i in realmAnnotation {
+            mkAnnotationConvert.append(i)
+        }
+       
+        mapView.mapBaseView.addAnnotations(mkAnnotationConvert)
         print(mapView.mapBaseView.annotations.count)
     }
-    
-    func myRegionFilterAnnotation() {
-        
-    }
- 
+
     /// 권한 - 허용안함을 눌렀을때 Alert을 띄우고 iOS 설정 화면으로 이동
     func showLocationSettingAlert() {
         let alert = UIAlertController(title: "위치 정보 설정", message: "설정>개인 정보 보호> 위치 여기로 이동해서 위치 권한 설정해주세요", preferredStyle: .alert)
