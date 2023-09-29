@@ -12,7 +12,7 @@ import Toast
 import RealmSwift
 
 final class MapViewController: BaseViewController {
-
+    
     let mapView = MapView()
     var realm = try! Realm()
     let marketAPIManager = MarketAPIManager.shared
@@ -23,7 +23,7 @@ final class MapViewController: BaseViewController {
     
     let realmManager = RealmManager()
     var locationManger = {
-       var location = CLLocationManager()
+        var location = CLLocationManager()
         location.allowsBackgroundLocationUpdates = true
         location.pausesLocationUpdatesAutomatically = false
         return location
@@ -42,7 +42,7 @@ final class MapViewController: BaseViewController {
     
     // 권한 상태
     var authorization: CLAuthorizationStatus = .notDetermined
-
+    
     // stop or start 설정하는 토글
     var isCurrentLocation: Bool = false
     
@@ -50,27 +50,29 @@ final class MapViewController: BaseViewController {
     var myRangeAnnotation: [MKAnnotation] = []
     
     // 각 City 배열
-    
     let cityList: [City] = [
-        City(imageName: "Seoul", cityName: "서울"),
-        City(imageName: "Gyeonggi-do", cityName: "경기도"),
-        City(imageName: "Gangwon-do", cityName: "강원도"),
-        City(imageName: "Chungcheongbuk-do", cityName: "충청북도"),
-        City(imageName: "Chungcheongnam-do", cityName: "충청남도"),
-        City(imageName: "Gyeongsangbuk-do", cityName: "경상북도"),
-        City(imageName: "Gyeongsangnam-do", cityName: "경상남도"),
-        City(imageName: "Jeollabuk-do", cityName: "전라북도"),
-        City(imageName: "Jeollanam-do", cityName: "전라남도"),
-        City(imageName: "Jeju-do", cityName: "제주도")
-        ]
-
+        City(imageName: "Seoul"),
+        City(imageName: "Gyeonggi-do"),
+        City(imageName: "Gangwon-do"),
+        City(imageName: "Chungcheongbuk-do"),
+        City(imageName: "Chungcheongnam-do"),
+        City(imageName: "Gyeongsangbuk-do"),
+        City(imageName: "Gyeongsangnam-do"),
+        City(imageName: "Jeollabuk-do"),
+        City(imageName: "Jeollanam-do"),
+        City(imageName: "Jeju-do")
+    ]
+    
+    // city
+    var selectedCity: String = "서울특별시"
+    
     override func loadView() {
         self.view = mapView
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
     }
     
     func layout() -> UICollectionViewFlowLayout {
@@ -94,12 +96,12 @@ final class MapViewController: BaseViewController {
         buttonEvent()
         configureCity()
         
-
-
+        
+        
         marketAPIManager.request { item in
             print("총 시장 갯수",item.response.body.items.count)
         }
-
+        
         print("Realm파일 경로",realm.configuration.fileURL!)
     }
     
@@ -108,10 +110,11 @@ final class MapViewController: BaseViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(CityCell.self, forCellWithReuseIdentifier: String(describing: CityCell.self))
         
         
-       
+        
     }
     
     override func setConstraints() {
@@ -128,7 +131,7 @@ final class MapViewController: BaseViewController {
             
             self.isCurrentLocation = isCurrent
             print("isCurrentLocation",self.isCurrentLocation)
-           
+            
             if isCurrent {
                 self.locationManger.startUpdatingLocation()
             } else {
@@ -136,8 +139,8 @@ final class MapViewController: BaseViewController {
             }
         }
     }
-
- 
+    
+    
     /// 해당 지역에 들어왔을때 로컬 알림 메서드
     func registLocation() {
         print("범위에 속하는 어노테이션 갯수",myRangeAnnotation.count)
@@ -188,35 +191,42 @@ final class MapViewController: BaseViewController {
     
     /// 어노테이션 추가
     func addAnnotation() {
-
+        
         let items = marketAPIManager.exampleList.response.body.items
- 
+        
         // Realm에 데이터 추가
         let _ = items.map {
             realmManager.addData(market: $0)
         }
+        // CityCell 눌렀을때 해당 지역 Annotation만 보여주기
+        filterCityAnnotation()
         
+        print(mapView.mapBaseView.annotations.count)
+    }
+    
+    
+    /// 해당 지역 Annotation만 보여주기
+    func filterCityAnnotation() {
         // LazyMapSequence<Results<TraditionalMarketRealm>, MKAnnotation>로 나온것을 배열로 만들어주기 위해 변수 설정
         var mkAnnotationConvert: [MKAnnotation] = []
         
+        // mapView에 있는 어노테이션 삭제
+        mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
         
-        let realmAnnotation = realmManager.filterData(region: "서울특별시").map {
+        let realmAnnotation = realmManager.filterData(region: selectedCity).map {
             (realItem) -> MKAnnotation in
             let pin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: Double(realItem.latitude!) ?? 0.0, longitude: Double(realItem.longitude!) ?? 0.0))
             pin.title = realItem.marketName
             return pin
         }
         
-        
         // 반복문을 사용하여 배열 안에 담아주기
         for i in realmAnnotation {
             mkAnnotationConvert.append(i)
         }
-       
         mapView.mapBaseView.addAnnotations(mkAnnotationConvert)
-        print(mapView.mapBaseView.annotations.count)
     }
-
+    
     /// 권한 - 허용안함을 눌렀을때 Alert을 띄우고 iOS 설정 화면으로 이동
     func showLocationSettingAlert() {
         let alert = UIAlertController(title: "위치 정보 설정", message: "설정>개인 정보 보호> 위치 여기로 이동해서 위치 권한 설정해주세요", preferredStyle: .alert)
@@ -232,7 +242,7 @@ final class MapViewController: BaseViewController {
         alert.addAction(cancel)
         present(alert, animated: true)
     }
-
+    
     /// 상태가 바뀔때 마다 권한 확인
     func checkDeviceLocationAuthorization() {
         DispatchQueue.global().async {
@@ -253,7 +263,7 @@ final class MapViewController: BaseViewController {
         }
     }
     
-
+    
     /// 권한 설정에 따른 메서드
     /// - Parameter status: 권한 상태
     func checkStatuesDeviceLocationAuthorization(status: CLAuthorizationStatus) {
@@ -294,7 +304,7 @@ extension MapViewController: CLLocationManagerDelegate {
             startLocation = location
             print("시작 위치를 받아오고 있습니다 \(location)")
         }
-    }    
+    }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("위치를 받아오지 못했을때 - \(error.localizedDescription)")
@@ -305,15 +315,15 @@ extension MapViewController: CLLocationManagerDelegate {
         checkDeviceLocationAuthorization()
     }
     
-        func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-            guard let region = region as? CLCircularRegion else { return }
-            showAlert(title: "\(region.identifier)", message: "\(region.identifier) 해당 지역에 들어왔습니다.")
-        }
-        
-        func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-            guard let region = region as? CLCircularRegion else { return }
-            showAlert(title: "\(region.identifier)", message: "\(region.identifier) 해당 지역에서 나갔습니다.")
-        }
+    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        guard let region = region as? CLCircularRegion else { return }
+        showAlert(title: "\(region.identifier)", message: "\(region.identifier) 해당 지역에 들어왔습니다.")
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+        guard let region = region as? CLCircularRegion else { return }
+        showAlert(title: "\(region.identifier)", message: "\(region.identifier) 해당 지역에서 나갔습니다.")
+    }
     
     
     // Geofencing Error 처리
@@ -329,10 +339,10 @@ extension MapViewController: CLLocationManagerDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         
         let circleRenderer = MKCircleRenderer(overlay: overlay)
-                circleRenderer.strokeColor = .red
-                circleRenderer.fillColor = UIColor.yellow.withAlphaComponent(0.3)
-                circleRenderer.lineWidth = 1.0
-                return circleRenderer
+        circleRenderer.strokeColor = .red
+        circleRenderer.fillColor = UIColor.yellow.withAlphaComponent(0.3)
+        circleRenderer.lineWidth = 1.0
+        return circleRenderer
     }
     
 }
@@ -348,6 +358,11 @@ extension MapViewController: MKMapViewDelegate {
 extension MapViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("해당 인덱스 \(indexPath.item)")
+        let cityIndex = CityIndex(rawValue: indexPath.item)
+        guard let cityIndex else { return }
+        print(cityIndex.indexToCity)
+        selectedCity = cityIndex.indexToCity
+        filterCityAnnotation()
     }
 }
 
@@ -361,7 +376,6 @@ extension MapViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CityCell.self), for: indexPath) as? CityCell else { return UICollectionViewCell() }
         let data = cityList[indexPath.item]
         cell.imageView.image = UIImage(named: data.imageName)
-        cell.label.text = data.cityName
         return cell
     }
 }

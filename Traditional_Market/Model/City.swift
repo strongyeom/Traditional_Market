@@ -9,5 +9,4 @@ import Foundation
 
 struct City {
     let imageName: String
-    let cityName: String
 }
