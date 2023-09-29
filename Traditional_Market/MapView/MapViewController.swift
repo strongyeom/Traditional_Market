@@ -17,6 +17,8 @@ final class MapViewController: BaseViewController {
     var realm = try! Realm()
     let marketAPIManager = MarketAPIManager.shared
     
+    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
+    
     var marketRealmList: TraditionalMarketRealm = TraditionalMarketRealm(marketName: "", marketType: "", loadNameAddress: "", address: "", marketOpenCycle: "", publicToilet: "", latitude: "", longitude: "", popularProducts: "", phoneNumber: "")
     
     let realmManager = RealmManager()
@@ -56,6 +58,18 @@ final class MapViewController: BaseViewController {
 
     }
     
+    func layout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let spacing: CGFloat = 5
+        let width = UIScreen.main.bounds.width
+        layout.itemSize = CGSize(width: width / 4, height: 150)
+        layout.minimumLineSpacing = spacing
+        layout.minimumInteritemSpacing = spacing
+        layout.sectionInset = UIEdgeInsets(top: spacing, left: 0, bottom: spacing, right: 0)
+        return layout
+    }
+    
     override func configureView() {
         mapView.mapBaseView.delegate = self
         locationManger.delegate = self
@@ -63,12 +77,28 @@ final class MapViewController: BaseViewController {
         checkDeviceLocationAuthorization()
         registLocation()
         buttonEvent()
+        
+        
+
+        mapView.mapBaseView.addSubview(collectionView)
+        collectionView.dataSource = self
+        collectionView.register(CityCell.self, forCellWithReuseIdentifier: String(describing: CityCell.self))
+        
+        
        
         marketAPIManager.request { item in
             print("총 시장 갯수",item.response.body.items.count)
         }
 
         print("Realm파일 경로",realm.configuration.fileURL!)
+    }
+    
+    override func setConstraints() {
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(mapView.stackView.snp.bottom).offset(10)
+            make.horizontalEdges.equalToSuperview()
+            make.height.equalTo(200)
+        }
     }
     
     /// 버튼의 이벤트를 받아 start와 stop 할 수 있음
@@ -291,5 +321,18 @@ extension MapViewController: MKMapViewDelegate {
         locationManger.stopUpdatingLocation()
         mapView.currentLocationButton.isSelected = false
         mapView.currentLocationButton.tintColor = .red
+    }
+}
+
+
+extension MapViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CityCell.self), for: indexPath) as? CityCell else { return UICollectionViewCell() }
+        cell.label.text = "123123안녕"
+        return cell
     }
 }

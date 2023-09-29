@@ -56,7 +56,6 @@ class MapView : UIView {
         super.init(frame: frame)
         configureView()
         setConstraints()
-    
     }
     
     required init?(coder: NSCoder) {
@@ -64,7 +63,6 @@ class MapView : UIView {
     }
     
     func configureView() {
-        //self.addSubview(searchBar)
         self.addSubview(mapBaseView)
         mapBaseView.addSubview(stackView)
         mapBaseView.addSubview(currentLocationButton)
@@ -84,6 +82,8 @@ class MapView : UIView {
         mapBaseView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        
         
         stackView.snp.makeConstraints { make in
             make.top.leading.equalTo(self.safeAreaLayoutGuide).inset(10)
