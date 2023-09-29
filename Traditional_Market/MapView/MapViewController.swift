@@ -48,7 +48,22 @@ final class MapViewController: BaseViewController {
     
     // 내 위치 안에 있는 Annotation 담는 배열
     var myRangeAnnotation: [MKAnnotation] = []
- 
+    
+    // 각 City 배열
+    
+    let cityList: [City] = [
+        City(imageName: "Seoul", cityName: "서울"),
+        City(imageName: "Gyeonggi-do", cityName: "경기도"),
+        City(imageName: "Gangwon-do", cityName: "강원도"),
+        City(imageName: "Chungcheongbuk-do", cityName: "충청북도"),
+        City(imageName: "Chungcheongnam-do", cityName: "충청남도"),
+        City(imageName: "Gyeongsangbuk-do", cityName: "경상북도"),
+        City(imageName: "Gyeongsangnam-do", cityName: "경상남도"),
+        City(imageName: "Jeollabuk-do", cityName: "전라북도"),
+        City(imageName: "Jeollanam-do", cityName: "전라남도"),
+        City(imageName: "Jeju-do", cityName: "제주도")
+        ]
+
     override func loadView() {
         self.view = mapView
     }
@@ -61,12 +76,12 @@ final class MapViewController: BaseViewController {
     func layout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        let spacing: CGFloat = 5
+        let spacing: CGFloat = 20
         let width = UIScreen.main.bounds.width
-        layout.itemSize = CGSize(width: width / 4, height: 150)
+        layout.itemSize = CGSize(width: width / 5, height: width / 5)
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
-        layout.sectionInset = UIEdgeInsets(top: spacing, left: 0, bottom: spacing, right: 0)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: spacing)
         return layout
     }
     
@@ -77,15 +92,10 @@ final class MapViewController: BaseViewController {
         checkDeviceLocationAuthorization()
         registLocation()
         buttonEvent()
-        
+        configureCity()
         
 
-        mapView.mapBaseView.addSubview(collectionView)
-        collectionView.dataSource = self
-        collectionView.register(CityCell.self, forCellWithReuseIdentifier: String(describing: CityCell.self))
-        
-        
-       
+
         marketAPIManager.request { item in
             print("총 시장 갯수",item.response.body.items.count)
         }
@@ -93,11 +103,22 @@ final class MapViewController: BaseViewController {
         print("Realm파일 경로",realm.configuration.fileURL!)
     }
     
+    func configureCity() {
+        mapView.mapBaseView.addSubview(collectionView)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.backgroundColor = .clear
+        collectionView.register(CityCell.self, forCellWithReuseIdentifier: String(describing: CityCell.self))
+        
+        
+       
+    }
+    
     override func setConstraints() {
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(mapView.stackView.snp.bottom).offset(10)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
             make.horizontalEdges.equalToSuperview()
-            make.height.equalTo(200)
+            make.height.equalTo(80)
         }
     }
     
@@ -324,15 +345,23 @@ extension MapViewController: MKMapViewDelegate {
     }
 }
 
+extension MapViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("해당 인덱스 \(indexPath.item)")
+    }
+}
+
 
 extension MapViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return cityList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CityCell.self), for: indexPath) as? CityCell else { return UICollectionViewCell() }
-        cell.label.text = "123123안녕"
+        let data = cityList[indexPath.item]
+        cell.imageView.image = UIImage(named: data.imageName)
+        cell.label.text = data.cityName
         return cell
     }
 }

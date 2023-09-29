@@ -9,10 +9,16 @@ import UIKit
 
 class CityCell : UICollectionViewCell {
     
-    let cityView = UIView()
+    let imageView = {
+       let view = UIImageView()
+        return view
+    }()
+    let baseImageView = UIView()
+    
     let label = {
-       let view = UILabel()
+        let view = UILabel()
         view.text = "안녕하세요"
+        view.clipsToBounds = true
         return view
     }()
     
@@ -27,21 +33,26 @@ class CityCell : UICollectionViewCell {
     }
     
     func configureView() {
-        contentView.addSubview(cityView)
+        contentView.addSubview(baseImageView)
         contentView.addSubview(label)
+        baseImageView.addSubview(imageView)
     }
     
     func setConstraints() {
-        cityView.backgroundColor = .yellow
-        cityView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.size.equalTo(50)
+        baseImageView.layer.borderColor = UIColor.blue.cgColor
+        baseImageView.layer.borderWidth = 2
+        
+        baseImageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
         
-        label.snp.makeConstraints { make in
-            make.top.equalTo(cityView.snp.bottom).offset(10)
-            make.horizontalEdges.equalTo(cityView)
+        imageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(15)
+           
+        }
+        DispatchQueue.main.async {
+            self.baseImageView.layer.cornerRadius = self.baseImageView.frame.width / 2
+           // self.imageView.clipsToBounds = true
         }
     }
-    
 }

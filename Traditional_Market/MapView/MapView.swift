@@ -11,17 +11,18 @@ import SnapKit
 
 class MapView : UIView {
     
-    let button1 = {
-       let view = UIButton()
-        view.settingButtonLayer(title: "상설장")
-        return view
-    }()
-    
-    let button2 = {
-       let view = UIButton()
-        view.settingButtonLayer(title: "5일장")
-        return view
-    }()
+
+//    let button1 = {
+//       let view = UIButton()
+//        view.settingButtonLayer(title: "상설장")
+//        return view
+//    }()
+//
+//    let button2 = {
+//       let view = UIButton()
+//        view.settingButtonLayer(title: "5일장")
+//        return view
+//    }()
     
     let currentLocationButton = {
        let view = UIButton()
@@ -40,16 +41,16 @@ class MapView : UIView {
         return view
     }()
     
-    
-    lazy var stackView = {
-        let stack = UIStackView(arrangedSubviews: [button1, button2])
-        stack.axis = .horizontal
-        stack.spacing = 10
-        stack.alignment = .fill
-        stack.distribution = .fillEqually
-        return stack
-    }()
-    
+//
+//    lazy var stackView = {
+//        let stack = UIStackView(arrangedSubviews: [button1, button2])
+//        stack.axis = .horizontal
+//        stack.spacing = 10
+//        stack.alignment = .fill
+//        stack.distribution = .fillEqually
+//        return stack
+//    }()
+//
     var completion: ((Bool) -> Void)?
     
     override init(frame: CGRect) {
@@ -64,7 +65,7 @@ class MapView : UIView {
     
     func configureView() {
         self.addSubview(mapBaseView)
-        mapBaseView.addSubview(stackView)
+        //mapBaseView.addSubview(stackView)
         mapBaseView.addSubview(currentLocationButton)
         self.currentLocationButton.addTarget(self, action: #selector(currentBtnClicked), for: .touchUpInside)
     }
@@ -85,9 +86,9 @@ class MapView : UIView {
         
         
         
-        stackView.snp.makeConstraints { make in
-            make.top.leading.equalTo(self.safeAreaLayoutGuide).inset(10)
-        }
+//        stackView.snp.makeConstraints { make in
+//            make.top.leading.equalTo(self.safeAreaLayoutGuide).inset(10)
+//        }
         
         currentLocationButton.snp.makeConstraints { make in
             make.size.equalTo(50)
