@@ -7,6 +7,7 @@
 
 import Foundation
 import RealmSwift
+import CoreLocation
 
 class RealmManager {
 
@@ -52,6 +53,18 @@ class RealmManager {
         let result = realm.objects(TraditionalMarketRealm.self).where { $0.address.contains(region)
         }
         return result
+    }
+    
+    
+    /// Realm에서 내가 선택한 전통시장
+    /// - Parameter title: 선택한 전통시장 이름
+    /// - Returns: 해당 전통시장 데이터
+    func selectedCity(location: CLLocationCoordinate2D) -> Results<TraditionalMarketRealm> {
+        let aa = realm.objects(TraditionalMarketRealm.self).where {
+            $0.latitude == String(location.latitude) && $0.longitude == String(location.longitude)
+            
+        }
+        return aa
     }
     
 
