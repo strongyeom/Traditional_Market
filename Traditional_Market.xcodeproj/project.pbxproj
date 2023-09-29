@@ -14,6 +14,8 @@
 		2633E7042AC6AC90002581EB /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2633E7032AC6AC90002581EB /* City.swift */; };
 		2633E7072AC6C4D5002581EB /* CityIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2633E7062AC6C4D5002581EB /* CityIndex.swift */; };
 		2633E7092AC6E7ED002581EB /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2633E7082AC6E7ED002581EB /* DetailViewController.swift */; };
+		2633E70B2AC70955002581EB /* DetailMarketInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2633E70A2AC70955002581EB /* DetailMarketInfoCell.swift */; };
+		2633E7112AC71DC8002581EB /* DetailHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2633E7102AC71DC8002581EB /* DetailHeaderCell.swift */; };
 		26A9C4F72AC2E607004F955A /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A9C4F62AC2E607004F955A /* CustomAnnotation.swift */; };
 		26A9C4FA2AC2E77D004F955A /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 26A9C4F92AC2E77D004F955A /* Toast */; };
 		26A9C4FC2AC324EE004F955A /* Ext+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A9C4FB2AC324EE004F955A /* Ext+UIViewController.swift */; };
@@ -45,6 +47,8 @@
 		2633E7032AC6AC90002581EB /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		2633E7062AC6C4D5002581EB /* CityIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityIndex.swift; sourceTree = "<group>"; };
 		2633E7082AC6E7ED002581EB /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		2633E70A2AC70955002581EB /* DetailMarketInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMarketInfoCell.swift; sourceTree = "<group>"; };
+		2633E7102AC71DC8002581EB /* DetailHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHeaderCell.swift; sourceTree = "<group>"; };
 		26A9C4F62AC2E607004F955A /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		26A9C4FB2AC324EE004F955A /* Ext+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIViewController.swift"; sourceTree = "<group>"; };
 		26A9C4FD2AC326D5004F955A /* ExampleLocation.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ExampleLocation.gpx; sourceTree = "<group>"; };
@@ -125,6 +129,8 @@
 				26AAD8A32AC44B07002E5DD4 /* CustomAnnotationView.swift */,
 				26EA66572AC2ADED00F6FE6A /* MapView.swift */,
 				2633E7082AC6E7ED002581EB /* DetailViewController.swift */,
+				2633E70A2AC70955002581EB /* DetailMarketInfoCell.swift */,
+				2633E7102AC71DC8002581EB /* DetailHeaderCell.swift */,
 			);
 			path = MapView;
 			sourceTree = "<group>";
@@ -290,10 +296,12 @@
 				26AAD8C12AC48574002E5DD4 /* MarketAPIManager.swift in Sources */,
 				26AAD8B82AC46218002E5DD4 /* Observable.swift in Sources */,
 				2633E7072AC6C4D5002581EB /* CityIndex.swift in Sources */,
+				2633E7112AC71DC8002581EB /* DetailHeaderCell.swift in Sources */,
 				26AAD8B62AC46203002E5DD4 /* TraditionalMarketViewModel.swift in Sources */,
 				26229BA82AC5AD84002FBE59 /* BaseViewController.swift in Sources */,
 				2633E7042AC6AC90002581EB /* City.swift in Sources */,
 				26AAD8B32AC45B69002E5DD4 /* Router.swift in Sources */,
+				2633E70B2AC70955002581EB /* DetailMarketInfoCell.swift in Sources */,
 				26EA66482AC2AB4400F6FE6A /* MapViewController.swift in Sources */,
 				26EA66582AC2ADED00F6FE6A /* MapView.swift in Sources */,
 				2633E7092AC6E7ED002581EB /* DetailViewController.swift in Sources */,

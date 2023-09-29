@@ -16,7 +16,7 @@ final class MapViewController: BaseViewController {
     let mapView = MapView()
     var realm = try! Realm()
     let marketAPIManager = MarketAPIManager.shared
-    let viewModel = TraditionalMarketViewModel()
+     let viewModel = TraditionalMarketViewModel()
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     
@@ -367,19 +367,24 @@ extension MapViewController: MKMapViewDelegate {
       //  print("여기가 타는건가??",annotation.title!!)
         let detailVC = DetailViewController()
         // Realm 필터를 사용해서 Item 하나만 던져주기
-      //  let selectedLocation = realmManager.selectedCity(location: annotation.coordinate).first!
-        
-        viewModel.selectedMarketInfomation(location: annotation.coordinate)
-        
-        viewModel.selectedMarket.bind {  selectedLocation in detailVC.selectedMarket = selectedLocation
-        }
+       // let selectedLocation = realmManager.selectedCity(location: annotation.coordinate).first!
+        //detailVC.selectedMarket = selectedLocation
+       // viewModel.selectedMarketInfomation(location: annotation.coordinate)
+//
+//        viewModel.selectedMarket.bind { selectedLocation in
+//
+//
+//        }
 
+        detailVC.selectedMarket = viewModel.selectedMarketInfomation(location: annotation.coordinate)
 //
         
         
         
       //  print("어떤게 들어올까?", selectedLocation)
-        present(detailVC, animated: true)
+        self.dismiss(animated: true) {
+            self.present(detailVC, animated: true)
+        }
     }
 }
 
@@ -388,7 +393,7 @@ extension MapViewController: UICollectionViewDelegate {
         print("해당 인덱스 \(indexPath.item)")
         let cityIndex = CityIndex(rawValue: indexPath.item)
         guard let cityIndex else { return }
-        print(cityIndex.indexToCity)
+        print("didSelectItemAt",cityIndex.indexToCity)
         selectedCity = cityIndex.indexToCity
         filterCityAnnotation()
     }

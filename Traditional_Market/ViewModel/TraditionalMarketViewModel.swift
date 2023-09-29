@@ -14,9 +14,12 @@ class TraditionalMarketViewModel {
     
     var selectedMarket: Observable<TraditionalMarketRealm> = Observable(TraditionalMarketRealm(marketName: "", marketType: "", loadNameAddress: "", address: "", marketOpenCycle: "", publicToilet: "", latitude: "", longitude: "", popularProducts: "", phoneNumber: ""))
     
-    func selectedMarketInfomation(location: CLLocationCoordinate2D) {
-        
+    func selectedMarketInfomation(location: CLLocationCoordinate2D) -> TraditionalMarketRealm {
+      //  let aa = realmManager.selectedCity(location: location)
+      //  print("어떻게 생긴거야? \(aa)")
         selectedMarket.value = realmManager.selectedCity(location: location).first!
-        print("realm", selectedMarket.value)
+      //  selectedMarket.value = realmManager.selectedCity(location: location)
+        print("TraditionalMarketViewModel -- ", selectedMarket.value)
+        return selectedMarket.value
     }
 }
