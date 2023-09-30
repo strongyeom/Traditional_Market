@@ -34,8 +34,33 @@ class NetworkManager {
                     }
                 }
         }
-  
-
+    }
+    
+    func reqeustImage(search: String, completionHandler: @escaping ((NaverMarketImage?) -> Void)) {
+        let url = URL(string: "https://openapi.naver.com/v1/search/image.json")!
+        
+        let header: HTTPHeaders = [
+            "X-Naver-Client-Id" : "myXCWsXxrg83Q4L0SAdP",
+            "X-Naver-Client-Secret" : "2s8Jgd07Ij"
+        ]
+        
+        let query: [String:String] = [
+            "query": search,
+            "display": "30",
+            "start": "1",
+            "sort": "sim"
+        ]
+        
+        AF.request(url , parameters: query, headers: header)
+            .responseDecodable(of: NaverMarketImage.self) { response in
+                switch response.result {
+                case .success(let data):
+                    completionHandler(data)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        
     }
   
     

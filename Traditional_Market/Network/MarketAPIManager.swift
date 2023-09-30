@@ -14,7 +14,10 @@ class MarketAPIManager {
     
     var pageCount = Array(1...16)
     
-    var exampleList: TraditionalMarket = TraditionalMarket(response: Response.init(body: Body.init(items: [], totalCount: "", numOfRows: "", pageNo: "")))
+    var marketList: TraditionalMarket = TraditionalMarket(response: Response.init(body: Body.init(items: [], totalCount: "", numOfRows: "", pageNo: "")))
+    
+   
+    
     
     func request(completionHandler: @escaping ((TraditionalMarket) -> Void)) {
         
@@ -22,12 +25,21 @@ class MarketAPIManager {
             NetworkManager.shared.request(page: page) { response in
                 
                 
-                self.exampleList.response.body.items.append(contentsOf: response)
+                self.marketList.response.body.items.append(contentsOf: response)
                
-                completionHandler(self.exampleList)
+                completionHandler(self.marketList)
             }
         }
-       
     }
+    
+    func requestNaverImage(search: String, completionHandler: @escaping((NaverMarketImage) -> Void)) {
+        
+        NetworkManager.shared.reqeustImage(search: search) { response in
+            guard let response else { return }
+            completionHandler(response)
+        }
+    }
+    
+    
     
 }

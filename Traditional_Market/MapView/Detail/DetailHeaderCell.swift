@@ -9,7 +9,11 @@ import UIKit
 
 class DetailHeaderCell : UICollectionReusableView {
     
-    let view = UIView()
+    let bgView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.bgViewColor()
+        return view
+    }()
     
     
     let marketTitle = {
@@ -77,15 +81,15 @@ class DetailHeaderCell : UICollectionReusableView {
     }
     
     func configureView() {
-        self.addSubview(view)
+        self.addSubview(bgView)
         [marketTitle, marketType, marketCycle, betweenLineView, stackView].forEach {
-            view.addSubview($0)
+            bgView.addSubview($0)
         }
     }
     
     func setConstraints() {
-        view.backgroundColor = .yellow
-        view.snp.makeConstraints { make in
+        
+        bgView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         

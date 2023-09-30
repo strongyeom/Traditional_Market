@@ -198,7 +198,7 @@ final class MapViewController: BaseViewController {
     /// 어노테이션 추가
     func addAnnotation() {
         
-        let items = marketAPIManager.exampleList.response.body.items
+        let items = marketAPIManager.marketList.response.body.items
         
         // Realm에 데이터 추가
         let _ = items.map {
