@@ -16,7 +16,7 @@ final class MapViewController: BaseViewController {
     let mapView = MapView()
     var realm = try! Realm()
     let marketAPIManager = MarketAPIManager.shared
-     let viewModel = TraditionalMarketViewModel()
+    let viewModel = TraditionalMarketViewModel()
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     
@@ -362,29 +362,23 @@ extension MapViewController: MKMapViewDelegate {
         mapView.currentLocationButton.tintColor = .red
     }
     
-    // 어노테이션을 클릭했을때 액션 메서드 
+    // 어노테이션을 클릭했을때 액션 메서드
     func mapView(_ mapView: MKMapView, didSelect annotation: MKAnnotation) {
-      //  print("여기가 타는건가??",annotation.title!!)
+        //  print("여기가 타는건가??",annotation.title!!)
         let detailVC = DetailViewController()
         // Realm 필터를 사용해서 Item 하나만 던져주기
-       // let selectedLocation = realmManager.selectedCity(location: annotation.coordinate).first!
-        //detailVC.selectedMarket = selectedLocation
-       // viewModel.selectedMarketInfomation(location: annotation.coordinate)
-//
-//        viewModel.selectedMarket.bind { selectedLocation in
-//
-//
-//        }
-
         detailVC.selectedMarket = viewModel.selectedMarketInfomation(location: annotation.coordinate)
-//
         
-        
-        
-      //  print("어떤게 들어올까?", selectedLocation)
+        //  print("어떤게 들어올까?", selectedLocation)
         self.dismiss(animated: true) {
             self.present(detailVC, animated: true)
         }
+        
+    }
+    
+    
+    func mapView(_ mapView: MKMapView, didDeselect annotation: MKAnnotation) {
+        dismiss(animated: true)
     }
 }
 

@@ -14,14 +14,7 @@ class DetailViewController: BaseViewController {
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
    
-    var selectedMarket: TraditionalMarketRealm? {
-        didSet {
-            // 데이터가 바뀔때마다 VC를 갱신
-            print("DetailViewController : \(selectedMarket!)")
-            // 데이터가 갱신 될떄마다 CompositionalLayout 갱신
-            self.collectionView.reloadData()
-        }
-    }
+    var selectedMarket: TraditionalMarketRealm?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +45,7 @@ class DetailViewController: BaseViewController {
         layout.itemSize = CGSize(width: width, height: 150)
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
-        layout.headerReferenceSize = CGSize(width: width, height: 150)
+        layout.headerReferenceSize = CGSize(width: width, height: width * 0.4)
         return layout
     }
     
@@ -76,9 +69,15 @@ extension DetailViewController : UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        
+        guard let selectedMarket else { return UICollectionReusableView() }
         if kind == UICollectionView.elementKindSectionHeader {
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: String(describing: DetailHeaderCell.self), for: indexPath) as? DetailHeaderCell else { return UICollectionReusableView() }
+            header.marketTitle.text = selectedMarket.marketName
+            header.marketType.text = selectedMarket.marketType
+            header.marketCycle.text = selectedMarket.marketOpenCycle
+            header.loadAddress.text = "도로명 주소 : \(selectedMarket.loadNameAddress ?? "도로명 주소 없음")"
+            header.famousProducts.text = "품목 : \(selectedMarket.popularProducts ?? "주력상품 없음")"
+            header.phoneNumber.text = "전화번호 : \(selectedMarket.phoneNumber ?? "전화번호 없음")"
             return header
         } else {
             return UICollectionReusableView()
