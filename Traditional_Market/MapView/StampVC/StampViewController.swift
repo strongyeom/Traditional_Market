@@ -11,6 +11,8 @@ class StampViewController : BaseViewController {
     
     let stampView = StampView()
     
+    let realmManager = RealmManager()
+    
     var selectedMarket: TraditionalMarketRealm?
     
     override func loadView() {
@@ -36,7 +38,13 @@ class StampViewController : BaseViewController {
         
         addKeyboardNotifications()
         stampView.memoTextView.delegate = self
+        
         stampView.cancelCompletion = {
+            self.dismiss(animated: true)
+        }
+        
+        stampView.saveCompletion = {
+            self.realmManager.myFavoriteMarket(market: selectedMarket, text: self.stampView.memoTextView.text)
             self.dismiss(animated: true)
         }
     }

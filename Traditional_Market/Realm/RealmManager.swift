@@ -18,12 +18,12 @@ class RealmManager {
     /// Realm에 데이터 추가하기
     /// - Parameter market: 추가할 데이터
     func addData(market: Item) {
-        let aa =
+        let addMarket =
         TraditionalMarketRealm(marketName: market.marketName, marketType: market.marketType, loadNameAddress: market.loadNameAddress, address: market.address, marketOpenCycle: market.marketOpenCycle, publicToilet: market.publicToilet, latitude: market.latitude, longitude: market.longitude, popularProducts: market.popularProducts, phoneNumber: market.phoneNumber)
 
         do {
             try realm.write {
-                realm.add(aa)
+                realm.add(addMarket)
             }
         } catch {
             print(error.localizedDescription)
@@ -60,11 +60,32 @@ class RealmManager {
     /// - Parameter title: 선택한 전통시장 이름
     /// - Returns: 해당 전통시장 데이터
     func selectedCity(location: CLLocationCoordinate2D) -> Results<TraditionalMarketRealm> {
-        let aa = realm.objects(TraditionalMarketRealm.self).where {
+        let filterCity = realm.objects(TraditionalMarketRealm.self).where {
             $0.latitude == String(location.latitude) && $0.longitude == String(location.longitude)
             
         }
-        return aa
+        return filterCity
+    }
+    
+    
+    
+    /// 선택된 전통시장 안에 메모 추가하기
+    /// - Parameter market: 선택된 전통시장
+    func myFavoriteMarket(market: TraditionalMarketRealm, text: String) {
+        
+        let filterEqualID = realm.objects(TraditionalMarketRealm.self).where {
+            $0._id == market._id
+        }.first!
+        
+        let favoriteMarket = FavoriteTable(marketName: market.marketName, marketType: market.marketType, loadNameAddress: market.loadNameAddress, address: market.address, marketOpenCycle: market.marketOpenCycle, latitude: market.latitude, longitude: market.longitude, popularProducts: market.popularProducts, phoneNumber: market.phoneNumber, memo: text)
+        
+        do {
+            try realm.write {
+                filterEqualID.myFavorite.append(favoriteMarket)
+            }
+        } catch {
+            print("myFavoriteMarket - \(error.localizedDescription)")
+        }
     }
     
 
