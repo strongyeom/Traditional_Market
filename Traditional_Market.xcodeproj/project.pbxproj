@@ -43,6 +43,9 @@
 		26EA75D22ACAC28D00FFDFDB /* StampViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA75D12ACAC28D00FFDFDB /* StampViewController.swift */; };
 		26EA75D52ACAD7DF00FFDFDB /* StampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA75D42ACAD7DF00FFDFDB /* StampView.swift */; };
 		26EA75D72ACADABA00FFDFDB /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA75D62ACADABA00FFDFDB /* BaseView.swift */; };
+		26EA75D92ACB014F00FFDFDB /* Ext+UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA75D82ACB014F00FFDFDB /* Ext+UIButton.swift */; };
+		26EA75DB2ACB07A800FFDFDB /* Ext+UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA75DA2ACB07A800FFDFDB /* Ext+UITextView.swift */; };
+		26EA75E02ACB1DCA00FFDFDB /* FavoriteTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA75DF2ACB1DCA00FFDFDB /* FavoriteTable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +83,9 @@
 		26EA75D12ACAC28D00FFDFDB /* StampViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StampViewController.swift; sourceTree = "<group>"; };
 		26EA75D42ACAD7DF00FFDFDB /* StampView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StampView.swift; sourceTree = "<group>"; };
 		26EA75D62ACADABA00FFDFDB /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		26EA75D82ACB014F00FFDFDB /* Ext+UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIButton.swift"; sourceTree = "<group>"; };
+		26EA75DA2ACB07A800FFDFDB /* Ext+UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UITextView.swift"; sourceTree = "<group>"; };
+		26EA75DF2ACB1DCA00FFDFDB /* FavoriteTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				26229B9E2AC575AD002FBE59 /* TraditionalMarketRealm.swift */,
+				26EA75DF2ACB1DCA00FFDFDB /* FavoriteTable.swift */,
 				26229B9C2AC57528002FBE59 /* RealmManager.swift */,
 			);
 			path = Realm;
@@ -177,6 +184,8 @@
 			isa = PBXGroup;
 			children = (
 				26CC8E6F2AC843E9009ABB14 /* Ext+UIColor.swift */,
+				26EA75D82ACB014F00FFDFDB /* Ext+UIButton.swift */,
+				26EA75DA2ACB07A800FFDFDB /* Ext+UITextView.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -363,6 +372,9 @@
 				26AAD8BA2AC46EDE002E5DD4 /* IntegrationAPI.swift in Sources */,
 				26AAD8AE2AC4559B002E5DD4 /* NetworkManager.swift in Sources */,
 				26EA665E2AC2AEB900F6FE6A /* Ext+MapButton.swift in Sources */,
+				26EA75D92ACB014F00FFDFDB /* Ext+UIButton.swift in Sources */,
+				26EA75E02ACB1DCA00FFDFDB /* FavoriteTable.swift in Sources */,
+				26EA75DB2ACB07A800FFDFDB /* Ext+UITextView.swift in Sources */,
 				26229B9D2AC57528002FBE59 /* RealmManager.swift in Sources */,
 				26EA66442AC2AB4400F6FE6A /* AppDelegate.swift in Sources */,
 				26EA66462AC2AB4400F6FE6A /* SceneDelegate.swift in Sources */,

@@ -128,6 +128,7 @@ extension DetailViewController: IsLikeDelegate {
     func btnClickedEvent() {
         print("델리겟 DetailViewController에서 탐")
        let stampVC = StampViewController()
+        stampVC.selectedMarket = selectedMarket
         let nav = UINavigationController(rootViewController: stampVC)
         nav.modalPresentationStyle = .fullScreen
         present(nav, animated: true)
