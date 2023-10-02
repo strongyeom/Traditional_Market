@@ -9,21 +9,8 @@ import UIKit
 import MapKit
 import SnapKit
 
-class MapView : UIView {
-    
+class MapView : BaseView {
 
-//    let button1 = {
-//       let view = UIButton()
-//        view.settingButtonLayer(title: "상설장")
-//        return view
-//    }()
-//
-//    let button2 = {
-//       let view = UIButton()
-//        view.settingButtonLayer(title: "5일장")
-//        return view
-//    }()
-    
     let currentLocationButton = {
        let view = UIButton()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 50, weight: .light)
@@ -40,32 +27,11 @@ class MapView : UIView {
         view.cameraZoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: 1000000)
         return view
     }()
-    
-//
-//    lazy var stackView = {
-//        let stack = UIStackView(arrangedSubviews: [button1, button2])
-//        stack.axis = .horizontal
-//        stack.spacing = 10
-//        stack.alignment = .fill
-//        stack.distribution = .fillEqually
-//        return stack
-//    }()
-//
+
     var completion: ((Bool) -> Void)?
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        configureView()
-        setConstraints()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func configureView() {
+ 
+    override func configureView() {
         self.addSubview(mapBaseView)
-        //mapBaseView.addSubview(stackView)
         mapBaseView.addSubview(currentLocationButton)
         self.currentLocationButton.addTarget(self, action: #selector(currentBtnClicked), for: .touchUpInside)
     }
@@ -79,7 +45,7 @@ class MapView : UIView {
         completion?(isCurrent)
     }
     
-    func setConstraints() {
+    override func setConstraints() {
         mapBaseView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }

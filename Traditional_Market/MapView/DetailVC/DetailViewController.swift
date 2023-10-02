@@ -44,7 +44,7 @@ class DetailViewController: BaseViewController {
     
     func requestImage(search: String) {
         MarketAPIManager.shared.requestNaverImage(search: selectedMarket!.marketName) { response in
-            dump("DetailViewController - \(response)")
+          //  dump("DetailViewController - \(response)")
             DispatchQueue.main.async {
                 self.naverImageList.items.append(contentsOf: response.items)
                 self.collectionView.reloadData()
@@ -55,7 +55,7 @@ class DetailViewController: BaseViewController {
     func layout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        let spacing: CGFloat = 10
+        let spacing: CGFloat = 8
         let width = UIScreen.main.bounds.width
         layout.itemSize = CGSize(width: (width - (spacing * 4)) / 3 , height: (width - (spacing * 4)) / 3)
         layout.minimumLineSpacing = spacing
@@ -102,6 +102,7 @@ extension DetailViewController : UICollectionViewDelegate, UICollectionViewDataS
             header.loadAddress.text = "도로명 주소 : \(selectedMarket.loadNameAddress ?? "도로명 주소 없음")"
             header.famousProducts.text = "품목 : \(selectedMarket.popularProducts ?? "주력상품 없음")"
             header.phoneNumber.text = "전화번호 : \(selectedMarket.phoneNumber ?? "전화번호 없음")"
+            header.delegate = self
             return header
         } else {
             return UICollectionReusableView()
@@ -120,5 +121,16 @@ extension DetailViewController {
             // 코너 주기
             sheetPresentationController.preferredCornerRadius = 20
         }
+    }
+}
+
+extension DetailViewController: IsLikeDelegate {
+    func btnClickedEvent() {
+        print("델리겟 DetailViewController에서 탐")
+       let stampVC = StampViewController()
+        let nav = UINavigationController(rootViewController: stampVC)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true)
+        // 스탬프 VC를 올리고 저장하면 두번 dismiss하는건 어떨까?? -> 사용자 관점에서 보면 과연 어색하진 않을까?
     }
 }

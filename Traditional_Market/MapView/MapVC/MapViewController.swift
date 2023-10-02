@@ -368,11 +368,12 @@ extension MapViewController: MKMapViewDelegate {
         let detailVC = DetailViewController()
         // Realm 필터를 사용해서 Item 하나만 던져주기
         detailVC.selectedMarket = viewModel.selectedMarketInfomation(location: annotation.coordinate)
-        
         //  print("어떤게 들어올까?", selectedLocation)
         self.dismiss(animated: true) {
             self.present(detailVC, animated: true)
         }
+        
+        
         
     }
     

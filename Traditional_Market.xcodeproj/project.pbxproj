@@ -40,6 +40,9 @@
 		26EA66582AC2ADED00F6FE6A /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA66572AC2ADED00F6FE6A /* MapView.swift */; };
 		26EA665B2AC2AE0F00F6FE6A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 26EA665A2AC2AE0F00F6FE6A /* SnapKit */; };
 		26EA665E2AC2AEB900F6FE6A /* Ext+MapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA665D2AC2AEB900F6FE6A /* Ext+MapButton.swift */; };
+		26EA75D22ACAC28D00FFDFDB /* StampViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA75D12ACAC28D00FFDFDB /* StampViewController.swift */; };
+		26EA75D52ACAD7DF00FFDFDB /* StampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA75D42ACAD7DF00FFDFDB /* StampView.swift */; };
+		26EA75D72ACADABA00FFDFDB /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA75D62ACADABA00FFDFDB /* BaseView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +77,9 @@
 		26EA66512AC2AB4700F6FE6A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		26EA66572AC2ADED00F6FE6A /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		26EA665D2AC2AEB900F6FE6A /* Ext+MapButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+MapButton.swift"; sourceTree = "<group>"; };
+		26EA75D12ACAC28D00FFDFDB /* StampViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StampViewController.swift; sourceTree = "<group>"; };
+		26EA75D42ACAD7DF00FFDFDB /* StampView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StampView.swift; sourceTree = "<group>"; };
+		26EA75D62ACADABA00FFDFDB /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				26229BA72AC5AD84002FBE59 /* BaseViewController.swift */,
+				26EA75D62ACADABA00FFDFDB /* BaseView.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -129,12 +136,9 @@
 			isa = PBXGroup;
 			children = (
 				2633E6FA2AC69254002581EB /* City */,
-				26EA66472AC2AB4400F6FE6A /* MapViewController.swift */,
-				26A9C4FD2AC326D5004F955A /* ExampleLocation.gpx */,
-				26A9C4F62AC2E607004F955A /* CustomAnnotation.swift */,
-				26AAD8A32AC44B07002E5DD4 /* CustomAnnotationView.swift */,
-				26EA66572AC2ADED00F6FE6A /* MapView.swift */,
-				26CC8E712AC84B70009ABB14 /* Detail */,
+				26EA75D32ACAC2B700FFDFDB /* MapVC */,
+				26EA75D02ACAC27200FFDFDB /* StampVC */,
+				26CC8E712AC84B70009ABB14 /* DetailVC */,
 			);
 			path = MapView;
 			sourceTree = "<group>";
@@ -177,14 +181,14 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
-		26CC8E712AC84B70009ABB14 /* Detail */ = {
+		26CC8E712AC84B70009ABB14 /* DetailVC */ = {
 			isa = PBXGroup;
 			children = (
 				2633E7082AC6E7ED002581EB /* DetailViewController.swift */,
 				2633E70A2AC70955002581EB /* DetailMarketInfoCell.swift */,
 				2633E7102AC71DC8002581EB /* DetailHeaderCell.swift */,
 			);
-			path = Detail;
+			path = DetailVC;
 			sourceTree = "<group>";
 		};
 		26EA66372AC2AB4400F6FE6A = {
@@ -231,6 +235,27 @@
 				26A9C4FB2AC324EE004F955A /* Ext+UIViewController.swift */,
 			);
 			path = Ext;
+			sourceTree = "<group>";
+		};
+		26EA75D02ACAC27200FFDFDB /* StampVC */ = {
+			isa = PBXGroup;
+			children = (
+				26EA75D12ACAC28D00FFDFDB /* StampViewController.swift */,
+				26EA75D42ACAD7DF00FFDFDB /* StampView.swift */,
+			);
+			path = StampVC;
+			sourceTree = "<group>";
+		};
+		26EA75D32ACAC2B700FFDFDB /* MapVC */ = {
+			isa = PBXGroup;
+			children = (
+				26EA66472AC2AB4400F6FE6A /* MapViewController.swift */,
+				26A9C4FD2AC326D5004F955A /* ExampleLocation.gpx */,
+				26A9C4F62AC2E607004F955A /* CustomAnnotation.swift */,
+				26AAD8A32AC44B07002E5DD4 /* CustomAnnotationView.swift */,
+				26EA66572AC2ADED00F6FE6A /* MapView.swift */,
+			);
+			path = MapVC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -317,6 +342,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26EA75D72ACADABA00FFDFDB /* BaseView.swift in Sources */,
 				26229B9F2AC575AD002FBE59 /* TraditionalMarketRealm.swift in Sources */,
 				2633E7002AC6A2A4002581EB /* CityCell.swift in Sources */,
 				26AAD8C12AC48574002E5DD4 /* MarketAPIManager.swift in Sources */,
@@ -329,6 +355,7 @@
 				2633E7042AC6AC90002581EB /* City.swift in Sources */,
 				26AAD8B32AC45B69002E5DD4 /* Router.swift in Sources */,
 				2633E70B2AC70955002581EB /* DetailMarketInfoCell.swift in Sources */,
+				26EA75D22ACAC28D00FFDFDB /* StampViewController.swift in Sources */,
 				26CC8E752AC87180009ABB14 /* NaverMarketImage.swift in Sources */,
 				26EA66482AC2AB4400F6FE6A /* MapViewController.swift in Sources */,
 				26EA66582AC2ADED00F6FE6A /* MapView.swift in Sources */,
@@ -342,6 +369,7 @@
 				26A9C4FC2AC324EE004F955A /* Ext+UIViewController.swift in Sources */,
 				26AAD8A42AC44B07002E5DD4 /* CustomAnnotationView.swift in Sources */,
 				26A9C4F72AC2E607004F955A /* CustomAnnotation.swift in Sources */,
+				26EA75D52ACAD7DF00FFDFDB /* StampView.swift in Sources */,
 				26AAD8A92AC44FCD002E5DD4 /* TraditionalMarket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

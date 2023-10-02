@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol IsLikeDelegate: AnyObject {
+    func btnClickedEvent()
+}
+
 class DetailHeaderCell : UICollectionReusableView {
     
     let bgView = {
@@ -32,6 +36,13 @@ class DetailHeaderCell : UICollectionReusableView {
     let betweenLineView = {
         let view = UIView()
         view.backgroundColor = .lightGray
+        return view
+    }()
+    
+    let isLikeButton = {
+       let view = UIButton()
+        view.setImage(UIImage(systemName: "star"), for: .normal)
+        view.tintColor = .red
         return view
     }()
     
@@ -70,10 +81,18 @@ class DetailHeaderCell : UICollectionReusableView {
         return stack
     }()
     
+    weak var delegate: IsLikeDelegate?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureView()
         setConstraints()
+        isLikeButton.addTarget(self, action: #selector(isLikeBtnClicked(_:)), for: .touchUpInside)
+    }
+    
+    @objc func isLikeBtnClicked(_ sender: UIButton) {
+        print("즐겨찾기 버튼 눌림")
+        delegate?.btnClickedEvent()
     }
     
     required init?(coder: NSCoder) {
@@ -82,7 +101,7 @@ class DetailHeaderCell : UICollectionReusableView {
     
     func configureView() {
         self.addSubview(bgView)
-        [marketTitle, marketType, marketCycle, betweenLineView, stackView].forEach {
+        [marketTitle, isLikeButton, marketType, marketCycle, betweenLineView, stackView].forEach {
             bgView.addSubview($0)
         }
     }
@@ -95,7 +114,12 @@ class DetailHeaderCell : UICollectionReusableView {
         
         
         marketTitle.snp.makeConstraints { make in
-            make.top.horizontalEdges.equalToSuperview().inset(13)
+            make.top.leading.equalToSuperview().inset(10)
+        }
+        
+        isLikeButton.snp.makeConstraints { make in
+            make.verticalEdges.equalTo(marketTitle)
+            make.trailing.equalToSuperview().inset(10)
         }
         
         marketType.snp.makeConstraints { make in

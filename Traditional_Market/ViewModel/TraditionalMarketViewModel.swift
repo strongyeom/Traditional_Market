@@ -19,7 +19,7 @@ class TraditionalMarketViewModel {
       //  print("어떻게 생긴거야? \(aa)")
         selectedMarket.value = realmManager.selectedCity(location: location).first!
       //  selectedMarket.value = realmManager.selectedCity(location: location)
-        print("TraditionalMarketViewModel -- ", selectedMarket.value)
+       // print("TraditionalMarketViewModel -- ", selectedMarket.value)
         return selectedMarket.value
     }
 }
