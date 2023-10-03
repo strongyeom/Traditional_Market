@@ -8,64 +8,38 @@
 import UIKit
 import CoreLocation
 import MapKit
-import Toast
-import RealmSwift
 
 final class MapViewController: BaseViewController {
     
-    let mapView = MapView()
-    var realm = try! Realm()
-    let marketAPIManager = MarketAPIManager.shared
-    let viewModel = TraditionalMarketViewModel()
+    private let mapView = MapView()
+    private let marketAPIManager = MarketAPIManager.shared
+    private let viewModel = TraditionalMarketViewModel()
+    private let realmManager = RealmManager()
     
-    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
-    
-    var marketRealmList: TraditionalMarketRealm = TraditionalMarketRealm(marketName: "", marketType: "", loadNameAddress: "", address: "", marketOpenCycle: "", publicToilet: "", latitude: "", longitude: "", popularProducts: "", phoneNumber: "")
-    
-    let realmManager = RealmManager()
-    var locationManger = {
+    private var locationManger = {
         var location = CLLocationManager()
         location.allowsBackgroundLocationUpdates = true
         location.pausesLocationUpdatesAutomatically = false
         return location
     }()
     
-    var trigger: UNLocationNotificationTrigger?
-    var request: UNNotificationRequest?
-    
-    var startLocation: CLLocationCoordinate2D? {
+    private var startLocation: CLLocationCoordinate2D? {
         didSet {
             setMyRegion(center: startLocation ?? CLLocationCoordinate2D(latitude: 37.504721, longitude: 127.140886))
         }
     }
     
-    var previousCoordinate: CLLocationCoordinate2D?
-    
     // 권한 상태
-    var authorization: CLAuthorizationStatus = .notDetermined
+    private var authorization: CLAuthorizationStatus = .notDetermined
     
     // stop or start 설정하는 토글
-    var isCurrentLocation: Bool = false
+    private var isCurrentLocation: Bool = false
     
     // 내 위치 안에 있는 Annotation 담는 배열
-    var myRangeAnnotation: [MKAnnotation] = []
-    
-    // 각 City 배열
-    let cityList: [City] = [
-        City(imageName: "Seoul"),
-        City(imageName: "Gyeonggi-do"),
-        City(imageName: "Gangwon-do"),
-        City(imageName: "Chungcheongbuk-do"),
-        City(imageName: "Chungcheongnam-do"),
-        City(imageName: "Gyeongsangbuk-do"),
-        City(imageName: "Gyeongsangnam-do"),
-        City(imageName: "Jeollabuk-do"),
-        City(imageName: "Jeollanam-do"),
-        City(imageName: "Jeju-do")
-    ]
+    private var myRangeAnnotation: [MKAnnotation] = []
     
     // city
-    var selectedCity: String = "서울특별시"
+    private var selectedCity: String = "서울특별시"
     
     override func loadView() {
         self.view = mapView
@@ -76,77 +50,20 @@ final class MapViewController: BaseViewController {
         
     }
     
-    func layout() -> UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        let spacing: CGFloat = 20
-        let width = UIScreen.main.bounds.width
-        layout.itemSize = CGSize(width: width / 5, height: width / 5)
-        layout.minimumLineSpacing = spacing
-        layout.minimumInteritemSpacing = spacing
-        layout.sectionInset = UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: spacing)
-        return layout
-    }
     
     override func configureView() {
-        mapView.mapBaseView.delegate = self
-        locationManger.delegate = self
-        locationManger.desiredAccuracy = kCLLocationAccuracyBest // 정확성
-        checkDeviceLocationAuthorization()
-        registLocation()
-        buttonEvent()
-        configureCity()
-        
-        
-        // 전통시장 API에서 데이터 불러오기
-        marketAPIManager.request { item in
-            print("총 시장 갯수",item.response.body.items.count)
-        }
-        
-        print("Realm파일 경로",realm.configuration.fileURL!)
-        
-        mapView.mapBaseView.register(MKAnnotationView.self, forAnnotationViewWithReuseIdentifier: String(describing: MKAnnotationView.self))
+        setMapView()
+        setLocation()
+        setCollectionView()
+        setNetwork()
         
     }
     
-    func configureCity() {
-        mapView.mapBaseView.addSubview(collectionView)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.backgroundColor = .clear
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.register(CityCell.self, forCellWithReuseIdentifier: String(describing: CityCell.self))
-        
-        
-        
-    }
     
-    override func setConstraints() {
-        collectionView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
-            make.horizontalEdges.equalToSuperview()
-            make.height.equalTo(80)
-        }
-    }
-    
-    /// 버튼의 이벤트를 받아 start와 stop 할 수 있음
-    func buttonEvent() {
-        mapView.completion = { isCurrent in
-            
-            self.isCurrentLocation = isCurrent
-            print("isCurrentLocation",self.isCurrentLocation)
-            
-            if isCurrent {
-                self.locationManger.startUpdatingLocation()
-            } else {
-                self.locationManger.stopUpdatingLocation()
-            }
-        }
-    }
     
     
     /// 해당 지역에 들어왔을때 로컬 알림 메서드
-    func registLocation() {
+    fileprivate  func registLocation() {
         print("범위에 속하는 어노테이션 갯수",myRangeAnnotation.count)
         print("myRangeAnnotation",myRangeAnnotation)
         // 내 범위에서 내 위치는 렌더링 하지 않기
@@ -167,7 +84,7 @@ final class MapViewController: BaseViewController {
     }
     
     // 내 위치 범위 산정
-    func setMyRegion(center: CLLocationCoordinate2D) {
+    fileprivate  func setMyRegion(center: CLLocationCoordinate2D) {
         myRangeAnnotation = []
         
         let range = 200.0
@@ -194,7 +111,7 @@ final class MapViewController: BaseViewController {
     }
     
     /// 어노테이션 추가
-    func addAnnotation() {
+    fileprivate  func addAnnotation() {
         
         let items = marketAPIManager.marketList.response.body.items
         
@@ -210,7 +127,7 @@ final class MapViewController: BaseViewController {
     
     
     /// 해당 지역 Annotation만 보여주기
-    func filterCityAnnotation() {
+    fileprivate  func filterCityAnnotation() {
         // LazyMapSequence<Results<TraditionalMarketRealm>, MKAnnotation>로 나온것을 배열로 만들어주기 위해 변수 설정
         var mkAnnotationConvert: [MKAnnotation] = []
         
@@ -232,7 +149,7 @@ final class MapViewController: BaseViewController {
     }
     
     /// 권한 - 허용안함을 눌렀을때 Alert을 띄우고 iOS 설정 화면으로 이동
-    func showLocationSettingAlert() {
+    fileprivate  func showLocationSettingAlert() {
         let alert = UIAlertController(title: "위치 정보 설정", message: "설정>개인 정보 보호> 위치 여기로 이동해서 위치 권한 설정해주세요", preferredStyle: .alert)
         let goSetting = UIAlertAction(title: "위치 설정하기", style: .default) { _ in
             // iOS 설정 페이지로 이동 : openSettingURLString
@@ -248,7 +165,7 @@ final class MapViewController: BaseViewController {
     }
     
     /// 상태가 바뀔때 마다 권한 확인
-    func checkDeviceLocationAuthorization() {
+    fileprivate func checkDeviceLocationAuthorization() {
         DispatchQueue.global().async {
             // 위치 서비스를 이용하고 있다면
             if CLLocationManager.locationServicesEnabled() {
@@ -270,7 +187,7 @@ final class MapViewController: BaseViewController {
     
     /// 권한 설정에 따른 메서드
     /// - Parameter status: 권한 상태
-    func checkStatuesDeviceLocationAuthorization(status: CLAuthorizationStatus) {
+    fileprivate func checkStatuesDeviceLocationAuthorization(status: CLAuthorizationStatus) {
         switch status {
         case .notDetermined:
             print("아무것도 결정하지 않았다.")
@@ -395,13 +312,57 @@ extension MapViewController: UICollectionViewDelegate {
 
 extension MapViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cityList.count
+        return mapView.cityList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CityCell.self), for: indexPath) as? CityCell else { return UICollectionViewCell() }
-        let data = cityList[indexPath.item]
+        let data = mapView.cityList[indexPath.item]
         cell.imageView.image = UIImage(named: data.imageName)
         return cell
+    }
+}
+
+
+extension MapViewController {
+    fileprivate func setNetwork() {
+        // 전통시장 API에서 데이터 불러오기
+        marketAPIManager.request { item in
+            print("총 시장 갯수",item.response.body.items.count)
+        }
+    }
+    
+    fileprivate func setCollectionView() {
+        mapView.collectionView.delegate = self
+        mapView.collectionView.dataSource = self
+    }
+    
+    fileprivate func setLocation() {
+        locationManger.delegate = self
+        locationManger.desiredAccuracy = kCLLocationAccuracyBest // 정확성
+        checkDeviceLocationAuthorization()
+        registLocation()
+    }
+    
+    fileprivate func setMapView() {
+        mapView.mapBaseView.delegate = self
+        buttonEvent()
+        mapView.mapBaseView.register(MKAnnotationView.self, forAnnotationViewWithReuseIdentifier: String(describing: MKAnnotationView.self))
+        
+    }
+    
+    /// 버튼의 이벤트를 받아 start와 stop 할 수 있음
+    fileprivate func buttonEvent() {
+        mapView.completion = { isCurrent in
+            
+            self.isCurrentLocation = isCurrent
+            print("isCurrentLocation",self.isCurrentLocation)
+            
+            if isCurrent {
+                self.locationManger.startUpdatingLocation()
+            } else {
+                self.locationManger.stopUpdatingLocation()
+            }
+        }
     }
 }
