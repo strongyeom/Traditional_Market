@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		26015E352ACC0C7900D25C94 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26015E342ACC0C7900D25C94 /* TabBarController.swift */; };
+		26015E382ACC0CC300D25C94 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26015E372ACC0CC300D25C94 /* ProfileViewController.swift */; };
 		26229B9D2AC57528002FBE59 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26229B9C2AC57528002FBE59 /* RealmManager.swift */; };
 		26229B9F2AC575AD002FBE59 /* TraditionalMarketRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26229B9E2AC575AD002FBE59 /* TraditionalMarketRealm.swift */; };
 		26229BA82AC5AD84002FBE59 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26229BA72AC5AD84002FBE59 /* BaseViewController.swift */; };
@@ -49,6 +51,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		26015E342ACC0C7900D25C94 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		26015E372ACC0CC300D25C94 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		26229B9C2AC57528002FBE59 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		26229B9E2AC575AD002FBE59 /* TraditionalMarketRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraditionalMarketRealm.swift; sourceTree = "<group>"; };
 		26229BA72AC5AD84002FBE59 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -104,6 +108,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		26015E332ACC0C4A00D25C94 /* TabBarVC */ = {
+			isa = PBXGroup;
+			children = (
+				26015E342ACC0C7900D25C94 /* TabBarController.swift */,
+			);
+			path = TabBarVC;
+			sourceTree = "<group>";
+		};
+		26015E362ACC0CAF00D25C94 /* ProfileVC */ = {
+			isa = PBXGroup;
+			children = (
+				26015E372ACC0CC300D25C94 /* ProfileViewController.swift */,
+			);
+			path = ProfileVC;
+			sourceTree = "<group>";
+		};
 		26229B9B2AC57518002FBE59 /* Realm */ = {
 			isa = PBXGroup;
 			children = (
@@ -186,6 +206,8 @@
 				26CC8E6F2AC843E9009ABB14 /* Ext+UIColor.swift */,
 				26EA75D82ACB014F00FFDFDB /* Ext+UIButton.swift */,
 				26EA75DA2ACB07A800FFDFDB /* Ext+UITextView.swift */,
+				26EA665D2AC2AEB900F6FE6A /* Ext+MapButton.swift */,
+				26A9C4FB2AC324EE004F955A /* Ext+UIViewController.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -219,6 +241,7 @@
 		26EA66422AC2AB4400F6FE6A /* Traditional_Market */ = {
 			isa = PBXGroup;
 			children = (
+				26015E362ACC0CAF00D25C94 /* ProfileVC */,
 				26CC8E6E2AC843D9009ABB14 /* Extension */,
 				2633E7052AC6C4C1002581EB /* Enum */,
 				26229BA62AC5AD76002FBE59 /* Base */,
@@ -227,7 +250,7 @@
 				26AAD8A72AC44DAD002E5DD4 /* Model */,
 				26AAD8A62AC44DA6002E5DD4 /* Network */,
 				26AAD8A52AC44D9B002E5DD4 /* MapView */,
-				26EA665C2AC2AEA000F6FE6A /* Ext */,
+				26015E332ACC0C4A00D25C94 /* TabBarVC */,
 				26EA66432AC2AB4400F6FE6A /* AppDelegate.swift */,
 				26EA66452AC2AB4400F6FE6A /* SceneDelegate.swift */,
 				26EA664C2AC2AB4700F6FE6A /* Assets.xcassets */,
@@ -235,15 +258,6 @@
 				26EA66512AC2AB4700F6FE6A /* Info.plist */,
 			);
 			path = Traditional_Market;
-			sourceTree = "<group>";
-		};
-		26EA665C2AC2AEA000F6FE6A /* Ext */ = {
-			isa = PBXGroup;
-			children = (
-				26EA665D2AC2AEB900F6FE6A /* Ext+MapButton.swift */,
-				26A9C4FB2AC324EE004F955A /* Ext+UIViewController.swift */,
-			);
-			path = Ext;
 			sourceTree = "<group>";
 		};
 		26EA75D02ACAC27200FFDFDB /* StampVC */ = {
@@ -375,6 +389,8 @@
 				26EA75D92ACB014F00FFDFDB /* Ext+UIButton.swift in Sources */,
 				26EA75E02ACB1DCA00FFDFDB /* FavoriteTable.swift in Sources */,
 				26EA75DB2ACB07A800FFDFDB /* Ext+UITextView.swift in Sources */,
+				26015E382ACC0CC300D25C94 /* ProfileViewController.swift in Sources */,
+				26015E352ACC0C7900D25C94 /* TabBarController.swift in Sources */,
 				26229B9D2AC57528002FBE59 /* RealmManager.swift in Sources */,
 				26EA66442AC2AB4400F6FE6A /* AppDelegate.swift in Sources */,
 				26EA66462AC2AB4400F6FE6A /* SceneDelegate.swift in Sources */,

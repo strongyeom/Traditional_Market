@@ -9,15 +9,6 @@ import UIKit
 
 extension UIButton {
     func stampBtnLayout(text: String) {
-//        var config = UIButton.Configuration.filled()
-//        config.title = text
-//        config.baseBackgroundColor = UIColor(named: "btnColor")
-//        config.baseForegroundColor = .white
-//       // config.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10)
-//        config.titleAlignment = .center
-//        self.configuration = config
-//
-        
         self.setTitle(text, for: .normal)
         self.layer.cornerRadius = 8
         self.clipsToBounds = true

@@ -66,9 +66,15 @@ extension StampViewController {
         }
         
         stampView.saveCompletion = {
-            // 해당 시장안에 "저장"버튼 클릭시 메모 추가
-            self.realmManager.myFavoriteMarket(market: selectedMarket, text: self.stampView.memoTextView.text)
-            self.dismiss(animated: true)
+            
+            if self.stampView.memoTextView.text == "텍스트를 입력해주세요" || self.stampView.memoTextView.text.isEmpty {
+                self.showAlert(title: "메모장이 비어있습니다.", message: "메모장에 기록을 남겨주세요.")
+            } else if self.stampView.memoTextView.text != "텍스트를 입력해주세요" && !self.stampView.memoTextView.text.isEmpty {
+                // 해당 시장안에 "저장"버튼 클릭시 메모 추가
+                self.realmManager.myFavoriteMarket(market: selectedMarket, text: self.stampView.memoTextView.text)
+                self.dismiss(animated: true)
+            }
+           
         }
     }
     
@@ -96,6 +102,8 @@ extension StampViewController {
     }
 }
 
+
+// MARK: - TextView PlaceHolder
 extension StampViewController : UITextViewDelegate {
     // 텍스트 칼라가 회색이면 -> nil, textColor -> black
     func textViewDidBeginEditing(_ textView: UITextView) {

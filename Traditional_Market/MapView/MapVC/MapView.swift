@@ -99,7 +99,8 @@ class MapView : BaseView {
         
         currentLocationButton.snp.makeConstraints { make in
             make.size.equalTo(50)
-            make.bottom.trailing.equalToSuperview().inset(50)
+            make.trailing.equalToSuperview().inset(50)
+            make.bottom.equalTo(self.safeAreaLayoutGuide).inset(80)
         }
     }
 }

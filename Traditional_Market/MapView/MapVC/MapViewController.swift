@@ -8,9 +8,10 @@
 import UIKit
 import CoreLocation
 import MapKit
-
+import RealmSwift
 final class MapViewController: BaseViewController {
     
+    let realm = try! Realm()
     private let mapView = MapView()
     private let marketAPIManager = MarketAPIManager.shared
     private let viewModel = TraditionalMarketViewModel()
@@ -25,7 +26,7 @@ final class MapViewController: BaseViewController {
     
     private var startLocation: CLLocationCoordinate2D? {
         didSet {
-            setMyRegion(center: startLocation ?? CLLocationCoordinate2D(latitude: 37.504721, longitude: 127.140886))
+            setMyRegion(center: startLocation ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0))
         }
     }
     
@@ -56,7 +57,7 @@ final class MapViewController: BaseViewController {
         setLocation()
         setCollectionView()
         setNetwork()
-        
+        print("Realm파일 경로", realm.configuration.fileURL!)
     }
     
     
@@ -72,8 +73,8 @@ final class MapViewController: BaseViewController {
         for i in myLocationRangeRemoveMyLocation {
             print("iii",i)
             let regionCenter = CLLocationCoordinate2DMake(i.coordinate.latitude, i.coordinate.longitude)
-            let exampleRegion = CLCircularRegion(center: i.coordinate, radius: 50.0, identifier: "\(i.title! ?? "내위치")")
-            let circleRagne = MKCircle(center: regionCenter, radius: 50.0)
+            let exampleRegion = CLCircularRegion(center: i.coordinate, radius: 100.0, identifier: "\(i.title! ?? "내위치")")
+            let circleRagne = MKCircle(center: regionCenter, radius: 100.0)
             mapView.mapBaseView.addOverlay(circleRagne)
             
             exampleRegion.notifyOnEntry = true
@@ -87,9 +88,11 @@ final class MapViewController: BaseViewController {
     fileprivate  func setMyRegion(center: CLLocationCoordinate2D) {
         myRangeAnnotation = []
         
-        let range = 200.0
+        // 내 위치 반경
+        let range = 300.0
         let regionCenter = CLLocationCoordinate2DMake(center.latitude, center.longitude)
-        let region = MKCoordinateRegion(center: center, latitudinalMeters: 500, longitudinalMeters: 500)
+        // MapView에 축척 m단위로 보여주기
+        let region = MKCoordinateRegion(center: center, latitudinalMeters: 550, longitudinalMeters: 550)
         let regionRange = CLCircularRegion(center: center, radius: range, identifier: "내 위치")
         let circle = MKCircle(center: regionCenter, radius: range)
         mapView.mapBaseView.addOverlay(circle)
@@ -206,7 +209,7 @@ final class MapViewController: BaseViewController {
             print("한번만 권한 허용")
             locationManger.startUpdatingLocation()
             addAnnotation()
-            setMyRegion(center: startLocation ?? CLLocationCoordinate2D(latitude: 37.503685, longitude: 127.140901))
+            setMyRegion(center: startLocation ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0))
             mapView.currentLocationButton.isSelected = true
         case .authorized:
             print("권한 허용 됨")
@@ -260,8 +263,8 @@ extension MapViewController: CLLocationManagerDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         
         let circleRenderer = MKCircleRenderer(overlay: overlay)
-        circleRenderer.strokeColor = .red
-        circleRenderer.fillColor = UIColor.yellow.withAlphaComponent(0.3)
+        circleRenderer.strokeColor = .systemBlue
+        circleRenderer.fillColor = UIColor.systemBlue.withAlphaComponent(0.3)
         circleRenderer.lineWidth = 1.0
         return circleRenderer
     }

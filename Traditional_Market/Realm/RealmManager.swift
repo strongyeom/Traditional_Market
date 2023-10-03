@@ -87,7 +87,4 @@ class RealmManager {
             print("myFavoriteMarket - \(error.localizedDescription)")
         }
     }
-    
-
-
 }

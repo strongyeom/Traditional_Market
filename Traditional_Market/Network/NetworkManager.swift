@@ -19,8 +19,6 @@ class NetworkManager {
     
     func request(page: Int, completionHandler: @escaping(([Item]) -> Void)) {
         
-        print("Realm파일 경로", realm.configuration.fileURL!)
-        
         let url = URL(string: "http://api.data.go.kr/openapi/tn_pubr_public_trdit_mrkt_api?serviceKey=UQybVf%2FBVAsYaLeP9xLFftf6XvnhuY3nWPU72kKjfSPporofcAGn6UQp%2BG9ftv2cI9VQxA9Fq0B%2FtIWxZ2lavg%3D%3D&pageNo=\(page)&numOfRows=100&type=json")!
         
         if !realm.isEmpty {
