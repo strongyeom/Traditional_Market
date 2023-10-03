@@ -7,17 +7,14 @@
 
 import UIKit
 import RealmSwift
-import Kingfisher
 
-class DetailViewController: BaseViewController {
-    
-    let label = UILabel()
+final class DetailViewController: BaseViewController {
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     
     var selectedMarket: TraditionalMarketRealm?
     
-    var naverImageList: NaverMarketImage = NaverMarketImage(lastBuildDate: "", total: 0, start: 0, display: 0, items: [])
+    private var naverImageList: NaverMarketImage = NaverMarketImage(lastBuildDate: "", total: 0, start: 0, display: 0, items: [])
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,25 +23,66 @@ class DetailViewController: BaseViewController {
     
     override func configureView() {
         super.configureView()
-        sheetPresent()
-        
         view.addSubview(collectionView)
+        
+        guard let selectedMarket else { return }
+        sheetPresent()
+        requestImage(search: selectedMarket.marketName)
+        setCollectionView()
+    }
+    
+    override func setConstraints() {
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+    }
+    
+}
+
+extension DetailViewController : UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return naverImageList.items.count
+    }
+    
+    // 해당 시장 이미지
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-       
-        requestImage(search: selectedMarket!.marketName)
+        // guard let selectedMarket else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: DetailMarketInfoCell.self), for: indexPath) as? DetailMarketInfoCell else { return UICollectionViewCell()}
+        
+        let data = naverImageList.items[indexPath.item]
+        cell.configureCell(market: data)
+        return cell
+    }
+   
+    // 시장 정보 칸
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let selectedMarket else { return UICollectionReusableView() }
+        if kind == UICollectionView.elementKindSectionHeader {
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: String(describing: DetailHeaderCell.self), for: indexPath) as? DetailHeaderCell else { return UICollectionReusableView() }
+            header.configureCell(market: selectedMarket)
+            header.delegate = self
+            return header
+        } else {
+            return UICollectionReusableView()
+        }
+    }
+}
+
+extension DetailViewController {
+    
+    fileprivate func setCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(DetailMarketInfoCell.self, forCellWithReuseIdentifier: String(describing: DetailMarketInfoCell.self))
         collectionView.register(DetailHeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: DetailHeaderCell.self))
-        
     }
     
-    func requestImage(search: String) {
+    fileprivate func requestImage(search: String) {
         MarketAPIManager.shared.requestNaverImage(search: selectedMarket!.marketName) { response in
           //  dump("DetailViewController - \(response)")
+            // Prefetching을 이용해서 여러 사진을 보여주려고 했지만 똑같은 사진들이 반복적으로 나와서 사용하지 않음
             DispatchQueue.main.async {
                 self.naverImageList.items.append(contentsOf: response.items)
                 self.collectionView.reloadData()
@@ -52,7 +90,7 @@ class DetailViewController: BaseViewController {
         }
     }
     
-    func layout() -> UICollectionViewFlowLayout {
+    fileprivate func layout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let spacing: CGFloat = 8
@@ -66,52 +104,7 @@ class DetailViewController: BaseViewController {
     }
     
     
-}
-
-extension DetailViewController : UICollectionViewDelegate, UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return naverImageList.items.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        // guard let selectedMarket else { return UICollectionViewCell() }
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: DetailMarketInfoCell.self), for: indexPath) as? DetailMarketInfoCell else { return UICollectionViewCell()}
-        
-        let data = naverImageList.items[indexPath.item]
-        let url = URL(string: data.link)
-        DispatchQueue.global().async {
-            if let url = url, let data = try? Data(contentsOf: url) {
- 
-                DispatchQueue.main.async {
-                    cell.imageView.image = UIImage(data: data)
-                }
-            }
-        }
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let selectedMarket else { return UICollectionReusableView() }
-        if kind == UICollectionView.elementKindSectionHeader {
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: String(describing: DetailHeaderCell.self), for: indexPath) as? DetailHeaderCell else { return UICollectionReusableView() }
-            header.marketTitle.text = selectedMarket.marketName
-            header.marketType.text = selectedMarket.marketType
-            header.marketCycle.text = selectedMarket.marketOpenCycle
-            header.loadAddress.text = "도로명 주소 : \(selectedMarket.loadNameAddress ?? "도로명 주소 없음")"
-            header.famousProducts.text = "품목 : \(selectedMarket.popularProducts ?? "주력상품 없음")"
-            header.phoneNumber.text = "전화번호 : \(selectedMarket.phoneNumber ?? "전화번호 없음")"
-            header.delegate = self
-            return header
-        } else {
-            return UICollectionReusableView()
-        }
-    }
-}
-
-extension DetailViewController {
-    func sheetPresent() {
+    fileprivate func sheetPresent() {
         if let sheetPresentationController {
             sheetPresentationController.detents = [.medium(), .large()]
             // dim 처리를 하지 않기 때문에 유저 인터렉션에 반응할 수 있음
@@ -125,13 +118,14 @@ extension DetailViewController {
 }
 
 extension DetailViewController: IsLikeDelegate {
-    func btnClickedEvent() {
+    func isLikeClickedEvent() {
         print("델리겟 DetailViewController에서 탐")
        let stampVC = StampViewController()
         stampVC.selectedMarket = selectedMarket
         let nav = UINavigationController(rootViewController: stampVC)
         nav.modalPresentationStyle = .fullScreen
         present(nav, animated: true)
-        // 스탬프 VC를 올리고 저장하면 두번 dismiss하는건 어떨까?? -> 사용자 관점에서 보면 과연 어색하진 않을까?
+        // 1. DetailVC를 내리고 StampVC를 올리는것이 나을까?
+        // 2. DetailVC 위로 StampVC를 덮어씌우는것이 좋을까?
     }
 }

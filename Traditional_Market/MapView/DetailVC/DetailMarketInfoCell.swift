@@ -7,14 +7,15 @@
 
 import UIKit
 
-class DetailMarketInfoCell : UICollectionViewCell {
+final class DetailMarketInfoCell : UICollectionViewCell {
     
     
-    let imageView = {
+    private let imageView = {
        let view = UIImageView()
         view.backgroundColor = .lightGray
         return view
     }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureView()
@@ -25,13 +26,26 @@ class DetailMarketInfoCell : UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureView() {
+    private func configureView() {
         contentView.addSubview(imageView)
     }
     
-    func setConstraints() {
+    private func setConstraints() {
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+    }
+    
+    func configureCell(market: NaverItem) {
+        let url = URL(string: market.link)
+        
+        DispatchQueue.global().async {
+            if let url = url, let data = try? Data(contentsOf: url) {
+ 
+                DispatchQueue.main.async {
+                    self.imageView.image = UIImage(data: data)
+                }
+            }
         }
     }
     

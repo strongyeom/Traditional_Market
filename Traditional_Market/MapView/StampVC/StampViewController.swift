@@ -7,11 +7,11 @@
 
 import UIKit
 
-class StampViewController : BaseViewController {
+final class StampViewController : BaseViewController {
     
-    let stampView = StampView()
+    private let stampView = StampView()
     
-    let realmManager = RealmManager()
+    private let realmManager = RealmManager()
     
     var selectedMarket: TraditionalMarketRealm?
     
@@ -27,34 +27,14 @@ class StampViewController : BaseViewController {
     
     override func configureView() {
         super.configureView()
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(leftBtnClicked))
-        navigationItem.title = "스탬프 추가하기"
-        
-        
-        guard let selectedMarket else { return }
-        
-        
-        stampView.marketTitle.text = selectedMarket.marketName
-        
+        setNavigationBar()
+        setStampView()
         addKeyboardNotifications()
-        stampView.memoTextView.delegate = self
-        
-        stampView.cancelCompletion = {
-            self.dismiss(animated: true)
-        }
-        
-        stampView.saveCompletion = {
-            self.realmManager.myFavoriteMarket(market: selectedMarket, text: self.stampView.memoTextView.text)
-            self.dismiss(animated: true)
-        }
     }
     
+
     @objc func leftBtnClicked() {
         dismiss(animated: true)
-    }
-    
-    override func setConstraints() {
-        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -66,10 +46,35 @@ class StampViewController : BaseViewController {
 }
 
 
-extension UIViewController {
+extension StampViewController {
+    
+    fileprivate func setNavigationBar() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(leftBtnClicked))
+        navigationItem.title = "스탬프 추가하기"
+        
+        
+    }
+    
+    fileprivate func setStampView() {
+        
+        guard let selectedMarket else { return }
+        stampView.marketTitle.text = selectedMarket.marketName
+        stampView.memoTextView.delegate = self
+        
+        stampView.cancelCompletion = {
+            self.dismiss(animated: true)
+        }
+        
+        stampView.saveCompletion = {
+            // 해당 시장안에 "저장"버튼 클릭시 메모 추가
+            self.realmManager.myFavoriteMarket(market: selectedMarket, text: self.stampView.memoTextView.text)
+            self.dismiss(animated: true)
+        }
+    }
+    
     
     // 노티피케이션을 추가하는 메서드
-    func addKeyboardNotifications(){
+    fileprivate func addKeyboardNotifications() {
         // 키보드가 나타날 때 앱에게 알리는 메서드 추가
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification , object: nil)
         // 키보드가 사라질 때 앱에게 알리는 메서드 추가

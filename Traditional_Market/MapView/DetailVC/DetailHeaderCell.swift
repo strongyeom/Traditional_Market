@@ -8,71 +8,71 @@
 import UIKit
 
 protocol IsLikeDelegate: AnyObject {
-    func btnClickedEvent()
+    func isLikeClickedEvent()
 }
 
-class DetailHeaderCell : UICollectionReusableView {
+final class DetailHeaderCell : UICollectionReusableView {
     
-    let bgView = {
+    private let bgView = {
         let view = UIView()
         view.backgroundColor = UIColor.bgViewColor()
         return view
     }()
     
     
-    let marketTitle = {
+    private let marketTitle = {
        let view = UILabel()
         view.font = .systemFont(ofSize: 25, weight: .medium)
         view.textAlignment = .left
         return view
     }()
     
-    let marketType = {
+    private let marketType = {
         let view = UILabel()
         view.font = .systemFont(ofSize: 13)
         return view
     }()
     
-    let betweenLineView = {
+    private let betweenLineView = {
         let view = UIView()
         view.backgroundColor = .lightGray
         return view
     }()
     
-    let isLikeButton = {
+    private let isLikeButton = {
        let view = UIButton()
         view.setImage(UIImage(systemName: "star"), for: .normal)
         view.tintColor = .red
         return view
     }()
     
-    let marketCycle = {
+    private let marketCycle = {
         let view = UILabel()
         view.font = .systemFont(ofSize: 13)
         view.textColor = .lightGray
         return view
     }()
     
-    let loadAddress = {
+    private let loadAddress = {
        let view = UILabel()
         view.font = .systemFont(ofSize: 14)
         return view
     }()
     
-    let famousProducts = {
+    private let famousProducts = {
        let view = UILabel()
         view.font = .systemFont(ofSize: 14)
         view.numberOfLines = 2
         return view
     }()
     
-    let phoneNumber = {
+    private let phoneNumber = {
        let view = UILabel()
         view.font = .systemFont(ofSize: 14)
         return view
     }()
     
-    lazy var stackView = {
+    private lazy var stackView = {
         let stack = UIStackView(arrangedSubviews: [loadAddress, famousProducts, phoneNumber])
         stack.axis = .vertical
         stack.spacing = 6
@@ -92,21 +92,21 @@ class DetailHeaderCell : UICollectionReusableView {
     
     @objc func isLikeBtnClicked(_ sender: UIButton) {
         print("즐겨찾기 버튼 눌림")
-        delegate?.btnClickedEvent()
+        delegate?.isLikeClickedEvent()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureView() {
+    private func configureView() {
         self.addSubview(bgView)
         [marketTitle, isLikeButton, marketType, marketCycle, betweenLineView, stackView].forEach {
             bgView.addSubview($0)
         }
     }
     
-    func setConstraints() {
+    private func setConstraints() {
         
         bgView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -146,6 +146,15 @@ class DetailHeaderCell : UICollectionReusableView {
         
         
         
+    }
+    
+    func configureCell(market: TraditionalMarketRealm) {
+        self.marketTitle.text = market.marketName
+        self.marketType.text = market.marketType
+        self.marketCycle.text = market.marketOpenCycle
+        self.loadAddress.text = "도로명 주소 : \(market.loadNameAddress ?? "도로명 주소 없음")"
+        self.famousProducts.text = "품목 : \(market.popularProducts ?? "주력상품 없음")"
+        self.phoneNumber.text = "전화번호 : \(market.phoneNumber ?? "전화번호 없음")"
     }
     
 }
