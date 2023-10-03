@@ -98,14 +98,12 @@ final class MapViewController: BaseViewController {
         configureCity()
         
         
-        
+        // 전통시장 API에서 데이터 불러오기
         marketAPIManager.request { item in
             print("총 시장 갯수",item.response.body.items.count)
         }
         
         print("Realm파일 경로",realm.configuration.fileURL!)
-        
-        
         
         mapView.mapBaseView.register(MKAnnotationView.self, forAnnotationViewWithReuseIdentifier: String(describing: MKAnnotationView.self))
         
@@ -359,7 +357,7 @@ extension MapViewController: MKMapViewDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         locationManger.stopUpdatingLocation()
         mapView.currentLocationButton.isSelected = false
-        mapView.currentLocationButton.tintColor = .red
+        mapView.currentLocationButton.tintColor = .black
     }
     
     // 어노테이션을 클릭했을때 액션 메서드
@@ -368,14 +366,7 @@ extension MapViewController: MKMapViewDelegate {
         let detailVC = DetailViewController()
         // Realm 필터를 사용해서 Item 하나만 던져주기
         detailVC.selectedMarket = viewModel.selectedMarketInfomation(location: annotation.coordinate)
-        //  print("어떤게 들어올까?", selectedLocation)
-//        detailVC.btnClickedEvent {
-//            let aa = StampViewController()
-//
-//            self.present(aa, animated: true)
-//        }
-        
-            detailVC.btnClickedEvent()
+        detailVC.isLikeClickedEvent()
         self.dismiss(animated: true) {
             self.present(detailVC, animated: true)
         }

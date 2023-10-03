@@ -14,7 +14,7 @@ class MapView : BaseView {
     let currentLocationButton = {
        let view = UIButton()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 50, weight: .light)
-        let image = UIImage(systemName: "play.circle", withConfiguration: imageConfig)
+        let image = UIImage(systemName: "paperplane.circle", withConfiguration: imageConfig)
         view.setTitle("", for: .normal)
         view.setImage(image, for: .normal)
         return view
@@ -40,7 +40,7 @@ class MapView : BaseView {
         sender.isSelected.toggle()
         let isCurrent = sender.isSelected
         
-        currentLocationButton.tintColor = isCurrent ? .systemBlue : .red
+        currentLocationButton.tintColor = isCurrent ? .systemBlue : .black
         
         completion?(isCurrent)
     }
