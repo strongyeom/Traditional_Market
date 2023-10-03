@@ -12,14 +12,26 @@ class TraditionalMarketViewModel {
     
     let realmManager = RealmManager()
     
+    var naverImageList: Observable<NaverMarketImage> = Observable(NaverMarketImage(lastBuildDate: "", total: 0, start: 0, display: 0, items: []))
+    
     var selectedMarket: Observable<TraditionalMarketRealm> = Observable(TraditionalMarketRealm(marketName: "", marketType: "", loadNameAddress: "", address: "", marketOpenCycle: "", publicToilet: "", latitude: "", longitude: "", popularProducts: "", phoneNumber: ""))
     
+    // 선택된 전통시장 정보
     func selectedMarketInfomation(location: CLLocationCoordinate2D) -> TraditionalMarketRealm {
-      //  let aa = realmManager.selectedCity(location: location)
-      //  print("어떻게 생긴거야? \(aa)")
         selectedMarket.value = realmManager.selectedCity(location: location).first!
-      //  selectedMarket.value = realmManager.selectedCity(location: location)
-       // print("TraditionalMarketViewModel -- ", selectedMarket.value)
         return selectedMarket.value
     }
+    
+    // 네이버 API 통신
+    // 시장 title 이용해서 Naver이미지 API 사용
+    func requestImage(search: TraditionalMarketRealm) {
+        MarketAPIManager.shared.requestNaverImage(search: search.marketName) { response in
+            DispatchQueue.main.async {
+                self.naverImageList.value.items.append(contentsOf: response.items)
+            }
+        }
+    }
+    
+    
+    
 }

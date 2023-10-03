@@ -287,9 +287,6 @@ extension MapViewController: MKMapViewDelegate {
         self.dismiss(animated: true) {
             self.present(detailVC, animated: true)
         }
-        
-        
-        
     }
     
     

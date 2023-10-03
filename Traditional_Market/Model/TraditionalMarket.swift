@@ -47,18 +47,3 @@ struct Item: Decodable, Hashable {
         case phoneNumber
     }
 }
-
-//enum MrktEstblCycle: String, Decodable, Hashable {
-//    case twoAndSevenDay = "2일+7일"
-//    case threeAndEightDay = "3일+8일"
-//    case fourAndNineDay = "4일+9일"
-//    case fiveAndTenDay = "5일+10일"
-//    case everyDay = "매일"
-//    case everyAndSixDay = "매일+6일"
-//}
-//
-//enum MrktType: String, Decodable, Hashable {
-//    case fiveDay_Market = "5일장"
-//    case everyDay_Market = "상설장"
-//    case everyDayAndFiveDay_Market = "상설장+5일장"
-//}

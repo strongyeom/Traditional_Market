@@ -14,7 +14,8 @@ final class DetailViewController: BaseViewController {
     
     var selectedMarket: TraditionalMarketRealm?
     
-    private var naverImageList: NaverMarketImage = NaverMarketImage(lastBuildDate: "", total: 0, start: 0, display: 0, items: [])
+    let viewModel = TraditionalMarketViewModel()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,8 +28,13 @@ final class DetailViewController: BaseViewController {
         
         guard let selectedMarket else { return }
         sheetPresent()
-        requestImage(search: selectedMarket.marketName)
         setCollectionView()
+        
+        viewModel.requestImage(search: selectedMarket)
+        viewModel.naverImageList.bind { _ in
+            self.collectionView.reloadData()
+        }
+        
     }
     
     override func setConstraints() {
@@ -42,16 +48,14 @@ final class DetailViewController: BaseViewController {
 extension DetailViewController : UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return naverImageList.items.count
+        return viewModel.naverImageList.value.items.count
     }
     
     // 해당 시장 이미지
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        // guard let selectedMarket else { return UICollectionViewCell() }
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: DetailMarketInfoCell.self), for: indexPath) as? DetailMarketInfoCell else { return UICollectionViewCell()}
         
-        let data = naverImageList.items[indexPath.item]
+        let data = viewModel.naverImageList.value.items[indexPath.item]
         cell.configureCell(market: data)
         return cell
     }
@@ -79,16 +83,7 @@ extension DetailViewController {
         collectionView.register(DetailHeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: DetailHeaderCell.self))
     }
     
-    fileprivate func requestImage(search: String) {
-        MarketAPIManager.shared.requestNaverImage(search: selectedMarket!.marketName) { response in
-          //  dump("DetailViewController - \(response)")
-            // Prefetching을 이용해서 여러 사진을 보여주려고 했지만 똑같은 사진들이 반복적으로 나와서 사용하지 않음
-            DispatchQueue.main.async {
-                self.naverImageList.items.append(contentsOf: response.items)
-                self.collectionView.reloadData()
-            }
-        }
-    }
+
     
     fileprivate func layout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
