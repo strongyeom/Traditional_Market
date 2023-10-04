@@ -93,6 +93,7 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
         [marketTitle, isLikeButton, marketType, marketCycle, betweenLineView, stackView].forEach {
             bgView.addSubview($0)
         }
+        isLikeButton.addTarget(self, action: #selector(isLikeBtnClicked(_:)), for: .touchUpInside)
     }
     
     override func setConstraints() {

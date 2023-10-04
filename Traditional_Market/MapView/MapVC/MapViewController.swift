@@ -9,6 +9,7 @@ import UIKit
 import CoreLocation
 import MapKit
 import RealmSwift
+
 final class MapViewController: BaseViewController {
     
     let realm = try! Realm()
@@ -262,15 +263,11 @@ extension MapViewController: CLLocationManagerDelegate {
     // rendering
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         // 위치 온 일때만 반경 그리기
-        if isCurrentLocation {
-            let circleRenderer = MKCircleRenderer(overlay: overlay)
-            circleRenderer.strokeColor = .systemBlue
-            circleRenderer.fillColor = UIColor.systemBlue.withAlphaComponent(0.3)
-            circleRenderer.lineWidth = 1.0
-            return circleRenderer
-        } else {
-            return MKOverlayRenderer()
-        }
+        let circleRenderer = MKCircleRenderer(overlay: overlay)
+        circleRenderer.strokeColor = .systemBlue
+        circleRenderer.fillColor = UIColor.systemBlue.withAlphaComponent(0.3)
+        circleRenderer.lineWidth = 1.0
+        return circleRenderer
         
     }
     
