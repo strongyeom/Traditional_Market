@@ -13,8 +13,16 @@ class StampCell : BaseColletionViewCell {
     
     let stampImage = UIImageView()
     
+//    let label = {
+//       let view = UILabel()
+//        view.text = "그리드이빈다."
+//        return view
+//    }()
+    
     override func configureView() {
         contentView.addSubview(stampImage)
+       // contentView.addSubview(label)
+       // label.backgroundColor = .green
     }
     
     override func setConstraints() {
@@ -22,6 +30,9 @@ class StampCell : BaseColletionViewCell {
         stampImage.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+//        label.snp.makeConstraints { make in
+//            make.edges.equalToSuperview()
+//        }
     }
     
 }
