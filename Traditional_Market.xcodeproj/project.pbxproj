@@ -34,6 +34,11 @@
 		26CC8E702AC843E9009ABB14 /* Ext+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC8E6F2AC843E9009ABB14 /* Ext+UIColor.swift */; };
 		26CC8E752AC87180009ABB14 /* NaverMarketImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC8E742AC87180009ABB14 /* NaverMarketImage.swift */; };
 		26CC8E7B2AC87DDC009ABB14 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 26CC8E7A2AC87DDC009ABB14 /* Kingfisher */; };
+		26E31C532ACD3E0D00392068 /* ReusableIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E31C522ACD3E0D00392068 /* ReusableIdentifier.swift */; };
+		26E31C562ACD3F5E00392068 /* StampCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E31C552ACD3F5E00392068 /* StampCell.swift */; };
+		26E31C582ACD3FB400392068 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E31C572ACD3FB400392068 /* BaseCollectionViewCell.swift */; };
+		26E31C5A2ACD40EA00392068 /* BaseHeaderReusableCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E31C592ACD40EA00392068 /* BaseHeaderReusableCollectionView.swift */; };
+		26E31C5C2ACD418C00392068 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E31C5B2ACD418C00392068 /* ListCell.swift */; };
 		26EA66442AC2AB4400F6FE6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA66432AC2AB4400F6FE6A /* AppDelegate.swift */; };
 		26EA66462AC2AB4400F6FE6A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA66452AC2AB4400F6FE6A /* SceneDelegate.swift */; };
 		26EA66482AC2AB4400F6FE6A /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA66472AC2AB4400F6FE6A /* MapViewController.swift */; };
@@ -75,6 +80,11 @@
 		26AAD8C02AC48574002E5DD4 /* MarketAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketAPIManager.swift; sourceTree = "<group>"; };
 		26CC8E6F2AC843E9009ABB14 /* Ext+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIColor.swift"; sourceTree = "<group>"; };
 		26CC8E742AC87180009ABB14 /* NaverMarketImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverMarketImage.swift; sourceTree = "<group>"; };
+		26E31C522ACD3E0D00392068 /* ReusableIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableIdentifier.swift; sourceTree = "<group>"; };
+		26E31C552ACD3F5E00392068 /* StampCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StampCell.swift; sourceTree = "<group>"; };
+		26E31C572ACD3FB400392068 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		26E31C592ACD40EA00392068 /* BaseHeaderReusableCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseHeaderReusableCollectionView.swift; sourceTree = "<group>"; };
+		26E31C5B2ACD418C00392068 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 		26EA66402AC2AB4400F6FE6A /* Traditional_Market.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Traditional_Market.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26EA66432AC2AB4400F6FE6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		26EA66452AC2AB4400F6FE6A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -120,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				26015E372ACC0CC300D25C94 /* ProfileViewController.swift */,
+				26E31C542ACD3F5400392068 /* Cell */,
 			);
 			path = ProfileVC;
 			sourceTree = "<group>";
@@ -139,6 +150,8 @@
 			children = (
 				26229BA72AC5AD84002FBE59 /* BaseViewController.swift */,
 				26EA75D62ACADABA00FFDFDB /* BaseView.swift */,
+				26E31C572ACD3FB400392068 /* BaseCollectionViewCell.swift */,
+				26E31C592ACD40EA00392068 /* BaseHeaderReusableCollectionView.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -222,6 +235,23 @@
 			path = DetailVC;
 			sourceTree = "<group>";
 		};
+		26E31C512ACD3DE900392068 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				26E31C522ACD3E0D00392068 /* ReusableIdentifier.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		26E31C542ACD3F5400392068 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				26E31C552ACD3F5E00392068 /* StampCell.swift */,
+				26E31C5B2ACD418C00392068 /* ListCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		26EA66372AC2AB4400F6FE6A = {
 			isa = PBXGroup;
 			children = (
@@ -241,6 +271,7 @@
 		26EA66422AC2AB4400F6FE6A /* Traditional_Market */ = {
 			isa = PBXGroup;
 			children = (
+				26E31C512ACD3DE900392068 /* Protocol */,
 				26CC8E6E2AC843D9009ABB14 /* Extension */,
 				2633E7052AC6C4C1002581EB /* Enum */,
 				26229BA62AC5AD76002FBE59 /* Base */,
@@ -368,6 +399,7 @@
 				26EA75D72ACADABA00FFDFDB /* BaseView.swift in Sources */,
 				26229B9F2AC575AD002FBE59 /* TraditionalMarketRealm.swift in Sources */,
 				2633E7002AC6A2A4002581EB /* CityCell.swift in Sources */,
+				26E31C562ACD3F5E00392068 /* StampCell.swift in Sources */,
 				26AAD8C12AC48574002E5DD4 /* MarketAPIManager.swift in Sources */,
 				26AAD8B82AC46218002E5DD4 /* Observable.swift in Sources */,
 				2633E7072AC6C4D5002581EB /* CityIndex.swift in Sources */,
@@ -379,10 +411,13 @@
 				26AAD8B32AC45B69002E5DD4 /* Router.swift in Sources */,
 				2633E70B2AC70955002581EB /* DetailMarketInfoCell.swift in Sources */,
 				26EA75D22ACAC28D00FFDFDB /* StampViewController.swift in Sources */,
+				26E31C532ACD3E0D00392068 /* ReusableIdentifier.swift in Sources */,
 				26CC8E752AC87180009ABB14 /* NaverMarketImage.swift in Sources */,
 				26EA66482AC2AB4400F6FE6A /* MapViewController.swift in Sources */,
+				26E31C5C2ACD418C00392068 /* ListCell.swift in Sources */,
 				26EA66582AC2ADED00F6FE6A /* MapView.swift in Sources */,
 				2633E7092AC6E7ED002581EB /* DetailViewController.swift in Sources */,
+				26E31C582ACD3FB400392068 /* BaseCollectionViewCell.swift in Sources */,
 				26AAD8BA2AC46EDE002E5DD4 /* IntegrationAPI.swift in Sources */,
 				26AAD8AE2AC4559B002E5DD4 /* NetworkManager.swift in Sources */,
 				26EA665E2AC2AEB900F6FE6A /* Ext+MapButton.swift in Sources */,
@@ -395,6 +430,7 @@
 				26EA66442AC2AB4400F6FE6A /* AppDelegate.swift in Sources */,
 				26EA66462AC2AB4400F6FE6A /* SceneDelegate.swift in Sources */,
 				26A9C4FC2AC324EE004F955A /* Ext+UIViewController.swift in Sources */,
+				26E31C5A2ACD40EA00392068 /* BaseHeaderReusableCollectionView.swift in Sources */,
 				26AAD8A42AC44B07002E5DD4 /* CustomAnnotationView.swift in Sources */,
 				26A9C4F72AC2E607004F955A /* CustomAnnotation.swift in Sources */,
 				26EA75D52ACAD7DF00FFDFDB /* StampView.swift in Sources */,

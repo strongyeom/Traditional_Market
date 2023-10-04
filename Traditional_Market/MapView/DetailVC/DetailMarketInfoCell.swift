@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class DetailMarketInfoCell : UICollectionViewCell {
+final class DetailMarketInfoCell : BaseColletionViewCell {
     
     
     private let imageView = {
@@ -16,21 +16,11 @@ final class DetailMarketInfoCell : UICollectionViewCell {
         return view
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        configureView()
-        setConstraints()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func configureView() {
+    override func configureView() {
         contentView.addSubview(imageView)
     }
     
-    private func setConstraints() {
+    override func setConstraints() {
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }

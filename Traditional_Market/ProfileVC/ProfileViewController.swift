@@ -8,6 +8,21 @@
 import UIKit
 
 class ProfileViewController: BaseViewController {
+    
+    
+    enum SectionLayoutKind: Int, CaseIterable {
+        case grid
+        case list
+        
+        var columnCount: Int {
+            switch self {
+            case .grid:
+                return 6
+            case .list:
+                return 3
+            }
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

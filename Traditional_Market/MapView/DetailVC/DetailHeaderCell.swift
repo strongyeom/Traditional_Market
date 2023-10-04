@@ -11,7 +11,7 @@ protocol IsLikeDelegate: AnyObject {
     func isLikeClickedEvent()
 }
 
-final class DetailHeaderCell : UICollectionReusableView {
+final class DetailHeaderCell : BaseHeaderReusableCollectionView {
     
     private let bgView = {
         let view = UIView()
@@ -82,31 +82,20 @@ final class DetailHeaderCell : UICollectionReusableView {
     }()
     
     weak var delegate: IsLikeDelegate?
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        configureView()
-        setConstraints()
-        isLikeButton.addTarget(self, action: #selector(isLikeBtnClicked(_:)), for: .touchUpInside)
-    }
-    
+  
     @objc func isLikeBtnClicked(_ sender: UIButton) {
         print("즐겨찾기 버튼 눌림")
         delegate?.isLikeClickedEvent()
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func configureView() {
+    override func configureView() {
         self.addSubview(bgView)
         [marketTitle, isLikeButton, marketType, marketCycle, betweenLineView, stackView].forEach {
             bgView.addSubview($0)
         }
     }
     
-    private func setConstraints() {
+    override func setConstraints() {
         
         bgView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
