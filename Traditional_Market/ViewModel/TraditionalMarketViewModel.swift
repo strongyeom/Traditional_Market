@@ -16,6 +16,8 @@ class TraditionalMarketViewModel {
     
     var selectedMarket: Observable<TraditionalMarketRealm> = Observable(TraditionalMarketRealm(marketName: "", marketType: "", loadNameAddress: "", address: "", marketOpenCycle: "", publicToilet: "", latitude: "", longitude: "", popularProducts: "", phoneNumber: ""))
     
+    lazy var favoriteMarket = Observable(realmManager.allOfFavoriteRealmCount())
+    
     // 선택된 전통시장 정보
     func selectedMarketInfomation(location: CLLocationCoordinate2D) -> TraditionalMarketRealm {
         

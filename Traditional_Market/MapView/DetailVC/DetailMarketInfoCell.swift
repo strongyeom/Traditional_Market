@@ -47,6 +47,8 @@ final class DetailMarketInfoCell : BaseColletionViewCell {
             self.imageView.image = cachedImage
             return
         }
+        
+        
 
         DispatchQueue.global().async {
             guard let data = try? Data(contentsOf: url) else { return }
@@ -60,6 +62,7 @@ final class DetailMarketInfoCell : BaseColletionViewCell {
                 ImageCacheManager.shared.setObject(image, forKey: cacheKey)
                 self.imageView.image = image
             }
+           
         }
     }
     

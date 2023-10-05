@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import RealmSwift
 
 final class DetailViewController: BaseViewController {
     
@@ -19,7 +18,14 @@ final class DetailViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+       
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.favoriteMarket.bind { _ in
+            self.collectionView.reloadData()
+        }
     }
     
     override func configureView() {

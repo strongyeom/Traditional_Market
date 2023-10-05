@@ -6,12 +6,15 @@
 //
 
 import UIKit
+import RealmSwift
 
 protocol IsLikeDelegate: AnyObject {
     func isLikeClickedEvent()
 }
 
 final class DetailHeaderCell : BaseHeaderReusableCollectionView {
+    
+    let realmManager = RealmManager()
     
     private let bgView = {
         let view = UIView()
@@ -41,7 +44,7 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
     
     private let isLikeButton = {
        let view = UIButton()
-        view.setImage(UIImage(systemName: "star"), for: .normal)
+       // view.setImage(UIImage(systemName: "star"), for: .normal)
         view.tintColor = .red
         return view
     }()
@@ -145,6 +148,16 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
         self.loadAddress.text = "도로명 주소 : \(market.loadNameAddress ?? "도로명 주소 없음")"
         self.famousProducts.text = "품목 : \(market.popularProducts ?? "주력상품 없음")"
         self.phoneNumber.text = "전화번호 : \(market.phoneNumber ?? "전화번호 없음")"
+        
+        let aa = realmManager.allOfFavoriteRealmCount()
+
+        if aa.contains(where: {
+            $0.marketName == market.marketName
+        }) {  //  view.setImage(UIImage(systemName: "star"), for: .normal)
+            isLikeButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+        } else {
+            isLikeButton.setImage(UIImage(systemName: "star"), for: .normal)
+        }
     }
     
 }
