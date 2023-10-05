@@ -51,17 +51,27 @@ final class DetailMarketInfoCell : BaseColletionViewCell {
         
 
         DispatchQueue.global().async {
-            guard let data = try? Data(contentsOf: url) else { return }
+//            guard let data = try? Data(contentsOf: url) else {
+//                return
+//            }
+            
+            do {
+                let data = try Data(contentsOf: url)
+                
+                DispatchQueue.main.async {
+                    guard let image = UIImage(data: data) else { return }
+                    // 다운로드된 이미지를 캐시에 저장
+                    print("imageIconUrl - ❗️캐시 이미지에 이미지가 없다면 다운로드된 이미지를 캐시에 저장")
+                    ImageCacheManager.shared.setObject(image, forKey: cacheKey)
+                    self.imageView.image = image
+                }
+            } catch {
+                print("올바르지 않은 URL 입니다.")
+            }
 
             guard urlString == url.absoluteString else { return }
 
-            DispatchQueue.main.async {
-                guard let image = UIImage(data: data) else { return }
-                // 다운로드된 이미지를 캐시에 저장
-                print("imageIconUrl - ❗️캐시 이미지에 이미지가 없다면 다운로드된 이미지를 캐시에 저장")
-                ImageCacheManager.shared.setObject(image, forKey: cacheKey)
-                self.imageView.image = image
-            }
+          
            
         }
     }
