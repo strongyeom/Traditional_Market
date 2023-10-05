@@ -19,7 +19,7 @@ class TabBarController: UITabBarController {
         mainVC.tabBarItem.image = UIImage(systemName: "map")
        
         
-        let profileVC = ProfileViewAnotherController()
+        let profileVC = ProfileViewController()
         profileVC.tabBarItem.title = "나의 시장"
         profileVC.tabBarItem.image = UIImage(systemName: "person.circle")
         let profileVCHome = UINavigationController(rootViewController: profileVC)

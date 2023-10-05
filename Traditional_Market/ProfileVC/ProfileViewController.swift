@@ -1,101 +1,136 @@
 //
-//  ProfileViewController.swift
+//  ProfileViewAnotherController.swift
 //  Traditional_Market
 //
-//  Created by 염성필 on 2023/10/03.
+//  Created by 염성필 on 2023/10/05.
 //
 
 import UIKit
+import RealmSwift
 
-class ProfileViewController: BaseViewController {
+class ProfileViewController : BaseViewController {
+    
+    let topView = UIView()
     
     
-    let myInfo = UIView()
+  
+    let realmManager = RealmManager()
     
-    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
+    let helloTitle = {
+       let view = UILabel()
+        view.text = "안녕하세요"
+        view.textAlignment = .left
+        view.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        view.textColor = .gray
+        return view
+    }()
     
-    let tableView = UITableView(frame: .zero, style: .grouped)
+    let nickName = {
+       let view = UILabel()
+        view.text = "백반기행"
+        view.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+        return view
+    }()
+    
+    let stampCountLabel = {
+       let view = UILabel()
+       // view.text = "시장 스탬프 3개"
+        view.font = UIFont.systemFont(ofSize: 13)
+        return view
+    }()
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    let infoList = [
+    "내가 방문한 시장",
+    "앱 소개",
+    "개인정보방침",
+    "버전 정보"
+    ]
+    
+    var realmFavorite: Results<FavoriteTable>? {
+        didSet {
+            self.tableView.reloadData()
+        }
     }
+    
+    let tableView = UITableView(frame: .zero, style: .plain)
+    
     
     override func configureView() {
         super.configureView()
-        [myInfo, collectionView, tableView].forEach {
-            view.addSubview($0)
+        navigationItem.title = "마이페이지"
+        
+        topView.backgroundColor = .lightGray
+        view.addSubview(topView)
+        
+        [helloTitle, nickName, stampCountLabel].forEach {
+            topView.addSubview($0)
         }
         
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.register(StampCell.self, forCellWithReuseIdentifier: StampCell.identifier)
-        
-        tableView.delegate = self
+        view.addSubview(tableView)
         tableView.dataSource = self
-        tableView.rowHeight = 55
-        tableView.register(ListCell.self, forCellReuseIdentifier: String(describing: ListCell.self))
+        tableView.delegate = self
+        tableView.rowHeight = 50
+        tableView.separatorStyle = .none
+        tableView.register(ExampleCell.self, forCellReuseIdentifier: String(describing: ExampleCell.self))
+        
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // MARK: - FavoriteData를 가져오고 있음
+        realmFavorite = realmManager.allOfFavoriteRealmCount()
+        let bb = realmFavorite?.count ?? 0
+        stampCountLabel.text = "시장 스탬프 : \(bb)"
     }
     
     override func setConstraints() {
-        myInfo.backgroundColor = .yellow
-        myInfo.snp.makeConstraints { make in
+        
+        topView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(10)
-            make.height.equalTo(100)
+            make.height.equalTo(view.snp.height).multipliedBy(0.2)
         }
         
-        // MARK: - CollectionViewHeader 만들기
-        collectionView.backgroundColor = .green
-        collectionView.snp.makeConstraints { make in
-            make.top.equalTo(myInfo.snp.bottom).offset(10)
-            make.horizontalEdges.equalTo(myInfo)
-            make.height.equalTo(UIScreen.main.bounds.height * 0.3)
+        helloTitle.snp.makeConstraints { make in
+            make.top.horizontalEdges.equalToSuperview()
         }
         
+        nickName.snp.makeConstraints { make in
+            make.leading.equalTo(helloTitle)
+            make.top.equalTo(helloTitle.snp.bottom).offset(5)
+        }
         
-        // MARK: - TableCiewHeader 만들기
+        stampCountLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(nickName)
+            make.trailing.equalToSuperview().inset(10)
+        }
+        
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(collectionView.snp.bottom).offset(10)
-            make.horizontalEdges.equalTo(myInfo)
-            make.height.equalTo(UIScreen.main.bounds.height * 0.3)
+            make.top.equalTo(topView.snp.bottom).offset(10)
+            make.bottom.horizontalEdges.equalToSuperview().inset(10)
         }
-    }
-    
-    static func layout() -> UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        let spacing: CGFloat = 10
-        let width = UIScreen.main.bounds.width
-        print("가로 길이 :\(width)")
-        layout.itemSize = CGSize(width: ((UIScreen.main.bounds.width - (spacing * 6)) / 3), height: ((UIScreen.main.bounds.width - (spacing * 6)) / 3))
-        layout.minimumLineSpacing = spacing
-        layout.minimumInteritemSpacing = spacing
-        layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
-        return layout
-    }
-}
-
-extension ProfileViewController : UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StampCell.identifier, for: indexPath) as? StampCell else { return UICollectionViewCell() }
         
-        return cell
+        
     }
+    
+    
 }
 
 extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return infoList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ListCell.self), for: indexPath) as? ListCell else { return UITableViewCell() }
-        cell.marketLabel.text = "123123"
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ExampleCell.self)) as! ExampleCell
+        guard let realmFavorite else { return UITableViewCell() }
+        cell.infoText.text = infoList[indexPath.row]
         cell.accessoryType = .disclosureIndicator
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // 해당 Cell을 눌렀을때 분기 처리해주기 -> Enum 만들기
     }
 }

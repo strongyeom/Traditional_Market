@@ -39,7 +39,6 @@
 		26E31C582ACD3FB400392068 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E31C572ACD3FB400392068 /* BaseCollectionViewCell.swift */; };
 		26E31C5A2ACD40EA00392068 /* BaseHeaderReusableCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E31C592ACD40EA00392068 /* BaseHeaderReusableCollectionView.swift */; };
 		26E31C5C2ACD418C00392068 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E31C5B2ACD418C00392068 /* ListCell.swift */; };
-		26E31C5E2ACDBF1B00392068 /* ProfileViewAnotherController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E31C5D2ACDBF1B00392068 /* ProfileViewAnotherController.swift */; };
 		26E31C602ACDC4C200392068 /* ExampleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E31C5F2ACDC4C200392068 /* ExampleCell.swift */; };
 		26EA66442AC2AB4400F6FE6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA66432AC2AB4400F6FE6A /* AppDelegate.swift */; };
 		26EA66462AC2AB4400F6FE6A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA66452AC2AB4400F6FE6A /* SceneDelegate.swift */; };
@@ -87,7 +86,6 @@
 		26E31C572ACD3FB400392068 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		26E31C592ACD40EA00392068 /* BaseHeaderReusableCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseHeaderReusableCollectionView.swift; sourceTree = "<group>"; };
 		26E31C5B2ACD418C00392068 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
-		26E31C5D2ACDBF1B00392068 /* ProfileViewAnotherController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewAnotherController.swift; sourceTree = "<group>"; };
 		26E31C5F2ACDC4C200392068 /* ExampleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleCell.swift; sourceTree = "<group>"; };
 		26EA66402AC2AB4400F6FE6A /* Traditional_Market.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Traditional_Market.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26EA66432AC2AB4400F6FE6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -134,7 +132,6 @@
 			isa = PBXGroup;
 			children = (
 				26015E372ACC0CC300D25C94 /* ProfileViewController.swift */,
-				26E31C5D2ACDBF1B00392068 /* ProfileViewAnotherController.swift */,
 				26E31C542ACD3F5400392068 /* Cell */,
 			);
 			path = ProfileVC;
@@ -424,7 +421,6 @@
 				26EA66582AC2ADED00F6FE6A /* MapView.swift in Sources */,
 				2633E7092AC6E7ED002581EB /* DetailViewController.swift in Sources */,
 				26E31C582ACD3FB400392068 /* BaseCollectionViewCell.swift in Sources */,
-				26E31C5E2ACDBF1B00392068 /* ProfileViewAnotherController.swift in Sources */,
 				26AAD8BA2AC46EDE002E5DD4 /* IntegrationAPI.swift in Sources */,
 				26AAD8AE2AC4559B002E5DD4 /* NetworkManager.swift in Sources */,
 				26EA665E2AC2AEB900F6FE6A /* Ext+MapButton.swift in Sources */,
