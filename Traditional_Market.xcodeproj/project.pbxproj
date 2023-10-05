@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		26015E352ACC0C7900D25C94 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26015E342ACC0C7900D25C94 /* TabBarController.swift */; };
 		26015E382ACC0CC300D25C94 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26015E372ACC0CC300D25C94 /* ProfileViewController.swift */; };
+		26077E412ACF059F005055DF /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26077E402ACF059F005055DF /* ImageCacheManager.swift */; };
 		26229B9D2AC57528002FBE59 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26229B9C2AC57528002FBE59 /* RealmManager.swift */; };
 		26229B9F2AC575AD002FBE59 /* TraditionalMarketRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26229B9E2AC575AD002FBE59 /* TraditionalMarketRealm.swift */; };
 		26229BA82AC5AD84002FBE59 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26229BA72AC5AD84002FBE59 /* BaseViewController.swift */; };
@@ -59,6 +60,7 @@
 /* Begin PBXFileReference section */
 		26015E342ACC0C7900D25C94 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		26015E372ACC0CC300D25C94 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		26077E402ACF059F005055DF /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		26229B9C2AC57528002FBE59 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		26229B9E2AC575AD002FBE59 /* TraditionalMarketRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraditionalMarketRealm.swift; sourceTree = "<group>"; };
 		26229BA72AC5AD84002FBE59 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -135,6 +137,14 @@
 				26E31C542ACD3F5400392068 /* Cell */,
 			);
 			path = ProfileVC;
+			sourceTree = "<group>";
+		};
+		26077E3F2ACF057D005055DF /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				26077E402ACF059F005055DF /* ImageCacheManager.swift */,
+			);
+			path = Cache;
 			sourceTree = "<group>";
 		};
 		26229B9B2AC57518002FBE59 /* Realm */ = {
@@ -274,6 +284,7 @@
 		26EA66422AC2AB4400F6FE6A /* Traditional_Market */ = {
 			isa = PBXGroup;
 			children = (
+				26077E3F2ACF057D005055DF /* Cache */,
 				26E31C512ACD3DE900392068 /* Protocol */,
 				26CC8E6E2AC843D9009ABB14 /* Extension */,
 				2633E7052AC6C4C1002581EB /* Enum */,
@@ -437,6 +448,7 @@
 				26AAD8A42AC44B07002E5DD4 /* CustomAnnotationView.swift in Sources */,
 				26A9C4F72AC2E607004F955A /* CustomAnnotation.swift in Sources */,
 				26EA75D52ACAD7DF00FFDFDB /* StampView.swift in Sources */,
+				26077E412ACF059F005055DF /* ImageCacheManager.swift in Sources */,
 				26E31C602ACDC4C200392068 /* ExampleCell.swift in Sources */,
 				26AAD8A92AC44FCD002E5DD4 /* TraditionalMarket.swift in Sources */,
 			);

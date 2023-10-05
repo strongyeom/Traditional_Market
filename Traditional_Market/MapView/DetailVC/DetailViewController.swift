@@ -56,7 +56,8 @@ extension DetailViewController : UICollectionViewDelegate, UICollectionViewDataS
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: DetailMarketInfoCell.self), for: indexPath) as? DetailMarketInfoCell else { return UICollectionViewCell()}
         
         let data = viewModel.naverImageList.value.items[indexPath.item]
-        cell.configureCell(market: data)
+       // cell.configureCell(market: data)
+        cell.ImageUrl = data.link
         return cell
     }
    

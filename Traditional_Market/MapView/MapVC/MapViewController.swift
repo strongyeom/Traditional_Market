@@ -43,6 +43,9 @@ final class MapViewController: BaseViewController {
     // city
     private var selectedCity: String = "서울특별시"
     
+    // MapView반경에 추가되는 어노테이션
+    var addAnnotationConvert: [MKAnnotation] = []
+    
     override func loadView() {
         self.view = mapView
     }
@@ -63,8 +66,6 @@ final class MapViewController: BaseViewController {
     }
     
     
-    
-    
     /// 해당 지역에 들어왔을때 로컬 알림 메서드
     fileprivate  func registLocation() {
         print("범위에 속하는 어노테이션 갯수",myRangeAnnotation.count)
@@ -73,7 +74,7 @@ final class MapViewController: BaseViewController {
         let myLocationRangeRemoveMyLocation = myRangeAnnotation.filter { $0.title!! != "My Location"}
         // 내 위치 반경에 해당하는 어노테이션만 가져오기
         for i in myLocationRangeRemoveMyLocation {
-            print("iii",i)
+            print("해당 \(i.title!!)에 들어왔습니다.",i.title!!)
             let regionCenter = CLLocationCoordinate2DMake(i.coordinate.latitude, i.coordinate.longitude)
             let exampleRegion = CLCircularRegion(center: i.coordinate, radius: 100.0, identifier: "\(i.title! ?? "내위치")")
             let circleRagne = MKCircle(center: regionCenter, radius: 100.0)
@@ -95,30 +96,27 @@ final class MapViewController: BaseViewController {
         let regionCenter = CLLocationCoordinate2DMake(center.latitude, center.longitude)
         // MapView에 축척 m단위로 보여주기
         let region = MKCoordinateRegion(center: center, latitudinalMeters: 550, longitudinalMeters: 550)
-        // span으로 처리
-      //  let regionSpan = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
-        
-       // let regionRange = CLCircularRegion(center: center, radius: range, identifier: "내 위치")
+        let regionRange = CLCircularRegion(center: center, radius: range, identifier: "내 위치")
         let circle = MKCircle(center: regionCenter, radius: range)
         mapView.mapBaseView.addOverlay(circle)
         // print("내 위치 반경 \(region)")
         mapView.mapBaseView.setRegion(region, animated: true)
         
         
-//        for i in mapView.mapBaseView.annotations {
-//            if regionRange.contains(i.coordinate) {
-//                print("\(i.title! ?? "")가 내 위치에 포함되어 있습니다.")
-//                // 범위안에 있는 것만 따로 배열에 담아서 registLocation타게 하기
-//                myRangeAnnotation.append(i)
-//            } else {
-//                print("\(i.title! ?? "")가 내 위치에 포함되어 있지 않습니다.")
-//            }
-//        }
-        
+        for i in addAnnotationConvert {
+            if regionRange.contains(i.coordinate) {
+                print("\(i.title! ?? "")가 내 위치에 포함되어 있습니다.")
+                // 범위안에 있는 것만 따로 배열에 담아서 registLocation타게 하기
+                myRangeAnnotation.append(i)
+            } else {
+                print("\(i.title! ?? "")가 내 위치에 포함되어 있지 않습니다.")
+            }
+        }
+         // 37.497972, 127.150579
         registLocation()
     }
     
-    /// Realm에 데이터 추가
+    /// Realm에 네트워크에서 받아온 API 추가
     fileprivate  func addRealmData() {
         
         let items = marketAPIManager.marketList.response.body.items
@@ -133,11 +131,9 @@ final class MapViewController: BaseViewController {
         print(mapView.mapBaseView.annotations.count)
     }
     
-    // 위치 반경에 존재하는 어노테이션만 보여주기
+    // MapView 위치 반경에 존재하는 어노테이션만 보여주기
     func mapViewRangeInAnnotations(containRange: Results<TraditionalMarketRealm>) {
-        var addAnnotationConvert: [MKAnnotation] = []
-        
-       // mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
+        addAnnotationConvert = []
         
         let rangeAnnotation = containRange.map {
             (realItem) -> MKAnnotation in
@@ -332,8 +328,6 @@ extension MapViewController: MKMapViewDelegate {
     
     // MapView Zoom의 거리 확인
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        print("맵뷰 지역 span : ",mapView.region.span)
-        print("맵뷰 지역 center : ",mapView.region.center)
         
         let span = mapView.region.span
         let center = mapView.region.center
@@ -359,15 +353,6 @@ extension MapViewController: MKMapViewDelegate {
       //  addAnnotation(item: rangeFilterd)
        
     }
-    
-    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-     
-        
-        
-        
-        
-    }
-    
 }
 
 extension MapViewController: UICollectionViewDelegate {

@@ -16,6 +16,15 @@ final class DetailMarketInfoCell : BaseColletionViewCell {
         return view
     }()
     
+    var ImageUrl: String? {
+        didSet {
+            // kingFisherLoadImage()
+            // imageLoadSDWebImage()
+             loadImage()
+            //nukeImageLoad()
+        }
+    }
+    
     override func configureView() {
         contentView.addSubview(imageView)
     }
@@ -26,15 +35,30 @@ final class DetailMarketInfoCell : BaseColletionViewCell {
         }
     }
     
-    func configureCell(market: NaverItem) {
-        let url = URL(string: market.link)
-        
+    // NSCache 사용
+    func loadImage() {
+        guard let urlString = ImageUrl, let url = URL(string: urlString) else { return }
+        // 이미지 캐시
+        let cacheKey = NSString(string: urlString) // 캐시에 사용될 key 값
+
+       //  해당 key에 캐시 이미지가 저장되어 있으면 이미지를 사용
+        if let cachedImage = ImageCacheManager.shared.object(forKey: cacheKey) {
+            print("imageIconUrl - ⭐️ 해당 이미지가 캐시이미지에 저장되어 있음")
+            self.imageView.image = cachedImage
+            return
+        }
+
         DispatchQueue.global().async {
-            if let url = url, let data = try? Data(contentsOf: url) {
- 
-                DispatchQueue.main.async {
-                    self.imageView.image = UIImage(data: data)
-                }
+            guard let data = try? Data(contentsOf: url) else { return }
+
+            guard urlString == url.absoluteString else { return }
+
+            DispatchQueue.main.async {
+                guard let image = UIImage(data: data) else { return }
+                // 다운로드된 이미지를 캐시에 저장
+                print("imageIconUrl - ❗️캐시 이미지에 이미지가 없다면 다운로드된 이미지를 캐시에 저장")
+                ImageCacheManager.shared.setObject(image, forKey: cacheKey)
+                self.imageView.image = image
             }
         }
     }
