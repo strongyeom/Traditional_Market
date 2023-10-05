@@ -58,6 +58,7 @@ final class MapViewController: BaseViewController {
         setLocation()
         setCollectionView()
         setNetwork()
+       
         print("Realm파일 경로", realm.configuration.fileURL!)
     }
     
@@ -117,19 +118,40 @@ final class MapViewController: BaseViewController {
         registLocation()
     }
     
-    /// 어노테이션 추가
-    fileprivate  func addAnnotation() {
+    /// Realm에 데이터 추가
+    fileprivate  func addRealmData() {
         
         let items = marketAPIManager.marketList.response.body.items
-        
+        print("몇개가 들어오나요 ? \(items.count)")
         // Realm에 데이터 추가
         let _ = items.map {
             realmManager.addData(market: $0)
         }
-        // CityCell 눌렀을때 해당 지역 Annotation만 보여주기
-        filterCityAnnotation()
+        // CityCell 눌렀을때 해당 지역 Annotation만 보여주기 - 저장이 되면 해당 default로 설정해놓은 "서울"지역 어노테이션 보여주기.
+       // filterCityAnnotation()
         
         print(mapView.mapBaseView.annotations.count)
+    }
+    
+    // 위치 반경에 존재하는 어노테이션만 보여주기
+    func mapViewRangeInAnnotations(containRange: Results<TraditionalMarketRealm>) {
+        var addAnnotationConvert: [MKAnnotation] = []
+        
+       // mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
+        
+        let rangeAnnotation = containRange.map {
+            (realItem) -> MKAnnotation in
+            let pin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: realItem.latitude, longitude: realItem.longitude))
+            pin.title = realItem.marketName
+            return pin
+        }
+        
+        // 반복문을 사용하여 배열 안에 담아주기
+        for i in rangeAnnotation {
+            addAnnotationConvert.append(i)
+        }
+        mapView.mapBaseView.addAnnotations(addAnnotationConvert)
+        print("추가된 어노테이션 갯수: \(addAnnotationConvert.count)")
     }
     
     
@@ -203,16 +225,20 @@ final class MapViewController: BaseViewController {
         case .restricted:
             print("권한 설정 거부함")
             showLocationSettingAlert()
+            addRealmData()
         case .denied:
             print("권한 설정 거부함")
             showLocationSettingAlert()
+            addRealmData()
         case .authorizedAlways:
             print("항상 권한 허용")
             locationManger.startUpdatingLocation()
+            addRealmData()
         case .authorizedWhenInUse:
             print("한번만 권한 허용")
             locationManger.startUpdatingLocation()
-            addAnnotation()
+            // addRealmData()
+            addRealmData()
             setMyRegion(center: startLocation ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0))
             mapView.currentLocationButton.isSelected = true
         case .authorized:
@@ -306,7 +332,8 @@ extension MapViewController: MKMapViewDelegate {
     
     // MapView Zoom의 거리 확인
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        print("카메라 맵뷰 지역 span : ",mapView.region.span)
+        print("맵뷰 지역 span : ",mapView.region.span)
+        print("맵뷰 지역 center : ",mapView.region.center)
         
         let span = mapView.region.span
         let center = mapView.region.center
@@ -325,8 +352,12 @@ extension MapViewController: MKMapViewDelegate {
         let rangeFilterd = realmManager.mapViewRangeFilterAnnotations(minLati: minimumLatitude, maxLati: maximumLatitude, minLong: minimumlongtitude, maxLong: maximumLongitude)
         print("MapView 반경에 있는 갯수:",rangeFilterd.count)
         
-      //  addAnnotation(item: rangeFilterd)
         
+        if authorization == .authorizedWhenInUse || authorization == .authorizedAlways || authorization == .denied {
+            mapViewRangeInAnnotations(containRange: rangeFilterd)
+        }
+      //  addAnnotation(item: rangeFilterd)
+       
     }
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
@@ -382,7 +413,7 @@ extension MapViewController {
         locationManger.delegate = self
         locationManger.desiredAccuracy = kCLLocationAccuracyBest // 정확성
         checkDeviceLocationAuthorization()
-        registLocation()
+        //registLocation()
     }
     
     fileprivate func setMapView() {
