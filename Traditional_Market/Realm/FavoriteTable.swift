@@ -16,8 +16,8 @@ class FavoriteTable: Object {
     @Persisted var loadNameAddress: String? // 지번
     @Persisted var address: String?
     @Persisted var marketOpenCycle: String? // 매일 or 1일, @Persisted 5일
-    @Persisted var latitude: String?
-    @Persisted var longitude: String?
+    @Persisted var latitude: Double
+    @Persisted var longitude: Double
     @Persisted var popularProducts: String?
     @Persisted var phoneNumber: String?
     @Persisted var memo: String?
@@ -26,7 +26,7 @@ class FavoriteTable: Object {
     @Persisted(originProperty: "myFavorite") var mainTable: LinkingObjects<TraditionalMarketRealm>
     
     
-    convenience init(marketName: String, marketType: String, loadNameAddress: String?, address: String?, marketOpenCycle: String?, latitude: String?, longitude: String?, popularProducts: String?, phoneNumber: String?, memo: String?, date: Date) {
+    convenience init(marketName: String, marketType: String, loadNameAddress: String?, address: String?, marketOpenCycle: String?, latitude: Double, longitude: Double, popularProducts: String, phoneNumber: String?, memo: String?, date: Date) {
         self.init()
         self.marketName = marketName
         self.marketType = marketType

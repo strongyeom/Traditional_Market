@@ -94,22 +94,25 @@ final class MapViewController: BaseViewController {
         let regionCenter = CLLocationCoordinate2DMake(center.latitude, center.longitude)
         // MapView에 축척 m단위로 보여주기
         let region = MKCoordinateRegion(center: center, latitudinalMeters: 550, longitudinalMeters: 550)
-        let regionRange = CLCircularRegion(center: center, radius: range, identifier: "내 위치")
+        // span으로 처리
+      //  let regionSpan = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
+        
+       // let regionRange = CLCircularRegion(center: center, radius: range, identifier: "내 위치")
         let circle = MKCircle(center: regionCenter, radius: range)
         mapView.mapBaseView.addOverlay(circle)
         // print("내 위치 반경 \(region)")
         mapView.mapBaseView.setRegion(region, animated: true)
         
         
-        for i in mapView.mapBaseView.annotations {
-            if regionRange.contains(i.coordinate) {
-                print("\(i.title! ?? "")가 내 위치에 포함되어 있습니다.")
-                // 범위안에 있는 것만 따로 배열에 담아서 registLocation타게 하기
-                myRangeAnnotation.append(i)
-            } else {
-                print("\(i.title! ?? "")가 내 위치에 포함되어 있지 않습니다.")
-            }
-        }
+//        for i in mapView.mapBaseView.annotations {
+//            if regionRange.contains(i.coordinate) {
+//                print("\(i.title! ?? "")가 내 위치에 포함되어 있습니다.")
+//                // 범위안에 있는 것만 따로 배열에 담아서 registLocation타게 하기
+//                myRangeAnnotation.append(i)
+//            } else {
+//                print("\(i.title! ?? "")가 내 위치에 포함되어 있지 않습니다.")
+//            }
+//        }
         
         registLocation()
     }
@@ -140,7 +143,7 @@ final class MapViewController: BaseViewController {
         
         let realmAnnotation = realmManager.filterData(region: selectedCity).map {
             (realItem) -> MKAnnotation in
-            let pin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: Double(realItem.latitude!) ?? 0.0, longitude: Double(realItem.longitude!) ?? 0.0))
+            let pin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: realItem.latitude, longitude: realItem.longitude))
             pin.title = realItem.marketName
             return pin
         }
@@ -295,9 +298,45 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     
+    // 핀을 터치 하지 않았을때 present된 DetailVC 내려주기
     func mapView(_ mapView: MKMapView, didDeselect annotation: MKAnnotation) {
         dismiss(animated: true)
     }
+    
+    
+    // MapView Zoom의 거리 확인
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        print("카메라 맵뷰 지역 span : ",mapView.region.span)
+        
+        let span = mapView.region.span
+        let center = mapView.region.center
+        
+        let farSouth = CLLocation(latitude: center.latitude - span.latitudeDelta * 0.5, longitude: center.longitude)
+        let farNorth = CLLocation(latitude: center.latitude + span.latitudeDelta * 0.5, longitude: center.longitude)
+        let farEast = CLLocation(latitude: center.latitude, longitude: center.longitude + span.longitudeDelta * 0.5)
+        let farWest = CLLocation(latitude: center.latitude, longitude: center.longitude - span.longitudeDelta * 0.5)
+        
+        let minimumLatitude: Double = farSouth.coordinate.latitude as Double
+        let maximumLatitude: Double = farNorth.coordinate.latitude as Double
+        let minimumlongtitude: Double = farWest.coordinate.longitude as Double
+        let maximumLongitude: Double = farEast.coordinate.longitude as Double
+        
+        
+        let rangeFilterd = realmManager.mapViewRangeFilterAnnotations(minLati: minimumLatitude, maxLati: maximumLatitude, minLong: minimumlongtitude, maxLong: maximumLongitude)
+        print("MapView 반경에 있는 갯수:",rangeFilterd.count)
+        
+      //  addAnnotation(item: rangeFilterd)
+        
+    }
+    
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+     
+        
+        
+        
+        
+    }
+    
 }
 
 extension MapViewController: UICollectionViewDelegate {

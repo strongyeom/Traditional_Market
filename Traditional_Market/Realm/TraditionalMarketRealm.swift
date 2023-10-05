@@ -19,14 +19,14 @@ class TraditionalMarketRealm: Object {
     @Persisted var address: String?
     @Persisted var marketOpenCycle: String? // 매일 or 1일, @Persisted 5일
     @Persisted var publicToilet: String?
-    @Persisted var latitude: String?
-    @Persisted var longitude: String?
+    @Persisted var latitude: Double
+    @Persisted var longitude: Double
     @Persisted var popularProducts: String?
     @Persisted var phoneNumber: String?
     
     @Persisted var myFavorite: List<FavoriteTable>
     
-    convenience init(marketName: String, marketType: String, loadNameAddress: String?, address: String?, marketOpenCycle: String, publicToilet: String?, latitude: String?, longitude: String?, popularProducts: String?, phoneNumber: String?) {
+    convenience init(marketName: String, marketType: String, loadNameAddress: String?, address: String?, marketOpenCycle: String, publicToilet: String?, latitude: String, longitude: String, popularProducts: String?, phoneNumber: String?) {
         self.init()
         self.marketName = marketName
         self.marketType = marketType
@@ -34,8 +34,8 @@ class TraditionalMarketRealm: Object {
         self.address = address
         self.marketOpenCycle = marketOpenCycle
         self.publicToilet = publicToilet
-        self.latitude = latitude
-        self.longitude = longitude
+        self.latitude = Double(latitude) ?? 0
+        self.longitude = Double(longitude) ?? 0
         self.popularProducts = popularProducts
         self.phoneNumber = phoneNumber
     }

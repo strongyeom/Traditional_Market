@@ -20,10 +20,11 @@ class RealmManager {
     func addData(market: Item) {
         let addMarket =
         TraditionalMarketRealm(marketName: market.marketName, marketType: market.marketType, loadNameAddress: market.loadNameAddress, address: market.address, marketOpenCycle: market.marketOpenCycle, publicToilet: market.publicToilet, latitude: market.latitude, longitude: market.longitude, popularProducts: market.popularProducts, phoneNumber: market.phoneNumber)
-
+        
         do {
             try realm.write {
                 realm.add(addMarket)
+                   
             }
         } catch {
             print(error.localizedDescription)
@@ -55,13 +56,30 @@ class RealmManager {
         return result
     }
     
+    // 반경안에 있는 어노테이션만 보여주기
+    func mapViewRangeFilterAnnotations(minLati: Double, maxLati: Double, minLong: Double, maxLong: Double) -> Results<TraditionalMarketRealm> {
+        // Realm에 있는 좌표중에 매개변수로 들어오는 Double 값 범위 안에 있다면 FilterRealm에 담아라
+        
+        let convertToStringMinLati = String(minLati)
+        let convertToStringMaxLati = String(maxLati)
+        let convertToStringMinLong = String(minLong)
+        let convertToStringMaxLong = String(maxLong)
+        
+        let result = realm.objects(TraditionalMarketRealm.self).filter("latitude BETWEEN {\(convertToStringMinLati), \(convertToStringMaxLati)} AND longitude BETWEEN {\(convertToStringMinLong), \(convertToStringMaxLong)}")
+        return result
+    }
+    /*
+     let progressBetween30and60 = tasks.filter("progressMinutes BETWEEN {30, 60}")
+     print("Tasks with progress between 30 and 60 minutes: \(progressBetween30and60.count)")
+     */
+    
     
     /// Realm에서 내가 선택한 전통시장
     /// - Parameter title: 선택한 전통시장 이름
     /// - Returns: 해당 전통시장 데이터
     func selectedCity(location: CLLocationCoordinate2D) -> Results<TraditionalMarketRealm> {
         let filterCity = realm.objects(TraditionalMarketRealm.self).where {
-            $0.latitude == String(location.latitude) && $0.longitude == String(location.longitude)
+            $0.latitude == location.latitude && $0.longitude == location.longitude
             
         }
         return filterCity
@@ -77,7 +95,7 @@ class RealmManager {
             $0._id == market._id
         }.first!
         
-        let favoriteMarket = FavoriteTable(marketName: market.marketName, marketType: market.marketType, loadNameAddress: market.loadNameAddress, address: market.address, marketOpenCycle: market.marketOpenCycle, latitude: market.latitude, longitude: market.longitude, popularProducts: market.popularProducts, phoneNumber: market.phoneNumber, memo: text, date: Date())
+        let favoriteMarket = FavoriteTable(marketName: market.marketName, marketType: market.marketType, loadNameAddress: market.loadNameAddress, address: market.address, marketOpenCycle: market.marketOpenCycle, latitude: market.latitude, longitude: market.longitude, popularProducts: market.popularProducts ?? "", phoneNumber: market.phoneNumber, memo: text, date: Date())
         
         do {
             try realm.write {
