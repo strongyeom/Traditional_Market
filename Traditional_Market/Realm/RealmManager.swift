@@ -77,7 +77,7 @@ class RealmManager {
             $0._id == market._id
         }.first!
         
-        let favoriteMarket = FavoriteTable(marketName: market.marketName, marketType: market.marketType, loadNameAddress: market.loadNameAddress, address: market.address, marketOpenCycle: market.marketOpenCycle, latitude: market.latitude, longitude: market.longitude, popularProducts: market.popularProducts, phoneNumber: market.phoneNumber, memo: text)
+        let favoriteMarket = FavoriteTable(marketName: market.marketName, marketType: market.marketType, loadNameAddress: market.loadNameAddress, address: market.address, marketOpenCycle: market.marketOpenCycle, latitude: market.latitude, longitude: market.longitude, popularProducts: market.popularProducts, phoneNumber: market.phoneNumber, memo: text, date: Date())
         
         do {
             try realm.write {
@@ -86,5 +86,11 @@ class RealmManager {
         } catch {
             print("myFavoriteMarket - \(error.localizedDescription)")
         }
+    }
+    
+    // myFavoriteRealm 데이터 불러오기
+    func allOfFavoriteRealmCount() -> Results<FavoriteTable> {
+        let aa = realm.objects(FavoriteTable.self).sorted(byKeyPath: "date", ascending: false)
+        return aa
     }
 }

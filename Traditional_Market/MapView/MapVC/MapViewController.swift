@@ -265,8 +265,8 @@ extension MapViewController: CLLocationManagerDelegate {
         // 위치 온 일때만 반경 그리기
         let circleRenderer = MKCircleRenderer(overlay: overlay)
         circleRenderer.strokeColor = .systemBlue
-        circleRenderer.fillColor = UIColor.systemBlue.withAlphaComponent(0.3)
-        circleRenderer.lineWidth = 1.0
+        circleRenderer.fillColor = UIColor.systemBlue.withAlphaComponent(0.1)
+        circleRenderer.lineWidth = 0.1
         return circleRenderer
         
     }

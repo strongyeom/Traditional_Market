@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ProfileViewAnotherController : BaseViewController {
     
     let topView = UIView()
+    
+    let realmManager = RealmManager()
     
     let helloTitle = {
        let view = UILabel()
@@ -27,9 +30,9 @@ class ProfileViewAnotherController : BaseViewController {
         return view
     }()
     
-    let stampCount = {
+    let stampCountLabel = {
        let view = UILabel()
-        view.text = "시장 스탬프 3개"
+       // view.text = "시장 스탬프 3개"
         view.font = UIFont.systemFont(ofSize: 13)
         return view
     }()
@@ -37,10 +40,17 @@ class ProfileViewAnotherController : BaseViewController {
     
     let tableList = [
     "내가 방문한 시장",
-    "앱 소개",
     "최근 방문한 시장",
+    "앱 소개",
+    "개인정보방침",
     "버전 정보"
     ]
+    
+    var realmFavorite: Results<FavoriteTable>? {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
     
     let tableView = UITableView(frame: .zero, style: .plain)
     
@@ -52,7 +62,7 @@ class ProfileViewAnotherController : BaseViewController {
         topView.backgroundColor = .lightGray
         view.addSubview(topView)
         
-        [helloTitle, nickName, stampCount].forEach {
+        [helloTitle, nickName, stampCountLabel].forEach {
             topView.addSubview($0)
         }
         
@@ -64,6 +74,13 @@ class ProfileViewAnotherController : BaseViewController {
         tableView.register(ExampleCell.self, forCellReuseIdentifier: String(describing: ExampleCell.self))
         
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        realmFavorite = realmManager.allOfFavoriteRealmCount()
+        let bb = realmFavorite?.count ?? 0
+        stampCountLabel.text = "시장 스탬프 : \(bb)"
     }
     
     override func setConstraints() {
@@ -82,7 +99,7 @@ class ProfileViewAnotherController : BaseViewController {
             make.top.equalTo(helloTitle.snp.bottom).offset(5)
         }
         
-        stampCount.snp.makeConstraints { make in
+        stampCountLabel.snp.makeConstraints { make in
             make.centerY.equalTo(nickName)
             make.trailing.equalToSuperview().inset(10)
         }
@@ -100,13 +117,18 @@ class ProfileViewAnotherController : BaseViewController {
 
 extension ProfileViewAnotherController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableList.count
+        return realmFavorite?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ExampleCell.self)) as! ExampleCell
-        cell.infoText.text = tableList[indexPath.row]
+        guard let realmFavorite else { return UITableViewCell() }
+        cell.infoText.text = realmFavorite[indexPath.row].marketName
         cell.accessoryType = .disclosureIndicator
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
     }
 }
