@@ -10,7 +10,7 @@ import CoreLocation
 import MapKit
 import RealmSwift
 
-final class MapViewController: BaseViewController {
+final class MapViewController: BaseViewController, UISearchControllerDelegate {
     
     let realm = try! Realm()
     private let mapView = MapView()
@@ -67,12 +67,17 @@ final class MapViewController: BaseViewController {
         setCollectionView()
         setNetwork()
         print("Realm파일 경로", realm.configuration.fileURL!)
-        
+        setSearchController()
+      
+    }
+    
+    func setSearchController() {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.placeholder = "검색어를 입력해주세요."
         self.navigationItem.searchController = searchController
         self.navigationItem.title = "시장 지도"
         self.navigationController?.navigationBar.backgroundColor = .white
+        searchController.searchResultsUpdater = self
     }
     
     
@@ -450,6 +455,15 @@ extension MapViewController {
             } else {
                 self.locationManger.stopUpdatingLocation()
             }
+        }
+    }
+}
+
+extension MapViewController : UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+      //  dump(searchController.searchBar.text!)
+        if let text = searchController.searchBar.text {
+            let bb = realmManager.allOfAnnotationSearchFilter(text: text)
         }
     }
 }
