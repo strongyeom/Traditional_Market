@@ -41,6 +41,8 @@
 		26E31C5A2ACD40EA00392068 /* BaseHeaderReusableCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E31C592ACD40EA00392068 /* BaseHeaderReusableCollectionView.swift */; };
 		26E31C5C2ACD418C00392068 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E31C5B2ACD418C00392068 /* ListCell.swift */; };
 		26E31C602ACDC4C200392068 /* ExampleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E31C5F2ACDC4C200392068 /* ExampleCell.swift */; };
+		26E768282AD053AC0052EC4C /* ExampleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E768272AD053AC0052EC4C /* ExampleVC.swift */; };
+		26E7682A2AD07A820052EC4C /* Scale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E768292AD07A820052EC4C /* Scale.swift */; };
 		26EA66442AC2AB4400F6FE6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA66432AC2AB4400F6FE6A /* AppDelegate.swift */; };
 		26EA66462AC2AB4400F6FE6A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA66452AC2AB4400F6FE6A /* SceneDelegate.swift */; };
 		26EA66482AC2AB4400F6FE6A /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA66472AC2AB4400F6FE6A /* MapViewController.swift */; };
@@ -89,6 +91,8 @@
 		26E31C592ACD40EA00392068 /* BaseHeaderReusableCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseHeaderReusableCollectionView.swift; sourceTree = "<group>"; };
 		26E31C5B2ACD418C00392068 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 		26E31C5F2ACDC4C200392068 /* ExampleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleCell.swift; sourceTree = "<group>"; };
+		26E768272AD053AC0052EC4C /* ExampleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleVC.swift; sourceTree = "<group>"; };
+		26E768292AD07A820052EC4C /* Scale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scale.swift; sourceTree = "<group>"; };
 		26EA66402AC2AB4400F6FE6A /* Traditional_Market.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Traditional_Market.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26EA66432AC2AB4400F6FE6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		26EA66452AC2AB4400F6FE6A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -180,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				2633E7062AC6C4D5002581EB /* CityIndex.swift */,
+				26E768292AD07A820052EC4C /* Scale.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -318,6 +323,7 @@
 			isa = PBXGroup;
 			children = (
 				26EA66472AC2AB4400F6FE6A /* MapViewController.swift */,
+				26E768272AD053AC0052EC4C /* ExampleVC.swift */,
 				26A9C4FD2AC326D5004F955A /* ExampleLocation.gpx */,
 				26A9C4F62AC2E607004F955A /* CustomAnnotation.swift */,
 				26AAD8A32AC44B07002E5DD4 /* CustomAnnotationView.swift */,
@@ -439,6 +445,7 @@
 				26EA75E02ACB1DCA00FFDFDB /* FavoriteTable.swift in Sources */,
 				26EA75DB2ACB07A800FFDFDB /* Ext+UITextView.swift in Sources */,
 				26015E382ACC0CC300D25C94 /* ProfileViewController.swift in Sources */,
+				26E7682A2AD07A820052EC4C /* Scale.swift in Sources */,
 				26015E352ACC0C7900D25C94 /* TabBarController.swift in Sources */,
 				26229B9D2AC57528002FBE59 /* RealmManager.swift in Sources */,
 				26EA66442AC2AB4400F6FE6A /* AppDelegate.swift in Sources */,
@@ -449,6 +456,7 @@
 				26A9C4F72AC2E607004F955A /* CustomAnnotation.swift in Sources */,
 				26EA75D52ACAD7DF00FFDFDB /* StampView.swift in Sources */,
 				26077E412ACF059F005055DF /* ImageCacheManager.swift in Sources */,
+				26E768282AD053AC0052EC4C /* ExampleVC.swift in Sources */,
 				26E31C602ACDC4C200392068 /* ExampleCell.swift in Sources */,
 				26AAD8A92AC44FCD002E5DD4 /* TraditionalMarket.swift in Sources */,
 			);

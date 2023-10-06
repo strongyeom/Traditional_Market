@@ -70,12 +70,14 @@ class RealmManager {
     
     
     // 모든 어노테이션을 SearchText로 검색한 것만 필터링
-    func allOfAnnotationSearchFilter(text: String) {
-        let aa = fetch().where {
+    func allOfAnnotationSearchFilter(text: String) -> Results<TraditionalMarketRealm> {
+        let result = fetch().where {
             $0.marketName.contains(text)
         }
-        print("필터된 갯수 : \(aa.count)")
-        print("해당 시자 이름 : \(aa.map { $0.marketName })")
+        print("필터된 갯수 : \(result.count)")
+        print("해당 시자 이름 : \(result.map { $0.marketName })")
+        
+        return result
     }
     
     

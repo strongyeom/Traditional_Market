@@ -54,7 +54,7 @@ class MapView : BaseView {
         let view = MKMapView()
         view.showsUserLocation = true
         view.userTrackingMode = .follow
-        view.cameraZoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: 200000)
+        view.cameraZoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: 1000000)
         return view
     }()
 
@@ -79,7 +79,7 @@ class MapView : BaseView {
         sender.isSelected.toggle()
         let isCurrent = sender.isSelected
         
-        currentLocationButton.tintColor = isCurrent ? .systemBlue : .black
+       // currentLocationButton.tintColor = isCurrent ? .systemBlue : .black
         
         completion?(isCurrent)
     }
