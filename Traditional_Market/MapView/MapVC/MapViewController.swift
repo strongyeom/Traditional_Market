@@ -61,8 +61,13 @@ final class MapViewController: BaseViewController {
         setLocation()
         setCollectionView()
         setNetwork()
-       
         print("Realm파일 경로", realm.configuration.fileURL!)
+        
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.placeholder = "검색어를 입력해주세요."
+        self.navigationItem.searchController = searchController
+        self.navigationItem.title = "시장 지도"
+        self.navigationController?.navigationBar.backgroundColor = .white
     }
     
     
@@ -237,6 +242,7 @@ final class MapViewController: BaseViewController {
             addRealmData()
             setMyRegion(center: startLocation ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0))
             mapView.currentLocationButton.isSelected = true
+            mapView.currentLocationButton.tintColor = .systemBlue
         case .authorized:
             print("권한 허용 됨")
         @unknown default:
@@ -376,6 +382,7 @@ extension MapViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CityCell.self), for: indexPath) as? CityCell else { return UICollectionViewCell() }
         let data = mapView.cityList[indexPath.item]
         cell.imageView.image = UIImage(named: data.imageName)
+        cell.localName.text = data.localname
         return cell
     }
 }

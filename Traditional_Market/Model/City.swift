@@ -9,4 +9,5 @@ import Foundation
 
 struct City {
     let imageName: String
+    let localname: String
 }

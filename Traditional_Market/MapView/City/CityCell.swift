@@ -10,39 +10,52 @@ import UIKit
 class CityCell : BaseColletionViewCell {
     
     let imageView = {
-       let view = UIImageView()
+        let view = UIImageView()
         return view
     }()
-    let baseImageView = UIView()
     
-    let label = {
+    let baseView = {
+       let view = UIView()
+        view.layer.cornerRadius = 12
+        view.backgroundColor = .white
+        view.clipsToBounds = true
+        view.layer.borderColor = UIColor.gray.cgColor
+        view.layer.borderWidth = 1
+        return view
+    }()
+    
+    
+    let localName = {
         let view = UILabel()
-        view.text = "안녕하세요"
+        // View 사이즈에 Label크기 자동으로 맞춤
+        view.adjustsFontSizeToFitWidth = true
         view.clipsToBounds = true
         return view
     }()
     
     override func configureView() {
-        contentView.addSubview(baseImageView)
-        contentView.addSubview(label)
-        baseImageView.addSubview(imageView)
+        contentView.addSubview(baseView)
+        baseView.addSubview(imageView)
+        baseView.addSubview(localName)
     }
     
     override func setConstraints() {
-        baseImageView.layer.borderColor = UIColor.blue.cgColor
-        baseImageView.layer.borderWidth = 2
         
-        baseImageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        baseView.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(10)
         }
-        
+       
         imageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(15)
-           
+            make.leading.equalToSuperview().inset(10)
+            make.size.equalTo(28)
+            make.centerY.equalToSuperview()
         }
-        DispatchQueue.main.async {
-            self.baseImageView.layer.cornerRadius = self.baseImageView.frame.width / 2
-           // self.imageView.clipsToBounds = true
+        
+        localName.snp.makeConstraints { make in
+            make.leading.equalTo(imageView.snp.trailing).offset(10)
+            make.trailing.equalToSuperview().inset(10)
+            make.centerY.equalTo(imageView)
         }
+        
     }
 }
