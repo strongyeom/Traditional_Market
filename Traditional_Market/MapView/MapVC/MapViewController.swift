@@ -40,11 +40,14 @@ final class MapViewController: BaseViewController {
     // 내 위치 안에 있는 Annotation 담는 배열
     private var myRangeAnnotation: [MKAnnotation] = []
     
-    // city
-    private var selectedCity: String = "서울특별시"
+    // 상세조건 검색
+    private var selectedCell: String?
     
     // MapView반경에 추가되는 어노테이션
     var addAnnotationConvert: [MKAnnotation] = []
+    
+    // 사용자가 누른 index 저장
+    var selectedSaveIndex: String = ""
     
     override func loadView() {
         self.view = mapView
@@ -57,6 +60,7 @@ final class MapViewController: BaseViewController {
     
     
     override func configureView() {
+        super.configureView()
         setMapView()
         setLocation()
         setCollectionView()
@@ -158,18 +162,23 @@ final class MapViewController: BaseViewController {
     
     /// 해당 지역 Annotation만 보여주기
     fileprivate  func filterCityAnnotation() {
+        
+        guard let selectedCell else { return }
         // LazyMapSequence<Results<TraditionalMarketRealm>, MKAnnotation>로 나온것을 배열로 만들어주기 위해 변수 설정
         var mkAnnotationConvert: [MKAnnotation] = []
         
         // mapView에 있는 어노테이션 삭제
-        mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
-        
-        let realmAnnotation = realmManager.filterData(region: selectedCity).map {
+       //  mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
+        print("filterCityAnnotation - \(selectedCell)")
+        let realmAnnotation = realmManager.filterData(region: selectedCell).map {
             (realItem) -> MKAnnotation in
             let pin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: realItem.latitude, longitude: realItem.longitude))
             pin.title = realItem.marketName
             return pin
         }
+        
+        
+       
         
         // 반복문을 사용하여 배열 안에 담아주기
         for i in realmAnnotation {
@@ -354,20 +363,31 @@ extension MapViewController: MKMapViewDelegate {
         
         
         if authorization == .authorizedWhenInUse || authorization == .authorizedAlways || authorization == .denied {
-            mapViewRangeInAnnotations(containRange: rangeFilterd)
+        //    mapViewRangeInAnnotations(containRange: rangeFilterd)
+            
+            if selectedCell != nil {
+                filterCityAnnotation()
+            } else {
+                mapViewRangeInAnnotations(containRange: rangeFilterd)
+            }
         }
-      //  addAnnotation(item: rangeFilterd)
-       
     }
 }
 
 extension MapViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("해당 인덱스 \(indexPath.item)")
-        let cityIndex = CityIndex(rawValue: indexPath.item)
-        guard let cityIndex else { return }
-        print("didSelectItemAt",cityIndex.indexToCity)
-        selectedCity = cityIndex.indexToCity
+        mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
+        let data = mapView.cityList[indexPath.item]
+        
+        if selectedSaveIndex == "\(indexPath.item)" {
+            selectedCell = nil
+            selectedSaveIndex = ""
+        } else {
+            selectedSaveIndex = "\(indexPath.item)"
+            selectedCell = data.localname
+        }
+        
+        print("\(indexPath.item) 인덱스 상세 조건: \(selectedCell ?? "nil입니다.")")
         filterCityAnnotation()
     }
 }

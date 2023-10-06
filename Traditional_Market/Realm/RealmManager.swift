@@ -14,6 +14,8 @@ class RealmManager {
     private let realm = try! Realm()
 
     var marketList: Results<TraditionalMarketRealm>!
+    
+    var rangeFiltetedMarket: Results<TraditionalMarketRealm>!
 
     /// Realm에 데이터 추가하기
     /// - Parameter market: 추가할 데이터
@@ -51,28 +53,33 @@ class RealmManager {
     /// - Parameter region: 해당 지역
     /// - Returns: 필터된 지역
     func filterData(region: String) -> Results<TraditionalMarketRealm> {
-        let result = realm.objects(TraditionalMarketRealm.self).where { $0.address.contains(region)
+        if region == "상설장" || region == "5일장" {
+            let result = rangeFiltetedMarket.where {
+                $0.marketType.contains(region)
+            }
+            
+            return result
+        } else {
+            let result = rangeFiltetedMarket.where {
+                $0.address.contains(region)
+            }
+            
+            return result
         }
-        return result
+        
     }
     
     // 반경안에 있는 어노테이션만 보여주기
     func mapViewRangeFilterAnnotations(minLati: Double, maxLati: Double, minLong: Double, maxLong: Double) -> Results<TraditionalMarketRealm> {
         // Realm에 있는 좌표중에 매개변수로 들어오는 Double 값 범위 안에 있다면 FilterRealm에 담아라
-        
         let convertToStringMinLati = String(minLati)
         let convertToStringMaxLati = String(maxLati)
         let convertToStringMinLong = String(minLong)
         let convertToStringMaxLong = String(maxLong)
         
-        let result = realm.objects(TraditionalMarketRealm.self).filter("latitude BETWEEN {\(convertToStringMinLati), \(convertToStringMaxLati)} AND longitude BETWEEN {\(convertToStringMinLong), \(convertToStringMaxLong)}")
-        return result
+        rangeFiltetedMarket = realm.objects(TraditionalMarketRealm.self).filter("latitude BETWEEN {\(convertToStringMinLati), \(convertToStringMaxLati)} AND longitude BETWEEN {\(convertToStringMinLong), \(convertToStringMaxLong)}")
+        return rangeFiltetedMarket
     }
-    /*
-     let progressBetween30and60 = tasks.filter("progressMinutes BETWEEN {30, 60}")
-     print("Tasks with progress between 30 and 60 minutes: \(progressBetween30and60.count)")
-     */
-    
     
     /// Realm에서 내가 선택한 전통시장
     /// - Parameter title: 선택한 전통시장 이름

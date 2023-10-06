@@ -15,8 +15,8 @@ class MapView : BaseView {
     
     // 각 City 배열
     let cityList: [City] = [
-        City(imageName: "basicStamp", localname: "오일장"),
-        City(imageName: "checkStamp", localname: "삼일장"),
+        City(imageName: "basicStamp", localname: "상설장"),
+        City(imageName: "checkStamp", localname: "5일장"),
         City(imageName: "Seoul", localname: "서울특별시"),
         City(imageName: "Gyeonggi-do", localname: "경기도"),
         City(imageName: "Gangwon-do", localname: "강원도"),
@@ -54,7 +54,7 @@ class MapView : BaseView {
         let view = MKMapView()
         view.showsUserLocation = true
         view.userTrackingMode = .follow
-        view.cameraZoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: 1000000)
+        view.cameraZoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: 200000)
         return view
     }()
 
