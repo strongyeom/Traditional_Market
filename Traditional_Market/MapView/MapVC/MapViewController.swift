@@ -25,6 +25,8 @@ final class MapViewController: BaseViewController {
         return location
     }()
     
+    
+    
     private var startLocation: CLLocationCoordinate2D? {
         didSet {
             setMyRegion(center: startLocation ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0))
@@ -55,7 +57,6 @@ final class MapViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     
@@ -121,7 +122,7 @@ final class MapViewController: BaseViewController {
                 print("\(i.title! ?? "")가 내 위치에 포함되어 있지 않습니다.")
             }
         }
-         // 37.497972, 127.150579
+        // 37.497972, 127.150579
         registLocation()
     }
     
@@ -135,7 +136,7 @@ final class MapViewController: BaseViewController {
             realmManager.addData(market: $0)
         }
         // CityCell 눌렀을때 해당 지역 Annotation만 보여주기 - 저장이 되면 해당 default로 설정해놓은 "서울"지역 어노테이션 보여주기.
-       // filterCityAnnotation()
+        // filterCityAnnotation()
         
         print(mapView.mapBaseView.annotations.count)
     }
@@ -168,7 +169,7 @@ final class MapViewController: BaseViewController {
         var mkAnnotationConvert: [MKAnnotation] = []
         
         // mapView에 있는 어노테이션 삭제
-       //  mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
+        //  mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
         print("filterCityAnnotation - \(selectedCell)")
         let realmAnnotation = realmManager.filterData(region: selectedCell).map {
             (realItem) -> MKAnnotation in
@@ -178,12 +179,13 @@ final class MapViewController: BaseViewController {
         }
         
         
-       
+        
         
         // 반복문을 사용하여 배열 안에 담아주기
         for i in realmAnnotation {
             mkAnnotationConvert.append(i)
         }
+        print("상세 조건을 클릭했을때 담기는 배열의 갯수 : \(mkAnnotationConvert.count)")
         mapView.mapBaseView.addAnnotations(mkAnnotationConvert)
     }
     
@@ -251,7 +253,6 @@ final class MapViewController: BaseViewController {
             addRealmData()
             setMyRegion(center: startLocation ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0))
             mapView.currentLocationButton.isSelected = true
-            mapView.currentLocationButton.tintColor = .systemBlue
         case .authorized:
             print("권한 허용 됨")
         @unknown default:
@@ -268,6 +269,7 @@ extension MapViewController: CLLocationManagerDelegate {
         if let location = locations.first?.coordinate {
             startLocation = location
             print("시작 위치를 받아오고 있습니다 \(location)")
+            mapView.currentLocationButton.tintColor = .systemBlue
         }
     }
     
@@ -363,7 +365,7 @@ extension MapViewController: MKMapViewDelegate {
         
         
         if authorization == .authorizedWhenInUse || authorization == .authorizedAlways || authorization == .denied {
-        //    mapViewRangeInAnnotations(containRange: rangeFilterd)
+            //    mapViewRangeInAnnotations(containRange: rangeFilterd)
             
             if selectedCell != nil {
                 filterCityAnnotation()
@@ -382,6 +384,7 @@ extension MapViewController: UICollectionViewDelegate {
         if selectedSaveIndex == "\(indexPath.item)" {
             selectedCell = nil
             selectedSaveIndex = ""
+            locationManger.startUpdatingLocation()
         } else {
             selectedSaveIndex = "\(indexPath.item)"
             selectedCell = data.localname
