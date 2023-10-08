@@ -8,31 +8,38 @@
 import UIKit
 import RealmSwift
 
+
 class ExampleVC : BaseViewController {
     
     let tableView = UITableView(frame: .zero, style: .grouped)
-    
-    let label = UILabel()
-    
-    var data: Results<TraditionalMarketRealm>?
+    let exampleArray = [
+    "123",
+    "asdads",
+    "agfg",
+    "dadda"
+    ]
     
     override func configureView() {
         super.configureView()
-       
-        guard let data else { return }
-        view.addSubview(label)
-        label.text = data.first!.marketName
-        label.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+        print("ExampleVC")
+        setTableView()
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
-        
-        print("ExampleVC - \(label.text)")
+      //  print("ExampleVC - \(label.text)")
     }
     
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        self.tableView.reloadData()
+//    }
+//
     func setTableView() {
         view.addSubview(tableView)
         tableView.dataSource = self
         tableView.rowHeight = 44
+        tableView.register(ExampleTableCell.self, forCellReuseIdentifier: String(describing: ExampleTableCell.self))
     }
     
     
@@ -40,10 +47,12 @@ class ExampleVC : BaseViewController {
 
 extension ExampleVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return exampleArray.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ExampleTableCell.self), for: indexPath) as! ExampleTableCell
+        cell.exampleText.text = exampleArray[indexPath.row]
         return UITableViewCell()
     }
 }

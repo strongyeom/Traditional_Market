@@ -25,7 +25,8 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         return location
     }()
     
-    let searchController = UISearchController(searchResultsController: nil)
+    let searchController = UISearchController(searchResultsController: ExampleVC())
+
     
     private var startLocation: CLLocationCoordinate2D? {
         didSet {
@@ -60,6 +61,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     }
     
     
+    // MARK: - configureView
     override func configureView() {
         super.configureView()
         setMapView()
@@ -73,13 +75,14 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     
     func setSearchController() {
         // searchResultsController에는 검색결과를 표시하고싶은 ViewController가 들어가면 됩니다.
+      
         
         searchController.searchBar.placeholder = "검색어를 입력해주세요."
         self.navigationItem.searchController = searchController
         self.navigationItem.title = "시장 지도"
         self.navigationController?.navigationBar.backgroundColor = .white
         searchController.searchResultsUpdater = self
-        searchController.searchBar.delegate = self
+        // searchController.searchBar.delegate = self
     }
     
     
@@ -496,67 +499,15 @@ extension MapViewController {
     }
 }
 
-extension MapViewController : UISearchResultsUpdating {
+
+// MARK: - UISearchResultsUpdating
+extension MapViewController : UISearchResultsUpdating  {
     func updateSearchResults(for searchController: UISearchController) {
-      //  dump(searchController.searchBar.text!)
-       // let searchResultVC = ExampleVC()
-//        if let text = searchController.searchBar.text {
-//            print("서치바 시작 함 : \(searchController.isActive)")
-//           let aa = realmManager.allOfAnnotationSearchFilter(text: text)
-//
-//            var mkAnnotationConvert: [MKAnnotation] = []
-//
-//            // mapView에 있는 어노테이션 삭제
-//            //  mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
-//            let realmAnnotation = aa.map {
-//                (realItem) -> MKAnnotation in
-//                let pin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: realItem.latitude, longitude: realItem.longitude))
-//                pin.title = realItem.marketName
-//                return pin
-//            }
-//
-//
-//
-//
-//            // 반복문을 사용하여 배열 안에 담아주기
-//            for i in realmAnnotation {
-//                mkAnnotationConvert.append(i)
-//            }
-//            print("상세 조건을 클릭했을때 담기는 배열의 갯수 : \(mkAnnotationConvert.count)")
-//            mapView.mapBaseView.addAnnotations(mkAnnotationConvert)
-//        }
+        let text = searchController.searchBar.text!
+        let aa = ExampleVC()
+       
+        dump(searchController.searchBar.text!)
+       
     }
     
-    
-}
-extension MapViewController : UISearchBarDelegate {
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
-        if let text = searchBar.text {
-            print("서치바 시작 함 : \(searchController.isActive)")
-           let aa = realmManager.allOfAnnotationSearchFilter(text: text)
-            
-            var mkAnnotationConvert: [MKAnnotation] = []
-            
-            // mapView에 있는 어노테이션 삭제
-            //  mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
-            let realmAnnotation = aa.map {
-                (realItem) -> MKAnnotation in
-                let pin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: realItem.latitude, longitude: realItem.longitude))
-                pin.title = realItem.marketName
-                return pin
-            }
-            
-            // 반복문을 사용하여 배열 안에 담아주기
-            for i in realmAnnotation {
-                mkAnnotationConvert.append(i)
-            }
-            print("상세 조건을 클릭했을때 담기는 배열의 갯수 : \(mkAnnotationConvert.count)")
-            mapView.mapBaseView.addAnnotations(mkAnnotationConvert)
-            let region = MKCoordinateRegion(center: locationManger.location!.coordinate, latitudinalMeters: Scale.distance, longitudinalMeters: Scale.distance)
-            mapView.mapBaseView.setRegion(region, animated: true)
-            locationManger.stopUpdatingLocation()
-            mapView.currentLocationButton.tintColor = .black
-        }
-    }
 }
