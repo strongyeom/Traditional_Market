@@ -27,9 +27,8 @@ class CityCell : BaseColletionViewCell {
     
     let localName = {
         let view = UILabel()
-        // View 사이즈에 Label크기 자동으로 맞춤
-        view.adjustsFontSizeToFitWidth = true
-        view.clipsToBounds = true
+        view.font = UIFont.systemFont(ofSize: 11)
+        view.textAlignment = .center
         return view
     }()
     
@@ -52,8 +51,8 @@ class CityCell : BaseColletionViewCell {
         }
         
         localName.snp.makeConstraints { make in
-            make.leading.equalTo(imageView.snp.trailing).offset(10)
-            make.trailing.equalToSuperview().inset(10)
+            make.leading.equalTo(imageView.snp.trailing).offset(5)
+            make.trailing.equalToSuperview().inset(5)
             make.centerY.equalTo(imageView)
         }
         

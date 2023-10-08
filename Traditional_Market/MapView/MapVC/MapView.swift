@@ -11,8 +11,6 @@ import SnapKit
 
 class MapView : BaseView {
     
-    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
-    
     // 각 City 배열
     let cityList: [City] = [
         City(imageName: "basicStamp", localname: "상설장"),
@@ -29,18 +27,9 @@ class MapView : BaseView {
         City(imageName: "Jeju-do", localname: "제주도")
     ]
     
-    func layout() -> UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        let spacing: CGFloat = 10
-        let width = UIScreen.main.bounds.width
-        layout.itemSize = CGSize(width: width / 4, height: width / 6)
-        layout.minimumLineSpacing = spacing
-        layout.minimumInteritemSpacing = spacing
-        layout.sectionInset = UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: spacing)
-        return layout
-    }
-
+    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
+    
+ 
     let currentLocationButton = {
        let view = UIButton()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 50, weight: .light)
@@ -78,9 +67,6 @@ class MapView : BaseView {
     @objc func currentBtnClicked(_ sender: UIButton) {
         sender.isSelected.toggle()
         let isCurrent = sender.isSelected
-        
-       // currentLocationButton.tintColor = isCurrent ? .systemBlue : .black
-        
         completion?(isCurrent)
     }
     
@@ -104,4 +90,21 @@ class MapView : BaseView {
             
         }
     }
+}
+
+extension MapView {
+
+    
+    func layout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let spacing: CGFloat = 10
+        let width = UIScreen.main.bounds.width
+        layout.itemSize = CGSize(width: width / 3.4, height: width / 6)
+        layout.minimumLineSpacing = spacing
+        layout.minimumInteritemSpacing = spacing
+        layout.sectionInset = UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: spacing)
+        return layout
+    }
+
 }

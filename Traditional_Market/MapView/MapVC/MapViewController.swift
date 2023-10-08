@@ -388,11 +388,13 @@ extension MapViewController: MKMapViewDelegate {
               
             }
         }
+        
     }
 }
 
 extension MapViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
         mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
         let data = mapView.cityList[indexPath.item]
         
