@@ -68,6 +68,14 @@ class RealmManager {
         }
     }
     
+    // Search결과 필터링
+    func searchFilterData(text: String) -> Results<TraditionalMarketRealm> {
+        let searchResult = fetch().where {
+            $0.marketName.contains(text)
+        }
+        return searchResult
+    }
+    
     
     // 모든 어노테이션을 SearchText로 검색한 것만 필터링
     func allOfAnnotationSearchFilter(text: String) -> Results<TraditionalMarketRealm> {
@@ -127,7 +135,7 @@ class RealmManager {
     
     // myFavoriteRealm 데이터 불러오기
     func allOfFavoriteRealmCount() -> Results<FavoriteTable> {
-        let aa = realm.objects(FavoriteTable.self).sorted(byKeyPath: "date", ascending: false)
-        return aa
+        let favoriteTable = realm.objects(FavoriteTable.self).sorted(byKeyPath: "date", ascending: false)
+        return favoriteTable
     }
 }

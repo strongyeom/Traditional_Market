@@ -149,9 +149,9 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
         self.famousProducts.text = "품목 : \(market.popularProducts ?? "주력상품 없음")"
         self.phoneNumber.text = "전화번호 : \(market.phoneNumber ?? "전화번호 없음")"
         
-        let aa = realmManager.allOfFavoriteRealmCount()
+        let favoriteTable = realmManager.allOfFavoriteRealmCount()
 
-        if aa.contains(where: {
+        if favoriteTable.contains(where: {
             $0.marketName == market.marketName
         }) {  //  view.setImage(UIImage(systemName: "star"), for: .normal)
             isLikeButton.setImage(UIImage(systemName: "star.fill"), for: .normal)

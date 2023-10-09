@@ -81,8 +81,8 @@ class ProfileViewController : BaseViewController {
         super.viewWillAppear(animated)
         // MARK: - FavoriteData를 가져오고 있음
         realmFavorite = realmManager.allOfFavoriteRealmCount()
-        let bb = realmFavorite?.count ?? 0
-        stampCountLabel.text = "시장 스탬프 : \(bb)"
+        let favoriteDataCount = realmFavorite?.count ?? 0
+        stampCountLabel.text = "시장 스탬프 : \(favoriteDataCount)"
     }
     
     override func setConstraints() {

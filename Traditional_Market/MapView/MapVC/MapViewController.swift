@@ -25,9 +25,6 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         return location
     }()
     
-    let searchController = UISearchController(searchResultsController: ExampleVC())
-
-    
     private var startLocation: CLLocationCoordinate2D? {
         didSet {
             setMyRegion(center: startLocation ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0))
@@ -52,6 +49,12 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     // 사용자가 누른 index 저장
     var selectedSaveIndex: String = ""
     
+    // UISearchController 변수 생성
+    var searchController: UISearchController!
+    
+    // resultsTableController 변수 생성
+    private var resultsTableController: SearchResultsViewController!
+    
     override func loadView() {
         self.view = mapView
     }
@@ -74,15 +77,24 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     }
     
     func setSearchController() {
-        // searchResultsController에는 검색결과를 표시하고싶은 ViewController가 들어가면 됩니다.
-      
         
+        resultsTableController = SearchResultsViewController()
+        resultsTableController.tableView.delegate = self
+
+        searchController = UISearchController(searchResultsController: resultsTableController)
         searchController.searchBar.placeholder = "검색어를 입력해주세요."
         self.navigationItem.searchController = searchController
         self.navigationItem.title = "시장 지도"
         self.navigationController?.navigationBar.backgroundColor = .white
+        searchController.delegate = self
         searchController.searchResultsUpdater = self
-        // searchController.searchBar.delegate = self
+        searchController.searchBar.delegate = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+       // search 활성화 조건식 넣기 ex) isActive
     }
     
     
@@ -500,14 +512,53 @@ extension MapViewController {
 }
 
 
+
+extension MapViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Cell을 눌렀을때 액션
+        print("MapViewController - didSelectRowAt")
+    }
+}
+
+extension MapViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
+    func presentSearchController(_ searchController: UISearchController) {
+        Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
+    }
+    
+    func willPresentSearchController(_ searchController: UISearchController) {
+        Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
+    }
+    
+    func didPresentSearchController(_ searchController: UISearchController) {
+        Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
+    }
+    
+    func willDismissSearchController(_ searchController: UISearchController) {
+        Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
+    }
+    
+    func didDismissSearchController(_ searchController: UISearchController) {
+        Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
+    }
+}
+
+
 // MARK: - UISearchResultsUpdating
-extension MapViewController : UISearchResultsUpdating  {
+extension MapViewController : UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        let text = searchController.searchBar.text!
-        let aa = ExampleVC()
-       
-        dump(searchController.searchBar.text!)
-       
+        
+        
+        guard let text = searchController.searchBar.text else { return }
+        let filterResults = realmManager.searchFilterData(text: text)
+        
+        if let resultsController = searchController.searchResultsController as? SearchResultsViewController {
+            resultsController.filterData = filterResults
+            resultsController.tableView.reloadData()
+        }
     }
     
 }
