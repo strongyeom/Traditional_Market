@@ -93,9 +93,10 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
             // Realm 필터를 사용해서 Item 하나만 던져주기
             detailVC.selectedMarket = self.viewModel.selectedMarketInfomation(location: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
             detailVC.isLikeClickedEvent()
+            
             self.present(detailVC, animated: true)
         }
-        
+       
         
         
     }
@@ -151,12 +152,12 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         //
         let scale: CLLocationDegrees = 550
         
-        let regionCenter = CLLocationCoordinate2DMake(center.latitude, center.longitude)
+      //  let regionCenter = CLLocationCoordinate2DMake(center.latitude, center.longitude)
         // MapView에 축척 m단위로 보여주기
         let region = MKCoordinateRegion(center: center, latitudinalMeters: scale, longitudinalMeters: scale)
         let regionRange = CLCircularRegion(center: center, radius: range, identifier: "내 위치")
-        let circle = MKCircle(center: regionCenter, radius: range)
-        mapView.mapBaseView.addOverlay(circle)
+       // let circle = MKCircle(center: regionCenter, radius: range)
+      //  mapView.mapBaseView.addOverlay(circle)
         // print("내 위치 반경 \(region)")
         mapView.mapBaseView.setRegion(region, animated: true)
         
@@ -173,6 +174,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         // 37.497972, 127.150579
         registLocation()
     }
+
     
     /// Realm에 네트워크에서 받아온 API 추가
     fileprivate  func addRealmData() {
@@ -375,6 +377,7 @@ extension MapViewController: MKMapViewDelegate {
         locationManger.stopUpdatingLocation()
         mapView.currentLocationButton.isSelected = false
         mapView.currentLocationButton.tintColor = .black
+       
     }
     
     // 어노테이션을 클릭했을때 액션 메서드
@@ -398,6 +401,7 @@ extension MapViewController: MKMapViewDelegate {
     // 핀을 터치 하지 않았을때 present된 DetailVC 내려주기
     func mapView(_ mapView: MKMapView, didDeselect annotation: MKAnnotation) {
         dismiss(animated: true)
+        
     }
     
     
@@ -549,7 +553,10 @@ extension MapViewController: UISearchBarDelegate {
     
     func presentSearchController(_ searchController: UISearchController) {
        print("presentSearchController")
+        locationManger.stopUpdatingLocation()
+        mapView.currentLocationButton.tintColor = .black
         // 검색창 실행시 DetailVC 내리기
+        
         dismiss(animated: true)
     }
 }
