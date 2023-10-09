@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import UserNotifications
+import FirebaseCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,13 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // 알림 권한 설정
-       UNUserNotificationCenter.current().delegate = self
-        // requestAuthorization(options: ) - 알림이 왔을때 어떠한 형식으로 보여주게 할 것인지
-        // completionHandler: Bool - 사용자가 권한을 설정 했는지 안했는지
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { success, error in
-            print(success, error)
-        }
+        FirebaseApp.configure()
         return true
     }
 

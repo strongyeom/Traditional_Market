@@ -75,7 +75,22 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         setSearchController()
         searchResultAnnotation()
 
+        
+        // Do any additional setup after loading the view, typically from a nib.
+
+        let button = UIButton(type: .roundedRect)
+        button.frame = CGRect(x: 100, y: 100, width: 100, height: 30)
+        button.setTitle("Test Crash", for: [])
+        button.addTarget(self, action: #selector(self.crashButtonTapped(_:)), for: .touchUpInside)
+        mapView.mapBaseView.addSubview(button)
+
+
       
+    }
+    
+    @objc func crashButtonTapped(_ sender: AnyObject) {
+        let numbers = [0]
+        let _ = numbers[1]
     }
     
     // Search 결과 값 어노테이션 찍기
@@ -96,9 +111,6 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
             
             self.present(detailVC, animated: true)
         }
-       
-        
-        
     }
     
     // SearchController 셋팅
@@ -151,14 +163,9 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         let range = 300.0
         //
         let scale: CLLocationDegrees = 550
-        
-      //  let regionCenter = CLLocationCoordinate2DMake(center.latitude, center.longitude)
         // MapView에 축척 m단위로 보여주기
         let region = MKCoordinateRegion(center: center, latitudinalMeters: scale, longitudinalMeters: scale)
         let regionRange = CLCircularRegion(center: center, radius: range, identifier: "내 위치")
-       // let circle = MKCircle(center: regionCenter, radius: range)
-      //  mapView.mapBaseView.addOverlay(circle)
-        // print("내 위치 반경 \(region)")
         mapView.mapBaseView.setRegion(region, animated: true)
         
         
@@ -171,7 +178,6 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
                 print("\(i.title! ?? "")가 내 위치에 포함되어 있지 않습니다.")
             }
         }
-        // 37.497972, 127.150579
         registLocation()
     }
 
