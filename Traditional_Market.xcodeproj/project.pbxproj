@@ -196,6 +196,7 @@
 			children = (
 				2633E6FA2AC69254002581EB /* City */,
 				26EA75D32ACAC2B700FFDFDB /* MapVC */,
+				26E9F3672AD406B80007B7CD /* SearchVC */,
 				26EA75D02ACAC27200FFDFDB /* StampVC */,
 				26CC8E712AC84B70009ABB14 /* DetailVC */,
 			);
@@ -272,6 +273,15 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		26E9F3672AD406B80007B7CD /* SearchVC */ = {
+			isa = PBXGroup;
+			children = (
+				26E768272AD053AC0052EC4C /* SearchResultsViewController.swift */,
+				26C92EC32AD2F622002A53D2 /* SearchCell.swift */,
+			);
+			path = SearchVC;
+			sourceTree = "<group>";
+		};
 		26EA66372AC2AB4400F6FE6A = {
 			isa = PBXGroup;
 			children = (
@@ -325,8 +335,6 @@
 			isa = PBXGroup;
 			children = (
 				26EA66472AC2AB4400F6FE6A /* MapViewController.swift */,
-				26E768272AD053AC0052EC4C /* SearchResultsViewController.swift */,
-				26C92EC32AD2F622002A53D2 /* SearchCell.swift */,
 				26A9C4FD2AC326D5004F955A /* ExampleLocation.gpx */,
 				26A9C4F62AC2E607004F955A /* CustomAnnotation.swift */,
 				26AAD8A32AC44B07002E5DD4 /* CustomAnnotationView.swift */,

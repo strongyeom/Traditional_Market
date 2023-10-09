@@ -73,13 +73,38 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         setNetwork()
         print("Realm파일 경로", realm.configuration.fileURL!)
         setSearchController()
+        searchResultAnnotation()
+
       
     }
     
+    // Search 결과 값 어노테이션 찍기
+    func searchResultAnnotation() {
+       
+        resultsTableController.completion = { result in
+            print("completion : \(result.marketName)")
+            self.searchController.searchBar.text = result.marketName
+            print("searchController.searchBar.text", self.searchController.searchBar.text ?? "")
+
+            // 해당 지역으로 setRegion
+            self.setMyRegion(center: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
+            // search한 결과 pin 찍힌 액션 취하기 + pin을 눌렀을때 중심으로 이동하기
+            let detailVC = DetailViewController()
+            // Realm 필터를 사용해서 Item 하나만 던져주기
+            detailVC.selectedMarket = self.viewModel.selectedMarketInfomation(location: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
+            detailVC.isLikeClickedEvent()
+            self.present(detailVC, animated: true)
+        }
+        
+        
+        
+    }
+    
+    // SearchController 셋팅
     func setSearchController() {
         
         resultsTableController = SearchResultsViewController()
-        resultsTableController.tableView.delegate = self
+       // resultsTableController.tableView.delegate = self
 
         searchController = UISearchController(searchResultsController: resultsTableController)
         searchController.searchBar.placeholder = "검색어를 입력해주세요."
@@ -91,11 +116,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         searchController.searchBar.delegate = self
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-       // search 활성화 조건식 넣기 ex) isActive
-    }
+    
     
     
     /// 해당 지역에 들어왔을때 로컬 알림 메서드
@@ -361,6 +382,7 @@ extension MapViewController: MKMapViewDelegate {
         self.dismiss(animated: true) {
             self.present(detailVC, animated: true)
         }
+        
     }
     
     
@@ -511,38 +533,9 @@ extension MapViewController {
     }
 }
 
-
-
-extension MapViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Cell을 눌렀을때 액션
-        print("MapViewController - didSelectRowAt")
-    }
-}
-
 extension MapViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-    }
-    
-    func presentSearchController(_ searchController: UISearchController) {
-        Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
-    }
-    
-    func willPresentSearchController(_ searchController: UISearchController) {
-        Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
-    }
-    
-    func didPresentSearchController(_ searchController: UISearchController) {
-        Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
-    }
-    
-    func willDismissSearchController(_ searchController: UISearchController) {
-        Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
-    }
-    
-    func didDismissSearchController(_ searchController: UISearchController) {
-        Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
     }
 }
 
@@ -551,14 +544,14 @@ extension MapViewController: UISearchBarDelegate {
 extension MapViewController : UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         
-        
         guard let text = searchController.searchBar.text else { return }
         let filterResults = realmManager.searchFilterData(text: text)
         
+        // 검색 결과 SearchResultsVC로 전달 및 tableView Reload하기
         if let resultsController = searchController.searchResultsController as? SearchResultsViewController {
             resultsController.filterData = filterResults
             resultsController.tableView.reloadData()
+            
         }
     }
-    
 }

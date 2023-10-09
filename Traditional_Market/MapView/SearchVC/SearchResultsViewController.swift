@@ -15,6 +15,8 @@ class SearchResultsViewController : BaseViewController {
 
     var filterData: Results<TraditionalMarketRealm>?
     
+    var completion: ((TraditionalMarketRealm) -> Void)?
+    
     override func configureView() {
         super.configureView()
         print("ExampleVC")
@@ -27,6 +29,7 @@ class SearchResultsViewController : BaseViewController {
     func setTableView() {
         view.addSubview(tableView)
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.rowHeight = 54
         tableView.register(SearchCell.self, forCellReuseIdentifier: SearchCell.identifier)
     }
@@ -34,7 +37,17 @@ class SearchResultsViewController : BaseViewController {
     
 }
 
-extension SearchResultsViewController: UITableViewDataSource {
+extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("SearchResultsViewController - didSelectRowAt")
+        guard let filterData else { return }
+        let aa = filterData[indexPath.row]
+        print("SearchResultsViewController - \(aa.marketName)")
+        completion?(aa)
+        dismiss(animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let filterData else { return 0}
         return filterData.count

@@ -109,11 +109,20 @@ extension DetailViewController {
     
     fileprivate func sheetPresent() {
         if let sheetPresentationController {
-            sheetPresentationController.detents = [.medium(), .large()]
+          
+            // detent의 식별자, 식별자를 지정하지 않으면 시스템에서 랜덤한 식별자가 생성
+            let detentIdentifier = UISheetPresentationController.Detent.Identifier("customDetent")
+            
+            let minCustomDetent = UISheetPresentationController.Detent.custom(identifier: detentIdentifier) { _ in
+                return 200
+            }
+            sheetPresentationController.detents = [minCustomDetent, .large()]
             // dim 처리를 하지 않기 때문에 유저 인터렉션에 반응할 수 있음
             sheetPresentationController.largestUndimmedDetentIdentifier = .medium
             // grabber 설정
             sheetPresentationController.prefersGrabberVisible = true
+            // present시 백그라운드 dim 처리 유무 ( 어떤 상태일때 회색으로 만들것이냐 ) 
+            sheetPresentationController.largestUndimmedDetentIdentifier = minCustomDetent.identifier
             // 코너 주기
             sheetPresentationController.preferredCornerRadius = 20
         }
