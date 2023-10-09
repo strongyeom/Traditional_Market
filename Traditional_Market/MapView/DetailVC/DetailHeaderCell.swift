@@ -19,6 +19,8 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
     private let bgView = {
         let view = UIView()
         view.backgroundColor = UIColor.bgViewColor()
+        view.layer.cornerRadius = 12
+        view.clipsToBounds = true
         return view
     }()
     
@@ -102,12 +104,14 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
     override func setConstraints() {
         
         bgView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.horizontalEdges.bottom.equalToSuperview().inset(10)
+            make.top.equalToSuperview().inset(20)
         }
         
         
         marketTitle.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview().inset(10)
+            make.leading.equalToSuperview().inset(10)
+            make.top.equalToSuperview().inset(10)
         }
         
         isLikeButton.snp.makeConstraints { make in
@@ -154,9 +158,9 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
         if favoriteTable.contains(where: {
             $0.marketName == market.marketName
         }) {  //  view.setImage(UIImage(systemName: "star"), for: .normal)
-            isLikeButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            isLikeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         } else {
-            isLikeButton.setImage(UIImage(systemName: "star"), for: .normal)
+            isLikeButton.setImage(UIImage(systemName: "heart"), for: .normal)
         }
     }
     

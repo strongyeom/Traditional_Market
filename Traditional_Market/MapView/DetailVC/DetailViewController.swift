@@ -30,7 +30,7 @@ final class DetailViewController: BaseViewController {
     }
     
     override func configureView() {
-        super.configureView()
+        view.backgroundColor = .lightGray
         view.addSubview(collectionView)
         
         guard let selectedMarket else { return }
@@ -102,7 +102,7 @@ extension DetailViewController {
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
         layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
-        layout.headerReferenceSize = CGSize(width: width, height: width * 0.4)
+        layout.headerReferenceSize = CGSize(width: width, height: width * 0.45)
         return layout
     }
     
@@ -117,14 +117,13 @@ extension DetailViewController {
                 return 200
             }
             sheetPresentationController.detents = [minCustomDetent, .large()]
-            // dim 처리를 하지 않기 때문에 유저 인터렉션에 반응할 수 있음
-            sheetPresentationController.largestUndimmedDetentIdentifier = .medium
+
             // grabber 설정
             sheetPresentationController.prefersGrabberVisible = true
-            // present시 백그라운드 dim 처리 유무 ( 어떤 상태일때 회색으로 만들것이냐 ) 
+            // present시 백그라운드 dim 처리 유무 ( 어떤 상태일때 회색으로 만들것이냐 ) - dim 처리를 하지 않기 때문에 유저 인터렉션에 반응할 수 있음
             sheetPresentationController.largestUndimmedDetentIdentifier = minCustomDetent.identifier
             // 코너 주기
-            sheetPresentationController.preferredCornerRadius = 20
+            sheetPresentationController.preferredCornerRadius = 30
         }
     }
 }

@@ -22,7 +22,13 @@ class TraditionalMarketViewModel {
     func selectedMarketInfomation(location: CLLocationCoordinate2D) -> TraditionalMarketRealm {
         
         // MARK: - 화천재래시장 , 태백시장 클릭시 에러 발생 해결해야 함
-        selectedMarket.value = realmManager.selectedCity(location: location).first!
+        // selectedMarket.value = realmManager.selectedCity(location: location).first
+        
+        if let selectedCity = realmManager.selectedCity(location: location).first {
+            selectedMarket.value = selectedCity
+        } else {
+            print("선택한 전통시장 에러 발생...")
+        }
         return selectedMarket.value
     }
     

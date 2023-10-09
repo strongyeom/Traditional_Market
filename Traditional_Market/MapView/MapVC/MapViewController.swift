@@ -123,14 +123,16 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     fileprivate  func registLocation() {
         print("범위에 속하는 어노테이션 갯수",myRangeAnnotation.count)
         print("myRangeAnnotation",myRangeAnnotation)
+        
+        let range: CLLocationDistance = 100.0
         // 내 범위에서 내 위치는 렌더링 하지 않기
         let myLocationRangeRemoveMyLocation = myRangeAnnotation.filter { $0.title!! != "My Location"}
         // 내 위치 반경에 해당하는 어노테이션만 가져오기
         for i in myLocationRangeRemoveMyLocation {
             print("해당 \(i.title!!)에 들어왔습니다.",i.title!!)
             let regionCenter = CLLocationCoordinate2DMake(i.coordinate.latitude, i.coordinate.longitude)
-            let exampleRegion = CLCircularRegion(center: i.coordinate, radius: 100.0, identifier: "\(i.title! ?? "내위치")")
-            let circleRagne = MKCircle(center: regionCenter, radius: 100.0)
+            let exampleRegion = CLCircularRegion(center: i.coordinate, radius: range, identifier: "\(i.title! ?? "내위치")")
+            let circleRagne = MKCircle(center: regionCenter, radius: range)
             mapView.mapBaseView.addOverlay(circleRagne)
             
             exampleRegion.notifyOnEntry = true
@@ -146,9 +148,12 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         
         // 내 위치 반경
         let range = 300.0
+        //
+        let scale: CLLocationDegrees = 550
+        
         let regionCenter = CLLocationCoordinate2DMake(center.latitude, center.longitude)
         // MapView에 축척 m단위로 보여주기
-        let region = MKCoordinateRegion(center: center, latitudinalMeters: 550, longitudinalMeters: 550)
+        let region = MKCoordinateRegion(center: center, latitudinalMeters: scale, longitudinalMeters: scale)
         let regionRange = CLCircularRegion(center: center, radius: range, identifier: "내 위치")
         let circle = MKCircle(center: regionCenter, radius: range)
         mapView.mapBaseView.addOverlay(circle)
@@ -383,6 +388,10 @@ extension MapViewController: MKMapViewDelegate {
             self.present(detailVC, animated: true)
         }
         
+        if searchController.isActive {
+            print("서치 컨트롤 활성화 상태 : \(searchController.isActive)")
+        }
+        
     }
     
     
@@ -537,6 +546,12 @@ extension MapViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
+    
+    func presentSearchController(_ searchController: UISearchController) {
+       print("presentSearchController")
+        // 검색창 실행시 DetailVC 내리기
+        dismiss(animated: true)
+    }
 }
 
 
@@ -546,7 +561,6 @@ extension MapViewController : UISearchResultsUpdating {
         
         guard let text = searchController.searchBar.text else { return }
         let filterResults = realmManager.searchFilterData(text: text)
-        
         // 검색 결과 SearchResultsVC로 전달 및 tableView Reload하기
         if let resultsController = searchController.searchResultsController as? SearchResultsViewController {
             resultsController.filterData = filterResults
