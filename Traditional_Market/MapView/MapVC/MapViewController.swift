@@ -60,6 +60,9 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     
     // mapView range 반경을 위한 변수
     var rangeFilterAnnoation: Results<TraditionalMarketRealm>!
+    
+    // 축척
+    let scale: CLLocationDegrees = 200
 
     override func loadView() {
         self.view = mapView
@@ -153,7 +156,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
             print("해당 \(i.title!!)에 들어왔습니다.",i.title!!)
             let regionCenter = CLLocationCoordinate2DMake(i.coordinate.latitude, i.coordinate.longitude)
             let exampleRegion = CLCircularRegion(center: i.coordinate, radius: range, identifier: "\(i.title! ?? "내위치")")
-            let circleRagne = MKCircle(center: regionCenter, radius: range)
+          //  let circleRagne = MKCircle(center: regionCenter, radius: range)
            // mapView.mapBaseView.addOverlay(circleRagne)
             
             exampleRegion.notifyOnEntry = true
@@ -170,7 +173,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         // 내 위치 반경
         let range = 300.0
         //
-        let scale: CLLocationDegrees = 550
+        
         // MapView에 축척 m단위로 보여주기
         let region = MKCoordinateRegion(center: center, latitudinalMeters: scale, longitudinalMeters: scale)
         let regionRange = CLCircularRegion(center: center, radius: range, identifier: "내 위치")
@@ -193,7 +196,6 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     }
     
     func setRegionScale(center: CLLocationCoordinate2D) {
-        let scale: CLLocationDegrees = 550
         // MapView에 축척 m단위로 보여주기
         let region = MKCoordinateRegion(center: center, latitudinalMeters: scale, longitudinalMeters: scale)
         
@@ -441,7 +443,8 @@ extension MapViewController: MKMapViewDelegate {
         locationManger.stopUpdatingLocation()
         mapView.currentLocationButton.isSelected = false
         mapView.currentLocationButton.tintColor = .black
-       
+        
+       // dismiss(animated: true)
     }
     
     // 어노테이션을 클릭했을때 액션 메서드
@@ -465,6 +468,7 @@ extension MapViewController: MKMapViewDelegate {
     
     // 핀을 터치 하지 않았을때 present된 DetailVC 내려주기
     func mapView(_ mapView: MKMapView, didDeselect annotation: MKAnnotation) {
+        print("MapViewController - didDeselect")
         dismiss(animated: true)
     }
     
