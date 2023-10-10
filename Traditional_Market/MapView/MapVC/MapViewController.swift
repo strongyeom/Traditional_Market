@@ -86,7 +86,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     // 식별자를 갖고 Annotation view 생성
     func setupAnnotationView(for annotation: CustomAnnotation, on mapView: MKMapView) -> MKAnnotationView {
         // dequeueReusableAnnotationView: 식별자를 확인하여 사용가능한 뷰가 있으면 해당 뷰를 반환
-        return mapView.dequeueReusableAnnotationView(withIdentifier: NSStringFromClass(CustomAnnotationView.self), for: annotation)
+        return mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier, for: annotation)
     }
   
     
@@ -219,7 +219,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     // MapView 위치 반경에 존재하는 어노테이션만 보여주기
     func mapViewRangeInAnnotations(containRange: Results<TraditionalMarketRealm>) {
         addAnnotationConvert = []
-        
+        self.mapView.mapBaseView.removeAnnotations(self.mapView.mapBaseView.annotations)
         let rangeAnnotation = containRange.map {
             (realItem) -> MKAnnotation in
             let pin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: realItem.latitude, longitude: realItem.longitude))
@@ -232,7 +232,19 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         for i in rangeAnnotation {
             addAnnotationConvert.append(i)
         }
-        mapView.mapBaseView.addAnnotations(addAnnotationConvert)
+        
+        var fianlAddAnnotation: [MKAnnotation] = []
+        
+        let aa = mapView.mapBaseView.annotations
+       // aa에 addAnnotation이 포함되어 있으면 추가하지않고 없는 것만 추가하기
+        for j in addAnnotationConvert {
+            if aa.contains(where: { annotation in
+                annotation.title!! != j.title!!
+            }) {
+                fianlAddAnnotation.append(j)
+            }
+        }
+        mapView.mapBaseView.addAnnotations(fianlAddAnnotation)
         print("추가된 어노테이션 갯수: \(addAnnotationConvert.count)")
     }
     
@@ -396,20 +408,32 @@ extension MapViewController: CLLocationManagerDelegate {
     
 }
 
+
+// MARK: - MKMapViewDelegate
 extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         // 현재 위치 표시(점)도 일종에 어노테이션이기 때문에, 이 처리를 안하게 되면, 유저 위치 어노테이션도 변경 된다.
         guard !annotation.isKind(of: MKUserLocation.self) else { return nil }
         
-        var annotationView: MKAnnotationView?
-        // 다운캐스팅이 되면 CustomAnnotation를 갖고 CustomAnnotationView를 생성
-        if let customAnnotation = annotation as? CustomAnnotation {
-            annotationView = setupAnnotationView(for: customAnnotation, on: mapView)
-            
+//        var annotationView: MKAnnotationView?
+//        // 다운캐스팅이 되면 CustomAnnotation를 갖고 CustomAnnotationView를 생성
+//        if let customAnnotation = annotation as? CustomAnnotation {
+//            annotationView = setupAnnotationView(for: customAnnotation, on: mapView)
+//        }
+//
+        switch annotation {
+        case is CustomAnnotation:
+            let view = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier, for: annotation)
+                    view.clusteringIdentifier = String(describing: CustomAnnotationView.self)
+                    return view
+        case is MKClusterAnnotation:
+            return mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier, for: annotation)
+        default:
+            return nil
         }
         
-        return annotationView
+      //  return annotationView
     }
     
     // MapView를 터치했을때 액션 메서드
@@ -539,7 +563,9 @@ extension MapViewController {
         buttonEvent()
        // mapView.mapBaseView.register(MKAnnotationView.self, forAnnotationViewWithReuseIdentifier: String(describing: MKAnnotationView.self))
         // NSStringFromClass 클래스 타입자체 이름을 string 반환
-        mapView.mapBaseView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: NSStringFromClass(CustomAnnotationView.self))
+        mapView.mapBaseView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        
+        mapView.mapBaseView.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
         
     }
     

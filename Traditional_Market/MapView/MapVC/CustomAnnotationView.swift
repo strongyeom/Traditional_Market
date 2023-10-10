@@ -5,7 +5,7 @@
 //  Created by 염성필 on 2023/09/27.
 //
 
-import Foundation
+import UIKit
 import MapKit
 
 class CustomAnnotationView : MKAnnotationView {
@@ -23,11 +23,10 @@ class CustomAnnotationView : MKAnnotationView {
     var customImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
-        //  view.backgroundColor = .lightGray
         return view
     }()
     
-    lazy var stacView = {
+    lazy var stackView = {
         let view = UIStackView(arrangedSubviews: [customImageView, titleLabel])
         view.spacing = 5
         view.axis = .vertical
@@ -48,7 +47,7 @@ class CustomAnnotationView : MKAnnotationView {
         // MKAnnotation의 크기를 정함
         bounds.size = CGSize(width: 70, height: 70)
         self.addSubview(backgroundView)
-        backgroundView.addSubview(stacView)
+        backgroundView.addSubview(stackView)
     }
     
     func setConstraints() {
@@ -61,7 +60,7 @@ class CustomAnnotationView : MKAnnotationView {
             make.height.equalTo(40)
         }
         
-        stacView.snp.makeConstraints { make in
+        stackView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(5)
         }
     }

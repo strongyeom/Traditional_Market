@@ -48,6 +48,7 @@
 		26E9F36C2AD443CA0007B7CD /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 26E9F36B2AD443CA0007B7CD /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		26E9F36E2AD443CA0007B7CD /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 26E9F36D2AD443CA0007B7CD /* FirebaseCrashlytics */; };
 		26E9F3712AD518D30007B7CD /* FullImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E9F3702AD518D20007B7CD /* FullImageViewController.swift */; };
+		26E9F3732AD5A9190007B7CD /* ClusterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E9F3722AD5A9190007B7CD /* ClusterAnnotationView.swift */; };
 		26EA66442AC2AB4400F6FE6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA66432AC2AB4400F6FE6A /* AppDelegate.swift */; };
 		26EA66462AC2AB4400F6FE6A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA66452AC2AB4400F6FE6A /* SceneDelegate.swift */; };
 		26EA66482AC2AB4400F6FE6A /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA66472AC2AB4400F6FE6A /* MapViewController.swift */; };
@@ -101,6 +102,7 @@
 		26E768292AD07A820052EC4C /* Scale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scale.swift; sourceTree = "<group>"; };
 		26E9F3682AD443340007B7CD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		26E9F3702AD518D20007B7CD /* FullImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageViewController.swift; sourceTree = "<group>"; };
+		26E9F3722AD5A9190007B7CD /* ClusterAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterAnnotationView.swift; sourceTree = "<group>"; };
 		26EA66402AC2AB4400F6FE6A /* Traditional_Market.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Traditional_Market.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26EA66432AC2AB4400F6FE6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		26EA66452AC2AB4400F6FE6A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -348,6 +350,7 @@
 				26A9C4FD2AC326D5004F955A /* ExampleLocation.gpx */,
 				26A9C4F62AC2E607004F955A /* CustomAnnotation.swift */,
 				26AAD8A32AC44B07002E5DD4 /* CustomAnnotationView.swift */,
+				26E9F3722AD5A9190007B7CD /* ClusterAnnotationView.swift */,
 				26EA66572AC2ADED00F6FE6A /* MapView.swift */,
 			);
 			path = MapVC;
@@ -509,6 +512,7 @@
 				26A9C4F72AC2E607004F955A /* CustomAnnotation.swift in Sources */,
 				26EA75D52ACAD7DF00FFDFDB /* StampView.swift in Sources */,
 				26077E412ACF059F005055DF /* ImageCacheManager.swift in Sources */,
+				26E9F3732AD5A9190007B7CD /* ClusterAnnotationView.swift in Sources */,
 				26E768282AD053AC0052EC4C /* SearchResultsViewController.swift in Sources */,
 				26E31C602ACDC4C200392068 /* ExampleCell.swift in Sources */,
 				26AAD8A92AC44FCD002E5DD4 /* TraditionalMarket.swift in Sources */,
