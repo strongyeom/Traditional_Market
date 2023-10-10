@@ -74,24 +74,9 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         print("Realm파일 경로", realm.configuration.fileURL!)
         setSearchController()
         searchResultAnnotation()
-
-        
-        // Do any additional setup after loading the view, typically from a nib.
-
-        let button = UIButton(type: .roundedRect)
-        button.frame = CGRect(x: 100, y: 100, width: 100, height: 30)
-        button.setTitle("Test Crash", for: [])
-        button.addTarget(self, action: #selector(self.crashButtonTapped(_:)), for: .touchUpInside)
-        mapView.mapBaseView.addSubview(button)
-
-
       
     }
-    
-    @objc func crashButtonTapped(_ sender: AnyObject) {
-        let numbers = [0]
-        let _ = numbers[1]
-    }
+  
     
     // Search 결과 값 어노테이션 찍기
     func searchResultAnnotation() {

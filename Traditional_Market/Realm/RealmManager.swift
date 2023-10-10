@@ -25,8 +25,10 @@ class RealmManager {
         
         do {
             try realm.write {
-                realm.add(addMarket)
-                   
+                if String(addMarket.latitude) != "0.0" {
+                    realm.add(addMarket)
+                }
+                
             }
         } catch {
             print(error.localizedDescription)
