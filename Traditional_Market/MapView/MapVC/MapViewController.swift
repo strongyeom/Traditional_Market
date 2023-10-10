@@ -128,8 +128,8 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     func setSearchController() {
         
         resultsTableController = SearchResultsViewController()
-       // resultsTableController.tableView.delegate = self
-
+        // resultsTableController.tableView.delegate = self
+        
         searchController = UISearchController(searchResultsController: resultsTableController)
         searchController.searchBar.showsCancelButton = true
         searchController.searchBar.placeholder = "검색어를 입력해주세요."
@@ -139,18 +139,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         searchController.delegate = self
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
-        registerMapAnnotationViews()
     }
-    
-    
-    // 재사용을 위해 식별자 생성
-    func registerMapAnnotationViews() {
-        // NSStringFromClass 클래스 타입자체 이름을 string 반환
-        mapView.mapBaseView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: NSStringFromClass(CustomAnnotationView.self))
-    }
-    
-    
-    
     /// 해당 지역에 들어왔을때 로컬 알림 메서드
     fileprivate  func registLocation() {
         print("범위에 속하는 어노테이션 갯수",myRangeAnnotation.count)
@@ -234,6 +223,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         let rangeAnnotation = containRange.map {
             (realItem) -> MKAnnotation in
             let pin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: realItem.latitude, longitude: realItem.longitude))
+            pin.imageName = "checkStamp"
             pin.title = realItem.marketName
             return pin
         }
@@ -413,10 +403,10 @@ extension MapViewController: MKMapViewDelegate {
         guard !annotation.isKind(of: MKUserLocation.self) else { return nil }
         
         var annotationView: MKAnnotationView?
-        
         // 다운캐스팅이 되면 CustomAnnotation를 갖고 CustomAnnotationView를 생성
         if let customAnnotation = annotation as? CustomAnnotation {
             annotationView = setupAnnotationView(for: customAnnotation, on: mapView)
+            
         }
         
         return annotationView
@@ -548,6 +538,8 @@ extension MapViewController {
         mapView.mapBaseView.delegate = self
         buttonEvent()
        // mapView.mapBaseView.register(MKAnnotationView.self, forAnnotationViewWithReuseIdentifier: String(describing: MKAnnotationView.self))
+        // NSStringFromClass 클래스 타입자체 이름을 string 반환
+        mapView.mapBaseView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: NSStringFromClass(CustomAnnotationView.self))
         
     }
     

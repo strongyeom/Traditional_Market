@@ -12,22 +12,22 @@ class CustomAnnotationView : MKAnnotationView {
     
     let backgroundView = UIView()
     
-    var titleLabel: UILabel = {
+    var titleLabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .caption1)
-        label.textColor = .orange
+        label.font = UIFont.systemFont(ofSize: 9, weight: .regular)
+        label.textColor = .black
         label.textAlignment = .center
         return label
     }()
     
-    var customImageView: UIImageView = {
+    var customImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
-        view.backgroundColor = .lightGray
+        //  view.backgroundColor = .lightGray
         return view
     }()
     
-    lazy var stacView: UIStackView = {
+    lazy var stacView = {
         let view = UIStackView(arrangedSubviews: [customImageView, titleLabel])
         view.spacing = 5
         view.axis = .vertical
@@ -45,6 +45,8 @@ class CustomAnnotationView : MKAnnotationView {
     }
     
     func configureView() {
+        // MKAnnotation의 크기를 정함
+        bounds.size = CGSize(width: 70, height: 70)
         self.addSubview(backgroundView)
         backgroundView.addSubview(stacView)
     }
@@ -52,6 +54,11 @@ class CustomAnnotationView : MKAnnotationView {
     func setConstraints() {
         backgroundView.snp.makeConstraints { make in
             make.size.equalTo(70)
+        }
+        
+        customImageView.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+            make.height.equalTo(40)
         }
         
         stacView.snp.makeConstraints { make in
@@ -74,29 +81,9 @@ class CustomAnnotationView : MKAnnotationView {
         guard let annotation = annotation as? CustomAnnotation else { return }
         
         titleLabel.text = annotation.title
-        
-        guard let imageName = annotation.imageName,
-              let image = UIImage(named: imageName) else { return }
-        
-        customImageView.image = image
-        
-        // 이미지의 크기 및 레이블의 사이즈가 변경될 수도 있으므로 레이아웃을 업데이트 한다.
-        setNeedsLayout()
-        
-        // 참고. drawing life cycle :
-        // setNeedsLayout를 통해 다음 런루프에서 레이아웃을 업데이트하도록 예약
-        // -> layoutSubviews을 통해 레이아웃 업데이트
-        
-        // layoutSubviews를 쓰려면 setNeedsLayout도 항상 같이 사용해야 한다고 하네요.
+        if let imageName = annotation.imageName, let image = UIImage(named: imageName) {
+            
+            customImageView.image = image
+        }
     }
-    
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        // MKAnnotationView 크기를 backgroundView 크기 만큼 정해줌.
-        bounds.size = CGSize(width: 70, height: 70)
-        // 중심점을 기준으로 크기의 절반만큼 이동
-        centerOffset = CGPoint(x: 0, y: 35)
-    }
-    
 }
