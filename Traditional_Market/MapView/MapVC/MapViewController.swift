@@ -82,6 +82,12 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         searchResultAnnotation()
       
     }
+    
+    // 식별자를 갖고 Annotation view 생성
+    func setupAnnotationView(for annotation: CustomAnnotation, on mapView: MKMapView) -> MKAnnotationView {
+        // dequeueReusableAnnotationView: 식별자를 확인하여 사용가능한 뷰가 있으면 해당 뷰를 반환
+        return mapView.dequeueReusableAnnotationView(withIdentifier: NSStringFromClass(CustomAnnotationView.self), for: annotation)
+    }
   
     
     // Search 결과 값 어노테이션 찍기
@@ -133,8 +139,15 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         searchController.delegate = self
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
+        registerMapAnnotationViews()
     }
     
+    
+    // 재사용을 위해 식별자 생성
+    func registerMapAnnotationViews() {
+        // NSStringFromClass 클래스 타입자체 이름을 string 반환
+        mapView.mapBaseView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: NSStringFromClass(CustomAnnotationView.self))
+    }
     
     
     
@@ -395,6 +408,20 @@ extension MapViewController: CLLocationManagerDelegate {
 
 extension MapViewController: MKMapViewDelegate {
     
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        // 현재 위치 표시(점)도 일종에 어노테이션이기 때문에, 이 처리를 안하게 되면, 유저 위치 어노테이션도 변경 된다.
+        guard !annotation.isKind(of: MKUserLocation.self) else { return nil }
+        
+        var annotationView: MKAnnotationView?
+        
+        // 다운캐스팅이 되면 CustomAnnotation를 갖고 CustomAnnotationView를 생성
+        if let customAnnotation = annotation as? CustomAnnotation {
+            annotationView = setupAnnotationView(for: customAnnotation, on: mapView)
+        }
+        
+        return annotationView
+    }
+    
     // MapView를 터치했을때 액션 메서드
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         locationManger.stopUpdatingLocation()
@@ -425,9 +452,7 @@ extension MapViewController: MKMapViewDelegate {
     // 핀을 터치 하지 않았을때 present된 DetailVC 내려주기
     func mapView(_ mapView: MKMapView, didDeselect annotation: MKAnnotation) {
         dismiss(animated: true)
-        
     }
-    
     
     // MapView Zoom의 거리 확인
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
@@ -522,7 +547,7 @@ extension MapViewController {
     fileprivate func setMapView() {
         mapView.mapBaseView.delegate = self
         buttonEvent()
-        mapView.mapBaseView.register(MKAnnotationView.self, forAnnotationViewWithReuseIdentifier: String(describing: MKAnnotationView.self))
+       // mapView.mapBaseView.register(MKAnnotationView.self, forAnnotationViewWithReuseIdentifier: String(describing: MKAnnotationView.self))
         
     }
     
