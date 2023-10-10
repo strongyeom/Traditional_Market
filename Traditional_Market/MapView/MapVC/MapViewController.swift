@@ -55,8 +55,11 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     // resultsTableController 변수 생성
     private var resultsTableController: SearchResultsViewController!
     
-    //
+    // didSelect or DeSelect를 위한 변수
     var mkAnnotationSearchResult: MKAnnotation!
+    
+    // mapView range 반경을 위한 변수
+    var rangeFilterAnnoation: Results<TraditionalMarketRealm>!
 
     override func loadView() {
         self.view = mapView
@@ -91,7 +94,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
 
             // 해당 지역으로 setRegion
 //            self.setMyRegion(center: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
-            self.searchResultAnnotation(center: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
+            self.setRegionScale(center: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
             // search한 결과 pin 찍힌 액션 취하기 + pin을 눌렀을때 중심으로 이동하기
             
             
@@ -187,7 +190,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         registLocation()
     }
     
-    func searchResultAnnotation(center: CLLocationCoordinate2D) {
+    func setRegionScale(center: CLLocationCoordinate2D) {
         let scale: CLLocationDegrees = 550
         // MapView에 축척 m단위로 보여주기
         let region = MKCoordinateRegion(center: center, latitudinalMeters: scale, longitudinalMeters: scale)
@@ -403,6 +406,7 @@ extension MapViewController: MKMapViewDelegate {
     // 어노테이션을 클릭했을때 액션 메서드
     func mapView(_ mapView: MKMapView, didSelect annotation: MKAnnotation) {
         //  print("여기가 타는건가??",annotation.title!!)
+        setRegionScale(center: annotation.coordinate)
         let detailVC = DetailViewController()
         // Realm 필터를 사용해서 Item 하나만 던져주기
         detailVC.selectedMarket = viewModel.selectedMarketInfomation(location: annotation.coordinate)
@@ -442,20 +446,16 @@ extension MapViewController: MKMapViewDelegate {
         let maximumLongitude: Double = farEast.coordinate.longitude as Double
         
         
-        let rangeFilterd = realmManager.mapViewRangeFilterAnnotations(minLati: minimumLatitude, maxLati: maximumLatitude, minLong: minimumlongtitude, maxLong: maximumLongitude)
-        print("MapView 반경에 있는 갯수:",rangeFilterd.count)
+        rangeFilterAnnoation = realmManager.mapViewRangeFilterAnnotations(minLati: minimumLatitude, maxLati: maximumLatitude, minLong: minimumlongtitude, maxLong: maximumLongitude)
+        print("MapView 반경에 있는 갯수:",rangeFilterAnnoation.count)
         
         
         if authorization == .authorizedWhenInUse || authorization == .authorizedAlways || authorization == .denied {
-            //    mapViewRangeInAnnotations(containRange: rangeFilterd)
             
             if selectedCell != nil {
                 filterCityAnnotation()
-            } else {
-                if !searchController.isActive {
-                    mapViewRangeInAnnotations(containRange: rangeFilterd)
-                }
-              
+            } else { // selectedCell == nil 이라면
+                mapViewRangeInAnnotations(containRange: rangeFilterAnnoation)
             }
         }
         
@@ -471,7 +471,9 @@ extension MapViewController: UICollectionViewDelegate {
         if selectedSaveIndex == "\(indexPath.item)" {
             selectedCell = nil
             selectedSaveIndex = ""
-            locationManger.startUpdatingLocation()
+//            locationManger.startUpdatingLocation()
+          //  self.mapView.mapBaseView.removeAnnotations(self.mapView.mapBaseView.annotations)
+            self.mapViewRangeInAnnotations(containRange: rangeFilterAnnoation)
         } else {
             selectedSaveIndex = "\(indexPath.item)"
             selectedCell = data.localname
