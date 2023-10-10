@@ -54,6 +54,15 @@ final class DetailViewController: BaseViewController {
 
 extension DetailViewController : UICollectionViewDelegate, UICollectionViewDataSource {
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let data = viewModel.naverImageList.value.items[indexPath.row]
+        
+        let fullimageVC = FullImageViewController()
+        fullimageVC.imageUrl = data.link
+        fullimageVC.modalPresentationStyle = .fullScreen
+        present(fullimageVC, animated: true)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.naverImageList.value.items.count
     }
@@ -102,7 +111,7 @@ extension DetailViewController {
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
         layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
-        layout.headerReferenceSize = CGSize(width: width, height: width * 0.45)
+        layout.headerReferenceSize = CGSize(width: width, height: width * 0.5)
         return layout
     }
     

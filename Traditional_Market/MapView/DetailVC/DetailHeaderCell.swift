@@ -105,7 +105,7 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
         
         bgView.snp.makeConstraints { make in
             make.horizontalEdges.bottom.equalToSuperview().inset(10)
-            make.top.equalToSuperview().inset(20)
+            make.top.equalToSuperview().inset(50)
         }
         
         

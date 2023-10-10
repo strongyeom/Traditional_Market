@@ -55,6 +55,9 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     // resultsTableController 변수 생성
     private var resultsTableController: SearchResultsViewController!
     
+    //
+    var mkAnnotationSearchResult: MKAnnotation!
+
     override func loadView() {
         self.view = mapView
     }
@@ -87,15 +90,29 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
             print("searchController.searchBar.text", self.searchController.searchBar.text ?? "")
 
             // 해당 지역으로 setRegion
-            self.setMyRegion(center: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
+//            self.setMyRegion(center: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
+            self.searchResultAnnotation(center: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
             // search한 결과 pin 찍힌 액션 취하기 + pin을 눌렀을때 중심으로 이동하기
+            
+            
+            
+            // 현재 위치 핀 찍기
+            let annotation = MKPointAnnotation()
+            annotation.title = result.marketName
+            annotation.coordinate = CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude)
+            self.mkAnnotationSearchResult = annotation
+            self.mapView.mapBaseView.addAnnotation(annotation)
+            self.mapView.mapBaseView.selectAnnotation(annotation, animated: true)
+            
+            
+            
             let detailVC = DetailViewController()
             // Realm 필터를 사용해서 Item 하나만 던져주기
             detailVC.selectedMarket = self.viewModel.selectedMarketInfomation(location: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
             detailVC.isLikeClickedEvent()
-            
             self.present(detailVC, animated: true)
         }
+        
     }
     
     // SearchController 셋팅
@@ -105,6 +122,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
        // resultsTableController.tableView.delegate = self
 
         searchController = UISearchController(searchResultsController: resultsTableController)
+        searchController.searchBar.showsCancelButton = true
         searchController.searchBar.placeholder = "검색어를 입력해주세요."
         self.navigationItem.searchController = searchController
         self.navigationItem.title = "시장 지도"
@@ -131,7 +149,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
             let regionCenter = CLLocationCoordinate2DMake(i.coordinate.latitude, i.coordinate.longitude)
             let exampleRegion = CLCircularRegion(center: i.coordinate, radius: range, identifier: "\(i.title! ?? "내위치")")
             let circleRagne = MKCircle(center: regionCenter, radius: range)
-            mapView.mapBaseView.addOverlay(circleRagne)
+           // mapView.mapBaseView.addOverlay(circleRagne)
             
             exampleRegion.notifyOnEntry = true
             exampleRegion.notifyOnExit = true
@@ -163,7 +181,18 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
                 print("\(i.title! ?? "")가 내 위치에 포함되어 있지 않습니다.")
             }
         }
+        
+       
+        
         registLocation()
+    }
+    
+    func searchResultAnnotation(center: CLLocationCoordinate2D) {
+        let scale: CLLocationDegrees = 550
+        // MapView에 축척 m단위로 보여주기
+        let region = MKCoordinateRegion(center: center, latitudinalMeters: scale, longitudinalMeters: scale)
+        
+        mapView.mapBaseView.setRegion(region, animated: true)
     }
 
     
@@ -349,15 +378,15 @@ extension MapViewController: CLLocationManagerDelegate {
     }
     
     // rendering
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        // 위치 온 일때만 반경 그리기
-        let circleRenderer = MKCircleRenderer(overlay: overlay)
-        circleRenderer.strokeColor = .systemBlue
-        circleRenderer.fillColor = UIColor.systemBlue.withAlphaComponent(0.1)
-        circleRenderer.lineWidth = 0.1
-        return circleRenderer
-        
-    }
+//    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+//        // 위치 온 일때만 반경 그리기
+//        let circleRenderer = MKCircleRenderer(overlay: overlay)
+//        circleRenderer.strokeColor = .systemBlue
+//        circleRenderer.fillColor = UIColor.systemBlue.withAlphaComponent(0.1)
+//        circleRenderer.lineWidth = 0.1
+//        return circleRenderer
+//
+//    }
     
 }
 
@@ -542,14 +571,43 @@ extension MapViewController: UISearchBarDelegate {
         searchBar.resignFirstResponder()
     }
     
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        if let mkAnnotationSearchResult {
+            print("어떤게 적용됐나?",mkAnnotationSearchResult.title!!)
+          //  mapView(self.mapView.mapBaseView, didDeselect: mkAnnotationSearchResult)
+            self.mapView.mapBaseView.deselectAnnotation(mkAnnotationSearchResult, animated: true)
+        }
+       
+    }
+    
+   
+    
     func presentSearchController(_ searchController: UISearchController) {
        print("presentSearchController")
+        
         locationManger.stopUpdatingLocation()
         mapView.currentLocationButton.tintColor = .black
-        // 검색창 실행시 DetailVC 내리기
         
+        // 검색창 실행시 DetailVC 내리기
         dismiss(animated: true)
     }
+    
+    func willPresentSearchController(_ searchController: UISearchController) {
+        Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
+    }
+    
+    func didPresentSearchController(_ searchController: UISearchController) {
+        Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
+    }
+    
+    func willDismissSearchController(_ searchController: UISearchController) {
+        Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
+    }
+    
+    func didDismissSearchController(_ searchController: UISearchController) {
+        Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
+    }
+    
 }
 
 
