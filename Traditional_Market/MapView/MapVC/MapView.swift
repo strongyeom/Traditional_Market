@@ -43,7 +43,7 @@ class MapView : BaseView {
         let view = MKMapView()
         view.showsUserLocation = true
         view.userTrackingMode = .follow
-        view.cameraZoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: 1000000)
+        view.cameraZoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: 400000)
         return view
     }()
 

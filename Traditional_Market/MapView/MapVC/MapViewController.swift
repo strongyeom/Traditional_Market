@@ -102,7 +102,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
             print("searchController.searchBar.text", self.searchController.searchBar.text ?? "")
 
             // 해당 지역으로 setRegion
-//            self.setMyRegion(center: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
+            // self.setRegionScale(center: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
             self.setRegionScale(center: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
             // search한 결과 pin 찍힌 액션 취하기 + pin을 눌렀을때 중심으로 이동하기
             
@@ -257,7 +257,9 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         guard let selectedCell else { return }
         // LazyMapSequence<Results<TraditionalMarketRealm>, MKAnnotation>로 나온것을 배열로 만들어주기 위해 변수 설정
         var mkAnnotationConvert: [MKAnnotation] = []
+        print("필터 삭제 전 : \(mapView.mapBaseView.annotations.count)")
         self.mapView.mapBaseView.removeAnnotations(self.mapView.mapBaseView.annotations)
+        print("필터 삭제 후 : \(mapView.mapBaseView.annotations.count)")
         // mapView에 있는 어노테이션 삭제
         print("filterCityAnnotation - \(selectedCell)")
         let realmAnnotation = realmManager.filterData(region: selectedCell).map {
@@ -285,8 +287,10 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
 //                fianlAddAnnotation.append(j)
 //            }
 //        }
-      //  print("상세 조건을 클릭했을때 담기는 배열의 갯수 : \(fianlAddAnnotation.count)")
+     
         mapView.mapBaseView.addAnnotations(mkAnnotationConvert)
+        let aa = mapView.mapBaseView.annotations.count
+        print("필터 총 갯수 : \(aa)")
     }
     
     /// 권한 - 허용안함을 눌렀을때 Alert을 띄우고 iOS 설정 화면으로 이동
@@ -514,7 +518,7 @@ extension MapViewController: MKMapViewDelegate {
 extension MapViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
+        // mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
         let data = mapView.cityList[indexPath.item]
         
         if selectedSaveIndex == "\(indexPath.item)" {
@@ -629,8 +633,9 @@ extension MapViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         if let mkAnnotationSearchResult {
             print("어떤게 적용됐나?",mkAnnotationSearchResult.title!!)
+            dismiss(animated: true)
           //  mapView(self.mapView.mapBaseView, didDeselect: mkAnnotationSearchResult)
-            self.mapView.mapBaseView.deselectAnnotation(mkAnnotationSearchResult, animated: true)
+           // self.mapView.mapBaseView.deselectAnnotation(mkAnnotationSearchResult, animated: true)
         }
        
     }
