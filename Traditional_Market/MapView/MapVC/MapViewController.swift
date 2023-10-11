@@ -234,19 +234,19 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         for i in rangeAnnotation {
             addAnnotationConvert.append(i)
         }
-        
-        var fianlAddAnnotation: [MKAnnotation] = []
-        
-        let aa = mapView.mapBaseView.annotations
-       // aa에 addAnnotation이 포함되어 있으면 추가하지않고 없는 것만 추가하기
-        for j in addAnnotationConvert {
-            if aa.contains(where: { annotation in
-                annotation.title!! != j.title!!
-            }) {
-                fianlAddAnnotation.append(j)
-            }
-        }
-        mapView.mapBaseView.addAnnotations(fianlAddAnnotation)
+//
+//        var fianlAddAnnotation: [MKAnnotation] = []
+//
+//        let aa = mapView.mapBaseView.annotations
+//       // aa에 addAnnotation이 포함되어 있으면 추가하지않고 없는 것만 추가하기
+//        for j in addAnnotationConvert {
+//            if aa.contains(where: { annotation in
+//                annotation.title!! != j.title!!
+//            }) {
+//                fianlAddAnnotation.append(j)
+//            }
+//        }
+        mapView.mapBaseView.addAnnotations(addAnnotationConvert)
         print("추가된 어노테이션 갯수: \(addAnnotationConvert.count)")
     }
     
@@ -257,38 +257,36 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         guard let selectedCell else { return }
         // LazyMapSequence<Results<TraditionalMarketRealm>, MKAnnotation>로 나온것을 배열로 만들어주기 위해 변수 설정
         var mkAnnotationConvert: [MKAnnotation] = []
-        
+        self.mapView.mapBaseView.removeAnnotations(self.mapView.mapBaseView.annotations)
         // mapView에 있는 어노테이션 삭제
-        mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
         print("filterCityAnnotation - \(selectedCell)")
         let realmAnnotation = realmManager.filterData(region: selectedCell).map {
             (realItem) -> MKAnnotation in
             let pin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: realItem.latitude, longitude: realItem.longitude))
             pin.title = realItem.marketName
+            pin.imageName = "checkStamp"
             return pin
         }
-        
-        
-        
         
         // 반복문을 사용하여 배열 안에 담아주기
         for i in realmAnnotation {
             mkAnnotationConvert.append(i)
         }
-        
-        var fianlAddAnnotation: [MKAnnotation] = []
-        
-        let aa = mapView.mapBaseView.annotations
-       // aa에 addAnnotation이 포함되어 있으면 추가하지않고 없는 것만 추가하기
-        for j in mkAnnotationConvert {
-            if aa.contains(where: { annotation in
-                annotation.title!! != j.title!!
-            }) {
-                fianlAddAnnotation.append(j)
-            }
-        }
-        print("상세 조건을 클릭했을때 담기는 배열의 갯수 : \(fianlAddAnnotation.count)")
-        mapView.mapBaseView.addAnnotations(fianlAddAnnotation)
+//
+//        var fianlAddAnnotation: [MKAnnotation] = []
+//
+//        let aa = mapView.mapBaseView.annotations
+//        print("이거 remove했으니까 0개 아니야? :\(aa.count)")
+//       // aa에 addAnnotation이 포함되어 있으면 추가하지않고 없는 것만 추가하기
+//        for j in mkAnnotationConvert {
+//            if aa.contains(where: { annotation in
+//                annotation.title!! != j.title!!
+//            }) {
+//                fianlAddAnnotation.append(j)
+//            }
+//        }
+      //  print("상세 조건을 클릭했을때 담기는 배열의 갯수 : \(fianlAddAnnotation.count)")
+        mapView.mapBaseView.addAnnotations(mkAnnotationConvert)
     }
     
     /// 권한 - 허용안함을 눌렀을때 Alert을 띄우고 iOS 설정 화면으로 이동
