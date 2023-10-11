@@ -70,13 +70,21 @@ extension StampViewController {
         
         stampView.saveCompletion = {
             
-            if self.stampView.memoTextView.text == "텍스트를 입력해주세요" || self.stampView.memoTextView.text.isEmpty {
+            if self.stampView.memoTextView.text == "텍스트를 입력해주세요" && self.stampView.memoTextView.textColor == UIColor.lightGray || self.stampView.memoTextView.text.isEmpty {
                 self.showAlert(title: "메모장이 비어있습니다.", message: "메모장에 기록을 남겨주세요.")
             } else if self.stampView.memoTextView.text != "텍스트를 입력해주세요" && !self.stampView.memoTextView.text.isEmpty {
                 // 해당 시장안에 "저장"버튼 클릭시 메모 추가
                 self.realmManager.myFavoriteMarket(market: selectedMarket, text: self.stampView.memoTextView.text)
                 self.dismiss(animated: true)
             }
+            
+            if self.stampView.stampImage.image != nil {
+                self.saveImageToDocument(fileName: "myPhoto_ \(selectedMarket._id).jpg", image: self.stampView.stampImage.image!)
+            } else {
+                self.stampView.stampImage.image = UIImage(named: "basicStamp")
+            }
+            
+            
            
         }
     }
@@ -177,7 +185,7 @@ extension StampViewController : PHPickerViewControllerDelegate {
 
 extension StampViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
+        if let image = info[.editedImage] as? UIImage {
             stampView.stampImage.image = image
         }
         picker.dismiss(animated: true)
