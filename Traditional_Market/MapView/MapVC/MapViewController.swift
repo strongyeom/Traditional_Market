@@ -154,7 +154,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         // 내 위치 반경에 해당하는 어노테이션만 가져오기
         for i in myLocationRangeRemoveMyLocation {
             print("해당 \(i.title!!)에 들어왔습니다.",i.title!!)
-            let regionCenter = CLLocationCoordinate2DMake(i.coordinate.latitude, i.coordinate.longitude)
+          //  let regionCenter = CLLocationCoordinate2DMake(i.coordinate.latitude, i.coordinate.longitude)
             let exampleRegion = CLCircularRegion(center: i.coordinate, radius: range, identifier: "\(i.title! ?? "내위치")")
           //  let circleRagne = MKCircle(center: regionCenter, radius: range)
            // mapView.mapBaseView.addOverlay(circleRagne)
@@ -259,7 +259,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         var mkAnnotationConvert: [MKAnnotation] = []
         
         // mapView에 있는 어노테이션 삭제
-        //  mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
+        mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
         print("filterCityAnnotation - \(selectedCell)")
         let realmAnnotation = realmManager.filterData(region: selectedCell).map {
             (realItem) -> MKAnnotation in
@@ -275,8 +275,20 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         for i in realmAnnotation {
             mkAnnotationConvert.append(i)
         }
-        print("상세 조건을 클릭했을때 담기는 배열의 갯수 : \(mkAnnotationConvert.count)")
-        mapView.mapBaseView.addAnnotations(mkAnnotationConvert)
+        
+        var fianlAddAnnotation: [MKAnnotation] = []
+        
+        let aa = mapView.mapBaseView.annotations
+       // aa에 addAnnotation이 포함되어 있으면 추가하지않고 없는 것만 추가하기
+        for j in mkAnnotationConvert {
+            if aa.contains(where: { annotation in
+                annotation.title!! != j.title!!
+            }) {
+                fianlAddAnnotation.append(j)
+            }
+        }
+        print("상세 조건을 클릭했을때 담기는 배열의 갯수 : \(fianlAddAnnotation.count)")
+        mapView.mapBaseView.addAnnotations(fianlAddAnnotation)
     }
     
     /// 권한 - 허용안함을 눌렀을때 Alert을 띄우고 iOS 설정 화면으로 이동
@@ -443,35 +455,31 @@ extension MapViewController: MKMapViewDelegate {
         locationManger.stopUpdatingLocation()
         mapView.currentLocationButton.isSelected = false
         mapView.currentLocationButton.tintColor = .black
-        
-       // dismiss(animated: true)
     }
     
     // 어노테이션을 클릭했을때 액션 메서드
     func mapView(_ mapView: MKMapView, didSelect annotation: MKAnnotation) {
-        //  print("여기가 타는건가??",annotation.title!!)
-        setRegionScale(center: annotation.coordinate)
+        //  -> 축척이 변함 -> dismiss  ->  present -> regionDidChangeAnimated -> mapViewRangeInAnnotations -> mapView.mapBaseView.removeAnnotations -> 선택된 Annotation 자동으로 해제 -> didDeselect
         let detailVC = DetailViewController()
         // Realm 필터를 사용해서 Item 하나만 던져주기
         detailVC.selectedMarket = viewModel.selectedMarketInfomation(location: annotation.coordinate)
         detailVC.isLikeClickedEvent()
         self.dismiss(animated: true) {
             self.present(detailVC, animated: true)
+            self.setRegionScale(center: annotation.coordinate)
         }
-        
-        if searchController.isActive {
-            print("서치 컨트롤 활성화 상태 : \(searchController.isActive)")
-        }
-        
     }
+
+
+    
     
     
     // 핀을 터치 하지 않았을때 present된 DetailVC 내려주기
     func mapView(_ mapView: MKMapView, didDeselect annotation: MKAnnotation) {
-        print("MapViewController - didDeselect")
-        dismiss(animated: true)
+      //  dismiss(animated: true)
+        print("didDeselect")
     }
-    
+ 
     // MapView Zoom의 거리 확인
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         
@@ -490,7 +498,7 @@ extension MapViewController: MKMapViewDelegate {
         
         
         rangeFilterAnnoation = realmManager.mapViewRangeFilterAnnotations(minLati: minimumLatitude, maxLati: maximumLatitude, minLong: minimumlongtitude, maxLong: maximumLongitude)
-        print("MapView 반경에 있는 갯수:",rangeFilterAnnoation.count)
+        print("MapView 반경에 있는 총 갯수:",rangeFilterAnnoation.count)
         
         
         if authorization == .authorizedWhenInUse || authorization == .authorizedAlways || authorization == .denied {
