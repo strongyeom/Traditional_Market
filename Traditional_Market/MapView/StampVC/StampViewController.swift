@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PhotosUI
 
 final class StampViewController : BaseViewController {
     
@@ -19,10 +20,9 @@ final class StampViewController : BaseViewController {
         self.view = stampView
     }
     
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     
     override func configureView() {
@@ -31,6 +31,8 @@ final class StampViewController : BaseViewController {
         setStampView()
         addKeyboardNotifications()
     }
+    
+
     
 
     @objc func leftBtnClicked() {
@@ -60,7 +62,8 @@ extension StampViewController {
         guard let selectedMarket else { return }
         stampView.marketTitle.text = selectedMarket.marketName
         stampView.memoTextView.delegate = self
-        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(stampImageTapped))
+        stampView.stampImage.addGestureRecognizer(tapGesture)
         stampView.cancelCompletion = {
             self.dismiss(animated: true)
         }
@@ -76,6 +79,39 @@ extension StampViewController {
             }
            
         }
+    }
+    
+    @objc func stampImageTapped() {
+        print("스탬프 사진 클릭 됌 -- ")
+     
+            let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+            let camera = UIAlertAction(title: "카메라", style: .default) { [weak self] _ in
+                guard let self else { return }
+                let camera = UIImagePickerController()
+                camera.sourceType = .camera
+                camera.allowsEditing = true
+                camera.cameraCaptureMode = .photo
+                camera.delegate = self
+                self.present(camera, animated: true)
+            }
+        
+            let photoLibray = UIAlertAction(title: "갤러리", style: .default) { [weak self] _ in
+                guard let self else { return }
+                var config = PHPickerConfiguration()
+                config.selectionLimit = 1
+                config.filter = .images
+                let picker = PHPickerViewController(configuration: config)
+                picker.delegate = self
+                self.present(picker, animated: true)
+            }
+        
+            let cancel = UIAlertAction(title: "취소", style: .destructive)
+            
+            actionSheet.addAction(camera)
+            actionSheet.addAction(photoLibray)
+            actionSheet.addAction(cancel)
+            present(actionSheet, animated: true)
     }
     
     
@@ -118,5 +154,36 @@ extension StampViewController : UITextViewDelegate {
             stampView.memoTextView.text = "텍스트를 입력해주세요"
             stampView.memoTextView.textColor = .lightGray
         }
+    }
+}
+
+extension StampViewController : PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true) // 1
+        
+        let itemProvider = results.first?.itemProvider // 2
+        if let itemProvider = itemProvider,
+           itemProvider.canLoadObject(ofClass: UIImage.self) { // 3
+            itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in // 4
+                DispatchQueue.main.async {
+                    self.stampView.stampImage.image = image as? UIImage // 5
+                }
+            }
+        } else {
+            // TODO: Handle empty results or item provider not being able load UIImage
+        }
+    }
+}
+
+extension StampViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
+            stampView.stampImage.image = image
+        }
+        picker.dismiss(animated: true)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
     }
 }

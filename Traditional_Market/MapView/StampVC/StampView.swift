@@ -15,8 +15,11 @@ class StampView : BaseView {
         return view
     }()
     
-    let stampImage = {
+    
+    
+    lazy var stampImage = {
        let view = UIImageView(image: UIImage(named: "basicStamp"))
+        view.isUserInteractionEnabled = true
         return view
     }()
     
