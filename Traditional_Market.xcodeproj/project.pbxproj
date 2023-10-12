@@ -23,6 +23,8 @@
 		26A5BB642AD8042600D03FC7 /* LevelInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A5BB632AD8042600D03FC7 /* LevelInfoViewController.swift */; };
 		26A5BB662AD8088800D03FC7 /* SaveMarketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A5BB652AD8088800D03FC7 /* SaveMarketViewController.swift */; };
 		26A5BB682AD8351C00D03FC7 /* SaveTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A5BB672AD8351C00D03FC7 /* SaveTableView.swift */; };
+		26A5BB6B2AD8456900D03FC7 /* SavedDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A5BB6A2AD8456900D03FC7 /* SavedDetailViewController.swift */; };
+		26A5BB6D2AD8458200D03FC7 /* SavedDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A5BB6C2AD8458200D03FC7 /* SavedDetailView.swift */; };
 		26A9C4F72AC2E607004F955A /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A9C4F62AC2E607004F955A /* CustomAnnotation.swift */; };
 		26A9C4FA2AC2E77D004F955A /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 26A9C4F92AC2E77D004F955A /* Toast */; };
 		26A9C4FC2AC324EE004F955A /* Ext+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A9C4FB2AC324EE004F955A /* Ext+UIViewController.swift */; };
@@ -85,6 +87,8 @@
 		26A5BB632AD8042600D03FC7 /* LevelInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelInfoViewController.swift; sourceTree = "<group>"; };
 		26A5BB652AD8088800D03FC7 /* SaveMarketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveMarketViewController.swift; sourceTree = "<group>"; };
 		26A5BB672AD8351C00D03FC7 /* SaveTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveTableView.swift; sourceTree = "<group>"; };
+		26A5BB6A2AD8456900D03FC7 /* SavedDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedDetailViewController.swift; sourceTree = "<group>"; };
+		26A5BB6C2AD8458200D03FC7 /* SavedDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedDetailView.swift; sourceTree = "<group>"; };
 		26A9C4F62AC2E607004F955A /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		26A9C4FB2AC324EE004F955A /* Ext+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIViewController.swift"; sourceTree = "<group>"; };
 		26A9C4FD2AC326D5004F955A /* ExampleLocation.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ExampleLocation.gpx; sourceTree = "<group>"; };
@@ -158,8 +162,7 @@
 				26015E372ACC0CC300D25C94 /* ProfileViewController.swift */,
 				26A5BB612AD7E6C300D03FC7 /* TopView.swift */,
 				26A5BB632AD8042600D03FC7 /* LevelInfoViewController.swift */,
-				26A5BB652AD8088800D03FC7 /* SaveMarketViewController.swift */,
-				26A5BB672AD8351C00D03FC7 /* SaveTableView.swift */,
+				26A5BB692AD8454000D03FC7 /* SavedMarket */,
 				26E31C542ACD3F5400392068 /* Cell */,
 			);
 			path = ProfileVC;
@@ -209,6 +212,17 @@
 				26E768292AD07A820052EC4C /* Scale.swift */,
 			);
 			path = Enum;
+			sourceTree = "<group>";
+		};
+		26A5BB692AD8454000D03FC7 /* SavedMarket */ = {
+			isa = PBXGroup;
+			children = (
+				26A5BB652AD8088800D03FC7 /* SaveMarketViewController.swift */,
+				26A5BB672AD8351C00D03FC7 /* SaveTableView.swift */,
+				26A5BB6A2AD8456900D03FC7 /* SavedDetailViewController.swift */,
+				26A5BB6C2AD8458200D03FC7 /* SavedDetailView.swift */,
+			);
+			path = SavedMarket;
 			sourceTree = "<group>";
 		};
 		26AAD8A52AC44D9B002E5DD4 /* MapView */ = {
@@ -490,6 +504,7 @@
 				2633E7112AC71DC8002581EB /* DetailHeaderCell.swift in Sources */,
 				26AAD8B62AC46203002E5DD4 /* TraditionalMarketViewModel.swift in Sources */,
 				26229BA82AC5AD84002FBE59 /* BaseViewController.swift in Sources */,
+				26A5BB6B2AD8456900D03FC7 /* SavedDetailViewController.swift in Sources */,
 				2633E7042AC6AC90002581EB /* City.swift in Sources */,
 				26AAD8B32AC45B69002E5DD4 /* Router.swift in Sources */,
 				2633E70B2AC70955002581EB /* DetailMarketInfoCell.swift in Sources */,
@@ -513,6 +528,7 @@
 				26015E382ACC0CC300D25C94 /* ProfileViewController.swift in Sources */,
 				26E7682A2AD07A820052EC4C /* Scale.swift in Sources */,
 				26015E352ACC0C7900D25C94 /* TabBarController.swift in Sources */,
+				26A5BB6D2AD8458200D03FC7 /* SavedDetailView.swift in Sources */,
 				26229B9D2AC57528002FBE59 /* RealmManager.swift in Sources */,
 				26EA66442AC2AB4400F6FE6A /* AppDelegate.swift in Sources */,
 				26EA66462AC2AB4400F6FE6A /* SceneDelegate.swift in Sources */,
