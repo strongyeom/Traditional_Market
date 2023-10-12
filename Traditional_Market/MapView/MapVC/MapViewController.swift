@@ -220,6 +220,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     
     // MapView 위치 반경에 존재하는 어노테이션만 보여주기
     func mapViewRangeInAnnotations(containRange: Results<TraditionalMarketRealm>) {
+        var currentAnnotations = mapView.mapBaseView.annotations
         addAnnotationConvert = []
         self.mapView.mapBaseView.removeAnnotations(self.mapView.mapBaseView.annotations)
         let rangeAnnotation = containRange.map {
@@ -234,26 +235,49 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         for i in rangeAnnotation {
             addAnnotationConvert.append(i)
         }
-//
-//        var fianlAddAnnotation: [MKAnnotation] = []
-//
-//        let aa = mapView.mapBaseView.annotations
-//       // aa에 addAnnotation이 포함되어 있으면 추가하지않고 없는 것만 추가하기
-//        for j in addAnnotationConvert {
-//            if aa.contains(where: { annotation in
-//                annotation.title!! != j.title!!
-//            }) {
-//                fianlAddAnnotation.append(j)
-//            }
-//        }
-        mapView.mapBaseView.addAnnotations(addAnnotationConvert)
-        print("추가된 어노테이션 갯수: \(addAnnotationConvert.count)")
+
+//        mapView.mapBaseView.addAnnotations(addAnnotationConvert)
+//        print("추가된 어노테이션 갯수: \(addAnnotationConvert.count)")
+        
+        // 현재 모든 어노테이션에서 추가한 어노테이션의 좌표가 같지 않은것만 필터링하기
+        let removeAnnotations = currentAnnotations.filter { (annotation) in
+            !addAnnotationConvert.contains(where: {
+                $0.coordinate.latitude == annotation.coordinate.latitude && $0.coordinate.longitude == annotation.coordinate.longitude
+            })
+        }
+        // 같지 않은것 어노테이션 빼기
+        mapView.mapBaseView.removeAnnotations(removeAnnotations)
+        
+        // 기존 어노테이션에 추가하려는 어노테이션이 없으면 추가 배열 생성
+        let addAnnotations = addAnnotationConvert.filter { newAnnotation in
+            !currentAnnotations.contains(where: {
+                $0.coordinate.latitude == newAnnotation.coordinate.latitude && $0.coordinate.latitude == newAnnotation.coordinate.longitude
+            })
+        }
+        
+        mapView.mapBaseView.addAnnotations(addAnnotations)
+        /*
+         let removeAnnotations = currentAnnotations.filter { (annotation) in
+             !newAnnotation.contains(where: {
+                 $0.coordinate.latitude == annotation.coordinate.latitude && $0.coordinate.longitude == annotation.coordinate.longitude
+             })
+         }
+         mapView.mapBaseView.removeAnnotations(removeAnnotations)
+         
+         let addAnnotations = newAnnotation.filter { newAnnotation in
+             !currentAnnotations.contains(where: {
+                 $0.coordinate.latitude == newAnnotation.coordinate.latitude && $0.coordinate.latitude == newAnnotation.coordinate.longitude
+             })
+         }
+         
+         mapView.mapBaseView.addAnnotations(addAnnotations)
+         */
     }
     
     
     /// 해당 지역 Annotation만 보여주기
     fileprivate  func filterCityAnnotation() {
-        
+        var currentAnnotations = mapView.mapBaseView.annotations
         guard let selectedCell else { return }
         // LazyMapSequence<Results<TraditionalMarketRealm>, MKAnnotation>로 나온것을 배열로 만들어주기 위해 변수 설정
         var mkAnnotationConvert: [MKAnnotation] = []
@@ -274,23 +298,25 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         for i in realmAnnotation {
             mkAnnotationConvert.append(i)
         }
-//
-//        var fianlAddAnnotation: [MKAnnotation] = []
-//
-//        let aa = mapView.mapBaseView.annotations
-//        print("이거 remove했으니까 0개 아니야? :\(aa.count)")
-//       // aa에 addAnnotation이 포함되어 있으면 추가하지않고 없는 것만 추가하기
-//        for j in mkAnnotationConvert {
-//            if aa.contains(where: { annotation in
-//                annotation.title!! != j.title!!
-//            }) {
-//                fianlAddAnnotation.append(j)
-//            }
-//        }
-     
-        mapView.mapBaseView.addAnnotations(mkAnnotationConvert)
-        let aa = mapView.mapBaseView.annotations.count
-        print("필터 총 갯수 : \(aa)")
+        
+        let removeAnnotations = currentAnnotations.filter { (annotation) in
+            !mkAnnotationConvert.contains(where: {
+                $0.coordinate.latitude == annotation.coordinate.latitude && $0.coordinate.longitude == annotation.coordinate.longitude
+            })
+        }
+        mapView.mapBaseView.removeAnnotations(removeAnnotations)
+        
+        let addAnnotations = mkAnnotationConvert.filter { newAnnotation in
+            !currentAnnotations.contains(where: {
+                $0.coordinate.latitude == newAnnotation.coordinate.latitude && $0.coordinate.latitude == newAnnotation.coordinate.longitude
+            })
+        }
+        
+        mapView.mapBaseView.addAnnotations(addAnnotations)
+
+//        mapView.mapBaseView.addAnnotations(mkAnnotationConvert)
+//        let aa = mapView.mapBaseView.annotations.count
+//        print("필터 총 갯수 : \(aa)")
     }
     
     /// 권한 - 허용안함을 눌렀을때 Alert을 띄우고 iOS 설정 화면으로 이동
@@ -520,7 +546,7 @@ extension MapViewController: MKMapViewDelegate {
 extension MapViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        // mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
+         mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
         let data = mapView.cityList[indexPath.item]
         
         if selectedSaveIndex == "\(indexPath.item)" {
@@ -577,8 +603,6 @@ extension MapViewController {
     fileprivate func setMapView() {
         mapView.mapBaseView.delegate = self
         buttonEvent()
-       // mapView.mapBaseView.register(MKAnnotationView.self, forAnnotationViewWithReuseIdentifier: String(describing: MKAnnotationView.self))
-        // NSStringFromClass 클래스 타입자체 이름을 string 반환
         mapView.mapBaseView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         
         mapView.mapBaseView.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
@@ -636,40 +660,18 @@ extension MapViewController: UISearchBarDelegate {
         if let mkAnnotationSearchResult {
             print("어떤게 적용됐나?",mkAnnotationSearchResult.title!!)
             dismiss(animated: true)
-          //  mapView(self.mapView.mapBaseView, didDeselect: mkAnnotationSearchResult)
-           // self.mapView.mapBaseView.deselectAnnotation(mkAnnotationSearchResult, animated: true)
         }
-       
     }
     
    
     
     func presentSearchController(_ searchController: UISearchController) {
        print("presentSearchController")
-        
         locationManger.stopUpdatingLocation()
         mapView.currentLocationButton.tintColor = .black
-        
         // 검색창 실행시 DetailVC 내리기
         dismiss(animated: true)
     }
-    
-    func willPresentSearchController(_ searchController: UISearchController) {
-        Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
-    }
-    
-    func didPresentSearchController(_ searchController: UISearchController) {
-        Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
-    }
-    
-    func willDismissSearchController(_ searchController: UISearchController) {
-        Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
-    }
-    
-    func didDismissSearchController(_ searchController: UISearchController) {
-        Swift.debugPrint("UISearchControllerDelegate invoked method: \(#function).")
-    }
-    
 }
 
 
