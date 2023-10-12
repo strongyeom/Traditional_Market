@@ -9,39 +9,17 @@ import UIKit
 import RealmSwift
 
 class ProfileViewController : BaseViewController {
+
     
-    let topView = UIView()
+    let topView = TopView()
     
+//    override func loadView() {
+//        self.view = topView
+//    }
     
-  
     let realmManager = RealmManager()
     
-    let helloTitle = {
-       let view = UILabel()
-        view.text = "안녕하세요"
-        view.textAlignment = .left
-        view.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-        view.textColor = .gray
-        return view
-    }()
-    
-    let nickName = {
-       let view = UILabel()
-        view.text = "백반기행"
-        view.font = UIFont.systemFont(ofSize: 20, weight: .medium)
-        return view
-    }()
-    
-    let stampCountLabel = {
-       let view = UILabel()
-       // view.text = "시장 스탬프 3개"
-        view.font = UIFont.systemFont(ofSize: 13)
-        return view
-    }()
-    
-    
     let infoList = [
-    "내가 방문한 시장",
     "앱 소개",
     "개인정보방침",
     "버전 정보"
@@ -59,22 +37,21 @@ class ProfileViewController : BaseViewController {
     override func configureView() {
         super.configureView()
         navigationItem.title = "마이페이지"
-        
-        topView.backgroundColor = .lightGray
+        setupTableView()
         view.addSubview(topView)
-        
-        [helloTitle, nickName, stampCountLabel].forEach {
-            topView.addSubview($0)
-        }
+        topView.levelDelegate = self
+    }
+    
+    func setupTableView() {
         
         view.addSubview(tableView)
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.rowHeight = 50
-        tableView.separatorStyle = .none
-        tableView.register(ExampleCell.self, forCellReuseIdentifier: String(describing: ExampleCell.self))
-        
-        
+       tableView.dataSource = self
+       tableView.delegate = self
+       tableView.rowHeight = 50
+       tableView.alwaysBounceVertical = false
+       tableView.separatorStyle = .none
+       tableView.register(ExampleCell.self, forCellReuseIdentifier: String(describing: ExampleCell.self))
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,30 +59,15 @@ class ProfileViewController : BaseViewController {
         // MARK: - FavoriteData를 가져오고 있음
         realmFavorite = realmManager.allOfFavoriteRealmCount()
         let favoriteDataCount = realmFavorite?.count ?? 0
-        stampCountLabel.text = "시장 스탬프 : \(favoriteDataCount)"
+       // stampCountLabel.text = "시장 스탬프 : \(favoriteDataCount)"
     }
     
     override func setConstraints() {
         
         topView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(10)
-            make.height.equalTo(view.snp.height).multipliedBy(0.2)
         }
-        
-        helloTitle.snp.makeConstraints { make in
-            make.top.horizontalEdges.equalToSuperview()
-        }
-        
-        nickName.snp.makeConstraints { make in
-            make.leading.equalTo(helloTitle)
-            make.top.equalTo(helloTitle.snp.bottom).offset(5)
-        }
-        
-        stampCountLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(nickName)
-            make.trailing.equalToSuperview().inset(10)
-        }
-        
+    
         tableView.snp.makeConstraints { make in
             make.top.equalTo(topView.snp.bottom).offset(10)
             make.bottom.horizontalEdges.equalToSuperview().inset(10)
@@ -126,6 +88,7 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ExampleCell.self)) as! ExampleCell
         guard let realmFavorite else { return UITableViewCell() }
         cell.infoText.text = infoList[indexPath.row]
+        cell.selectionStyle = .none
         cell.accessoryType = .disclosureIndicator
         return cell
     }
@@ -133,4 +96,13 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 해당 Cell을 눌렀을때 분기 처리해주기 -> Enum 만들기
     }
+}
+
+extension ProfileViewController : LevelDelegate {
+    func levelInfo() {
+        let levelInfoVC = LevelInfoViewController()
+        present(levelInfoVC, animated: true)
+    }
+    
+    
 }

@@ -18,8 +18,10 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
     
     private let bgView = {
         let view = UIView()
-        view.backgroundColor = UIColor.bgViewColor()
+      //  view.backgroundColor = UIColor.bgViewColor()
         view.layer.cornerRadius = 12
+        view.layer.borderColor = UIColor.lightGray.cgColor
+        view.layer.borderWidth = 1
         view.clipsToBounds = true
         return view
     }()
