@@ -84,7 +84,6 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: InfomationCell.self)) as! InfomationCell
-        guard let realmFavorite else { return UITableViewCell() }
         cell.infoText.text = infoList[indexPath.row]
         cell.selectionStyle = .none
         cell.accessoryType = .disclosureIndicator

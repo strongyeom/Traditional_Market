@@ -79,15 +79,22 @@ extension StampViewController {
             }
             
             if self.stampView.stampImage.image != nil {
-                self.saveImageToDocument(fileName: "myPhoto_ \(selectedMarket._id).jpg", image: self.stampView.stampImage.image!)
+                let favoriteMarket = self.selectedMarketConvertToFavoriteMarket(marktet: selectedMarket)
+                
+                self.saveImageToDocument(fileName: "myPhoto_ \(favoriteMarket.date).jpg", image: self.stampView.stampImage.image!)
             } else {
                 self.stampView.stampImage.image = UIImage(named: "basicStamp")
             }
-            
-            
-           
         }
     }
+    
+    
+    func selectedMarketConvertToFavoriteMarket(marktet: TraditionalMarketRealm) -> FavoriteTable {
+        
+        let favoriteMarket = FavoriteTable(marketName: marktet.marketName, marketType: marktet.marketType, loadNameAddress: marktet.loadNameAddress, address: marktet.address, marketOpenCycle: marktet.marketOpenCycle, latitude: marktet.latitude, longitude: marktet.longitude, popularProducts: marktet.popularProducts ?? "", phoneNumber: marktet.phoneNumber, memo: stampView.memoTextView.text!, date: Date())
+        return favoriteMarket
+    }
+    
     
     @objc func stampImageTapped() {
         print("스탬프 사진 클릭 됌 -- ")
