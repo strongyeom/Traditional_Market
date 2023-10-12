@@ -22,18 +22,19 @@ class SaveMarketViewController : BaseViewController {
     
     override func configureView() {
         super.configureView()
+        print("SaveMarketViewController - configureView")
         settuptableView()
         navigationItem.title = "내가 저장한 시장"
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print("SaveMarketViewController - viewWillAppear")
         saveRealmMarket = realmManager.allOfFavoriteRealmCount()
     }
     
     
     func settuptableView() {
-        
         saveTableView.tableView.delegate = self
         saveTableView.tableView.dataSource = self
     }
@@ -45,11 +46,13 @@ extension SaveMarketViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("SaveMarketViewController - numberOfRowsInSection")
         guard let saveRealmMarket else { return 0 }
         return saveRealmMarket.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("SaveMarketViewController - cellForRowAt")
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SaveMarketCell.identifier, for: indexPath) as? SaveMarketCell,
             let saveRealmMarket = saveRealmMarket
         else { return UITableViewCell() }
