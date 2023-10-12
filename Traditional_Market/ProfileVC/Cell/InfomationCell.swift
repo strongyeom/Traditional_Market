@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ExampleCell : UITableViewCell {
+class InfomationCell : UITableViewCell {
     
     let infoText = UILabel()
     

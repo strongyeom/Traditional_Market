@@ -40,11 +40,10 @@
 		26CC8E752AC87180009ABB14 /* NaverMarketImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC8E742AC87180009ABB14 /* NaverMarketImage.swift */; };
 		26CC8E7B2AC87DDC009ABB14 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 26CC8E7A2AC87DDC009ABB14 /* Kingfisher */; };
 		26E31C532ACD3E0D00392068 /* ReusableIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E31C522ACD3E0D00392068 /* ReusableIdentifier.swift */; };
-		26E31C562ACD3F5E00392068 /* StampCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E31C552ACD3F5E00392068 /* StampCell.swift */; };
 		26E31C582ACD3FB400392068 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E31C572ACD3FB400392068 /* BaseCollectionViewCell.swift */; };
 		26E31C5A2ACD40EA00392068 /* BaseHeaderReusableCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E31C592ACD40EA00392068 /* BaseHeaderReusableCollectionView.swift */; };
-		26E31C5C2ACD418C00392068 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E31C5B2ACD418C00392068 /* ListCell.swift */; };
-		26E31C602ACDC4C200392068 /* ExampleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E31C5F2ACDC4C200392068 /* ExampleCell.swift */; };
+		26E31C5C2ACD418C00392068 /* SaveMarketCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E31C5B2ACD418C00392068 /* SaveMarketCell.swift */; };
+		26E31C602ACDC4C200392068 /* InfomationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E31C5F2ACDC4C200392068 /* InfomationCell.swift */; };
 		26E768282AD053AC0052EC4C /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E768272AD053AC0052EC4C /* SearchResultsViewController.swift */; };
 		26E7682A2AD07A820052EC4C /* Scale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E768292AD07A820052EC4C /* Scale.swift */; };
 		26E9F3692AD443340007B7CD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26E9F3682AD443340007B7CD /* GoogleService-Info.plist */; };
@@ -99,11 +98,10 @@
 		26CC8E6F2AC843E9009ABB14 /* Ext+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIColor.swift"; sourceTree = "<group>"; };
 		26CC8E742AC87180009ABB14 /* NaverMarketImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverMarketImage.swift; sourceTree = "<group>"; };
 		26E31C522ACD3E0D00392068 /* ReusableIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableIdentifier.swift; sourceTree = "<group>"; };
-		26E31C552ACD3F5E00392068 /* StampCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StampCell.swift; sourceTree = "<group>"; };
 		26E31C572ACD3FB400392068 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		26E31C592ACD40EA00392068 /* BaseHeaderReusableCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseHeaderReusableCollectionView.swift; sourceTree = "<group>"; };
-		26E31C5B2ACD418C00392068 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
-		26E31C5F2ACDC4C200392068 /* ExampleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleCell.swift; sourceTree = "<group>"; };
+		26E31C5B2ACD418C00392068 /* SaveMarketCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveMarketCell.swift; sourceTree = "<group>"; };
+		26E31C5F2ACDC4C200392068 /* InfomationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfomationCell.swift; sourceTree = "<group>"; };
 		26E768272AD053AC0052EC4C /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		26E768292AD07A820052EC4C /* Scale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scale.swift; sourceTree = "<group>"; };
 		26E9F3682AD443340007B7CD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -286,9 +284,8 @@
 		26E31C542ACD3F5400392068 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				26E31C552ACD3F5E00392068 /* StampCell.swift */,
-				26E31C5B2ACD418C00392068 /* ListCell.swift */,
-				26E31C5F2ACDC4C200392068 /* ExampleCell.swift */,
+				26E31C5B2ACD418C00392068 /* SaveMarketCell.swift */,
+				26E31C5F2ACDC4C200392068 /* InfomationCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -483,7 +480,6 @@
 				26C92EC42AD2F622002A53D2 /* SearchCell.swift in Sources */,
 				26229B9F2AC575AD002FBE59 /* TraditionalMarketRealm.swift in Sources */,
 				2633E7002AC6A2A4002581EB /* CityCell.swift in Sources */,
-				26E31C562ACD3F5E00392068 /* StampCell.swift in Sources */,
 				26AAD8C12AC48574002E5DD4 /* MarketAPIManager.swift in Sources */,
 				26AAD8B82AC46218002E5DD4 /* Observable.swift in Sources */,
 				2633E7072AC6C4D5002581EB /* CityIndex.swift in Sources */,
@@ -498,7 +494,7 @@
 				26E31C532ACD3E0D00392068 /* ReusableIdentifier.swift in Sources */,
 				26CC8E752AC87180009ABB14 /* NaverMarketImage.swift in Sources */,
 				26EA66482AC2AB4400F6FE6A /* MapViewController.swift in Sources */,
-				26E31C5C2ACD418C00392068 /* ListCell.swift in Sources */,
+				26E31C5C2ACD418C00392068 /* SaveMarketCell.swift in Sources */,
 				26E9F3712AD518D30007B7CD /* FullImageViewController.swift in Sources */,
 				26EA66582AC2ADED00F6FE6A /* MapView.swift in Sources */,
 				2633E7092AC6E7ED002581EB /* DetailViewController.swift in Sources */,
@@ -526,7 +522,7 @@
 				26E9F3732AD5A9190007B7CD /* ClusterAnnotationView.swift in Sources */,
 				26E768282AD053AC0052EC4C /* SearchResultsViewController.swift in Sources */,
 				26A5BB662AD8088800D03FC7 /* SaveMarketViewController.swift in Sources */,
-				26E31C602ACDC4C200392068 /* ExampleCell.swift in Sources */,
+				26E31C602ACDC4C200392068 /* InfomationCell.swift in Sources */,
 				26AAD8A92AC44FCD002E5DD4 /* TraditionalMarket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

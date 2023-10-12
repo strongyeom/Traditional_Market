@@ -12,11 +12,7 @@ class ProfileViewController : BaseViewController {
 
     
     let topView = TopView()
-    
-//    override func loadView() {
-//        self.view = topView
-//    }
-    
+
     let realmManager = RealmManager()
     
     let infoList = [
@@ -51,7 +47,7 @@ class ProfileViewController : BaseViewController {
        tableView.rowHeight = 50
        tableView.alwaysBounceVertical = false
        tableView.separatorStyle = .none
-       tableView.register(ExampleCell.self, forCellReuseIdentifier: String(describing: ExampleCell.self))
+       tableView.register(InfomationCell.self, forCellReuseIdentifier: String(describing: InfomationCell.self))
        
     }
     
@@ -60,7 +56,8 @@ class ProfileViewController : BaseViewController {
         // MARK: - FavoriteData를 가져오고 있음
         realmFavorite = realmManager.allOfFavoriteRealmCount()
         let favoriteDataCount = realmFavorite?.count ?? 0
-       // stampCountLabel.text = "시장 스탬프 : \(favoriteDataCount)"
+        
+        topView.stampCountLabel.text = "\(favoriteDataCount)개"
     }
     
     override func setConstraints() {
@@ -86,7 +83,7 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ExampleCell.self)) as! ExampleCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: InfomationCell.self)) as! InfomationCell
         guard let realmFavorite else { return UITableViewCell() }
         cell.infoText.text = infoList[indexPath.row]
         cell.selectionStyle = .none
