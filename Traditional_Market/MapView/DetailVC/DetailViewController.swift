@@ -84,6 +84,9 @@ extension DetailViewController : UICollectionViewDelegate, UICollectionViewDataS
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: String(describing: DetailHeaderCell.self), for: indexPath) as? DetailHeaderCell else { return UICollectionReusableView() }
             header.configureCell(market: selectedMarket)
             header.delegate = self
+            header.completion = {
+                self.dismiss(animated: true)
+            }
             return header
         } else {
             return UICollectionReusableView()
