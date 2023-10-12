@@ -40,6 +40,7 @@ class ProfileViewController : BaseViewController {
         setupTableView()
         view.addSubview(topView)
         topView.levelDelegate = self
+        topView.likeBtnDelegate = self
     }
     
     func setupTableView() {
@@ -98,11 +99,18 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension ProfileViewController : LevelDelegate {
+extension ProfileViewController : ActionDelegate {
+    func likeBtnClicked() {
+        let saveMarket = SaveMarketViewController()
+        navigationController?.pushViewController(saveMarket, animated: true)
+    }
+    
     func levelInfo() {
         let levelInfoVC = LevelInfoViewController()
         present(levelInfoVC, animated: true)
     }
+    
+    
     
     
 }

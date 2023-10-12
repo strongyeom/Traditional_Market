@@ -21,6 +21,7 @@
 		2633E7112AC71DC8002581EB /* DetailHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2633E7102AC71DC8002581EB /* DetailHeaderCell.swift */; };
 		26A5BB622AD7E6C300D03FC7 /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A5BB612AD7E6C300D03FC7 /* TopView.swift */; };
 		26A5BB642AD8042600D03FC7 /* LevelInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A5BB632AD8042600D03FC7 /* LevelInfoViewController.swift */; };
+		26A5BB662AD8088800D03FC7 /* SaveMarketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A5BB652AD8088800D03FC7 /* SaveMarketViewController.swift */; };
 		26A9C4F72AC2E607004F955A /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A9C4F62AC2E607004F955A /* CustomAnnotation.swift */; };
 		26A9C4FA2AC2E77D004F955A /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 26A9C4F92AC2E77D004F955A /* Toast */; };
 		26A9C4FC2AC324EE004F955A /* Ext+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A9C4FB2AC324EE004F955A /* Ext+UIViewController.swift */; };
@@ -82,6 +83,7 @@
 		2633E7102AC71DC8002581EB /* DetailHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHeaderCell.swift; sourceTree = "<group>"; };
 		26A5BB612AD7E6C300D03FC7 /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
 		26A5BB632AD8042600D03FC7 /* LevelInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelInfoViewController.swift; sourceTree = "<group>"; };
+		26A5BB652AD8088800D03FC7 /* SaveMarketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveMarketViewController.swift; sourceTree = "<group>"; };
 		26A9C4F62AC2E607004F955A /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		26A9C4FB2AC324EE004F955A /* Ext+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIViewController.swift"; sourceTree = "<group>"; };
 		26A9C4FD2AC326D5004F955A /* ExampleLocation.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ExampleLocation.gpx; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				26015E372ACC0CC300D25C94 /* ProfileViewController.swift */,
 				26A5BB612AD7E6C300D03FC7 /* TopView.swift */,
 				26A5BB632AD8042600D03FC7 /* LevelInfoViewController.swift */,
+				26A5BB652AD8088800D03FC7 /* SaveMarketViewController.swift */,
 				26E31C542ACD3F5400392068 /* Cell */,
 			);
 			path = ProfileVC;
@@ -522,6 +525,7 @@
 				26077E412ACF059F005055DF /* ImageCacheManager.swift in Sources */,
 				26E9F3732AD5A9190007B7CD /* ClusterAnnotationView.swift in Sources */,
 				26E768282AD053AC0052EC4C /* SearchResultsViewController.swift in Sources */,
+				26A5BB662AD8088800D03FC7 /* SaveMarketViewController.swift in Sources */,
 				26E31C602ACDC4C200392068 /* ExampleCell.swift in Sources */,
 				26AAD8A92AC44FCD002E5DD4 /* TraditionalMarket.swift in Sources */,
 			);

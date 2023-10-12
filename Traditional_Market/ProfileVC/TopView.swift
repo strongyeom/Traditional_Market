@@ -8,8 +8,9 @@
 import UIKit
 
 
-protocol LevelDelegate: AnyObject {
+protocol ActionDelegate: AnyObject {
     func levelInfo()
+    func likeBtnClicked()
 }
 
 class TopView : BaseView {
@@ -68,7 +69,7 @@ class TopView : BaseView {
     let likeBtn = {
         let view = UIButton()
         var config = UIButton.Configuration.plain()
-        config.title = "내가 저장한 사진"
+        config.title = "내가 저장한 시장"
         config.titleAlignment = .center
         config.buttonSize = .medium
         config.image = UIImage(systemName: "arrow.forward")
@@ -128,9 +129,9 @@ class TopView : BaseView {
     }()
     
     
-    weak var levelDelegate: LevelDelegate?
+    weak var levelDelegate: ActionDelegate?
     
-    
+    weak var likeBtnDelegate: ActionDelegate?
     
     override func configureView() {
         self.addSubview(profileHorizatalStackView)
@@ -140,7 +141,12 @@ class TopView : BaseView {
     
     func setupButtonTarget() {
         self.infoLevelBtn.addTarget(self, action: #selector(infoLevelBtnClicked(_:)), for: .touchUpInside)
-       // self.likeBtn.addTarget(self, action: #selector(<#T##@objc method#>), for: .touchUpInside)
+        self.likeBtn.addTarget(self, action: #selector(likeBtnClicked(_:)), for: .touchUpInside)
+    }
+    
+    @objc func likeBtnClicked(_ sender: UIButton) {
+        print("내가 저장한 시장 버튼 눌림 - TopView")
+        likeBtnDelegate?.likeBtnClicked()
     }
     
     @objc func infoLevelBtnClicked(_ sender: UIButton) {
