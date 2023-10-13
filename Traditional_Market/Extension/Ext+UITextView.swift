@@ -8,7 +8,7 @@
 import UIKit
 
 extension UITextView {
-    func setTextViewLayout() {
+    func stampTextViewLayout() {
         self.layer.borderColor = UIColor.red.cgColor
         self.layer.borderWidth = 1
         self.layer.cornerRadius = 12
@@ -19,3 +19,4 @@ extension UITextView {
         self.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
 }
+

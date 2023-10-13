@@ -12,7 +12,7 @@ class SavedDetailView : BaseView {
     
     
     let savedImageView = UIImageView()
-    
+   
     private let marketTitle = {
        let view = UILabel()
         view.font = .systemFont(ofSize: 17, weight: .medium)
@@ -59,10 +59,11 @@ class SavedDetailView : BaseView {
         return view
     }()
     
-    private let memoText = {
-       let view = UILabel()
-        view.font = .systemFont(ofSize: 14)
-        view.numberOfLines = 0
+    let memoTextView = {
+       let view = UITextView()
+        view.layer.borderColor = UIColor.gray.cgColor
+        view.layer.borderWidth = 1
+        view.isEditable = false
         return view
     }()
     
@@ -75,10 +76,16 @@ class SavedDetailView : BaseView {
         return stack
     }()
     
+    private let memoLabel = {
+       let view = UILabel()
+        view.text = "메모 : "
+        view.font = .systemFont(ofSize: 14)
+        return view
+    }()
     
     
     override func configureView() {
-        [savedImageView, marketTitle, marketCycle, betweenLineView, marketType, stackView, memoText].forEach {
+        [savedImageView, marketTitle, marketCycle, betweenLineView, marketType, stackView, memoLabel, memoTextView].forEach {
             self.addSubview($0)
         }
     }
@@ -118,10 +125,15 @@ class SavedDetailView : BaseView {
             make.trailing.equalToSuperview().inset(10)
         }
         
-        memoText.snp.makeConstraints { make in
-            make.top.equalTo(stackView.snp.bottom).offset(10)
+        memoLabel.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(stackView)
-         //   make.bottom.equalTo(self.safeAreaLayoutGuide).inset(10)
+            make.top.equalTo(stackView.snp.bottom).offset(23)
+        }
+        
+        memoTextView.snp.makeConstraints { make in
+            make.top.equalTo(memoLabel.snp.bottom).offset(10)
+            make.horizontalEdges.equalTo(memoLabel)
+            make.bottom.equalToSuperview().inset(10)
         }
     }
     
@@ -132,7 +144,7 @@ class SavedDetailView : BaseView {
         loadAddress.text = market.loadNameAddress
         famousProducts.text = market.popularProducts
         phoneNumber.text = market.phoneNumber
-        memoText.text = "메모 : \(market.memo ?? "")"
+        memoTextView.text = market.memo ?? ""
     }
     
    

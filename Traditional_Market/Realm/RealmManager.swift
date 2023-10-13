@@ -60,6 +60,21 @@ class RealmManager {
             
         }
     }
+    
+    // Realm Favorite - DB 수정하기
+    func updateItem(id: ObjectId, memoText: String) {
+  
+        do {
+            // 트랜잭션에게 값 전달
+            try realm.write {
+                // Realm Update 해당 record중에 요소만 업데이트
+                realm.create(FavoriteTable.self, value: ["_id":id, "memo": memoText] as [String : Any], update: .modified)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
 
 
     /// Realm에서 해당 지역 필터하기

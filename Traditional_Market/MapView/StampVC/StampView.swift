@@ -39,7 +39,7 @@ class StampView : BaseView {
     
     let memoTextView = {
        let view = UITextView()
-        view.setTextViewLayout()
+        view.stampTextViewLayout()
         return view
     }()
     

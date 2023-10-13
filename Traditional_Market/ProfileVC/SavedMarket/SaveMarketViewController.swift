@@ -14,7 +14,11 @@ class SaveMarketViewController : BaseViewController {
     
     let realmManager = RealmManager()
     
-    var saveRealmMarket: Results<FavoriteTable>?
+    var saveRealmMarket: Results<FavoriteTable>? {
+        didSet {
+            self.saveTableView.tableView.reloadData()
+        }
+    }
     
     override func loadView() {
         self.view = saveTableView
@@ -77,7 +81,16 @@ extension SaveMarketViewController: UITableViewDelegate, UITableViewDataSource {
         let data = saveRealmMarket[indexPath.row]
         
         let edit = UIContextualAction(style: .normal, title: "편집") { _, _, _ in
-            
+            // 1. saveDatailVC로 이동하고
+            // 2. memoTextView 수정 가능  저장 버튼 만들고 hidden 처리 
+            // 3. 수정 한것 저장 누르면 Realm에 업데이트 , 다시 수정 못하게 false 창 내리기
+           
+            let selectedMarket = saveRealmMarket[indexPath.row]
+            let savedView = SavedDetailViewController()
+            savedView.savedSelectedData = selectedMarket
+            savedView.savedDetailView.memoTextView.isEditable = true
+            savedView.editState = false
+            self.navigationController?.pushViewController(savedView, animated: true)
         }
         
         let delete = UIContextualAction(style: .destructive, title: "삭제") { action, _, _ in
