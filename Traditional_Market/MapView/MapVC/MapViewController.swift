@@ -536,21 +536,26 @@ extension MapViewController: MKMapViewDelegate {
     }
 }
 
+// MARK: - UICollectionViewDelegate
 extension MapViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+    
          mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
         let data = mapView.cityList[indexPath.item]
+        // CollectionView에서 해당 indexPath를 사용해서 Cell 뽑아내기
+        let aa = mapView.collectionView.cellForItem(at: indexPath) as! CityCell
         
         if selectedSaveIndex == "\(indexPath.item)" {
             selectedCell = nil
             selectedSaveIndex = ""
-//            locationManger.startUpdatingLocation()
-          //  self.mapView.mapBaseView.removeAnnotations(self.mapView.mapBaseView.annotations)
             self.mapViewRangeInAnnotations(containRange: rangeFilterAnnoation)
+            
+            aa.baseView.backgroundColor = .white
         } else {
+            
             selectedSaveIndex = "\(indexPath.item)"
             selectedCell = data.localname
+            aa.baseView.backgroundColor = .yellow
         }
         
         print("\(indexPath.item) 인덱스 상세 조건: \(selectedCell ?? "nil입니다.")")
