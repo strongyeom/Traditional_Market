@@ -35,6 +35,8 @@ class SaveMarketViewController : BaseViewController {
         super.viewWillAppear(animated)
         print("SaveMarketViewController - viewWillAppear")
         saveRealmMarket = realmManager.allOfFavoriteRealmCount()
+        // 마이페이지에서 지도 갔다가 저장 하고 다시 탭을 눌렀을때 저장이 되어 있어야 하기 때문에 viewwillAppear에서 reload해줬음 
+        self.saveTableView.tableView.reloadData()
     }
 
     
@@ -52,7 +54,9 @@ extension SaveMarketViewController: UITableViewDelegate, UITableViewDataSource {
         let selectedMarket = saveRealmMarket[indexPath.row]
         let savedView = SavedDetailViewController()
         savedView.savedSelectedData = selectedMarket
-        navigationController?.pushViewController(savedView, animated: true)
+        let nav = UINavigationController(rootViewController: savedView)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true)
         
     }
     
@@ -69,8 +73,9 @@ extension SaveMarketViewController: UITableViewDelegate, UITableViewDataSource {
         else { return UITableViewCell() }
         //let row = list[indexPath.row]
         let data = saveRealmMarket[indexPath.row]
+        cell.selectionStyle = .none
         cell.marketTitle.text = data.marketName
-        cell.marketDescription.text = data.memo // "myPhoto_\(favoriteMarket._id).jpg"
+        cell.marketDescription.text = data.memo
         cell.saveImageView.image = loadImageFromDocument(fileName: "myPhoto_\(data._id).jpg")
         return cell
     }
@@ -90,7 +95,12 @@ extension SaveMarketViewController: UITableViewDelegate, UITableViewDataSource {
             savedView.savedSelectedData = selectedMarket
             savedView.savedDetailView.memoTextView.isEditable = true
             savedView.editState = false
-            self.navigationController?.pushViewController(savedView, animated: true)
+            
+            
+            let nav = UINavigationController(rootViewController: savedView)
+            nav.modalPresentationStyle = .fullScreen
+            self.present(nav, animated: true)
+            
         }
         
         let delete = UIContextualAction(style: .destructive, title: "삭제") { action, _, _ in

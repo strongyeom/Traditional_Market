@@ -30,6 +30,7 @@ class SaveMarketCell : UITableViewCell {
         view.text = "여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음"
         view.font = UIFont.systemFont(ofSize: 13)
         view.numberOfLines = 0
+        view.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         return view
     }()
     
