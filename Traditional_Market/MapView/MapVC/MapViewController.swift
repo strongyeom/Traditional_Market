@@ -412,14 +412,14 @@ extension MapViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         guard let region = region as? CLCircularRegion else { return }
-        showAlert(title: "\(region.identifier)", message: "\(region.identifier) 해당 지역에 들어왔습니다.")
+       // showAlert(title: "\(region.identifier)", message: "\(region.identifier) 해당 지역에 들어왔습니다.", completionHander: nil)
         
 //        viewModel.region.value = region
     }
     
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
         guard let region = region as? CLCircularRegion else { return }
-        showAlert(title: "\(region.identifier)", message: "\(region.identifier) 해당 지역에서 나갔습니다.")
+      //  showAlert(title: "\(region.identifier)", message: "\(region.identifier) 해당 지역에서 나갔습니다.", completionHander: nil)
     }
     
     

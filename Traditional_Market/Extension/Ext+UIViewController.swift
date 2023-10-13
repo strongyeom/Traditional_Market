@@ -8,9 +8,14 @@
 import UIKit
 
 extension UIViewController {
-    func showAlert(title: String, message: String) {
+    func showAlert(title: String, message: String, completionHander: ((UIAlertAction) -> Void)?) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let ok = UIAlertAction(title: "확인", style: .default)
+        
+        // 일단 삭제 메서드만 만들어놓고 범위 들어왔을때는 토스트나 추가 메서드 작성하자
+        
+        let ok = UIAlertAction(title: "삭제", style: .destructive, handler: completionHander)
+        
+        
         alert.addAction(ok)
         present(alert, animated: true)
     }

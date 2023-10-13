@@ -71,7 +71,7 @@ extension StampViewController {
         stampView.saveCompletion = {
             
             if self.stampView.memoTextView.text == "텍스트를 입력해주세요" && self.stampView.memoTextView.textColor == UIColor.lightGray || self.stampView.memoTextView.text.isEmpty {
-                self.showAlert(title: "메모장이 비어있습니다.", message: "메모장에 기록을 남겨주세요.")
+                self.showAlert(title: "메모장이 비어있습니다.", message: "메모장에 기록을 남겨주세요.", completionHander: nil)
             } else if self.stampView.memoTextView.text != "텍스트를 입력해주세요" && !self.stampView.memoTextView.text.isEmpty {
                 // 해당 시장안에 "저장"버튼 클릭시 메모 추가
                 self.realmManager.myFavoriteMarket(market: selectedMarket, text: self.stampView.memoTextView.text)
