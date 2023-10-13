@@ -204,23 +204,19 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
 
     
     /// Realm에 네트워크에서 받아온 API 추가
-    fileprivate  func addRealmData() {
+   // fileprivate  func addRealmData() {
         
-        let items = marketAPIManager.marketList.response.body.items
-        print("몇개가 들어오나요 ? \(items.count)")
-        // Realm에 데이터 추가
-        let _ = items.map {
-            realmManager.addData(market: $0)
-        }
-        // CityCell 눌렀을때 해당 지역 Annotation만 보여주기 - 저장이 되면 해당 default로 설정해놓은 "서울"지역 어노테이션 보여주기.
-        // filterCityAnnotation()
-        
-        print(mapView.mapBaseView.annotations.count)
-    }
+//        let items = marketAPIManager.marketList.response.body.items
+//        print("몇개가 들어오나요 ? \(items.count)")
+//        // Realm에 데이터 추가
+//        let _ = items.map {
+//            realmManager.addData(market: $0)
+//        }
+   // }
     
     // MapView 위치 반경에 존재하는 어노테이션만 보여주기
     func mapViewRangeInAnnotations(containRange: Results<TraditionalMarketRealm>) {
-        var currentAnnotations = mapView.mapBaseView.annotations
+        let currentAnnotations = mapView.mapBaseView.annotations
         addAnnotationConvert = []
         self.mapView.mapBaseView.removeAnnotations(self.mapView.mapBaseView.annotations)
         let rangeAnnotation = containRange.map {
@@ -277,7 +273,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     
     /// 해당 지역 Annotation만 보여주기
     fileprivate  func filterCityAnnotation() {
-        var currentAnnotations = mapView.mapBaseView.annotations
+        let currentAnnotations = mapView.mapBaseView.annotations
         guard let selectedCell else { return }
         // LazyMapSequence<Results<TraditionalMarketRealm>, MKAnnotation>로 나온것을 배열로 만들어주기 위해 변수 설정
         var mkAnnotationConvert: [MKAnnotation] = []
@@ -314,9 +310,6 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         
         mapView.mapBaseView.addAnnotations(addAnnotations)
 
-//        mapView.mapBaseView.addAnnotations(mkAnnotationConvert)
-//        let aa = mapView.mapBaseView.annotations.count
-//        print("필터 총 갯수 : \(aa)")
     }
     
     /// 권한 - 허용안함을 눌렀을때 Alert을 띄우고 iOS 설정 화면으로 이동
@@ -363,24 +356,24 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         case .notDetermined:
             print("아무것도 결정하지 않았다.")
             // p.list 알람 띄우기
+           // addRealmData()
             locationManger.requestWhenInUseAuthorization()
         case .restricted:
             print("권한 설정 거부함")
             showLocationSettingAlert()
-            addRealmData()
+            //addRealmData()
         case .denied:
             print("권한 설정 거부함")
             showLocationSettingAlert()
-            addRealmData()
+          //  addRealmData()
         case .authorizedAlways:
             print("항상 권한 허용")
             locationManger.startUpdatingLocation()
-            addRealmData()
+          //  addRealmData()
         case .authorizedWhenInUse:
             print("한번만 권한 허용")
             locationManger.startUpdatingLocation()
-            // addRealmData()
-            addRealmData()
+          //  addRealmData()
             setMyRegion(center: startLocation ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0))
             mapView.currentLocationButton.isSelected = true
         case .authorized:
@@ -585,7 +578,7 @@ extension MapViewController {
     fileprivate func setNetwork() {
         // 전통시장 API에서 데이터 불러오기
         marketAPIManager.request { item in
-            print("총 시장 갯수",item.response.body.items.count)
+            print("네트워크에서 저장한 RealmAdd하고 데이터 가져오기")
         }
     }
     

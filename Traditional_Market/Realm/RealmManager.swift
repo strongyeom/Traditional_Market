@@ -49,6 +49,17 @@ class RealmManager {
         }
         return marketList
     }
+    
+    func selectedRemoveData(market: FavoriteTable) {
+        
+        do {
+            try realm.write {
+                realm.delete(market)
+            }
+        } catch {
+            
+        }
+    }
 
 
     /// Realm에서 해당 지역 필터하기
@@ -128,12 +139,14 @@ class RealmManager {
         
         do {
             try realm.write {
+                print("선택했을때 추가되는 favoriteMarket : \(favoriteMarket._id)")
                 filterEqualID.myFavorite.append(favoriteMarket)
             }
         } catch {
             print("myFavoriteMarket - \(error.localizedDescription)")
         }
     }
+  
     
     // myFavoriteRealm 데이터 불러오기
     func allOfFavoriteRealmCount() -> Results<FavoriteTable> {

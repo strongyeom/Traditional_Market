@@ -37,7 +37,6 @@ class SaveMarketViewController : BaseViewController {
     func settuptableView() {
         saveTableView.tableView.delegate = self
         saveTableView.tableView.dataSource = self
-      //  guard let saveRealmMarket else { return }
     }
 }
 
@@ -47,9 +46,6 @@ extension SaveMarketViewController: UITableViewDelegate, UITableViewDataSource {
         let selectedMarket = saveRealmMarket[indexPath.row]
         let savedView = SavedDetailViewController()
         savedView.savedSelectedData = selectedMarket
-//        let savedDatailView = SavedDetailView()
-//        savedDatailView.savedImageView.image = loadImageFromDocument(fileName: "myPhoto_\(selectedMarket.date).jpg")
-//        savedDatailView.configureSavedView(market: selectedMarket)
         navigationController?.pushViewController(savedView, animated: true)
         
     }
@@ -69,7 +65,26 @@ extension SaveMarketViewController: UITableViewDelegate, UITableViewDataSource {
         let data = saveRealmMarket[indexPath.row]
         cell.marketTitle.text = data.marketName
         cell.marketDescription.text = data.memo // "myPhoto_\(favoriteMarket._id).jpg"
-        cell.saveImageView.image = loadImageFromDocument(fileName: "myPhoto_\(data.marketName)_\(data.latitude).jpg")
+        cell.saveImageView.image = loadImageFromDocument(fileName: "myPhoto_\(data._id).jpg")
         return cell
     }
+ 
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard let saveRealmMarket else { return UISwipeActionsConfiguration() }
+        let data = saveRealmMarket[indexPath.row]
+        
+        let edit = UIContextualAction(style: .normal, title: "편집") { _, _, _ in
+            
+        }
+        
+        let delete = UIContextualAction(style: .destructive, title: "삭제") { _, _, _ in
+            self.removeImageFromDocument(fileName: "myPhoto_\(data._id).jpg")
+            self.realmManager.selectedRemoveData(market: data)
+            self.saveTableView.tableView.reloadData()
+        }
+        
+        return UISwipeActionsConfiguration(actions: [delete, edit])
+    }
 }
+
+// 삭제하기 전에 이미지 먼저 지우고 그 다음에 Cell 지우기

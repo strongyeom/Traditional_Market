@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 class MarketAPIManager {
     static let shared = MarketAPIManager()
@@ -13,6 +14,10 @@ class MarketAPIManager {
     private init() { }
     
     var pageCount = Array(1...16)
+    
+    let group = DispatchGroup()
+    
+    let realmManager = RealmManager()
     
     var marketList: TraditionalMarket = TraditionalMarket(response: Response.init(body: Body.init(items: [], totalCount: "", numOfRows: "", pageNo: "")))
     
@@ -22,13 +27,22 @@ class MarketAPIManager {
     func request(completionHandler: @escaping ((TraditionalMarket) -> Void)) {
         
         for page in pageCount {
+            group.enter()
             NetworkManager.shared.request(page: page) { response in
                 
                 
                 self.marketList.response.body.items.append(contentsOf: response)
-               
-                completionHandler(self.marketList)
+                
+                let _ = response.map {
+                    self.realmManager.addData(market: $0)
+                }
+                
             }
+            group.leave()
+            
+        }
+        group.notify(queue: .main) {
+            completionHandler(self.marketList)
         }
     }
     

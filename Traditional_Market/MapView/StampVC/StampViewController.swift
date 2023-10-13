@@ -80,17 +80,18 @@ extension StampViewController {
             }
             
             if self.stampView.stampImage.image != nil {
-            //    let favoriteMarket = self.selectedMarketConvertToFavoriteMarket(marktet: selectedMarket)
-                let id = self.example(first: selectedMarket.marketName, second: "\(selectedMarket.latitude)")
+                let id = self.selectedImageId()
+                
                 self.saveImageToDocument(fileName: "myPhoto_\(id).jpg", image: self.stampView.stampImage.image!)
             } else {
                 self.stampView.stampImage.image = UIImage(named: "basicStamp")
             }
         }
     }
-    
-    func example(first: String, second: String) -> String {
-        return "\(first)_\(second)"
+ 
+    func selectedImageId() -> String {
+        let favorite = realmManager.allOfFavoriteRealmCount().first!
+        return "\(favorite._id)"
     }
     
     func selectedMarketConvertToFavoriteMarket(marktet: TraditionalMarketRealm) -> FavoriteTable {
