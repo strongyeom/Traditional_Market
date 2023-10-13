@@ -15,7 +15,7 @@ class MapView : BaseView {
     let cityList: [City] = [
         City(imageName: "basicStamp", localname: "상설장"),
         City(imageName: "checkStamp", localname: "5일장"),
-        City(imageName: "Seoul", localname: "서울특별시"),
+        City(imageName: "Seoul", localname: "서울"),
         City(imageName: "Gyeonggi-do", localname: "경기도"),
         City(imageName: "Gangwon-do", localname: "강원도"),
         City(imageName: "Chungcheongbuk-do", localname: "충청북도"),
@@ -98,12 +98,12 @@ extension MapView {
     func layout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        let spacing: CGFloat = 10
+        let spacing: CGFloat = 5
         let width = UIScreen.main.bounds.width
-        layout.itemSize = CGSize(width: width / 3.4, height: width / 6)
+        layout.itemSize = CGSize(width: (width - (spacing * 8)) / 7, height: width / 4.5)
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
-        layout.sectionInset = UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: spacing)
+        layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
         return layout
     }
 

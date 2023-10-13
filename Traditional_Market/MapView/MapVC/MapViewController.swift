@@ -277,9 +277,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         guard let selectedCell else { return }
         // LazyMapSequence<Results<TraditionalMarketRealm>, MKAnnotation>로 나온것을 배열로 만들어주기 위해 변수 설정
         var mkAnnotationConvert: [MKAnnotation] = []
-        print("필터 삭제 전 : \(mapView.mapBaseView.annotations.count)")
         self.mapView.mapBaseView.removeAnnotations(self.mapView.mapBaseView.annotations)
-        print("필터 삭제 후 : \(mapView.mapBaseView.annotations.count)")
         // mapView에 있는 어노테이션 삭제
         print("filterCityAnnotation - \(selectedCell)")
         let realmAnnotation = realmManager.filterData(region: selectedCell).map {
@@ -544,20 +542,24 @@ extension MapViewController: UICollectionViewDelegate {
         let data = mapView.cityList[indexPath.item]
         // CollectionView에서 해당 indexPath를 사용해서 Cell 뽑아내기
         let aa = mapView.collectionView.cellForItem(at: indexPath) as! CityCell
+        print("cell 클릭 : selectedSaveIndex: 전",selectedSaveIndex)
+        // Cell을 선택했다면 그 전의 Cell 배경색 white로 변경하기
         
         if selectedSaveIndex == "\(indexPath.item)" {
             selectedCell = nil
             selectedSaveIndex = ""
             self.mapViewRangeInAnnotations(containRange: rangeFilterAnnoation)
-            
             aa.baseView.backgroundColor = .white
         } else {
-            
+            if !selectedSaveIndex.isEmpty {
+                let bb = mapView.collectionView.cellForItem(at: IndexPath(row: Int(selectedSaveIndex)!, section: 0)) as! CityCell
+                bb.baseView.backgroundColor = .white
+            }
             selectedSaveIndex = "\(indexPath.item)"
             selectedCell = data.localname
             aa.baseView.backgroundColor = .yellow
         }
-        
+        print("cell 클릭 : selectedSaveIndex: 후",selectedSaveIndex)
         print("\(indexPath.item) 인덱스 상세 조건: \(selectedCell ?? "nil입니다.")")
         filterCityAnnotation()
     }
@@ -571,6 +573,7 @@ extension MapViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CityCell.self), for: indexPath) as? CityCell else { return UICollectionViewCell() }
+        print("cell 클릭 : cellForItemAt - \(indexPath.item)")
         let data = mapView.cityList[indexPath.item]
         cell.imageView.image = UIImage(named: data.imageName)
         cell.localName.text = data.localname

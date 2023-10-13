@@ -89,11 +89,12 @@ class RealmManager {
             return result
         } else {
             let result = rangeFiltetedMarket.where {
-                $0.address.contains(region)
+                $0.loadNameAddress.contains(region)
             }
             
             return result
         }
+       
     }
     
     // Search결과 필터링
