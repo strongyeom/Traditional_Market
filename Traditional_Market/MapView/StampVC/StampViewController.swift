@@ -75,7 +75,8 @@ extension StampViewController {
             } else if self.stampView.memoTextView.text != "텍스트를 입력해주세요" && !self.stampView.memoTextView.text.isEmpty {
                 // 해당 시장안에 "저장"버튼 클릭시 메모 추가
                 self.realmManager.myFavoriteMarket(market: selectedMarket, text: self.stampView.memoTextView.text)
-                self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+//                self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+                self.dismiss(animated: true)
 
             }
             

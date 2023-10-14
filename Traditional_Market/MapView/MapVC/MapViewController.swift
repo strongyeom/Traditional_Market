@@ -9,6 +9,7 @@ import UIKit
 import CoreLocation
 import MapKit
 import RealmSwift
+import Toast
 
 final class MapViewController: BaseViewController, UISearchControllerDelegate {
     
@@ -109,7 +110,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         
     }
     
-    // SearchController 셋팅
+    /// SearchController 셋팅
     func setSearchController() {
         
         resultsTableController = SearchResultsViewController()
@@ -125,11 +126,10 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
     }
+    
     /// 해당 지역에 들어왔을때 로컬 알림 메서드
     fileprivate  func registLocation() {
-        print("범위에 속하는 어노테이션 갯수",myRangeAnnotation.count)
-        print("myRangeAnnotation",myRangeAnnotation)
-        
+        print("내 범위에 속하는 어노테이션 갯수",myRangeAnnotation.count)
         // 내 범위에서 내 위치는 렌더링 하지 않기
         let myLocationRangeRemoveMyLocation = myRangeAnnotation.filter { $0.title!! != "My Location"}
         
@@ -155,6 +155,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         mapView.mapBaseView.setRegion(region, animated: true)
         
         
+        print("현재 MapView에서 보여지고 있는 어노테이션 갯수 : \(addAnnotationConvert.count)")
         for i in addAnnotationConvert {
             if regionRange.contains(i.coordinate) {
                 print("\(i.title! ?? "")가 내 위치에 포함되어 있습니다.")
@@ -164,9 +165,6 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
                 print("\(i.title! ?? "")가 내 위치에 포함되어 있지 않습니다.")
             }
         }
-        
-       
-        
         registLocation()
     }
     
@@ -177,18 +175,6 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         mapView.mapBaseView.setRegion(region, animated: true)
     }
 
-    
-    /// Realm에 네트워크에서 받아온 API 추가
-   // fileprivate  func addRealmData() {
-        
-//        let items = marketAPIManager.marketList.response.body.items
-//        print("몇개가 들어오나요 ? \(items.count)")
-//        // Realm에 데이터 추가
-//        let _ = items.map {
-//            realmManager.addData(market: $0)
-//        }
-   // }
-    
     // MapView 위치 반경에 존재하는 어노테이션만 보여주기
     func mapViewRangeInAnnotations(containRange: Results<TraditionalMarketRealm>) {
         let currentAnnotations = mapView.mapBaseView.annotations
@@ -207,9 +193,6 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
             addAnnotationConvert.append(i)
         }
 
-//        mapView.mapBaseView.addAnnotations(addAnnotationConvert)
-//        print("추가된 어노테이션 갯수: \(addAnnotationConvert.count)")
-        
         // 현재 모든 어노테이션에서 추가한 어노테이션의 좌표가 같지 않은것만 필터링하기
         let removeAnnotations = currentAnnotations.filter { (annotation) in
             !addAnnotationConvert.contains(where: {
@@ -226,23 +209,8 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
             })
         }
         
+        print("현재 축척에서 보여지지고 있는 addAnnotationConvert의 갯수")
         mapView.mapBaseView.addAnnotations(addAnnotations)
-        /*
-         let removeAnnotations = currentAnnotations.filter { (annotation) in
-             !newAnnotation.contains(where: {
-                 $0.coordinate.latitude == annotation.coordinate.latitude && $0.coordinate.longitude == annotation.coordinate.longitude
-             })
-         }
-         mapView.mapBaseView.removeAnnotations(removeAnnotations)
-         
-         let addAnnotations = newAnnotation.filter { newAnnotation in
-             !currentAnnotations.contains(where: {
-                 $0.coordinate.latitude == newAnnotation.coordinate.latitude && $0.coordinate.latitude == newAnnotation.coordinate.longitude
-             })
-         }
-         
-         mapView.mapBaseView.addAnnotations(addAnnotations)
-         */
     }
     
     
@@ -381,14 +349,52 @@ extension MapViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         guard let region = region as? CLCircularRegion else { return }
-       // showAlert(title: "\(region.identifier)", message: "\(region.identifier) 해당 지역에 들어왔습니다.", completionHander: nil)
+        // 37.499052 , 127.150779
+        print("didEnterRegion - \(region.identifier) 해당 지역에 들어왔습니다.")
         
-//        viewModel.region.value = region
+        // toast presented with multiple options and with a completion closure
+        self.mapView.mapBaseView.makeToast("마이페이지에 저장하기", duration: 6.0, position: .bottom, title: "\(region.identifier)") { didTap in
+            if didTap {
+                print("completion from tap")
+                let stampVC = StampViewController()
+                stampVC.selectedMarket = self.viewModel.selectedMarketInfomation(location: region.center)
+                let nav = UINavigationController(rootViewController: stampVC)
+                nav.modalPresentationStyle = .fullScreen
+                self.present(nav, animated: true)
+            } else {
+                print("completion without tap")
+            }
+        }
+        
+        
+        
+//
+//
+//        let alert = UIAlertController(title: "\(region.identifier)의 인근에 도착했습니다.", message: "마이페이지에 시장을 저장하시겠습니까?", preferredStyle: .alert)
+//        let ok = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+//            guard let self else { return }
+//            let detailVC = DetailViewController()
+//            let stampVC = StampViewController()
+//            stampVC.selectedMarket = self.viewModel.selectedMarketInfomation(location: region.center)
+//            let nav = UINavigationController(rootViewController: stampVC)
+//            nav.modalPresentationStyle = .fullScreen
+//           present(nav, animated: true)
+//
+//        }
+//        let cancel = UIAlertAction(title: "취소", style: .destructive)
+//
+//
+//        alert.addAction(cancel)
+//        alert.addAction(ok)
+//        present(alert, animated: true)
+//
     }
     
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+        // 37.500102 , 127.150779
         guard let region = region as? CLCircularRegion else { return }
-      //  showAlert(title: "\(region.identifier)", message: "\(region.identifier) 해당 지역에서 나갔습니다.", completionHander: nil)
+        print("didExitRegion - \(region.identifier) 해당 지역에서 나갔습니다.")
+        
     }
     
     
