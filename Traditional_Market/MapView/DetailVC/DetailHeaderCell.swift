@@ -159,8 +159,7 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
         
         stackView.snp.makeConstraints { make in
             make.top.equalTo(marketType.snp.bottom).offset(8)
-            make.leading.equalTo(marketType)
-            make.trailing.equalToSuperview().inset(10)
+            make.horizontalEdges.bottom.equalToSuperview().inset(10)
         }
         
         

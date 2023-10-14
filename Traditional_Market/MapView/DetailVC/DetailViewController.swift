@@ -22,15 +22,14 @@ final class DetailViewController: BaseViewController {
     }
     
     // 저장을 눌렀을때 즐겨찾기 버튼 활성화 됌 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        viewModel.favoriteMarket.bind { _ in
-            self.collectionView.reloadData()
-        }
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+////        viewModel.favoriteMarket.bind { _ in
+////            self.collectionView.reloadData()
+////        }
+//    }
     
     override func configureView() {
-        view.backgroundColor = .lightGray
         view.addSubview(collectionView)
         
         guard let selectedMarket else { return }

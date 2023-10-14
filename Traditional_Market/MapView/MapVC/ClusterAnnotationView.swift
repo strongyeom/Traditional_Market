@@ -47,7 +47,7 @@ class ClusterAnnotationView: MKAnnotationView {
     func setConstraints() {
         
         cluserImageView.snp.makeConstraints { make in
-            make.size.equalTo(70)
+            make.size.equalTo(50)
         }
         
         countLabel.snp.makeConstraints { make in
