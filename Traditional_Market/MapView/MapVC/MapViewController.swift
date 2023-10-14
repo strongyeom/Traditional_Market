@@ -12,7 +12,7 @@ import RealmSwift
 
 final class MapViewController: BaseViewController, UISearchControllerDelegate {
     
-    let realm = try! Realm()
+  //  let realm = try! Realm()
     private let mapView = MapView()
     private let marketAPIManager = MarketAPIManager.shared
     private let viewModel = TraditionalMarketViewModel()
@@ -61,9 +61,6 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     // mapView range 반경을 위한 변수
     var rangeFilterAnnoation: Results<TraditionalMarketRealm>!
     
-    // 축척
-    let scale: CLLocationDegrees = 200
-
     override func loadView() {
         self.view = mapView
     }
@@ -80,19 +77,10 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         setLocation()
         setCollectionView()
         setNetwork()
-        print("Realm파일 경로", realm.configuration.fileURL!)
         setSearchController()
         searchResultAnnotation()
       
     }
-    
-    // 식별자를 갖고 Annotation view 생성
-    func setupAnnotationView(for annotation: CustomAnnotation, on mapView: MKMapView) -> MKAnnotationView {
-        // dequeueReusableAnnotationView: 식별자를 확인하여 사용가능한 뷰가 있으면 해당 뷰를 반환
-        return mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier, for: annotation)
-    }
-  
-    
     // Search 결과 값 어노테이션 찍기
     func searchResultAnnotation() {
        
@@ -101,13 +89,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
             self.searchController.searchBar.text = result.marketName
             print("searchController.searchBar.text", self.searchController.searchBar.text ?? "")
 
-            // 해당 지역으로 setRegion
-            // self.setRegionScale(center: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
             self.setRegionScale(center: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
-            // search한 결과 pin 찍힌 액션 취하기 + pin을 눌렀을때 중심으로 이동하기
-            
-            
-            
             // 현재 위치 핀 찍기
             let annotation = MKPointAnnotation()
             annotation.title = result.marketName
@@ -148,20 +130,17 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         print("범위에 속하는 어노테이션 갯수",myRangeAnnotation.count)
         print("myRangeAnnotation",myRangeAnnotation)
         
-        let range: CLLocationDistance = 100.0
         // 내 범위에서 내 위치는 렌더링 하지 않기
         let myLocationRangeRemoveMyLocation = myRangeAnnotation.filter { $0.title!! != "My Location"}
+        
         // 내 위치 반경에 해당하는 어노테이션만 가져오기
         for i in myLocationRangeRemoveMyLocation {
             print("해당 \(i.title!!)에 들어왔습니다.",i.title!!)
-          //  let regionCenter = CLLocationCoordinate2DMake(i.coordinate.latitude, i.coordinate.longitude)
-            let exampleRegion = CLCircularRegion(center: i.coordinate, radius: range, identifier: "\(i.title! ?? "내위치")")
-          //  let circleRagne = MKCircle(center: regionCenter, radius: range)
-           // mapView.mapBaseView.addOverlay(circleRagne)
+            let circleRange = CLCircularRegion(center: i.coordinate, radius: Scale.marktRange, identifier: "\(i.title! ?? "내위치")")
             
-            exampleRegion.notifyOnEntry = true
-            exampleRegion.notifyOnExit = true
-            locationManger.startMonitoring(for: exampleRegion)
+            circleRange.notifyOnEntry = true
+            circleRange.notifyOnExit = true
+            locationManger.startMonitoring(for: circleRange)
         }
         // 🧐 UNLocationNotificationTrigger 고민해보기
     }
@@ -170,13 +149,9 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     fileprivate  func setMyRegion(center: CLLocationCoordinate2D) {
         myRangeAnnotation = []
         
-        // 내 위치 반경
-        let range = 300.0
-        //
-        
         // MapView에 축척 m단위로 보여주기
-        let region = MKCoordinateRegion(center: center, latitudinalMeters: scale, longitudinalMeters: scale)
-        let regionRange = CLCircularRegion(center: center, radius: range, identifier: "내 위치")
+        let region = MKCoordinateRegion(center: center, latitudinalMeters: Scale.myLocationScale, longitudinalMeters: Scale.myLocationScale)
+        let regionRange = CLCircularRegion(center: center, radius: Scale.myRangeScale, identifier: "내 위치")
         mapView.mapBaseView.setRegion(region, animated: true)
         
         
@@ -197,7 +172,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     
     func setRegionScale(center: CLLocationCoordinate2D) {
         // MapView에 축척 m단위로 보여주기
-        let region = MKCoordinateRegion(center: center, latitudinalMeters: scale, longitudinalMeters: scale)
+        let region = MKCoordinateRegion(center: center, latitudinalMeters: Scale.myLocationScale, longitudinalMeters: Scale.myLocationScale)
         
         mapView.mapBaseView.setRegion(region, animated: true)
     }
@@ -401,10 +376,6 @@ extension MapViewController: CLLocationManagerDelegate {
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         print("위치 권한이 바뀔때 마다 호출 - ")
-//        if !locationManger.authorizationStatus == .denied {
-//            mapView.mapBaseView.userTrackingMode = .follow
-//        }
-       // mapView.mapBaseView.userTrackingMode = .follow
         checkDeviceLocationAuthorization()
     }
     
@@ -429,18 +400,6 @@ extension MapViewController: CLLocationManagerDelegate {
         }
         print("식별자를 사용하여 지역을 모니터링하는 동안 오류가 발생했습니다: \(region.identifier)")
     }
-    
-    // rendering
-//    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-//        // 위치 온 일때만 반경 그리기
-//        let circleRenderer = MKCircleRenderer(overlay: overlay)
-//        circleRenderer.strokeColor = .systemBlue
-//        circleRenderer.fillColor = UIColor.systemBlue.withAlphaComponent(0.1)
-//        circleRenderer.lineWidth = 0.1
-//        return circleRenderer
-//
-//    }
-    
 }
 
 
@@ -451,12 +410,6 @@ extension MapViewController: MKMapViewDelegate {
         // 현재 위치 표시(점)도 일종에 어노테이션이기 때문에, 이 처리를 안하게 되면, 유저 위치 어노테이션도 변경 된다.
         guard !annotation.isKind(of: MKUserLocation.self) else { return nil }
         
-//        var annotationView: MKAnnotationView?
-//        // 다운캐스팅이 되면 CustomAnnotation를 갖고 CustomAnnotationView를 생성
-//        if let customAnnotation = annotation as? CustomAnnotation {
-//            annotationView = setupAnnotationView(for: customAnnotation, on: mapView)
-//        }
-//
         switch annotation {
         case is CustomAnnotation:
             let view = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier, for: annotation)

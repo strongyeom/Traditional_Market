@@ -13,6 +13,8 @@ class MarketAPIManager {
     
     private init() { }
     
+    let realm = try! Realm()
+    
     var pageCount = Array(1...16)
     
     let group = DispatchGroup()
@@ -43,6 +45,7 @@ class MarketAPIManager {
         }
         group.notify(queue: .main) {
             completionHandler(self.marketList)
+            print("Realm파일 경로", self.realm.configuration.fileURL!)
         }
     }
     

@@ -43,7 +43,7 @@ class MapView : BaseView {
         let view = MKMapView()
         view.showsUserLocation = true
         view.userTrackingMode = .follow
-        view.cameraZoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: 400000)
+        view.cameraZoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: Scale.maxDistance)
         return view
     }()
 
@@ -80,7 +80,7 @@ class MapView : BaseView {
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide).offset(10)
             make.horizontalEdges.equalToSuperview()
-            make.height.equalTo(70)
+            make.height.equalTo(90)
         }
         
         currentLocationButton.snp.makeConstraints { make in
@@ -100,7 +100,7 @@ extension MapView {
         layout.scrollDirection = .horizontal
         let spacing: CGFloat = 5
         let width = UIScreen.main.bounds.width
-        layout.itemSize = CGSize(width: (width - (spacing * 8)) / 7, height: width / 4.5)
+        layout.itemSize = CGSize(width: (width - (spacing * 8)) / 7, height: 90)
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
         layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)

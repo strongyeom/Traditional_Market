@@ -29,7 +29,6 @@ class CityCell : BaseColletionViewCell {
     let localName = {
         let view = UILabel()
         view.font = UIFont.systemFont(ofSize: 10)
-       // view.adjustsFontSizeToFitWidth = true
         view.textAlignment = .center
         return view
     }()
@@ -37,7 +36,7 @@ class CityCell : BaseColletionViewCell {
     lazy var stackView = {
         let stack = UIStackView(arrangedSubviews: [imageView, localName])
         stack.axis = .vertical
-        stack.spacing = 1
+        stack.spacing = 3
         stack.alignment = .center
         stack.distribution = .fill
         return stack
@@ -46,7 +45,6 @@ class CityCell : BaseColletionViewCell {
     override func configureView() {
         contentView.addSubview(baseView)
         baseView.addSubview(stackView)
-       // baseView.addSubview(localName)
     }
     
     override func setConstraints() {
@@ -58,13 +56,11 @@ class CityCell : BaseColletionViewCell {
         }
        
         imageView.snp.makeConstraints { make in
-            make.top.horizontalEdges.equalToSuperview().inset(5)
+            make.top.horizontalEdges.equalToSuperview()
             make.height.equalTo(self.imageView.snp.width)
         }
         
         stackView.snp.makeConstraints { make in
-//            make.top.horizontalEdges.equalToSuperview().inset(2)
-//            make.bottom.equalToSuperview()
             make.edges.equalToSuperview().inset(5)
         }
 
