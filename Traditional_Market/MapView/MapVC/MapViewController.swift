@@ -365,29 +365,6 @@ extension MapViewController: CLLocationManagerDelegate {
                 print("completion without tap")
             }
         }
-        
-        
-        
-//
-//
-//        let alert = UIAlertController(title: "\(region.identifier)의 인근에 도착했습니다.", message: "마이페이지에 시장을 저장하시겠습니까?", preferredStyle: .alert)
-//        let ok = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
-//            guard let self else { return }
-//            let detailVC = DetailViewController()
-//            let stampVC = StampViewController()
-//            stampVC.selectedMarket = self.viewModel.selectedMarketInfomation(location: region.center)
-//            let nav = UINavigationController(rootViewController: stampVC)
-//            nav.modalPresentationStyle = .fullScreen
-//           present(nav, animated: true)
-//
-//        }
-//        let cancel = UIAlertAction(title: "취소", style: .destructive)
-//
-//
-//        alert.addAction(cancel)
-//        alert.addAction(ok)
-//        present(alert, animated: true)
-//
     }
     
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {

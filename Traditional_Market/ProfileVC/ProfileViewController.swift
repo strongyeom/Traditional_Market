@@ -11,44 +11,31 @@ import RealmSwift
 class ProfileViewController : BaseViewController {
 
     
-    let topView = TopView()
+    let profileBaseView = ProfileBaseView()
 
     let realmManager = RealmManager()
-    
-    let infoList = [
-    "앱 소개",
-    "개인정보방침",
-    "버전 정보"
-    ]
+
+    override func loadView() {
+        self.view = profileBaseView
+    }
     
     var realmFavorite: Results<FavoriteTable>? {
         didSet {
-            self.tableView.reloadData()
+            self.profileBaseView.tableView.reloadData()
         }
     }
-    
-    let tableView = UITableView(frame: .zero, style: .plain)
-    
     
     override func configureView() {
         super.configureView()
         navigationItem.title = "마이페이지"
-        setupTableView()
-        view.addSubview(topView)
-        topView.levelDelegate = self
-        topView.likeBtnDelegate = self
+        configureTableView()
     }
     
-    func setupTableView() {
-        
-        view.addSubview(tableView)
-       tableView.dataSource = self
-       tableView.delegate = self
-       tableView.rowHeight = 50
-       tableView.alwaysBounceVertical = false
-       tableView.separatorStyle = .none
-       tableView.register(InfomationCell.self, forCellReuseIdentifier: String(describing: InfomationCell.self))
-       
+    func configureTableView() {
+        profileBaseView.tableView.dataSource = self
+        profileBaseView.tableView.delegate = self
+        profileBaseView.levelDelegate = self
+        profileBaseView.likeBtnDelegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,34 +44,19 @@ class ProfileViewController : BaseViewController {
         realmFavorite = realmManager.allOfFavoriteRealmCount()
         let favoriteDataCount = realmFavorite?.count ?? 0
         
-        topView.stampCountLabel.text = "\(favoriteDataCount)개"
+        profileBaseView.stampCountLabel.text = "\(favoriteDataCount)개"
     }
-    
-    override func setConstraints() {
-        
-        topView.snp.makeConstraints { make in
-            make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(10)
-        }
-    
-        tableView.snp.makeConstraints { make in
-            make.top.equalTo(topView.snp.bottom).offset(10)
-            make.bottom.horizontalEdges.equalToSuperview().inset(10)
-        }
-        
-        
-    }
-    
     
 }
 
 extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return infoList.count
+        return profileBaseView.infoList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: InfomationCell.self)) as! InfomationCell
-        cell.infoText.text = infoList[indexPath.row]
+        cell.infoText.text = profileBaseView.infoList[indexPath.row]
         cell.selectionStyle = .none
         cell.accessoryType = .disclosureIndicator
         return cell
@@ -105,8 +77,4 @@ extension ProfileViewController : ActionDelegate {
         let levelInfoVC = LevelInfoViewController()
         present(levelInfoVC, animated: true)
     }
-    
-    
-    
-    
 }

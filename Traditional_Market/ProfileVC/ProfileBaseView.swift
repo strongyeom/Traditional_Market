@@ -13,14 +13,19 @@ protocol ActionDelegate: AnyObject {
     func likeBtnClicked()
 }
 
-class TopView : BaseView {
+class ProfileBaseView : BaseView {
+    
+    let infoList = [
+    "앱 소개",
+    "개인정보방침",
+    "버전 정보"
+    ]
+    
+    let tableView = UITableView(frame: .zero, style: .plain)
     
     let profileImageView = {
         let view = UIImageView()
-        view.layer.cornerRadius = 12
-        view.clipsToBounds = true
-        view.layer.cornerCurve = .continuous
-        view.backgroundColor = .lightGray
+        view.basicSettingImageView()
         return view
     }()
     
@@ -28,7 +33,6 @@ class TopView : BaseView {
         let view = UILabel()
         view.font = UIFont.systemFont(ofSize: 20, weight: .medium)
         view.text = "나의 백반 기행"
-        view.backgroundColor = .green
         return view
     }()
     
@@ -68,63 +72,41 @@ class TopView : BaseView {
  
     let likeBtn = {
         let view = UIButton()
-        var config = UIButton.Configuration.plain()
-        config.title = "내가 저장한 시장"
-        config.titleAlignment = .center
-        config.buttonSize = .medium
-        config.image = UIImage(systemName: "arrow.forward")
-        config.imagePadding = 7
-        config.imagePlacement = .trailing
-        config.baseForegroundColor = .black
-        view.configuration = config
+        view.mypageSetupButton()
         return view
     }()
     
+    lazy var profileHorizatalStackView = {
+        let stack = UIStackView(arrangedSubviews: [profileImageView, profileNickName])
+        stack.basicSettingStackView(axis: .horizontal, spacing: 5, alignment: .center, distribution: .fill)
+        return stack
+    }()
+    
+    
+    
     lazy var verticalStampeStackView = {
         let stack = UIStackView(arrangedSubviews: [stampLabel, stampCountLabel])
-        stack.axis = .vertical
-        stack.spacing = 5
-        stack.alignment = .center
-        stack.distribution = .fill
-        stack.backgroundColor = .yellow
+        stack.mypageSetupStackView()
         return stack
     }()
     
     lazy var levelInfoStackView = {
         let stack = UIStackView(arrangedSubviews: [levelLabel, infoLevelBtn])
-        stack.axis = .horizontal
-        stack.spacing = 1
-        stack.alignment = .fill
-        stack.distribution = .fill
+        stack.basicSettingStackView(axis: .horizontal, spacing: 2, alignment: .fill, distribution: .fill)
         return stack
     }()
     
     lazy var verticalLevelStackView = {
         let stack = UIStackView(arrangedSubviews: [levelInfoStackView, levelCountLabel])
-        stack.axis = .vertical
-        stack.spacing = 5
-        stack.alignment = .center
-        stack.distribution = .fill
-        stack.backgroundColor = .yellow
+        stack.mypageSetupStackView()
         return stack
     }()
     
-    lazy var profileHorizatalStackView = {
-        let stack = UIStackView(arrangedSubviews: [profileImageView, profileNickName])
-        stack.axis = .horizontal
-        stack.spacing = 5
-        stack.alignment = .center
-        stack.distribution = .fill
-        return stack
-    }()
+
     
     lazy var stampInfoHorizantalStackView = {
         let stack = UIStackView(arrangedSubviews: [verticalStampeStackView, verticalLevelStackView, likeBtn])
-        stack.axis = .horizontal
-        stack.spacing = 10
-        stack.alignment = .fill
-        stack.distribution = .fillEqually
-        stack.backgroundColor = .red
+        stack.basicSettingStackView(axis: .horizontal, spacing: 10, alignment: .fill, distribution: .fillEqually)
         return stack
     }()
     
@@ -136,7 +118,9 @@ class TopView : BaseView {
     override func configureView() {
         self.addSubview(profileHorizatalStackView)
         self.addSubview(stampInfoHorizantalStackView)
+        self.addSubview(tableView)
         setupButtonTarget()
+        setupTableView()
     }
     
     func setupButtonTarget() {
@@ -164,18 +148,32 @@ class TopView : BaseView {
             make.height.equalTo(stampCountLabel).priority(.high)
         }
         
-        
+        profileImageView.image = UIImage(systemName: "person")
         profileImageView.snp.makeConstraints { make in
             make.size.equalTo(60)
         }
         
         profileHorizatalStackView.snp.makeConstraints { make in
-            make.top.horizontalEdges.equalToSuperview().inset(10)
+            make.top.horizontalEdges.equalTo(self.safeAreaLayoutGuide).inset(10)
         }
         
         stampInfoHorizantalStackView.snp.makeConstraints { make in
             make.top.equalTo(profileHorizatalStackView.snp.bottom).offset(10)
-            make.horizontalEdges.bottom.equalToSuperview().inset(10)
+            make.horizontalEdges.equalTo(profileHorizatalStackView)
         }
+        
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(stampInfoHorizantalStackView.snp.bottom).offset(10)
+            make.bottom.horizontalEdges.equalToSuperview().inset(10)
+        }
+    }
+}
+
+extension ProfileBaseView {
+    func setupTableView() {
+        tableView.rowHeight = 50
+        tableView.alwaysBounceVertical = false
+        tableView.separatorStyle = .none
+        tableView.register(InfomationCell.self, forCellReuseIdentifier: String(describing: InfomationCell.self))
     }
 }

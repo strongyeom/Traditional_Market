@@ -13,9 +13,7 @@ final class DetailMarketInfoCell : BaseColletionViewCell {
     
     private let imageView = {
        let view = UIImageView()
-        view.contentMode = .scaleToFill
-        view.layer.cornerRadius = 12
-        view.clipsToBounds = true
+        view.basicSettingImageView()
         return view
     }()
     
