@@ -12,13 +12,7 @@ class SaveMarketViewController : BaseViewController {
 
     let saveTableView = SaveTableView()
     
-    let realmManager = RealmManager()
-    
-    var saveRealmMarket: Results<FavoriteTable>? {
-        didSet {
-            self.saveTableView.tableView.reloadData()
-        }
-    }
+    let viewModel = TraditionalMarketViewModel()
     
     override func loadView() {
         self.view = saveTableView
@@ -29,29 +23,21 @@ class SaveMarketViewController : BaseViewController {
         print("SaveMarketViewController - configureView")
         settuptableView()
         navigationItem.title = "내가 저장한 시장"
+        viewModel.myFavoriteMarketList.bind { _ in
+            self.saveTableView.tableView.reloadData()
+        }
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print("SaveMarketViewController - viewWillAppear")
-        saveRealmMarket = realmManager.allOfFavoriteRealmCount()
-        // 마이페이지에서 지도 갔다가 저장 하고 다시 탭을 눌렀을때 저장이 되어 있어야 하기 때문에 viewwillAppear에서 reload해줬음 
-        self.saveTableView.tableView.reloadData()
-    }
-
     
     func settuptableView() {
         saveTableView.tableView.delegate = self
         saveTableView.tableView.dataSource = self
-        
-       
     }
 }
 
 extension SaveMarketViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let saveRealmMarket else { return  }
-        let selectedMarket = saveRealmMarket[indexPath.row]
+        
+        let selectedMarket =  viewModel.myFavoriteMarketList.value[indexPath.row]
         let savedView = SavedDetailViewController()
         savedView.savedSelectedData = selectedMarket
         let nav = UINavigationController(rootViewController: savedView)
@@ -61,18 +47,12 @@ extension SaveMarketViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("SaveMarketViewController - numberOfRowsInSection")
-        guard let saveRealmMarket else { return 0 }
-        return saveRealmMarket.count
+        return viewModel.myFavoriteMarketList.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("SaveMarketViewController - cellForRowAt")
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SaveMarketCell.identifier, for: indexPath) as? SaveMarketCell,
-            let saveRealmMarket = saveRealmMarket
-        else { return UITableViewCell() }
-        //let row = list[indexPath.row]
-        let data = saveRealmMarket[indexPath.row]
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SaveMarketCell.identifier, for: indexPath) as? SaveMarketCell else { return UITableViewCell() }
+        let data = viewModel.myFavoriteMarketList.value[indexPath.row]
         cell.selectionStyle = .none
         cell.marketTitle.text = data.marketName
         cell.marketDescription.text = data.memo
@@ -82,20 +62,17 @@ extension SaveMarketViewController: UITableViewDelegate, UITableViewDataSource {
     
  
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard let saveRealmMarket else { return UISwipeActionsConfiguration() }
-        let data = saveRealmMarket[indexPath.row]
         
+        let data = viewModel.myFavoriteMarketList.value[indexPath.row]
+        
+        // 스와이핑 편집
         let edit = UIContextualAction(style: .normal, title: "편집") { _, _, _ in
-            // 1. saveDatailVC로 이동하고
-            // 2. memoTextView 수정 가능  저장 버튼 만들고 hidden 처리 
-            // 3. 수정 한것 저장 누르면 Realm에 업데이트 , 다시 수정 못하게 false 창 내리기
-           
-            let selectedMarket = saveRealmMarket[indexPath.row]
+            // 아무 작업도 하지 않았을때 스와이프 액션이 취소 됨 즉, 원래상태로 돌아감
+            self.saveTableView.tableView.setEditing(false, animated: true)
             let savedView = SavedDetailViewController()
-            savedView.savedSelectedData = selectedMarket
+            savedView.savedSelectedData = self.viewModel.myFavoriteMarketList.value[indexPath.row]
             savedView.savedDetailView.memoTextView.isEditable = true
             savedView.editState = false
-            
             
             let nav = UINavigationController(rootViewController: savedView)
             nav.modalPresentationStyle = .fullScreen
@@ -103,17 +80,20 @@ extension SaveMarketViewController: UITableViewDelegate, UITableViewDataSource {
             
         }
         
+        // 스와이핑 삭제
         let delete = UIContextualAction(style: .destructive, title: "삭제") { action, _, _ in
             self.showAlert(title: "삭제하시겠습니까?", message: "삭제하시면 데이터는 영구히 삭제됩니다.") { _ in
                 print("삭제 버튼 눌림")
                 self.removeImageFromDocument(fileName: "myPhoto_\(data._id).jpg")
-                self.realmManager.selectedRemoveData(market: data)
+                self.viewModel.myFavoriteMarketSelectedRemove(market: data)
                 self.saveTableView.tableView.reloadData()
             }
         }
+        
         let config = UISwipeActionsConfiguration(actions: [delete, edit])
         // 끝까지 swipe 안되게 설정
         config.performsFirstActionWithFullSwipe = false
+        
         return config
     }
 }

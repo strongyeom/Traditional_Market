@@ -40,4 +40,7 @@ class TraditionalMarketViewModel {
         }
     }
     
+    func myFavoriteMarketSelectedRemove(market: FavoriteTable) {
+        realmManager.selectedRemoveData(market: market)
+    }
 }
