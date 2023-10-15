@@ -134,29 +134,7 @@ extension StampViewController {
             actionSheet.addAction(cancel)
             present(actionSheet, animated: true)
     }
-    
-    
-//    // 노티피케이션을 추가하는 메서드
-//    fileprivate func addKeyboardNotifications() {
-//        // 키보드가 나타날 때 앱에게 알리는 메서드 추가
-//        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification , object: nil)
-//        // 키보드가 사라질 때 앱에게 알리는 메서드 추가
-//        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-//    }
-//
-//
-//    @objc func keyboardWillShow(_ sender: Notification) {
-//        // 현재 동작하고 있는 이벤트에서 키보드의 frame을 받아옴
-//        guard let keyboardFrame = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
-//        let keyboardHeight = keyboardFrame.cgRectValue.height
-//        view.frame.origin.y -= keyboardHeight
-//    }
-//
-//    @objc func keyboardWillHide(_ sender: Notification) {
-//        if view.frame.origin.y != 0 {
-//            view.frame.origin.y = 0
-//        }
-//    }
+
 }
 
 
@@ -178,6 +156,7 @@ extension StampViewController : UITextViewDelegate {
     }
 }
 
+// MARK: - PHPickerViewControllerDelegate
 extension StampViewController : PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true) // 1
@@ -196,6 +175,8 @@ extension StampViewController : PHPickerViewControllerDelegate {
     }
 }
 
+
+// MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
 extension StampViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.editedImage] as? UIImage {

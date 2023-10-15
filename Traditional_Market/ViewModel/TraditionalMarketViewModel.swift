@@ -16,13 +16,11 @@ class TraditionalMarketViewModel {
     
     var selectedMarket: Observable<TraditionalMarketRealm> = Observable(TraditionalMarketRealm(marketName: "", marketType: "", loadNameAddress: "", address: "", marketOpenCycle: "", publicToilet: "", latitude: "", longitude: "", popularProducts: "", phoneNumber: ""))
     
-    lazy var favoriteMarket = Observable(realmManager.allOfFavoriteRealmCount())
+    // 좋아하는 전통시장 리스트
+    lazy var myFavoriteMarketList =  Observable(realmManager.allOfFavoriteRealmCount())
     
     // 선택된 전통시장 정보
     func selectedMarketInfomation(location: CLLocationCoordinate2D) -> TraditionalMarketRealm {
-        
-        // MARK: - 화천재래시장 , 태백시장 클릭시 에러 발생 해결해야 함
-        // selectedMarket.value = realmManager.selectedCity(location: location).first
         
         if let selectedCity = realmManager.selectedCity(location: location).first {
             selectedMarket.value = selectedCity
@@ -41,7 +39,5 @@ class TraditionalMarketViewModel {
             }
         }
     }
-    
-    
     
 }

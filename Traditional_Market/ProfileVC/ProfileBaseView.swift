@@ -10,7 +10,7 @@ import UIKit
 
 protocol ActionDelegate: AnyObject {
     func levelInfo()
-    func likeBtnClicked()
+    func mySavedMarketList()
 }
 
 class ProfileBaseView : BaseView {
@@ -47,7 +47,7 @@ class ProfileBaseView : BaseView {
     
     let stampCountLabel = {
         let view = UILabel()
-        view.text = "8개"
+        view.text = "0개"
         return view
     }()
     
@@ -130,7 +130,7 @@ class ProfileBaseView : BaseView {
     
     @objc func likeBtnClicked(_ sender: UIButton) {
         print("내가 저장한 시장 버튼 눌림 - TopView")
-        likeBtnDelegate?.likeBtnClicked()
+        likeBtnDelegate?.mySavedMarketList()
     }
     
     @objc func infoLevelBtnClicked(_ sender: UIButton) {

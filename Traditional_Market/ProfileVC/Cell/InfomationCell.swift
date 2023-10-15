@@ -31,5 +31,11 @@ class InfomationCell : UITableViewCell {
         }
     }
     
+    func configureCell(infoList: String) {
+        self.infoText.text = infoList
+        self.selectionStyle = .none
+        self.accessoryType = .disclosureIndicator
+    }
+    
 }
 

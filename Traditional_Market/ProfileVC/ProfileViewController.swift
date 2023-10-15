@@ -11,18 +11,12 @@ import RealmSwift
 class ProfileViewController : BaseViewController {
 
     
+    let viewModel = TraditionalMarketViewModel()
+    
     let profileBaseView = ProfileBaseView()
-
-    let realmManager = RealmManager()
 
     override func loadView() {
         self.view = profileBaseView
-    }
-    
-    var realmFavorite: Results<FavoriteTable>? {
-        didSet {
-            self.profileBaseView.tableView.reloadData()
-        }
     }
     
     override func configureView() {
@@ -40,11 +34,7 @@ class ProfileViewController : BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // MARK: - FavoriteData를 가져오고 있음
-        realmFavorite = realmManager.allOfFavoriteRealmCount()
-        let favoriteDataCount = realmFavorite?.count ?? 0
-        
-        profileBaseView.stampCountLabel.text = "\(favoriteDataCount)개"
+        profileBaseView.stampCountLabel.text = "\(viewModel.myFavoriteMarketList.value.count)개"
     }
     
 }
@@ -56,9 +46,8 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: InfomationCell.self)) as! InfomationCell
-        cell.infoText.text = profileBaseView.infoList[indexPath.row]
-        cell.selectionStyle = .none
-        cell.accessoryType = .disclosureIndicator
+        let infoList = profileBaseView.infoList[indexPath.row]
+        cell.configureCell(infoList: infoList)
         return cell
     }
     
@@ -68,7 +57,7 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
 }
 
 extension ProfileViewController : ActionDelegate {
-    func likeBtnClicked() {
+    func mySavedMarketList() {
         let saveMarket = SaveMarketViewController()
         navigationController?.pushViewController(saveMarket, animated: true)
     }

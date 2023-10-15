@@ -61,7 +61,7 @@ class RealmManager {
         }
     }
     
-    // Realm Favorite - DB 수정하기
+    /// Realm Favorite - DB 수정하기
     func updateItem(id: ObjectId, memoText: String) {
   
         do {
@@ -97,7 +97,7 @@ class RealmManager {
        
     }
     
-    // Search결과 필터링
+    /// Search결과 필터링
     func searchFilterData(text: String) -> Results<TraditionalMarketRealm> {
         let searchResult = fetch().where {
             $0.marketName.contains(text)
@@ -106,7 +106,7 @@ class RealmManager {
     }
     
     
-    // 모든 어노테이션을 SearchText로 검색한 것만 필터링
+    /// 모든 어노테이션을 SearchText로 검색한 것만 필터링
     func allOfAnnotationSearchFilter(text: String) -> Results<TraditionalMarketRealm> {
         let result = fetch().where {
             $0.marketName.contains(text)
@@ -118,7 +118,7 @@ class RealmManager {
     }
     
     
-    // 반경안에 있는 어노테이션만 보여주기
+    /// 반경안에 있는 어노테이션만 보여주기
     func mapViewRangeFilterAnnotations(minLati: Double, maxLati: Double, minLong: Double, maxLong: Double) -> Results<TraditionalMarketRealm> {
         // Realm에 있는 좌표중에 매개변수로 들어오는 Double 값 범위 안에 있다면 FilterRealm에 담아라
         let convertToStringMinLati = String(minLati)
@@ -164,7 +164,7 @@ class RealmManager {
     }
   
     
-    // myFavoriteRealm 데이터 불러오기
+    /// myFavoriteRealm 데이터 불러오기
     func allOfFavoriteRealmCount() -> Results<FavoriteTable> {
         let favoriteTable = realm.objects(FavoriteTable.self).sorted(byKeyPath: "date", ascending: false)
         return favoriteTable
