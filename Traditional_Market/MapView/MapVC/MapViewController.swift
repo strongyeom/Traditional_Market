@@ -417,6 +417,11 @@ extension MapViewController: MKMapViewDelegate {
     // 어노테이션을 클릭했을때 액션 메서드
     func mapView(_ mapView: MKMapView, didSelect annotation: MKAnnotation) {
         //  -> 축척이 변함 -> dismiss  ->  present -> regionDidChangeAnimated -> mapViewRangeInAnnotations -> mapView.mapBaseView.removeAnnotations -> 선택된 Annotation 자동으로 해제 -> didDeselect
+        print("찍힌 어노테이션 : \(annotation.title!!)")
+        
+        // 내 위치 클릭했을때 DetailVC 띄우지 않기
+        guard !annotation.isKind(of: MKUserLocation.self) else { return }
+        
         let detailVC = DetailViewController()
         // Realm 필터를 사용해서 Item 하나만 던져주기
         detailVC.selectedMarket = viewModel.selectedMarketInfomation(location: annotation.coordinate)
