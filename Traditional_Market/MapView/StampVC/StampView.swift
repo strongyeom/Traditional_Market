@@ -75,8 +75,9 @@ class StampView : BaseView {
     var saveCompletion: (() -> Void)?
     
     override func configureView() {
-        [bgView, stampImage, marketTitle, marketName, memo, memoTextView, stackView].forEach {
-            self.addSubview($0)
+        self.addSubview(bgView)
+        [stampImage, marketTitle, marketName, memo, memoTextView, stackView].forEach {
+            bgView.addSubview($0)
         }
         //stampImageBgView.addSubview(stampImage)
         cancelButton.addTarget(self, action: #selector(cancelBtnClicked), for: .touchUpInside)
@@ -129,7 +130,7 @@ class StampView : BaseView {
         stackView.snp.makeConstraints { make in
             make.top.equalTo(memoTextView.snp.bottom).offset(10)
             make.horizontalEdges.equalTo(memoTextView)
-            make.bottom.equalToSuperview().inset(10)
+            make.bottom.equalToSuperview().inset(20)
         }
     }
 }

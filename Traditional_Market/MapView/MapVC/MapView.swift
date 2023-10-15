@@ -80,7 +80,7 @@ class MapView : BaseView {
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide).offset(10)
             make.horizontalEdges.equalToSuperview()
-            make.height.equalTo(90)
+            make.height.equalTo(100)
         }
         
         currentLocationButton.snp.makeConstraints { make in
@@ -100,7 +100,7 @@ extension MapView {
         layout.scrollDirection = .horizontal
         let spacing: CGFloat = 5
         let width = UIScreen.main.bounds.width
-        layout.itemSize = CGSize(width: (width - (spacing * 8)) / 7, height: 90)
+        layout.itemSize = CGSize(width: (width - (spacing * 8)) / 7, height: 93)
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
         layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
