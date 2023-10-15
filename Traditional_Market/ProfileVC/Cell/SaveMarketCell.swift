@@ -17,7 +17,7 @@ class SaveMarketCell : UITableViewCell {
         view.backgroundColor = .lightGray
         return view
     }()
-    
+    //
     let marketTitle = {
         let view = UILabel()
         view.text = "자갈치시장"

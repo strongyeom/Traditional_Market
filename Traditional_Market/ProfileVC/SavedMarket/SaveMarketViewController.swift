@@ -23,6 +23,11 @@ class SaveMarketViewController : BaseViewController {
         print("SaveMarketViewController - configureView")
         settuptableView()
         navigationItem.title = "내가 저장한 시장"
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         viewModel.myFavoriteMarketList.bind { _ in
             self.saveTableView.tableView.reloadData()
         }

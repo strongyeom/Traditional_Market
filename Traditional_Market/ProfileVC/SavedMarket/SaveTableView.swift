@@ -15,7 +15,6 @@ class SaveTableView : BaseView {
     override func configureView() {
         self.addSubview(tableView)
         tableView.rowHeight = 80
-        tableView.backgroundColor = .orange
         tableView.register(SaveMarketCell.self, forCellReuseIdentifier: SaveMarketCell.identifier)
     }
     
