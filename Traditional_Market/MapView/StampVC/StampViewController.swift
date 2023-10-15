@@ -10,11 +10,20 @@ import PhotosUI
 
 final class StampViewController : BaseViewController {
     
+    enum EnterStampMethod {
+        case toast
+        case click
+    }
+    
+    
+    
     private let stampView = StampView()
     
     private let realmManager = RealmManager()
     
     var selectedMarket: TraditionalMarketRealm?
+    
+    var enterStampMethod: EnterStampMethod = .click
     
     override func loadView() {
         self.view = stampView
@@ -32,9 +41,6 @@ final class StampViewController : BaseViewController {
         addKeyboardNotifications()
     }
     
-
-    
-
     @objc func leftBtnClicked() {
         dismiss(animated: true)
     }
@@ -71,23 +77,28 @@ extension StampViewController {
         stampView.saveCompletion = {
             
             if self.stampView.memoTextView.text == "텍스트를 입력해주세요" && self.stampView.memoTextView.textColor == UIColor.lightGray || self.stampView.memoTextView.text.isEmpty {
-                self.showAlert(title: "메모장이 비어있습니다.", message: "메모장에 기록을 남겨주세요.", completionHander: nil)
+                self.showAlert(title: "메모장이 비어있습니다.", btnTitle: "확인", message: "메모장에 기록을 남겨주세요.", style: .default, completionHander: nil)
             } else if self.stampView.memoTextView.text != "텍스트를 입력해주세요" && !self.stampView.memoTextView.text.isEmpty {
                 // 해당 시장안에 "저장"버튼 클릭시 메모 추가
                 self.realmManager.myFavoriteMarket(market: selectedMarket, text: self.stampView.memoTextView.text)
-//                self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
-                self.dismiss(animated: true)
+
+                switch self.enterStampMethod {
+                case .click:
+                    self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+                case .toast:
+                    self.dismiss(animated: true)
+                }
 
             }
             
             if self.stampView.stampImage.image != nil {
                 let id = self.selectedImageId()
-                
                 self.saveImageToDocument(fileName: "myPhoto_\(id).jpg", image: self.stampView.stampImage.image!)
             } else {
                 self.stampView.stampImage.image = UIImage(named: "basicStamp")
             }
         }
+        
     }
  
     func selectedImageId() -> String {

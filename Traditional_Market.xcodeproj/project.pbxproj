@@ -276,9 +276,9 @@
 			isa = PBXGroup;
 			children = (
 				2633E7082AC6E7ED002581EB /* DetailViewController.swift */,
-				26E9F3702AD518D20007B7CD /* FullImageViewController.swift */,
 				2633E70A2AC70955002581EB /* DetailMarketInfoCell.swift */,
 				2633E7102AC71DC8002581EB /* DetailHeaderCell.swift */,
+				26E9F3702AD518D20007B7CD /* FullImageViewController.swift */,
 			);
 			path = DetailVC;
 			sourceTree = "<group>";

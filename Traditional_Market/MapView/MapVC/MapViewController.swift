@@ -13,7 +13,6 @@ import Toast
 
 final class MapViewController: BaseViewController, UISearchControllerDelegate {
     
-  //  let realm = try! Realm()
     private let mapView = MapView()
     private let marketAPIManager = MarketAPIManager.shared
     private let viewModel = TraditionalMarketViewModel()
@@ -358,6 +357,7 @@ extension MapViewController: CLLocationManagerDelegate {
                 print("completion from tap")
                 let stampVC = StampViewController()
                 stampVC.selectedMarket = self.viewModel.selectedMarketInfomation(location: region.center)
+                stampVC.enterStampMethod = .toast
                 let nav = UINavigationController(rootViewController: stampVC)
                 nav.modalPresentationStyle = .fullScreen
                 self.present(nav, animated: true)
@@ -544,7 +544,7 @@ extension MapViewController {
     
     fileprivate func setMapView() {
         mapView.mapBaseView.delegate = self
-        buttonEvent()
+        currentLocationBtnIsActive()
         mapView.mapBaseView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         
         mapView.mapBaseView.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
@@ -552,7 +552,7 @@ extension MapViewController {
     }
     
     /// 버튼의 이벤트를 받아 start와 stop 할 수 있음
-    fileprivate func buttonEvent() {
+    fileprivate func currentLocationBtnIsActive() {
         mapView.completion = { [weak self] isCurrent in
             
             guard let self else { return }

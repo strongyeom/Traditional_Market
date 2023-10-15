@@ -87,7 +87,7 @@ extension SaveMarketViewController: UITableViewDelegate, UITableViewDataSource {
         
         // 스와이핑 삭제
         let delete = UIContextualAction(style: .destructive, title: "삭제") { action, _, _ in
-            self.showAlert(title: "삭제하시겠습니까?", message: "삭제하시면 데이터는 영구히 삭제됩니다.") { _ in
+            self.showAlert(title: "삭제하시겠습니까?", btnTitle: "삭제", message: "삭제하시면 데이터는 영구히 삭제됩니다.", style: .destructive) { _ in
                 print("삭제 버튼 눌림")
                 self.removeImageFromDocument(fileName: "myPhoto_\(data._id).jpg")
                 self.viewModel.myFavoriteMarketSelectedRemove(market: data)

@@ -7,20 +7,21 @@
 
 import UIKit
 
+
+// MARK: - Alert
 extension UIViewController {
-    func showAlert(title: String, message: String, completionHander: ((UIAlertAction) -> Void)?) {
+    func showAlert(title: String, btnTitle: String, message: String, style: UIAlertAction.Style, completionHander: ((UIAlertAction) -> Void)?) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        // 일단 삭제 메서드만 만들어놓고 범위 들어왔을때는 토스트나 추가 메서드 작성하자
-        
-        let ok = UIAlertAction(title: "삭제", style: .destructive, handler: completionHander)
-        
+
+        let ok = UIAlertAction(title: btnTitle, style: style, handler: completionHander)
         
         alert.addAction(ok)
         present(alert, animated: true)
     }
 }
 
+
+// MARK: - ImageFileManager
 extension UIViewController {
 
     // 도큐먼트 폴더에 이미지를 저장하는 메서드 - 고유값으로 만들어야 됨
@@ -75,6 +76,8 @@ extension UIViewController {
     }
 }
 
+
+// MARK: - KeyboardNotification
 extension UIViewController {
     // 노티피케이션을 추가하는 메서드
     func addKeyboardNotifications() {

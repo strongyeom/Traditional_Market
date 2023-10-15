@@ -22,12 +22,12 @@ final class DetailViewController: BaseViewController {
     }
     
     // 저장을 눌렀을때 즐겨찾기 버튼 활성화 됌 
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-////        viewModel.favoriteMarket.bind { _ in
-////            self.collectionView.reloadData()
-////        }
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("DetailViewController - viewWillAppear")
+        // 헤더만 리로드 해주는 방법은 ?
+       
+    }
     
     override func configureView() {
         view.addSubview(collectionView)
@@ -80,7 +80,8 @@ extension DetailViewController : UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let selectedMarket else { return UICollectionReusableView() }
         if kind == UICollectionView.elementKindSectionHeader {
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: String(describing: DetailHeaderCell.self), for: indexPath) as? DetailHeaderCell else { return UICollectionReusableView() }
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: DetailHeaderCell.identifier, for: indexPath) as? DetailHeaderCell else { return UICollectionReusableView() }
+            
             header.configureCell(market: selectedMarket)
             header.delegate = self
             header.completion = {
@@ -98,8 +99,8 @@ extension DetailViewController {
     fileprivate func setCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(DetailMarketInfoCell.self, forCellWithReuseIdentifier: String(describing: DetailMarketInfoCell.self))
-        collectionView.register(DetailHeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: DetailHeaderCell.self))
+        collectionView.register(DetailMarketInfoCell.self, forCellWithReuseIdentifier: DetailMarketInfoCell.identifier)
+        collectionView.register(DetailHeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: DetailHeaderCell.identifier)
     }
     
 
@@ -144,6 +145,7 @@ extension DetailViewController: IsLikeDelegate {
         print("델리겟 DetailViewController에서 탐")
        let stampVC = StampViewController()
         stampVC.selectedMarket = selectedMarket
+        stampVC.enterStampMethod = .click
         let nav = UINavigationController(rootViewController: stampVC)
         nav.modalPresentationStyle = .fullScreen
         present(nav, animated: true)
