@@ -14,16 +14,21 @@ class StampView : BaseView {
         view.backgroundColor = UIColor.bgViewColor()
         return view
     }()
-    
-    
-    
+
     lazy var stampImage = {
-       let view = UIImageView(image: UIImage(named: "basicStamp"))
+       let view = UIImageView(image: UIImage(named: "basicStamp2"))
         view.isUserInteractionEnabled = true
         return view
     }()
     
     let marketTitle = {
+       let view = UILabel()
+        view.text = "시장 이름"
+        view.font = UIFont.systemFont(ofSize: 14, weight: .heavy)
+        return view
+    }()
+    
+    let marketName = {
        let view =  UILabel()
         view.text = "둔촌시장"
         view.font = .systemFont(ofSize: 17, weight: .medium)
@@ -34,6 +39,7 @@ class StampView : BaseView {
     let memo = {
        let view = UILabel()
         view.text = "기록하기"
+        view.font = UIFont.systemFont(ofSize: 14, weight: .heavy)
         return view
     }()
     
@@ -69,9 +75,10 @@ class StampView : BaseView {
     var saveCompletion: (() -> Void)?
     
     override func configureView() {
-        [bgView, stampImage, marketTitle, memo, memoTextView, stackView].forEach {
+        [bgView, stampImage, marketTitle, marketName, memo, memoTextView, stackView].forEach {
             self.addSubview($0)
         }
+        //stampImageBgView.addSubview(stampImage)
         cancelButton.addTarget(self, action: #selector(cancelBtnClicked), for: .touchUpInside)
         saveButton.addTarget(self, action: #selector(saveBtnClicked(_:)), for: .touchUpInside)
     }
@@ -91,34 +98,38 @@ class StampView : BaseView {
             make.top.horizontalEdges.equalTo(self.safeAreaLayoutGuide)
             make.bottom.equalToSuperview()
         }
-        
+      
         stampImage.snp.makeConstraints { make in
-            make.centerX.equalTo(self.safeAreaLayoutGuide)
-            make.centerY.equalTo(self.safeAreaLayoutGuide).offset(-150)
-            make.width.equalTo(self.snp.width).multipliedBy(0.6)
-            make.height.equalTo(stampImage.snp.width)
+            make.top.horizontalEdges.equalTo(self.safeAreaLayoutGuide)
+            make.height.equalToSuperview().multipliedBy(0.35)
         }
         
         marketTitle.snp.makeConstraints { make in
-            make.top.equalTo(stampImage.snp.bottom).offset(2)
-            make.horizontalEdges.equalTo(stampImage)
+            make.top.equalTo(stampImage.snp.bottom).offset(6)
+            make.horizontalEdges.equalToSuperview().inset(10)
+           // make.height.equalTo(20)
+        }
+        
+        marketName.snp.makeConstraints { make in
+            make.top.equalTo(marketTitle.snp.bottom).offset(6)
+            make.leading.equalTo(marketTitle)
         }
         
         memo.snp.makeConstraints { make in
-            make.top.equalTo(marketTitle.snp.bottom).offset(15)
-            make.leading.equalTo(self.safeAreaLayoutGuide).inset(16)
+            make.top.equalTo(marketName.snp.bottom).offset(16)
+            make.horizontalEdges.equalTo(marketName)
         }
         
         memoTextView.snp.makeConstraints { make in
             make.top.equalTo(memo.snp.bottom).offset(8)
-            make.horizontalEdges.equalTo(self.safeAreaLayoutGuide).inset(13)
-            make.height.equalTo(self).multipliedBy(0.3)
+            make.horizontalEdges.equalTo(self.safeAreaLayoutGuide).inset(11)
+           // make.height.equalTo(self).multipliedBy(0.3)
         }
         
         stackView.snp.makeConstraints { make in
             make.top.equalTo(memoTextView.snp.bottom).offset(10)
-            make.horizontalEdges.bottom.equalTo(self.safeAreaLayoutGuide).inset(10)
-            
+            make.horizontalEdges.equalTo(memoTextView)
+            make.bottom.equalToSuperview().inset(10)
         }
     }
 }

@@ -66,7 +66,7 @@ extension StampViewController {
     fileprivate func setStampView() {
         
         guard let selectedMarket else { return }
-        stampView.marketTitle.text = selectedMarket.marketName
+        stampView.marketName.text = selectedMarket.marketName
         stampView.memoTextView.delegate = self
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(stampImageTapped))
         stampView.stampImage.addGestureRecognizer(tapGesture)
@@ -95,7 +95,7 @@ extension StampViewController {
                 let id = self.selectedImageId()
                 self.saveImageToDocument(fileName: "myPhoto_\(id).jpg", image: self.stampView.stampImage.image!)
             } else {
-                self.stampView.stampImage.image = UIImage(named: "basicStamp")
+                self.stampView.stampImage.image = UIImage(named: "basicStamp2")
             }
         }
         
@@ -178,6 +178,7 @@ extension StampViewController : PHPickerViewControllerDelegate {
             itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in // 4
                 DispatchQueue.main.async {
                     self.stampView.stampImage.image = image as? UIImage // 5
+                  //  self.stampView.stampImageBgView.isOpaque = true
                 }
             }
         } else {
@@ -192,6 +193,8 @@ extension StampViewController: UIImagePickerControllerDelegate, UINavigationCont
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.editedImage] as? UIImage {
             stampView.stampImage.image = image
+           // self.stampView.stampImageBgView.isOpaque = true
+           // self.stampView.stampImage.backgroundColor = .clear
         }
         picker.dismiss(animated: true)
     }

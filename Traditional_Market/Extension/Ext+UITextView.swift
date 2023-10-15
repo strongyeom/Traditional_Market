@@ -12,6 +12,7 @@ extension UITextView {
         self.layer.borderColor = UIColor.red.cgColor
         self.layer.borderWidth = 1
         self.layer.cornerRadius = 12
+        self.layer.cornerCurve = .continuous
         self.clipsToBounds = true
         self.text = "텍스트를 입력해주세요"
         self.textColor = .lightGray
