@@ -10,7 +10,7 @@ import MapKit
 import SnapKit
 
 class MapView : BaseView {
-    
+
     // 각 City 배열
     let cityList: [City] = [
         City(imageName: "basicStamp", localname: "상설장"),

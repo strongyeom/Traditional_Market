@@ -22,12 +22,25 @@ class TraditionalMarketViewModel {
     // 좋아하는 전통시장 리스트
     lazy var myFavoriteMarketList =  Observable(realmManager.allOfFavoriteRealmCount())
     
+    // 내 위치 불러오기
     var startLocation = Observable(CLLocationCoordinate2D())
     
+    // 내 반경에 추가되는 어노테이션들
     var addedAnnotation = Observable<[MKAnnotation]>([])
+    
+    // 내 위치 "버튼"을 눌렀을때 Bool 값 변수
+    var isCurrentLocation = Observable(false)
+    
+    
+    
     
     
     // MARK: - Method
+    
+    // 내 위치 버튼일 눌렀을때 true, false인지 변환해주는 메서드
+    func myLocationClickedBtnIsCurrent() {
+        isCurrentLocation.value = false
+    }
     
     // MapView반경에 추가되는 어노테이션
     func mapViewRangeAddedAnnotation(annotation: MKAnnotation) {

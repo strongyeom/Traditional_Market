@@ -73,7 +73,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         viewModel.startLocation.bind {
             self.setMyRegion(center: $0)
         }
-      
+     
     }
     // Search 결과 값 어노테이션 찍기
     func searchResultAnnotation() {
@@ -538,27 +538,43 @@ extension MapViewController {
     /// 버튼의 이벤트를 받아 start와 stop 할 수 있음
     fileprivate func currentLocationBtnIsActive() {
         mapView.completion = { [weak self] isCurrent in
-            
+            print("현재 위치로 버튼 : \(isCurrent)")
             guard let self else { return }
+            viewModel.isCurrentLocation.value = isCurrent
             
+
             switch locationManger.authorizationStatus {
             case .authorizedAlways:
-                self.isCurrentLocation = isCurrent
-                print("isCurrentLocation",self.isCurrentLocation)
-                
-                if isCurrent {
+//                self.isCurrentLocation = isCurrent
+//
+                if viewModel.isCurrentLocation.value {
                     self.locationManger.startUpdatingLocation()
                 } else {
                     self.locationManger.stopUpdatingLocation()
                     mapView.currentLocationButton.tintColor = .black
                 }
+//                print("isCurrentLocation",self.isCurrentLocation)
+//
+//                if isCurrent {
+//                    self.locationManger.startUpdatingLocation()
+//                } else {
+//                    self.locationManger.stopUpdatingLocation()
+//                    mapView.currentLocationButton.tintColor = .black
+//                }
             case .notDetermined:
                 self.showLocationSettingAlert()
             case .authorizedWhenInUse:
-                self.isCurrentLocation = isCurrent
-                print("isCurrentLocation",self.isCurrentLocation)
+//                self.isCurrentLocation = isCurrent
+//                print("isCurrentLocation",self.isCurrentLocation)
+//
+//                if isCurrent {
+//                    self.locationManger.startUpdatingLocation()
+//                } else {
+//                    self.locationManger.stopUpdatingLocation()
+//                    mapView.currentLocationButton.tintColor = .black
+//                }
                 
-                if isCurrent {
+                if viewModel.isCurrentLocation.value {
                     self.locationManger.startUpdatingLocation()
                 } else {
                     self.locationManger.stopUpdatingLocation()
