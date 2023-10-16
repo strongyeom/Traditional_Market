@@ -53,7 +53,7 @@ class RealmManager {
                     while true {
                         let marketList = realOnBackground.objects(TraditionalMarketRealm.self)
                         realOnBackground.refresh()
-                        print("realOnBackground 갯수 : \(marketList.count)")
+                        //print("realOnBackground 갯수 : \(marketList.count)")
                         if marketList.count > 0 {
                             break
                         }
@@ -108,16 +108,17 @@ class RealmManager {
         /// Realm에서 해당 지역 필터하기
         /// - Parameter region: 해당 지역
         /// - Returns: 필터된 지역
-        func filterData(region: String) -> Results<TraditionalMarketRealm> {
+    func filterData(region: String, rangeMarket: Results<TraditionalMarketRealm>) -> Results<TraditionalMarketRealm> {
             if region == "상설장" || region == "5일장" {
-                let result = rangeFiltetedMarket.where {
+                print("RealmManager rangeFiltetedMarket \(rangeMarket.count)")
+                let result = rangeMarket.where {
                     $0.marketType.contains(region)
                 }
                 
                 return result
             } else {
-                let result = rangeFiltetedMarket.where {
-                    $0.loadNameAddress.contains(region)
+                let result = rangeMarket.where {
+                    $0.address.contains(region)
                 }
                 
                 return result

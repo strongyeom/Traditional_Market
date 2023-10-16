@@ -12,30 +12,13 @@ import RealmSwift
 import Toast
 
 final class MapViewController: BaseViewController, UISearchControllerDelegate {
+    let realm = try! Realm()
     
     private let mapView = MapView()
     private let marketAPIManager = MarketAPIManager.shared
     private let viewModel = TraditionalMarketViewModel()
     private let realmManager = RealmManager()
-    
-    private var locationManger = {
-        var location = CLLocationManager()
-        location.allowsBackgroundLocationUpdates = true
-        location.pausesLocationUpdatesAutomatically = false
-        return location
-    }()
 
-    // 권한 상태
-    private var authorization: CLAuthorizationStatus = .notDetermined
-    
-    // stop or start 설정하는 토글
-    private var isCurrentLocation: Bool = false
-    
-    // 내 위치 안에 있는 Annotation 담는 배열
-    private var myRangeAnnotation: [MKAnnotation] = []
-    
-    // 상세조건 검색
-    private var selectedCell: String?
     // 사용자가 누른 index 저장
     var selectedSaveIndex: String = ""
     
@@ -63,27 +46,81 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     // MARK: - configureView
     override func configureView() {
         super.configureView()
-        setMapView()
-        setLocation()
+        //setMapView()
+        // setLocation()
         setCollectionView()
         setNetwork()
         setSearchController()
         searchResultAnnotation()
-        
+        print("파일 경로 : \(self.realm.configuration.fileURL!)")
         viewModel.startLocation.bind {
-            self.setMyRegion(center: $0)
+            // self.setMyRegion(center: $0)
+            self.mapView.setMyRegion(center: $0)
         }
-     
+        
+        self.viewModel.isCurrentLocation.bind { isSelected in
+            print("isSelected",isSelected)
+            if isSelected {
+                self.mapView.locationManger.startUpdatingLocation()
+            } else {
+                self.mapView.locationManger.stopUpdatingLocation()
+                self.mapView.currentLocationButton.tintColor = .black
+            }
+        }
+        
+        mapView.locationManger.delegate = self
+        mapView.mapBaseView.delegate = self
+        
+        mapView.completion = { [weak self] isCurrent in
+            print("현재 위치로 버튼 : \(isCurrent)")
+            guard let self else { return }
+            // self.viewModel.isCurrentLocation.value = isCurrent
+            //  self.viewModel.myLocationClickedBtnIsCurrent(isSelected: isCurrent)
+            switch mapView.locationManger.authorizationStatus {
+            case .authorizedAlways:
+                if self.viewModel.isCurrentLocation.value {
+                    self.mapView.locationManger.startUpdatingLocation()
+                } else {
+                    self.mapView.locationManger.stopUpdatingLocation()
+                    self.mapView.currentLocationButton.tintColor = .black
+                }
+            case .notDetermined:
+                print("123")
+                // self.showLocationSettingAlert()
+            case .authorizedWhenInUse:
+                print("self.viewModel.isCurrentLocation.value",self.viewModel.isCurrentLocation.value)
+                self.viewModel.myLocationClickedBtnIsCurrent(isSelected: isCurrent)
+                //                if self.viewModel.isCurrentLocation.value {
+                //                    self.mapView.locationManger.startUpdatingLocation()
+                //                } else {
+                //                    self.mapView.locationManger.stopUpdatingLocation()
+                //                    self.mapView.currentLocationButton.tintColor = .black
+                //                }
+            case .denied:
+                // self.showLocationSettingAlert()
+                print("123")
+            case .restricted:
+                // self.showLocationSettingAlert()
+                print("123")
+            @unknown default:
+                print("어떤것이 추가 될 수 있음")
+            }
+            
+            
+        }
+        
     }
-    // Search 결과 값 어노테이션 찍기
+    /// Search 결과 값 어노테이션 찍기
     func searchResultAnnotation() {
-       
         resultsTableController.completion = { result in
             print("completion : \(result.marketName)")
+            
             self.searchController.searchBar.text = result.marketName
-            print("searchController.searchBar.text", self.searchController.searchBar.text ?? "")
-
-            self.setRegionScale(center: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
+            
+            //            print("searchController.searchBar.text", self.searchController.searchBar.text ?? "")
+            
+            self.mapView.setRegionScale(center: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
+            
             // 현재 위치 핀 찍기
             let annotation = MKPointAnnotation()
             annotation.title = result.marketName
@@ -119,205 +156,13 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
     }
-    
-    /// 해당 지역에 들어왔을때 로컬 알림 메서드
-    fileprivate  func registLocation() {
-        print("내 범위에 속하는 어노테이션 갯수",myRangeAnnotation.count)
-        // 내 범위에서 내 위치는 렌더링 하지 않기
-        let myLocationRangeRemoveMyLocation = myRangeAnnotation.filter { $0.title!! != "My Location"}
-        
-        // 내 위치 반경에 해당하는 어노테이션만 가져오기
-        for i in myLocationRangeRemoveMyLocation {
-            print("해당 \(i.title!!)에 들어왔습니다.",i.title!!)
-            let circleRange = CLCircularRegion(center: i.coordinate, radius: Scale.marktRange, identifier: "\(i.title! ?? "내위치")")
-            
-            circleRange.notifyOnEntry = true
-            circleRange.notifyOnExit = true
-            locationManger.startMonitoring(for: circleRange)
-        }
-        // 🧐 UNLocationNotificationTrigger 고민해보기
-    }
-    
-    // 내 위치 범위 산정
-    fileprivate  func setMyRegion(center: CLLocationCoordinate2D) {
-        myRangeAnnotation = []
-        // MapView에 축척 m단위로 보여주기
-        let region = MKCoordinateRegion(center: center, latitudinalMeters: Scale.myLocationScale, longitudinalMeters: Scale.myLocationScale)
-        let regionRange = CLCircularRegion(center: center, radius: Scale.myRangeScale, identifier: "내 위치")
-        mapView.mapBaseView.setRegion(region, animated: true)
-        
-        
-        print("현재 MapView에서 보여지고 있는 어노테이션 갯수 : \(viewModel.addedAnnotation.value.count)")
-        for i in viewModel.addedAnnotation.value {
-            if regionRange.contains(i.coordinate) {
-                print("\(i.title! ?? "")가 내 위치에 포함되어 있습니다.")
-                // 범위안에 있는 것만 따로 배열에 담아서 registLocation타게 하기
-                myRangeAnnotation.append(i)
-            } else {
-                print("\(i.title! ?? "")가 내 위치에 포함되어 있지 않습니다.")
-            }
-        }
-        registLocation()
-    }
-    
-    func setRegionScale(center: CLLocationCoordinate2D) {
-        // MapView에 축척 m단위로 보여주기
-        let region = MKCoordinateRegion(center: center, latitudinalMeters: Scale.myLocationScale, longitudinalMeters: Scale.myLocationScale)
-        
-        mapView.mapBaseView.setRegion(region, animated: true)
-    }
-
-    // MapView 위치 반경에 존재하는 어노테이션만 보여주기
-    func mapViewRangeInAnnotations(containRange: Results<TraditionalMarketRealm>) {
-        let currentAnnotations = mapView.mapBaseView.annotations
-        viewModel.addedAnnotation.value = []
-        self.mapView.mapBaseView.removeAnnotations(self.mapView.mapBaseView.annotations)
-        let rangeAnnotation = containRange.map {
-            (realItem) -> MKAnnotation in
-            let pin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: realItem.latitude, longitude: realItem.longitude))
-            pin.imageName = "checkStamp"
-            pin.title = realItem.marketName
-            return pin
-        }
-        
-        // 반복문을 사용하여 배열 안에 담아주기
-        for i in rangeAnnotation {
-            viewModel.mapViewRangeAddedAnnotation(annotation: i)
-        }
-
-        // 현재 모든 어노테이션에서 추가한 어노테이션의 좌표가 같지 않은것만 필터링하기
-        let removeAnnotations = currentAnnotations.filter { (annotation) in
-            !viewModel.addedAnnotation.value.contains(where: {
-                $0.coordinate.latitude == annotation.coordinate.latitude && $0.coordinate.longitude == annotation.coordinate.longitude
-            })
-        }
-        // 같지 않은것 어노테이션 빼기
-        mapView.mapBaseView.removeAnnotations(removeAnnotations)
-        
-        // 기존 어노테이션에 추가하려는 어노테이션이 없으면 추가 배열 생성
-        let addAnnotations = viewModel.addedAnnotation.value.filter { newAnnotation in
-            !currentAnnotations.contains(where: {
-                $0.coordinate.latitude == newAnnotation.coordinate.latitude && $0.coordinate.latitude == newAnnotation.coordinate.longitude
-            })
-        }
-        mapView.mapBaseView.addAnnotations(addAnnotations)
-    }
-    
-    
-    /// 해당 지역 Annotation만 보여주기
-    fileprivate  func filterCityAnnotation() {
-        let currentAnnotations = mapView.mapBaseView.annotations
-        guard let selectedCell else { return }
-        // LazyMapSequence<Results<TraditionalMarketRealm>, MKAnnotation>로 나온것을 배열로 만들어주기 위해 변수 설정
-        var mkAnnotationConvert: [MKAnnotation] = []
-        self.mapView.mapBaseView.removeAnnotations(self.mapView.mapBaseView.annotations)
-        // mapView에 있는 어노테이션 삭제
-        print("filterCityAnnotation - \(selectedCell)")
-        let realmAnnotation = realmManager.filterData(region: selectedCell).map {
-            (realItem) -> MKAnnotation in
-            let pin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: realItem.latitude, longitude: realItem.longitude))
-            pin.title = realItem.marketName
-            pin.imageName = "checkStamp"
-            return pin
-        }
-        
-        // 반복문을 사용하여 배열 안에 담아주기
-        for i in realmAnnotation {
-            mkAnnotationConvert.append(i)
-        }
-        
-        let removeAnnotations = currentAnnotations.filter { (annotation) in
-            !mkAnnotationConvert.contains(where: {
-                $0.coordinate.latitude == annotation.coordinate.latitude && $0.coordinate.longitude == annotation.coordinate.longitude
-            })
-        }
-        mapView.mapBaseView.removeAnnotations(removeAnnotations)
-        
-        let addAnnotations = mkAnnotationConvert.filter { newAnnotation in
-            !currentAnnotations.contains(where: {
-                $0.coordinate.latitude == newAnnotation.coordinate.latitude && $0.coordinate.latitude == newAnnotation.coordinate.longitude
-            })
-        }
-        
-        mapView.mapBaseView.addAnnotations(addAnnotations)
-
-    }
-    
-    /// 권한 - 허용안함을 눌렀을때 Alert을 띄우고 iOS 설정 화면으로 이동
-    fileprivate  func showLocationSettingAlert() {
-        let alert = UIAlertController(title: "위치 정보 설정", message: "설정>개인 정보 보호> 위치 여기로 이동해서 위치 권한 설정해주세요", preferredStyle: .alert)
-        let goSetting = UIAlertAction(title: "위치 설정하기", style: .default) { _ in
-            // iOS 설정 페이지로 이동 : openSettingURLString
-            if let appSetting = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(appSetting)
-            }
-        }
-        let cancel = UIAlertAction(title: "취소", style: .cancel)
-        
-        alert.addAction(goSetting)
-        alert.addAction(cancel)
-        present(alert, animated: true)
-    }
-    
-    /// 상태가 바뀔때 마다 권한 확인
-    fileprivate func checkDeviceLocationAuthorization() {
-        DispatchQueue.global().async {
-            // 위치 서비스를 이용하고 있다면
-            if CLLocationManager.locationServicesEnabled() {
-                
-                if #available(iOS 14.0, *) {
-                    self.authorization = self.locationManger.authorizationStatus
-                } else {
-                    self.authorization = CLLocationManager.authorizationStatus()
-                }
-                
-                DispatchQueue.main.async {
-                    print("현재 권한 상태 - \(self.authorization)")
-                    self.checkStatuesDeviceLocationAuthorization(status: self.authorization)
-                }
-            }
-        }
-    }
-    
-    
-    /// 권한 설정에 따른 메서드
-    /// - Parameter status: 권한 상태
-    fileprivate func checkStatuesDeviceLocationAuthorization(status: CLAuthorizationStatus) {
-        switch status {
-        case .notDetermined:
-            print("아무것도 결정하지 않았다.")
-            // p.list 알람 띄우기
-            locationManger.requestWhenInUseAuthorization()
-        case .restricted:
-            print("권한 설정 거부함")
-            showLocationSettingAlert()
-        case .denied:
-            print("권한 설정 거부함")
-            showLocationSettingAlert()
-        case .authorizedAlways:
-            print("항상 권한 허용")
-            locationManger.startUpdatingLocation()
-        case .authorizedWhenInUse:
-            print("한번만 권한 허용")
-            locationManger.startUpdatingLocation()
-            setMyRegion(center: viewModel.startLocation.value)
-            mapView.currentLocationButton.isSelected = true
-        case .authorized:
-            print("권한 허용 됨")
-        @unknown default:
-            print("어떤것이 추가 될 수 있음")
-        }
-    }
-    
-    
-    
+ 
 }
 
+// MARK: - CLLocationManagerDelegate
 extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first?.coordinate {
-            // mapView.mapBaseView.userTrackingMode = .follow
-            //startLocation = location
             viewModel.startLocationFetch(location: location)
             print("시작 위치를 받아오고 있습니다 \(location)")
             mapView.currentLocationButton.tintColor = .systemBlue
@@ -330,7 +175,8 @@ extension MapViewController: CLLocationManagerDelegate {
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         print("위치 권한이 바뀔때 마다 호출 - ")
-        checkDeviceLocationAuthorization()
+        // checkDeviceLocationAuthorization()
+        mapView.checkDeviceLocationAuthorization()
     }
     
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
@@ -372,7 +218,6 @@ extension MapViewController: CLLocationManagerDelegate {
     }
 }
 
-
 // MARK: - MKMapViewDelegate
 extension MapViewController: MKMapViewDelegate {
     
@@ -383,20 +228,20 @@ extension MapViewController: MKMapViewDelegate {
         switch annotation {
         case is CustomAnnotation:
             let view = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier, for: annotation)
-                    view.clusteringIdentifier = String(describing: CustomAnnotationView.self)
-                    return view
+            view.clusteringIdentifier = String(describing: CustomAnnotationView.self)
+            return view
         case is MKClusterAnnotation:
             return mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier, for: annotation)
         default:
             return nil
         }
         
-      //  return annotationView
+        //  return annotationView
     }
     
     // MapView를 터치했을때 액션 메서드
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        locationManger.stopUpdatingLocation()
+        mapView.locationManger.stopUpdatingLocation()
         mapView.currentLocationButton.isSelected = false
         mapView.currentLocationButton.tintColor = .black
     }
@@ -415,20 +260,21 @@ extension MapViewController: MKMapViewDelegate {
         detailVC.isLikeClickedEvent()
         self.dismiss(animated: true) {
             self.present(detailVC, animated: true)
-            self.setRegionScale(center: annotation.coordinate)
+            //   self.setRegionScale(center: annotation.coordinate)
+            self.mapView.setRegionScale(center: annotation.coordinate)
         }
     }
-
-
+    
+    
     
     
     
     // 핀을 터치 하지 않았을때 present된 DetailVC 내려주기
     func mapView(_ mapView: MKMapView, didDeselect annotation: MKAnnotation) {
-      //  dismiss(animated: true)
+        //  dismiss(animated: true)
         print("didDeselect")
     }
- 
+    
     // MapView Zoom의 거리 확인
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         
@@ -450,12 +296,14 @@ extension MapViewController: MKMapViewDelegate {
         print("MapView 반경에 있는 총 갯수:",rangeFilterAnnoation.count)
         
         
-        if authorization == .authorizedWhenInUse || authorization == .authorizedAlways || authorization == .denied {
+        if self.mapView.authorization == .authorizedWhenInUse || self.mapView.authorization == .authorizedAlways || self.mapView.authorization == .denied {
             
-            if selectedCell != nil {
-                filterCityAnnotation()
+            if self.mapView.selectedCell != nil {
+                //   filterCityAnnotation()
+                self.mapView.filterCityAnnotation(filterMarket: rangeFilterAnnoation)
             } else { // selectedCell == nil 이라면
-                mapViewRangeInAnnotations(containRange: rangeFilterAnnoation)
+                //  mapViewRangeInAnnotations(containRange: rangeFilterAnnoation)
+                self.mapView.mapViewRangeInAnnotations(containRange: rangeFilterAnnoation)
             }
         }
         
@@ -465,17 +313,18 @@ extension MapViewController: MKMapViewDelegate {
 // MARK: - UICollectionViewDelegate
 extension MapViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    
-         mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
+        
+        mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
         let data = mapView.cityList[indexPath.item]
         // CollectionView에서 해당 indexPath를 사용해서 Cell 뽑아내기
         let aa = mapView.collectionView.cellForItem(at: indexPath) as! CityCell
         // Cell을 선택했다면 그 전의 Cell 배경색 white로 변경하기
         
         if selectedSaveIndex == "\(indexPath.item)" {
-            selectedCell = nil
+            self.mapView.selectedCell = nil
             selectedSaveIndex = ""
-            self.mapViewRangeInAnnotations(containRange: rangeFilterAnnoation)
+            // self.mapViewRangeInAnnotations(containRange: rangeFilterAnnoation)
+            self.mapView.mapViewRangeInAnnotations(containRange: rangeFilterAnnoation)
             aa.baseView.backgroundColor = .white
         } else {
             if !selectedSaveIndex.isEmpty {
@@ -483,15 +332,17 @@ extension MapViewController: UICollectionViewDelegate {
                 bb.baseView.backgroundColor = .white
             }
             selectedSaveIndex = "\(indexPath.item)"
-            selectedCell = data.localname
+            self.mapView.selectedCell = data.localname
             aa.baseView.backgroundColor = .yellow
         }
-        print("\(indexPath.item) 인덱스 상세 조건: \(selectedCell ?? "nil입니다.")")
-        filterCityAnnotation()
+        print("\(indexPath.item) 인덱스 상세 조건: \( self.mapView.selectedCell ?? "nil입니다.")")
+        // filterCityAnnotation()
+        self.mapView.filterCityAnnotation(filterMarket: rangeFilterAnnoation)
     }
 }
 
 
+// MARK: - UICollectionViewDataSource
 extension MapViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return mapView.cityList.count
@@ -508,6 +359,7 @@ extension MapViewController: UICollectionViewDataSource {
 
 
 extension MapViewController {
+    
     fileprivate func setNetwork() {
         // 전통시장 API에서 데이터 불러오기
         marketAPIManager.request { item in
@@ -519,80 +371,10 @@ extension MapViewController {
         mapView.collectionView.delegate = self
         mapView.collectionView.dataSource = self
     }
-    
-    fileprivate func setLocation() {
-        locationManger.delegate = self
-        locationManger.desiredAccuracy = kCLLocationAccuracyBest // 정확성
-        checkDeviceLocationAuthorization()
-    }
-    
-    fileprivate func setMapView() {
-        mapView.mapBaseView.delegate = self
-        currentLocationBtnIsActive()
-        mapView.mapBaseView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-        
-        mapView.mapBaseView.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
-        
-    }
-    
-    /// 버튼의 이벤트를 받아 start와 stop 할 수 있음
-    fileprivate func currentLocationBtnIsActive() {
-        mapView.completion = { [weak self] isCurrent in
-            print("현재 위치로 버튼 : \(isCurrent)")
-            guard let self else { return }
-            viewModel.isCurrentLocation.value = isCurrent
-            
 
-            switch locationManger.authorizationStatus {
-            case .authorizedAlways:
-//                self.isCurrentLocation = isCurrent
-//
-                if viewModel.isCurrentLocation.value {
-                    self.locationManger.startUpdatingLocation()
-                } else {
-                    self.locationManger.stopUpdatingLocation()
-                    mapView.currentLocationButton.tintColor = .black
-                }
-//                print("isCurrentLocation",self.isCurrentLocation)
-//
-//                if isCurrent {
-//                    self.locationManger.startUpdatingLocation()
-//                } else {
-//                    self.locationManger.stopUpdatingLocation()
-//                    mapView.currentLocationButton.tintColor = .black
-//                }
-            case .notDetermined:
-                self.showLocationSettingAlert()
-            case .authorizedWhenInUse:
-//                self.isCurrentLocation = isCurrent
-//                print("isCurrentLocation",self.isCurrentLocation)
-//
-//                if isCurrent {
-//                    self.locationManger.startUpdatingLocation()
-//                } else {
-//                    self.locationManger.stopUpdatingLocation()
-//                    mapView.currentLocationButton.tintColor = .black
-//                }
-                
-                if viewModel.isCurrentLocation.value {
-                    self.locationManger.startUpdatingLocation()
-                } else {
-                    self.locationManger.stopUpdatingLocation()
-                    mapView.currentLocationButton.tintColor = .black
-                }
-            case .denied:
-                self.showLocationSettingAlert()
-            case .restricted:
-                self.showLocationSettingAlert()
-            @unknown default:
-                print("어떤것이 추가 될 수 있음")
-            }
-            
-            
-        }
-    }
 }
 
+// MARK: - UISearchBarDelegate
 extension MapViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
@@ -605,11 +387,11 @@ extension MapViewController: UISearchBarDelegate {
         }
     }
     
-   
+    
     
     func presentSearchController(_ searchController: UISearchController) {
-       print("presentSearchController")
-        locationManger.stopUpdatingLocation()
+        print("presentSearchController")
+        mapView.locationManger.stopUpdatingLocation()
         mapView.currentLocationButton.tintColor = .black
         // 검색창 실행시 DetailVC 내리기
         dismiss(animated: true)
