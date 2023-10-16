@@ -19,21 +19,38 @@ class RealmManager {
 
     /// Realm에 데이터 추가하기
     /// - Parameter market: 추가할 데이터
-    func addData(market: Item) {
-        let addMarket =
-        TraditionalMarketRealm(marketName: market.marketName, marketType: market.marketType, loadNameAddress: market.loadNameAddress, address: market.address, marketOpenCycle: market.marketOpenCycle, publicToilet: market.publicToilet, latitude: market.latitude, longitude: market.longitude, popularProducts: market.popularProducts, phoneNumber: market.phoneNumber)
+    func realmAddData(market: Item) {
         
-        do {
-            try realm.write {
-                if String(addMarket.latitude) != "0.0" {
-                    realm.add(addMarket)
-                }
-                
+        if !market.latitude.isEmpty {
+            checkAfterWriteBackgroundThreadUpdate()
+            let realmMainThread = try! Realm()
+            
+            let traditionalMarket = TraditionalMarketRealm(marketName: market.marketName, marketType: market.marketType, loadNameAddress: market.loadNameAddress, address: market.address, marketOpenCycle: market.marketOpenCycle, publicToilet: market.publicToilet, latitude: market.latitude, longitude: market.longitude, popularProducts: market.popularProducts, phoneNumber: market.phoneNumber)
+            
+            try! realmMainThread.write {
+                realmMainThread.add(traditionalMarket)
             }
-        } catch {
-            print(error.localizedDescription)
         }
     }
+    
+    /// 비동기로 작업한 Realm 데이터 MainThread에 동기화 시키기
+    func checkAfterWriteBackgroundThreadUpdate() {
+        DispatchQueue.global().async {
+            // autoreleasepool : 자동으로 해제되는게 아니라 해당 테스크가 끝날때 메모리에서 해제될 수 있도록 보장한다. -> 안정성을 높이기 위해 사용
+            autoreleasepool {
+                let realOnBackground = try! Realm()
+                while true {
+                    let marketList = realOnBackground.objects(TraditionalMarketRealm.self)
+                    realOnBackground.refresh()
+                    print("exampleList 갯수 : \(marketList.count)")
+                    if marketList.count > 0 {
+                        break
+                    }
+                }
+            }
+        }
+    }
+    
 
 
     /// Realm 불러오기

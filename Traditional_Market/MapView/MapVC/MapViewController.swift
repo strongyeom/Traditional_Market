@@ -147,7 +147,6 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     // 내 위치 범위 산정
     fileprivate  func setMyRegion(center: CLLocationCoordinate2D) {
         myRangeAnnotation = []
-        
         // MapView에 축척 m단위로 보여주기
         let region = MKCoordinateRegion(center: center, latitudinalMeters: Scale.myLocationScale, longitudinalMeters: Scale.myLocationScale)
         let regionRange = CLCircularRegion(center: center, radius: Scale.myRangeScale, identifier: "내 위치")

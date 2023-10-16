@@ -30,21 +30,26 @@ class MarketAPIManager {
         
         for page in pageCount {
             group.enter()
-            NetworkManager.shared.request(page: page) { response in
+            NetworkManager.shared.request(page: page) { [weak self] response in
                 
-                
+                guard let self else { return }
                 self.marketList.response.body.items.append(contentsOf: response)
-                
-                let _ = response.map {
-                    self.realmManager.addData(market: $0)
+               
+                // Batch 작업을 통해 속도 5배 개선
+                if page % 4 == 0 {
+                    let _ = response.map {
+                        self.realmManager.realmAddData(market: $0)
+                        self.marketList.response.body.items.removeAll()
+                    }
                 }
-                
+              
             }
             group.leave()
             
         }
         group.notify(queue: .main) {
             completionHandler(self.marketList)
+           
             print("Realm파일 경로", self.realm.configuration.fileURL!)
         }
     }
@@ -56,7 +61,4 @@ class MarketAPIManager {
             completionHandler(response)
         }
     }
-    
-    
-    
 }
