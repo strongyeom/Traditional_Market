@@ -21,6 +21,8 @@ class MarketAPIManager {
     
     let realmManager = RealmManager()
     
+    var aa: [Item] = []
+    
     var marketList: TraditionalMarket = TraditionalMarket(response: Response.init(body: Body.init(items: [], totalCount: "", numOfRows: "", pageNo: "")))
     
     
@@ -42,14 +44,12 @@ class MarketAPIManager {
                     self.realmManager.realmAddData(market: $0)
                 }
             }
-            group.leave()
             
         }
         
         group.notify(queue: .main) {
             completionHandler(self.marketList)
-            
-            print("Realm파일 경로", self.realm.configuration.fileURL!)
+            print("파일 경로 : \(self.realm.configuration.fileURL!)")
         }
     }
     

@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreLocation
+import MapKit
 
 class TraditionalMarketViewModel {
     
@@ -23,9 +24,15 @@ class TraditionalMarketViewModel {
     
     var startLocation = Observable(CLLocationCoordinate2D())
     
+    var addedAnnotation = Observable<[MKAnnotation]>([])
     
     
     // MARK: - Method
+    
+    // MapView반경에 추가되는 어노테이션
+    func mapViewRangeAddedAnnotation(annotation: MKAnnotation) {
+        addedAnnotation.value.append(annotation)
+    }
     
     
     // 시작 위치

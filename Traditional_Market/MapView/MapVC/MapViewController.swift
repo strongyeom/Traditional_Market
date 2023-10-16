@@ -24,13 +24,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         location.pausesLocationUpdatesAutomatically = false
         return location
     }()
-    
-//    private var startLocation: CLLocationCoordinate2D? {
-//        didSet {
-//            setMyRegion(center: startLocation ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0))
-//        }
-//    }
-    
+
     // 권한 상태
     private var authorization: CLAuthorizationStatus = .notDetermined
     
@@ -42,10 +36,6 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     
     // 상세조건 검색
     private var selectedCell: String?
-    
-    // MapView반경에 추가되는 어노테이션
-    var addAnnotationConvert: [MKAnnotation] = []
-    
     // 사용자가 누른 index 저장
     var selectedSaveIndex: String = ""
     
@@ -76,15 +66,13 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         setMapView()
         setLocation()
         setCollectionView()
-       // setNetwork()
+        setNetwork()
         setSearchController()
         searchResultAnnotation()
         
         viewModel.startLocation.bind {
             self.setMyRegion(center: $0)
         }
-        
-
       
     }
     // Search 결과 값 어노테이션 찍기
@@ -159,8 +147,8 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         mapView.mapBaseView.setRegion(region, animated: true)
         
         
-        print("현재 MapView에서 보여지고 있는 어노테이션 갯수 : \(addAnnotationConvert.count)")
-        for i in addAnnotationConvert {
+        print("현재 MapView에서 보여지고 있는 어노테이션 갯수 : \(viewModel.addedAnnotation.value.count)")
+        for i in viewModel.addedAnnotation.value {
             if regionRange.contains(i.coordinate) {
                 print("\(i.title! ?? "")가 내 위치에 포함되어 있습니다.")
                 // 범위안에 있는 것만 따로 배열에 담아서 registLocation타게 하기
@@ -182,7 +170,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     // MapView 위치 반경에 존재하는 어노테이션만 보여주기
     func mapViewRangeInAnnotations(containRange: Results<TraditionalMarketRealm>) {
         let currentAnnotations = mapView.mapBaseView.annotations
-        addAnnotationConvert = []
+        viewModel.addedAnnotation.value = []
         self.mapView.mapBaseView.removeAnnotations(self.mapView.mapBaseView.annotations)
         let rangeAnnotation = containRange.map {
             (realItem) -> MKAnnotation in
@@ -194,12 +182,12 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         
         // 반복문을 사용하여 배열 안에 담아주기
         for i in rangeAnnotation {
-            addAnnotationConvert.append(i)
+            viewModel.mapViewRangeAddedAnnotation(annotation: i)
         }
 
         // 현재 모든 어노테이션에서 추가한 어노테이션의 좌표가 같지 않은것만 필터링하기
         let removeAnnotations = currentAnnotations.filter { (annotation) in
-            !addAnnotationConvert.contains(where: {
+            !viewModel.addedAnnotation.value.contains(where: {
                 $0.coordinate.latitude == annotation.coordinate.latitude && $0.coordinate.longitude == annotation.coordinate.longitude
             })
         }
@@ -207,13 +195,11 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         mapView.mapBaseView.removeAnnotations(removeAnnotations)
         
         // 기존 어노테이션에 추가하려는 어노테이션이 없으면 추가 배열 생성
-        let addAnnotations = addAnnotationConvert.filter { newAnnotation in
+        let addAnnotations = viewModel.addedAnnotation.value.filter { newAnnotation in
             !currentAnnotations.contains(where: {
                 $0.coordinate.latitude == newAnnotation.coordinate.latitude && $0.coordinate.latitude == newAnnotation.coordinate.longitude
             })
         }
-        
-        print("현재 축척에서 보여지지고 있는 addAnnotationConvert의 갯수")
         mapView.mapBaseView.addAnnotations(addAnnotations)
     }
     
@@ -301,29 +287,21 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         case .notDetermined:
             print("아무것도 결정하지 않았다.")
             // p.list 알람 띄우기
-           // addRealmData()
             locationManger.requestWhenInUseAuthorization()
         case .restricted:
             print("권한 설정 거부함")
             showLocationSettingAlert()
-            //addRealmData()
         case .denied:
             print("권한 설정 거부함")
             showLocationSettingAlert()
-          //  addRealmData()
         case .authorizedAlways:
             print("항상 권한 허용")
             locationManger.startUpdatingLocation()
-          //  addRealmData()
         case .authorizedWhenInUse:
             print("한번만 권한 허용")
             locationManger.startUpdatingLocation()
-          //  addRealmData()
             setMyRegion(center: viewModel.startLocation.value)
             mapView.currentLocationButton.isSelected = true
-            marketAPIManager.request { data in
-                print("data 갯수 : \(data.response.body.items.count)")
-            }
         case .authorized:
             print("권한 허용 됨")
         @unknown default:
@@ -530,12 +508,12 @@ extension MapViewController: UICollectionViewDataSource {
 
 
 extension MapViewController {
-//    fileprivate func setNetwork() {
-//        // 전통시장 API에서 데이터 불러오기
-//        marketAPIManager.request { item in
-//            print("네트워크에서 저장한 RealmAdd하고 데이터 가져오기")
-//        }
-//    }
+    fileprivate func setNetwork() {
+        // 전통시장 API에서 데이터 불러오기
+        marketAPIManager.request { item in
+            print("네트워크에서 저장한 RealmAdd하고 데이터 가져오기")
+        }
+    }
     
     fileprivate func setCollectionView() {
         mapView.collectionView.delegate = self
