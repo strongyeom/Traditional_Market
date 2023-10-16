@@ -23,33 +23,32 @@ class MarketAPIManager {
     
     var marketList: TraditionalMarket = TraditionalMarket(response: Response.init(body: Body.init(items: [], totalCount: "", numOfRows: "", pageNo: "")))
     
-   
+    
     
     
     func request(completionHandler: @escaping ((TraditionalMarket) -> Void)) {
         
         for page in pageCount {
             group.enter()
+            print("측정 시작 전: \(Date().formatted(date: .omitted, time: .complete))")
             NetworkManager.shared.request(page: page) { [weak self] response in
                 
                 guard let self else { return }
                 self.marketList.response.body.items.append(contentsOf: response)
-               
-                // Batch 작업을 통해 속도 5배 개선
-                if page % 4 == 0 {
-                    let _ = response.map {
-                        self.realmManager.realmAddData(market: $0)
-                        self.marketList.response.body.items.removeAll()
-                    }
+                
+                // enter와 leave를 통해 모았다가 한번에 realm에 저장
+                let _ = response.map {
+                    print("측정 시작 후: \(Date().formatted(date: .omitted, time: .complete))")
+                    self.realmManager.realmAddData(market: $0)
                 }
-              
             }
             group.leave()
             
         }
+        
         group.notify(queue: .main) {
             completionHandler(self.marketList)
-           
+            
             print("Realm파일 경로", self.realm.configuration.fileURL!)
         }
     }

@@ -10,6 +10,8 @@ import CoreLocation
 
 class TraditionalMarketViewModel {
     
+    
+    // MARK: - Properties
     let realmManager = RealmManager()
     
     var naverImageList: Observable<NaverMarketImage> = Observable(NaverMarketImage(lastBuildDate: "", total: 0, start: 0, display: 0, items: []))
@@ -18,6 +20,19 @@ class TraditionalMarketViewModel {
     
     // 좋아하는 전통시장 리스트
     lazy var myFavoriteMarketList =  Observable(realmManager.allOfFavoriteRealmCount())
+    
+    var startLocation = Observable(CLLocationCoordinate2D())
+    
+    
+    
+    // MARK: - Method
+    
+    
+    // 시작 위치
+    func startLocationFetch(location: CLLocationCoordinate2D) {
+        startLocation.value = location
+    }
+    
     
     // 선택된 전통시장 정보
     func selectedMarketInfomation(location: CLLocationCoordinate2D) -> TraditionalMarketRealm {

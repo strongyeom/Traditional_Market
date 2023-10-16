@@ -25,11 +25,11 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         return location
     }()
     
-    private var startLocation: CLLocationCoordinate2D? {
-        didSet {
-            setMyRegion(center: startLocation ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0))
-        }
-    }
+//    private var startLocation: CLLocationCoordinate2D? {
+//        didSet {
+//            setMyRegion(center: startLocation ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0))
+//        }
+//    }
     
     // 권한 상태
     private var authorization: CLAuthorizationStatus = .notDetermined
@@ -76,9 +76,15 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         setMapView()
         setLocation()
         setCollectionView()
-        setNetwork()
+       // setNetwork()
         setSearchController()
         searchResultAnnotation()
+        
+        viewModel.startLocation.bind {
+            self.setMyRegion(center: $0)
+        }
+        
+
       
     }
     // Search 결과 값 어노테이션 찍기
@@ -313,8 +319,11 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
             print("한번만 권한 허용")
             locationManger.startUpdatingLocation()
           //  addRealmData()
-            setMyRegion(center: startLocation ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0))
+            setMyRegion(center: viewModel.startLocation.value)
             mapView.currentLocationButton.isSelected = true
+            marketAPIManager.request { data in
+                print("data 갯수 : \(data.response.body.items.count)")
+            }
         case .authorized:
             print("권한 허용 됨")
         @unknown default:
@@ -330,7 +339,8 @@ extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first?.coordinate {
             // mapView.mapBaseView.userTrackingMode = .follow
-            startLocation = location
+            //startLocation = location
+            viewModel.startLocationFetch(location: location)
             print("시작 위치를 받아오고 있습니다 \(location)")
             mapView.currentLocationButton.tintColor = .systemBlue
         }
@@ -520,12 +530,12 @@ extension MapViewController: UICollectionViewDataSource {
 
 
 extension MapViewController {
-    fileprivate func setNetwork() {
-        // 전통시장 API에서 데이터 불러오기
-        marketAPIManager.request { item in
-            print("네트워크에서 저장한 RealmAdd하고 데이터 가져오기")
-        }
-    }
+//    fileprivate func setNetwork() {
+//        // 전통시장 API에서 데이터 불러오기
+//        marketAPIManager.request { item in
+//            print("네트워크에서 저장한 RealmAdd하고 데이터 가져오기")
+//        }
+//    }
     
     fileprivate func setCollectionView() {
         mapView.collectionView.delegate = self
