@@ -42,7 +42,6 @@ class RealmManager {
                 while true {
                     let marketList = realOnBackground.objects(TraditionalMarketRealm.self)
                     realOnBackground.refresh()
-                    print("exampleList 갯수 : \(marketList.count)")
                     if marketList.count > 0 {
                         break
                     }

@@ -80,7 +80,7 @@ class MapView : BaseView {
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide).offset(10)
             make.horizontalEdges.equalToSuperview()
-            make.height.equalTo(100)
+            make.height.equalTo(110)
         }
         
         currentLocationButton.snp.makeConstraints { make in

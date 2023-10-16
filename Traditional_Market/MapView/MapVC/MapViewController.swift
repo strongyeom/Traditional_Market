@@ -482,7 +482,6 @@ extension MapViewController: UICollectionViewDelegate {
         let data = mapView.cityList[indexPath.item]
         // CollectionView에서 해당 indexPath를 사용해서 Cell 뽑아내기
         let aa = mapView.collectionView.cellForItem(at: indexPath) as! CityCell
-        print("cell 클릭 : selectedSaveIndex: 전",selectedSaveIndex)
         // Cell을 선택했다면 그 전의 Cell 배경색 white로 변경하기
         
         if selectedSaveIndex == "\(indexPath.item)" {
@@ -499,7 +498,6 @@ extension MapViewController: UICollectionViewDelegate {
             selectedCell = data.localname
             aa.baseView.backgroundColor = .yellow
         }
-        print("cell 클릭 : selectedSaveIndex: 후",selectedSaveIndex)
         print("\(indexPath.item) 인덱스 상세 조건: \(selectedCell ?? "nil입니다.")")
         filterCityAnnotation()
     }
@@ -513,7 +511,6 @@ extension MapViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CityCell.self), for: indexPath) as? CityCell else { return UICollectionViewCell() }
-        print("cell 클릭 : cellForItemAt - \(indexPath.item)")
         let data = mapView.cityList[indexPath.item]
         cell.imageView.image = UIImage(named: data.imageName)
         cell.localName.text = data.localname
