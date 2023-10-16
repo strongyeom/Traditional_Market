@@ -30,18 +30,19 @@ class SaveMarketCell : UITableViewCell {
         view.text = "여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음"
         view.font = UIFont.systemFont(ofSize: 13)
         view.numberOfLines = 0
-        view.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+      //  view.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+        
         return view
     }()
     
-    lazy var stackView = {
-        let stack = UIStackView(arrangedSubviews: [marketTitle, marketDescription])
-        stack.axis = .vertical
-        stack.spacing = 5
-        stack.alignment = .fill
-        stack.distribution = .fill
-        return stack
-    }()
+//    lazy var stackView = {
+//        let stack = UIStackView(arrangedSubviews: [marketTitle, marketDescription])
+//        stack.axis = .vertical
+//        stack.spacing = 5
+//        stack.alignment = .fill
+//        stack.distribution = .fill
+//        return stack
+//    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -55,21 +56,37 @@ class SaveMarketCell : UITableViewCell {
     
     func configureView() {
         contentView.addSubview(saveImageView)
-        contentView.addSubview(stackView)
+        contentView.addSubview(marketTitle)
+        contentView.addSubview(marketDescription)
     }
     
     func setConstraints() {
         
+   
         saveImageView.snp.makeConstraints { make in
-            make.leading.verticalEdges.equalToSuperview().inset(5)
+            make.leading.verticalEdges.equalToSuperview().inset(10)
             make.width.equalTo(self.saveImageView.snp.height)
         }
         
-        stackView.snp.makeConstraints { make in
-            make.leading.equalTo(saveImageView.snp.trailing).offset(5)
-            make.verticalEdges.equalTo(saveImageView)
-            make.trailing.equalToSuperview().inset(5)
+        marketTitle.snp.makeConstraints { make in
+            make.top.equalTo(saveImageView)
+            make.leading.equalTo(saveImageView.snp.trailing).offset(10)
+            make.trailing.equalToSuperview().inset(10)
         }
+        
+        marketDescription.snp.makeConstraints { make in
+            make.top.equalTo(marketTitle.snp.bottom).offset(5)
+            make.horizontalEdges.equalTo(marketTitle)
+            make.bottom.lessThanOrEqualTo(saveImageView)
+           
+        }
+        
+        
+//        stackView.snp.makeConstraints { make in
+//            make.leading.equalTo(saveImageView.snp.trailing).offset(5)
+//            make.verticalEdges.equalTo(saveImageView)
+//            make.trailing.equalToSuperview().inset(5)
+//        }
         
     }
     
