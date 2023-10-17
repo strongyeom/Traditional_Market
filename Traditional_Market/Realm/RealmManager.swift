@@ -129,6 +129,8 @@ class RealmManager {
         let convertToStringMinLong = String(minLong)
         let convertToStringMaxLong = String(maxLong)
         
+        
+        
         rangeFiltetedMarket = realm.objects(TraditionalMarketRealm.self).filter("latitude BETWEEN {\(convertToStringMinLati), \(convertToStringMaxLati)} AND longitude BETWEEN {\(convertToStringMinLong), \(convertToStringMaxLong)}")
         return rangeFiltetedMarket
     }

@@ -14,6 +14,10 @@ class TraditionalMarketViewModel {
     
     // MARK: - Properties
     let realmManager = RealmManager()
+    
+    
+    // mapViewRange 축척 안에 포함되는 어노테이션
+    lazy var rangeFilterAnnoation = Observable(realmManager.fetch())
 
     var selectedMarket: Observable<TraditionalMarketRealm> = Observable(TraditionalMarketRealm(marketName: "", marketType: "", loadNameAddress: "", address: "", marketOpenCycle: "", publicToilet: "", latitude: "", longitude: "", popularProducts: "", phoneNumber: ""))
 
@@ -27,6 +31,12 @@ class TraditionalMarketViewModel {
     var isCurrentLocation = Observable(false)
 
     // MARK: - Method
+    
+    // 축척에 보이것들만 어노테이션 가져오기
+    func mapScaleFilterAnnotations(minLati: Double, maxLati: Double, minLong: Double, maxLong: Double) {
+        self.rangeFilterAnnoation.value = realmManager.mapViewRangeFilterAnnotations(minLati: minLati, maxLati: maxLati, minLong: minLong, maxLong: maxLong)
+    }
+    
 
     // 내 위치 버튼일 눌렀을때 true, false인지 변환해주는 메서드
     func myLocationClickedBtnIsCurrent(isSelected: Bool = false) {

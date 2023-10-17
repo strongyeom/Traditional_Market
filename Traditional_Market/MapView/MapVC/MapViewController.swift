@@ -11,6 +11,7 @@ import MapKit
 import RealmSwift
 import Toast
 
+// UISearchControllerDelegate 채택 이유 : Searchbar cancel시 이벤트 발생
 final class MapViewController: BaseViewController, UISearchControllerDelegate {
     let realm = try! Realm()
     
@@ -33,9 +34,6 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     
     // didSelect or DeSelect를 위한 변수
     var mkAnnotationSearchResult: MKAnnotation!
-    
-    // mapView range 반경을 위한 변수
-    var rangeFilterAnnoation: Results<TraditionalMarketRealm>!
    
     override func loadView() {
         self.view = mapView
@@ -135,8 +133,6 @@ extension MapViewController: MKMapViewDelegate {
         default:
             return nil
         }
-        
-        //  return annotationView
     }
     
     // MapView를 터치했을때 액션 메서드
@@ -163,7 +159,6 @@ extension MapViewController: MKMapViewDelegate {
         detailVC.isLikeClickedEvent()
         self.dismiss(animated: true) {
             self.present(detailVC, animated: true)
-            //   self.setRegionScale(center: annotation.coordinate)
             self.mapView.setAnnotationSelectedRegionScale(center: annotation.coordinate)
         }
     }
@@ -185,19 +180,8 @@ extension MapViewController: MKMapViewDelegate {
         let maximumLongitude: Double = farEast.coordinate.longitude as Double
         
         
-        rangeFilterAnnoation = realmManager.mapViewRangeFilterAnnotations(minLati: minimumLatitude, maxLati: maximumLatitude, minLong: minimumlongtitude, maxLong: maximumLongitude)
-        print("MapView 반경에 있는 총 갯수:",rangeFilterAnnoation.count)
-        
-        
-        if self.mapView.authorization == .authorizedWhenInUse || self.mapView.authorization == .authorizedAlways || self.mapView.authorization == .denied {
-            
-            if self.mapView.selectedCell != nil {
-                self.mapView.filterCityAnnotation(filterMarket: rangeFilterAnnoation)
-            } else { // selectedCell == nil 이라면
-                self.mapView.mapViewRangeInAnnotations(containRange: rangeFilterAnnoation)
-            }
-        }
-        
+        viewModel.mapScaleFilterAnnotations(minLati: minimumLatitude, maxLati: maximumLatitude, minLong: minimumlongtitude, maxLong: maximumLongitude)
+        print("MapView 반경에 있는 총 갯수:",viewModel.rangeFilterAnnoation.value.count)
     }
 }
 
@@ -208,26 +192,26 @@ extension MapViewController: UICollectionViewDelegate {
         mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
         let data = mapView.cityList[indexPath.item]
         // CollectionView에서 해당 indexPath를 사용해서 Cell 뽑아내기
-        let aa = mapView.collectionView.cellForItem(at: indexPath) as! CityCell
+        let currentCell = mapView.collectionView.cellForItem(at: indexPath) as! CityCell
         // Cell을 선택했다면 그 전의 Cell 배경색 white로 변경하기
         
         if selectedSaveIndex == "\(indexPath.item)" {
             self.mapView.selectedCell = nil
             selectedSaveIndex = ""
-            self.mapView.mapViewRangeInAnnotations(containRange: rangeFilterAnnoation)
-            aa.baseView.backgroundColor = .white
+            self.mapView.mapViewRangeInAnnotations(containRange: viewModel.rangeFilterAnnoation.value)
+            currentCell.baseView.backgroundColor = .white
         } else {
             if !selectedSaveIndex.isEmpty {
-                let bb = mapView.collectionView.cellForItem(at: IndexPath(row: Int(selectedSaveIndex)!, section: 0)) as! CityCell
-                bb.baseView.backgroundColor = .white
+                let previousCell = mapView.collectionView.cellForItem(at: IndexPath(row: Int(selectedSaveIndex)!, section: 0)) as! CityCell
+                previousCell.baseView.backgroundColor = .white
             }
             selectedSaveIndex = "\(indexPath.item)"
             self.mapView.selectedCell = data.localname
-            aa.baseView.backgroundColor = .yellow
+            currentCell.baseView.backgroundColor = .yellow
         }
         print("\(indexPath.item) 인덱스 상세 조건: \( self.mapView.selectedCell ?? "nil입니다.")")
         // filterCityAnnotation()
-        self.mapView.filterCityAnnotation(filterMarket: rangeFilterAnnoation)
+        self.mapView.filterCityAnnotation(filterMarket: viewModel.rangeFilterAnnoation.value)
     }
 }
 
@@ -292,6 +276,18 @@ extension MapViewController {
     
     
     fileprivate func playViewmodel() {
+        
+        viewModel.rangeFilterAnnoation.bind { result in
+            if self.mapView.authorization != .restricted {
+                if self.mapView.selectedCell != nil {
+                    self.mapView.filterCityAnnotation(filterMarket: result)
+                } else { // selectedCell == nil 이라면
+                    self.mapView.mapViewRangeInAnnotations(containRange: result)
+                }
+            }
+        }
+        
+        
         viewModel.startLocation.bind {
             self.mapView.setRegionScale(center: $0)
         }
@@ -321,11 +317,9 @@ extension MapViewController {
                 print("self.viewModel.isCurrentLocation.value",self.viewModel.isCurrentLocation.value)
                 self.viewModel.myLocationClickedBtnIsCurrent(isSelected: isCurrent)
             case .denied:
-                // self.showLocationSettingAlert()
                 showSettingAlert()
                 print("denied")
             case .restricted:
-                // self.showLocationSettingAlert()
                 showSettingAlert()
                 print("restricted")
             @unknown default:
