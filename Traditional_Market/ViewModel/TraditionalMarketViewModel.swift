@@ -14,14 +14,9 @@ class TraditionalMarketViewModel {
     
     // MARK: - Properties
     let realmManager = RealmManager()
-    
-    var naverImageList: Observable<NaverMarketImage> = Observable(NaverMarketImage(lastBuildDate: "", total: 0, start: 0, display: 0, items: []))
-    
+
     var selectedMarket: Observable<TraditionalMarketRealm> = Observable(TraditionalMarketRealm(marketName: "", marketType: "", loadNameAddress: "", address: "", marketOpenCycle: "", publicToilet: "", latitude: "", longitude: "", popularProducts: "", phoneNumber: ""))
-    
-    // 좋아하는 전통시장 리스트
-    lazy var myFavoriteMarketList =  Observable(realmManager.allOfFavoriteRealmCount())
-    
+
     // 내 위치 불러오기
     var startLocation = Observable(CLLocationCoordinate2D())
     
@@ -60,18 +55,5 @@ class TraditionalMarketViewModel {
         }
         return selectedMarket.value
     }
-    
-    // 네이버 API 통신
-    // 시장 title 이용해서 Naver이미지 API 사용
-    func requestImage(search: TraditionalMarketRealm) {
-        MarketAPIManager.shared.requestNaverImage(search: search.marketName) { response in
-            DispatchQueue.main.async {
-                self.naverImageList.value.items.append(contentsOf: response.items)
-            }
-        }
-    }
-    
-    func myFavoriteMarketSelectedRemove(market: FavoriteTable) {
-        realmManager.selectedRemoveData(market: market)
-    }
+
 }

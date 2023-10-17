@@ -12,7 +12,7 @@ class SaveMarketViewController : BaseViewController {
 
     let saveTableView = SaveTableView()
     
-    let viewModel = TraditionalMarketViewModel()
+    let realmManager = RealmManager()
     
     override func loadView() {
         self.view = saveTableView
@@ -27,10 +27,7 @@ class SaveMarketViewController : BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        viewModel.myFavoriteMarketList.bind { _ in
-            self.saveTableView.tableView.reloadData()
-        }
+        self.saveTableView.tableView.reloadData()
     }
     
     func settuptableView() {
@@ -42,7 +39,7 @@ class SaveMarketViewController : BaseViewController {
 extension SaveMarketViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let selectedMarket =  viewModel.myFavoriteMarketList.value[indexPath.row]
+        let selectedMarket =  realmManager.allOfFavoriteRealmCount()[indexPath.row]
         let savedView = SavedDetailViewController()
         savedView.savedSelectedData = selectedMarket
         let nav = UINavigationController(rootViewController: savedView)
@@ -52,12 +49,12 @@ extension SaveMarketViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.myFavoriteMarketList.value.count
+        return realmManager.allOfFavoriteRealmCount().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SaveMarketCell.identifier, for: indexPath) as? SaveMarketCell else { return UITableViewCell() }
-        let data = viewModel.myFavoriteMarketList.value[indexPath.row]
+        let data = realmManager.allOfFavoriteRealmCount()[indexPath.row]
         cell.selectionStyle = .none
         cell.marketTitle.text = data.marketName
         cell.marketDescription.text = data.memo
@@ -68,14 +65,14 @@ extension SaveMarketViewController: UITableViewDelegate, UITableViewDataSource {
  
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        let data = viewModel.myFavoriteMarketList.value[indexPath.row]
+        let data = realmManager.allOfFavoriteRealmCount()[indexPath.row]
         
         // 스와이핑 편집
         let edit = UIContextualAction(style: .normal, title: "편집") { _, _, _ in
             // 아무 작업도 하지 않았을때 스와이프 액션이 취소 됨 즉, 원래상태로 돌아감
             self.saveTableView.tableView.setEditing(false, animated: true)
             let savedView = SavedDetailViewController()
-            savedView.savedSelectedData = self.viewModel.myFavoriteMarketList.value[indexPath.row]
+            savedView.savedSelectedData = self.realmManager.allOfFavoriteRealmCount()[indexPath.row]
             savedView.savedDetailView.memoTextView.isEditable = true
             savedView.editState = false
             
@@ -90,7 +87,7 @@ extension SaveMarketViewController: UITableViewDelegate, UITableViewDataSource {
             self.showAlert(title: "삭제하시겠습니까?", btnTitle: "삭제", message: "삭제하시면 데이터는 영구히 삭제됩니다.", style: .destructive) { _ in
                 print("삭제 버튼 눌림")
                 self.removeImageFromDocument(fileName: "myPhoto_\(data._id).jpg")
-                self.viewModel.myFavoriteMarketSelectedRemove(market: data)
+                self.realmManager.selectedRemoveData(market: data)
                 self.saveTableView.tableView.reloadData()
             }
         }

@@ -12,9 +12,8 @@ final class DetailViewController: BaseViewController {
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     
     var selectedMarket: TraditionalMarketRealm?
-    
-    let viewModel = TraditionalMarketViewModel()
 
+    let naverViewmodel = NaverImageViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,8 +35,8 @@ final class DetailViewController: BaseViewController {
         sheetPresent()
         setCollectionView()
         
-        viewModel.requestImage(search: selectedMarket)
-        viewModel.naverImageList.bind { _ in
+        naverViewmodel.requestImage(search: selectedMarket)
+        naverViewmodel.naverImageList.bind { _ in
             self.collectionView.reloadData()
         }
         
@@ -54,7 +53,7 @@ final class DetailViewController: BaseViewController {
 extension DetailViewController : UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let data = viewModel.naverImageList.value.items[indexPath.row]
+        let data = naverViewmodel.naverImageList.value.items[indexPath.row]
         
         let fullimageVC = FullImageViewController()
         fullimageVC.imageUrl = data.link
@@ -63,14 +62,14 @@ extension DetailViewController : UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.naverImageList.value.items.count
+        return naverViewmodel.naverImageList.value.items.count
     }
     
     // 해당 시장 이미지
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: DetailMarketInfoCell.self), for: indexPath) as? DetailMarketInfoCell else { return UICollectionViewCell()}
         
-        let data = viewModel.naverImageList.value.items[indexPath.item]
+        let data = naverViewmodel.naverImageList.value.items[indexPath.item]
        // cell.configureCell(market: data)
         cell.ImageUrl = data.link
         return cell

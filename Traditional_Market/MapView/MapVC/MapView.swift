@@ -46,7 +46,7 @@ class MapView : BaseView {
     
     // 권한 상태
     var authorization: CLAuthorizationStatus = .notDetermined
-    
+
     private var myRangeAnnotation: [MKAnnotation] = []
     
     // didSelect or DeSelect를 위한 변수

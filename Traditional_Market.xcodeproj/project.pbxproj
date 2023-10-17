@@ -12,6 +12,7 @@
 		26229B9D2AC57528002FBE59 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26229B9C2AC57528002FBE59 /* RealmManager.swift */; };
 		26229B9F2AC575AD002FBE59 /* TraditionalMarketRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26229B9E2AC575AD002FBE59 /* TraditionalMarketRealm.swift */; };
 		26229BA82AC5AD84002FBE59 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26229BA72AC5AD84002FBE59 /* BaseViewController.swift */; };
+		2631736C2ADEA248003A5F12 /* NaverImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2631736B2ADEA248003A5F12 /* NaverImageViewModel.swift */; };
 		2633E7002AC6A2A4002581EB /* CityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2633E6FF2AC6A2A4002581EB /* CityCell.swift */; };
 		2633E7042AC6AC90002581EB /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2633E7032AC6AC90002581EB /* City.swift */; };
 		2633E7072AC6C4D5002581EB /* CityIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2633E7062AC6C4D5002581EB /* CityIndex.swift */; };
@@ -74,6 +75,7 @@
 		26229B9C2AC57528002FBE59 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		26229B9E2AC575AD002FBE59 /* TraditionalMarketRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraditionalMarketRealm.swift; sourceTree = "<group>"; };
 		26229BA72AC5AD84002FBE59 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		2631736B2ADEA248003A5F12 /* NaverImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverImageViewModel.swift; sourceTree = "<group>"; };
 		2633E6FF2AC6A2A4002581EB /* CityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityCell.swift; sourceTree = "<group>"; };
 		2633E7032AC6AC90002581EB /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		2633E7062AC6C4D5002581EB /* CityIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityIndex.swift; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 			children = (
 				26AAD8B72AC46218002E5DD4 /* Observable.swift */,
 				26AAD8B52AC46203002E5DD4 /* TraditionalMarketViewModel.swift */,
+				2631736B2ADEA248003A5F12 /* NaverImageViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -490,6 +493,7 @@
 				2633E7112AC71DC8002581EB /* DetailHeaderCell.swift in Sources */,
 				26AAD8B62AC46203002E5DD4 /* TraditionalMarketViewModel.swift in Sources */,
 				26229BA82AC5AD84002FBE59 /* BaseViewController.swift in Sources */,
+				2631736C2ADEA248003A5F12 /* NaverImageViewModel.swift in Sources */,
 				26DB1A902ADB03CD008AAC99 /* Ext+UIStackView.swift in Sources */,
 				26A5BB6B2AD8456900D03FC7 /* SavedDetailViewController.swift in Sources */,
 				2633E7042AC6AC90002581EB /* City.swift in Sources */,
