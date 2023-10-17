@@ -34,6 +34,7 @@ class ProfileViewController : BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         profileBaseView.stampCountLabel.text = "\(realmManager.allOfFavoriteRealmCount().count)개"
+        profileBaseView.levelCountLabel.text = realmManager.calculateStampCountToLevelLabel()
     }
     
 }
@@ -59,10 +60,5 @@ extension ProfileViewController : ActionDelegate {
     func mySavedMarketList() {
         let saveMarket = SaveMarketViewController()
         navigationController?.pushViewController(saveMarket, animated: true)
-    }
-    
-    func levelInfo() {
-        let levelInfoVC = LevelInfoViewController()
-        present(levelInfoVC, animated: true)
     }
 }

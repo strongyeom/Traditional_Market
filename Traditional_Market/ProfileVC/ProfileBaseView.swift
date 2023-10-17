@@ -9,7 +9,6 @@ import UIKit
 
 
 protocol ActionDelegate: AnyObject {
-    func levelInfo()
     func mySavedMarketList()
 }
 
@@ -47,7 +46,8 @@ class ProfileBaseView : BaseView {
     
     let stampCountLabel = {
         let view = UILabel()
-        view.text = "0개"
+        view.text = "00000000개"
+        view.adjustsFontSizeToFitWidth = true
         return view
     }()
     
@@ -58,15 +58,9 @@ class ProfileBaseView : BaseView {
         return view
     }()
     
-    let infoLevelBtn = {
-       let view = UIButton()
-        view.setImage(UIImage(systemName: "info.circle"), for: .normal)
-        return view
-    }()
-    
     let levelCountLabel = {
         let view = UILabel()
-        view.text = "양민"
+        view.text = "LV.1000"
         return view
     }()
  
@@ -89,15 +83,9 @@ class ProfileBaseView : BaseView {
         stack.mypageSetupStackView()
         return stack
     }()
-    
-    lazy var levelInfoStackView = {
-        let stack = UIStackView(arrangedSubviews: [levelLabel, infoLevelBtn])
-        stack.basicSettingStackView(axis: .horizontal, spacing: 2, alignment: .fill, distribution: .fill)
-        return stack
-    }()
-    
+ 
     lazy var verticalLevelStackView = {
-        let stack = UIStackView(arrangedSubviews: [levelInfoStackView, levelCountLabel])
+        let stack = UIStackView(arrangedSubviews: [levelLabel, levelCountLabel])
         stack.mypageSetupStackView()
         return stack
     }()
@@ -124,7 +112,6 @@ class ProfileBaseView : BaseView {
     }
     
     func setupButtonTarget() {
-        self.infoLevelBtn.addTarget(self, action: #selector(infoLevelBtnClicked(_:)), for: .touchUpInside)
         self.likeBtn.addTarget(self, action: #selector(likeBtnClicked(_:)), for: .touchUpInside)
     }
     
@@ -132,23 +119,10 @@ class ProfileBaseView : BaseView {
         print("내가 저장한 시장 버튼 눌림 - TopView")
         likeBtnDelegate?.mySavedMarketList()
     }
-    
-    @objc func infoLevelBtnClicked(_ sender: UIButton) {
-        print("레벨 정보 버튼 눌림 - TopView")
-        levelDelegate?.levelInfo()
-    }
-    
+
     override func setConstraints() {
-        
-        stampCountLabel.snp.makeConstraints { make in
-            make.height.equalTo(30)
-        }
-        
-        levelCountLabel.snp.makeConstraints { make in
-            make.height.equalTo(stampCountLabel).priority(.high)
-        }
-        
-        profileImageView.image = UIImage(systemName: "person")
+   
+        profileImageView.image = UIImage(named: "profileImage")
         profileImageView.snp.makeConstraints { make in
             make.size.equalTo(60)
         }

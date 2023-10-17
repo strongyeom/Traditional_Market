@@ -24,7 +24,7 @@ extension UIStackView {
         self.axis = .vertical
         self.spacing = 5
         self.alignment = .center
-        self.distribution = .fill
+        self.distribution = .fillEqually
         self.layer.borderColor = UIColor.lightGray.cgColor
         self.layer.borderWidth = 1
         self.layer.cornerRadius = 12

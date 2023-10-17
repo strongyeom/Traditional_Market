@@ -174,4 +174,32 @@ class RealmManager {
         let favoriteTable = realm.objects(FavoriteTable.self).sorted(byKeyPath: "date", ascending: false)
         return favoriteTable
     }
+    
+    func calculateStampCountToLevelLabel() -> String {
+        let totalCount: Double = Double(allOfFavoriteRealmCount().count) / 10
+        
+        switch totalCount {
+        case 0..<2:
+            return "LV.1"
+        case 2..<3:
+            return "LV.2"
+        case 3..<4:
+            return "LV.3"
+        case 4..<5:
+            return "LV.4"
+        case 5..<6:
+            return "LV.5"
+        case 6..<7:
+            return "LV.6"
+        case 7..<8:
+            return "LV.7"
+        case 8..<9:
+            return "LV.8"
+        case 9..<10:
+            return "LV.9"
+        default:
+            return "LV.Max"
+        }
+    }
+    
 }
