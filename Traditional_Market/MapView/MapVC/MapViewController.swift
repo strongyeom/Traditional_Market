@@ -46,8 +46,6 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     // MARK: - configureView
     override func configureView() {
         super.configureView()
-        //setMapView()
-        // setLocation()
         setCollectionView()
         setNetwork()
         setSearchController()
@@ -74,8 +72,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         mapView.completion = { [weak self] isCurrent in
             print("현재 위치로 버튼 : \(isCurrent)")
             guard let self else { return }
-            // self.viewModel.isCurrentLocation.value = isCurrent
-            //  self.viewModel.myLocationClickedBtnIsCurrent(isSelected: isCurrent)
+            
             switch mapView.locationManger.authorizationStatus {
             case .authorizedAlways:
                 if self.viewModel.isCurrentLocation.value {
@@ -90,12 +87,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
             case .authorizedWhenInUse:
                 print("self.viewModel.isCurrentLocation.value",self.viewModel.isCurrentLocation.value)
                 self.viewModel.myLocationClickedBtnIsCurrent(isSelected: isCurrent)
-                //                if self.viewModel.isCurrentLocation.value {
-                //                    self.mapView.locationManger.startUpdatingLocation()
-                //                } else {
-                //                    self.mapView.locationManger.stopUpdatingLocation()
-                //                    self.mapView.currentLocationButton.tintColor = .black
-                //                }
+             
             case .denied:
                 // self.showLocationSettingAlert()
                 print("123")
@@ -144,10 +136,11 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     func setSearchController() {
         
         resultsTableController = SearchResultsViewController()
-        // resultsTableController.tableView.delegate = self
-        
         searchController = UISearchController(searchResultsController: resultsTableController)
-        searchController.searchBar.showsCancelButton = true
+        
+        searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
+        
+       // searchController.searchBar.showsCancelButton = true
         searchController.searchBar.placeholder = "검색어를 입력해주세요."
         self.navigationItem.searchController = searchController
         self.navigationItem.title = "시장 지도"
