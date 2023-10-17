@@ -206,6 +206,13 @@ class MapView : BaseView {
         
         self.mapBaseView.setRegion(region, animated: true)
     }
+    
+    func setAnnotationSelectedRegionScale(center: CLLocationCoordinate2D) {
+        // MapView에 축척 m단위로 보여주기
+        let region = MKCoordinateRegion(center: center, latitudinalMeters: Scale.marktRange, longitudinalMeters: Scale.marktRange)
+        
+        self.mapBaseView.setRegion(region, animated: true)
+    }
 
     /// MapView 위치 반경에 존재하는 어노테이션만 보여주기
     func mapViewRangeInAnnotations(containRange: Results<TraditionalMarketRealm>) {

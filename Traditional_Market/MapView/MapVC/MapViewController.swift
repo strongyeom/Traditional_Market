@@ -199,8 +199,11 @@ extension MapViewController: MKMapViewDelegate {
         print("찍힌 어노테이션 : \(annotation.title!!)")
         
         // 내 위치 클릭했을때 DetailVC 띄우지 않기
-        guard !annotation.isKind(of: MKUserLocation.self) else { return }
-        
+        // 클러스터가 됐을때는 didSelect 허용하지 않기 //
+        guard !annotation.isKind(of: MKUserLocation.self),
+              !annotation.isKind(of: MKClusterAnnotation.self)
+        else { return }
+   
         let detailVC = DetailViewController()
         // Realm 필터를 사용해서 Item 하나만 던져주기
         detailVC.selectedMarket = viewModel.selectedMarketInfomation(location: annotation.coordinate)
@@ -208,7 +211,7 @@ extension MapViewController: MKMapViewDelegate {
         self.dismiss(animated: true) {
             self.present(detailVC, animated: true)
             //   self.setRegionScale(center: annotation.coordinate)
-            self.mapView.setRegionScale(center: annotation.coordinate)
+            self.mapView.setAnnotationSelectedRegionScale(center: annotation.coordinate)
         }
     }
     
