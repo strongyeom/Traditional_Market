@@ -10,8 +10,7 @@ import RealmSwift
 
 class ProfileViewController : BaseViewController {
 
-    
-    let viewModel = TraditionalMarketViewModel()
+    let realmManager = RealmManager()
     
     let profileBaseView = ProfileBaseView()
 
@@ -34,7 +33,7 @@ class ProfileViewController : BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        profileBaseView.stampCountLabel.text = "\(viewModel.myFavoriteMarketList.value.count)개"
+        profileBaseView.stampCountLabel.text = "\(realmManager.allOfFavoriteRealmCount().count)개"
     }
     
 }

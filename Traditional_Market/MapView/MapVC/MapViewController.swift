@@ -36,10 +36,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     
     // mapView range 반경을 위한 변수
     var rangeFilterAnnoation: Results<TraditionalMarketRealm>!
-    
-    //   var selectedCellString: String = ""
-    
-    
+   
     override func loadView() {
         self.view = mapView
     }
@@ -61,51 +58,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         print("파일 경로 : \(self.realm.configuration.fileURL!)")
      
     }
-    /// Search 결과 값 어노테이션 찍기
-    func searchResultAnnotation() {
-        resultsTableController.completion = { result in
-            print("completion : \(result.marketName)")
-            
-            self.searchController.searchBar.text = result.marketName
-            self.mapView.setRegionScale(center: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
-            
-            // 현재 위치 핀 찍기
-            let annotation = MKPointAnnotation()
-            annotation.title = result.marketName
-            annotation.coordinate = CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude)
-            self.mkAnnotationSearchResult = annotation
-            self.mapView.mapBaseView.addAnnotation(annotation)
-            self.mapView.mapBaseView.selectAnnotation(annotation, animated: true)
-            
-            
-            
-            let detailVC = DetailViewController()
-            // Realm 필터를 사용해서 Item 하나만 던져주기
-            detailVC.selectedMarket = self.viewModel.selectedMarketInfomation(location: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
-            detailVC.isLikeClickedEvent()
-            self.present(detailVC, animated: true)
-        }
-        
-    }
-    
-    /// SearchController 셋팅
-    func setSearchController() {
-        
-        resultsTableController = SearchResultsViewController()
-        searchController = UISearchController(searchResultsController: resultsTableController)
-        
-        searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
-        
-        // searchController.searchBar.showsCancelButton = true
-        searchController.searchBar.placeholder = "검색어를 입력해주세요."
-        self.navigationItem.searchController = searchController
-        self.navigationItem.title = "시장 지도"
-        self.navigationController?.navigationBar.backgroundColor = .white
-        searchController.delegate = self
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.delegate = self
-    }
-    
+
 }
 
 // MARK: - CLLocationManagerDelegate
@@ -127,6 +80,7 @@ extension MapViewController: CLLocationManagerDelegate {
         mapView.checkDeviceLocationAuthorization()
     }
     
+    // geofencing으로 시장에 들어오면 액션 메서드
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         guard let region = region as? CLCircularRegion else { return }
         print("didEnterRegion - \(region.identifier) 해당 지역에 들어왔습니다.")
@@ -147,13 +101,12 @@ extension MapViewController: CLLocationManagerDelegate {
         }
     }
     
+    // 시장을 나갈때 메서드
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-        // 37.500102 , 127.150779
         guard let region = region as? CLCircularRegion else { return }
         print("didExitRegion - \(region.identifier) 해당 지역에서 나갔습니다.")
         
     }
-    
     
     // Geofencing Error 처리
     func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
@@ -215,16 +168,6 @@ extension MapViewController: MKMapViewDelegate {
         }
     }
     
-    
-    
-    
-    
-    // 핀을 터치 하지 않았을때 present된 DetailVC 내려주기
-    func mapView(_ mapView: MKMapView, didDeselect annotation: MKAnnotation) {
-        //  dismiss(animated: true)
-        print("didDeselect")
-    }
-    
     // MapView Zoom의 거리 확인
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         
@@ -249,10 +192,8 @@ extension MapViewController: MKMapViewDelegate {
         if self.mapView.authorization == .authorizedWhenInUse || self.mapView.authorization == .authorizedAlways || self.mapView.authorization == .denied {
             
             if self.mapView.selectedCell != nil {
-                //   filterCityAnnotation()
                 self.mapView.filterCityAnnotation(filterMarket: rangeFilterAnnoation)
             } else { // selectedCell == nil 이라면
-                //  mapViewRangeInAnnotations(containRange: rangeFilterAnnoation)
                 self.mapView.mapViewRangeInAnnotations(containRange: rangeFilterAnnoation)
             }
         }
@@ -273,7 +214,6 @@ extension MapViewController: UICollectionViewDelegate {
         if selectedSaveIndex == "\(indexPath.item)" {
             self.mapView.selectedCell = nil
             selectedSaveIndex = ""
-            // self.mapViewRangeInAnnotations(containRange: rangeFilterAnnoation)
             self.mapView.mapViewRangeInAnnotations(containRange: rangeFilterAnnoation)
             aa.baseView.backgroundColor = .white
         } else {
@@ -307,8 +247,49 @@ extension MapViewController: UICollectionViewDataSource {
     }
 }
 
-
 extension MapViewController {
+    /// Search 결과 값 어노테이션 찍기
+    func searchResultAnnotation() {
+        resultsTableController.completion = { result in
+            print("completion : \(result.marketName)")
+            
+            self.searchController.searchBar.text = result.marketName
+            self.mapView.setRegionScale(center: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
+            
+            // 현재 위치 핀 찍기
+            let annotation = MKPointAnnotation()
+            annotation.title = result.marketName
+            annotation.coordinate = CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude)
+            self.mkAnnotationSearchResult = annotation
+            self.mapView.mapBaseView.addAnnotation(annotation)
+            self.mapView.mapBaseView.selectAnnotation(annotation, animated: true)
+            
+            
+            
+            let detailVC = DetailViewController()
+            // Realm 필터를 사용해서 Item 하나만 던져주기
+            detailVC.selectedMarket = self.viewModel.selectedMarketInfomation(location: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
+            detailVC.isLikeClickedEvent()
+            self.present(detailVC, animated: true)
+        }
+        
+    }
+    
+    /// SearchController 셋팅
+    func setSearchController() {
+        
+        resultsTableController = SearchResultsViewController()
+        searchController = UISearchController(searchResultsController: resultsTableController)
+        searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
+        searchController.searchBar.placeholder = "검색어를 입력해주세요."
+        self.navigationItem.searchController = searchController
+        self.navigationItem.title = "시장 지도"
+        self.navigationController?.navigationBar.backgroundColor = .white
+        searchController.delegate = self
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+    }
+    
     
     fileprivate func playViewmodel() {
         viewModel.startLocation.bind {
