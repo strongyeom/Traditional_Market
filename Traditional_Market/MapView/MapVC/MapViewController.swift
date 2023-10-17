@@ -47,7 +47,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     override func configureView() {
         super.configureView()
         setCollectionView()
-        setNetwork()
+        marketAPIManager.request()
         setSearchController()
         searchResultAnnotation()
         print("파일 경로 : \(self.realm.configuration.fileURL!)")
@@ -353,12 +353,6 @@ extension MapViewController: UICollectionViewDataSource {
 
 extension MapViewController {
     
-    fileprivate func setNetwork() {
-        // 전통시장 API에서 데이터 불러오기
-        marketAPIManager.request { item in
-            print("네트워크에서 저장한 RealmAdd하고 데이터 가져오기")
-        }
-    }
     
     fileprivate func setCollectionView() {
         mapView.collectionView.delegate = self

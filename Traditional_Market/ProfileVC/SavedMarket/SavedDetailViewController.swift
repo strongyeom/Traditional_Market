@@ -25,7 +25,7 @@ class SavedDetailViewController : BaseViewController {
         settupNavigationBar()
         addKeyboardNotifications()
        
-        
+        savedDetailView.memoTextView.delegate = self
         savedDetailView.savedImageView.image = loadImageFromDocument(fileName: "myPhoto_\(savedSelectedData._id).jpg")
         savedDetailView.configureSavedView(market: savedSelectedData)
     }
@@ -70,3 +70,9 @@ class SavedDetailViewController : BaseViewController {
     
 }
 
+// TextView 소문자로 만들기
+extension SavedDetailViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        savedDetailView.memoTextView.text = textView.text.lowercased()
+    }
+}

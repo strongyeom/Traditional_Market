@@ -165,6 +165,11 @@ extension StampViewController : UITextViewDelegate {
             stampView.memoTextView.textColor = .lightGray
         }
     }
+    
+    // TextView 소문자만
+    func textViewDidChange(_ textView: UITextView) {
+        stampView.memoTextView.text = textView.text.lowercased()
+    }
 }
 
 // MARK: - PHPickerViewControllerDelegate

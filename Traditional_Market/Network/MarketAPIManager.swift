@@ -23,22 +23,24 @@ class MarketAPIManager {
     
     var marketList: TraditionalMarket = TraditionalMarket(response: Response.init(body: Body.init(items: [], totalCount: "", numOfRows: "", pageNo: "")))
     
+    let group = DispatchGroup()
     
-    
-    
-    func request(completionHandler: @escaping ((TraditionalMarket) -> Void)) {
-        
+    func request() {
         for page in pageCount {
+            group.enter()
             NetworkManager.shared.request(page: page) { [weak self] response in
                 
                 guard let self else { return }
-                self.marketList.response.body.items.append(contentsOf: response)
-                
-                let _ = response.map {
-                    self.realmManager.realmAddData(market: $0)
-                }
+                marketList.response.body.items.append(contentsOf:response)
+                group.leave()
             }
         }
+        
+        group.notify(queue: DispatchQueue.main) { [weak self] in
+            guard let self else { return }
+            self.realmManager.addDatas(markets: self.marketList.response.body.items)
+        }
+        
     }
     
     func requestNaverImage(search: String, completionHandler: @escaping((NaverMarketImage) -> Void)) {
