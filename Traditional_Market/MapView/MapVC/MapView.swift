@@ -71,8 +71,10 @@ class MapView : BaseView {
     
     var mapBaseView = {
         let view = MKMapView()
-        view.showsUserLocation = true
-        view.userTrackingMode = .follow
+        // 허용안함 눌렀을때 내 위치를 받아 올 수 없어서 보라색 에러 발생함
+        // 권한설정에 따라 추가해줬음
+//        view.showsUserLocation = true
+//        view.userTrackingMode = .follow
         view.cameraZoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: Scale.maxDistance)
         return view
     }()
@@ -138,35 +140,26 @@ class MapView : BaseView {
         case .authorizedAlways:
             print("항상 권한 허용")
             locationManger.startUpdatingLocation()
+            mapBaseView.userTrackingMode = .follow
+            mapBaseView.showsUserLocation = true
         case .authorizedWhenInUse:
             print("한번만 권한 허용")
             locationManger.startUpdatingLocation()
             setMyRegion(center: viewModel.startLocation.value)
             self.currentLocationButton.isSelected = true
+            mapBaseView.userTrackingMode = .follow
+            mapBaseView.showsUserLocation = true
         case .authorized:
             print("권한 허용 됨")
-            delegate?.showSettingAlert()
+            locationManger.startUpdatingLocation()
+            setMyRegion(center: viewModel.startLocation.value)
+            mapBaseView.userTrackingMode = .follow
+            mapBaseView.showsUserLocation = true
         @unknown default:
             print("어떤것이 추가 될 수 있음")
         }
     }
-    
-    func showLocationSettingAlert() {
-//        let alert = UIAlertController(title: "위치 정보 설정", message: "설정>개인 정보 보호> 위치 여기로 이동해서 위치 권한 설정해주세요", preferredStyle: .alert)
-//        let goSetting = UIAlertAction(title: "위치 설정하기", style: .default) { _ in
-//            // iOS 설정 페이지로 이동 : openSettingURLString
-//            if let appSetting = URL(string: UIApplication.openSettingsURLString) {
-//                UIApplication.shared.open(appSetting)
-//            }
-//        }
-//        let cancel = UIAlertAction(title: "취소", style: .cancel)
-//
-//        alert.addAction(goSetting)
-//        alert.addAction(cancel)
-       // present(alert, animated: true)
-    }
-   
-    
+
     /// 해당 지역에 들어왔을때 로컬 알림 메서드
     func registLocation() {
         print("내 범위에 속하는 어노테이션 갯수",myRangeAnnotation.count)
@@ -292,8 +285,6 @@ class MapView : BaseView {
     }
     
     func setMapView() {
-       // ⭐️ self.mapBaseView.delegate = self
-       // currentLocationBtnIsActive()
         self.mapBaseView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         
         self.mapBaseView.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
@@ -316,7 +307,7 @@ class MapView : BaseView {
                     self.currentLocationButton.tintColor = .black
                 }
             case .notDetermined:
-                self.showLocationSettingAlert()
+                print("notDetermined")
             case .authorizedWhenInUse:
                 if viewModel.isCurrentLocation.value {
                     self.locationManger.startUpdatingLocation()
@@ -325,18 +316,14 @@ class MapView : BaseView {
                     self.currentLocationButton.tintColor = .black
                 }
             case .denied:
-                self.showLocationSettingAlert()
+                print("denied")
             case .restricted:
-                self.showLocationSettingAlert()
+                print("restricted")
             @unknown default:
                 print("어떤것이 추가 될 수 있음")
             }
-            
-            
         }
     }
-  
-    // MARK: - ---------------------------
     
     func configureCity() {
         mapBaseView.addSubview(collectionView)
@@ -350,16 +337,6 @@ class MapView : BaseView {
         sender.isSelected.toggle()
         let isCurrent = sender.isSelected
         completion?(isCurrent)
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
     }
     

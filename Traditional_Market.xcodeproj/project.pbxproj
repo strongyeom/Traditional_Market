@@ -32,10 +32,8 @@
 		26AAD8AC2AC4554C002E5DD4 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 26AAD8AB2AC4554C002E5DD4 /* RealmSwift */; };
 		26AAD8AE2AC4559B002E5DD4 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8AD2AC4559B002E5DD4 /* NetworkManager.swift */; };
 		26AAD8B12AC4560D002E5DD4 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 26AAD8B02AC4560D002E5DD4 /* Alamofire */; };
-		26AAD8B32AC45B69002E5DD4 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8B22AC45B69002E5DD4 /* Router.swift */; };
 		26AAD8B62AC46203002E5DD4 /* TraditionalMarketViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8B52AC46203002E5DD4 /* TraditionalMarketViewModel.swift */; };
 		26AAD8B82AC46218002E5DD4 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8B72AC46218002E5DD4 /* Observable.swift */; };
-		26AAD8BA2AC46EDE002E5DD4 /* IntegrationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8B92AC46EDE002E5DD4 /* IntegrationAPI.swift */; };
 		26AAD8C12AC48574002E5DD4 /* MarketAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8C02AC48574002E5DD4 /* MarketAPIManager.swift */; };
 		26C92EC42AD2F622002A53D2 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C92EC32AD2F622002A53D2 /* SearchCell.swift */; };
 		26CC8E702AC843E9009ABB14 /* Ext+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC8E6F2AC843E9009ABB14 /* Ext+UIColor.swift */; };
@@ -94,10 +92,8 @@
 		26AAD8A32AC44B07002E5DD4 /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		26AAD8A82AC44FCD002E5DD4 /* TraditionalMarket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraditionalMarket.swift; sourceTree = "<group>"; };
 		26AAD8AD2AC4559B002E5DD4 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		26AAD8B22AC45B69002E5DD4 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		26AAD8B52AC46203002E5DD4 /* TraditionalMarketViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraditionalMarketViewModel.swift; sourceTree = "<group>"; };
 		26AAD8B72AC46218002E5DD4 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
-		26AAD8B92AC46EDE002E5DD4 /* IntegrationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationAPI.swift; sourceTree = "<group>"; };
 		26AAD8C02AC48574002E5DD4 /* MarketAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketAPIManager.swift; sourceTree = "<group>"; };
 		26C92EC32AD2F622002A53D2 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		26CC8E6F2AC843E9009ABB14 /* Ext+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIColor.swift"; sourceTree = "<group>"; };
@@ -233,8 +229,6 @@
 			isa = PBXGroup;
 			children = (
 				26AAD8AD2AC4559B002E5DD4 /* NetworkManager.swift */,
-				26AAD8B22AC45B69002E5DD4 /* Router.swift */,
-				26AAD8B92AC46EDE002E5DD4 /* IntegrationAPI.swift */,
 				26AAD8C02AC48574002E5DD4 /* MarketAPIManager.swift */,
 			);
 			path = Network;
@@ -499,7 +493,6 @@
 				26DB1A902ADB03CD008AAC99 /* Ext+UIStackView.swift in Sources */,
 				26A5BB6B2AD8456900D03FC7 /* SavedDetailViewController.swift in Sources */,
 				2633E7042AC6AC90002581EB /* City.swift in Sources */,
-				26AAD8B32AC45B69002E5DD4 /* Router.swift in Sources */,
 				2633E70B2AC70955002581EB /* DetailMarketInfoCell.swift in Sources */,
 				26EA75D22ACAC28D00FFDFDB /* StampViewController.swift in Sources */,
 				26A5BB682AD8351C00D03FC7 /* SaveTableView.swift in Sources */,
@@ -512,7 +505,6 @@
 				26EA66582AC2ADED00F6FE6A /* MapView.swift in Sources */,
 				2633E7092AC6E7ED002581EB /* DetailViewController.swift in Sources */,
 				26E31C582ACD3FB400392068 /* BaseCollectionViewCell.swift in Sources */,
-				26AAD8BA2AC46EDE002E5DD4 /* IntegrationAPI.swift in Sources */,
 				26AAD8AE2AC4559B002E5DD4 /* NetworkManager.swift in Sources */,
 				26A5BB642AD8042600D03FC7 /* LevelInfoViewController.swift in Sources */,
 				26EA75D92ACB014F00FFDFDB /* Ext+UIButton.swift in Sources */,
