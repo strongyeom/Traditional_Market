@@ -11,6 +11,10 @@ import SnapKit
 import CoreLocation
 import RealmSwift
 
+protocol SettingAlert {
+    func showSettingAlert()
+}
+
 class MapView : BaseView {
     
     let viewModel = TraditionalMarketViewModel()
@@ -45,10 +49,13 @@ class MapView : BaseView {
     
     private var myRangeAnnotation: [MKAnnotation] = []
     
+    // didSelect or DeSelect를 위한 변수
+    var mkAnnotationSearchResult: MKAnnotation!
+    
     // 상세조건 검색 ✅
     var selectedCell: String?
     
-    
+    var delegate: SettingAlert?
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     
@@ -56,7 +63,7 @@ class MapView : BaseView {
     let currentLocationButton = {
        let view = UIButton()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 50, weight: .light)
-        let image = UIImage(systemName: "location.circle", withConfiguration: imageConfig)
+        let image = UIImage(systemName: "scope", withConfiguration: imageConfig)
         view.setTitle("", for: .normal)
         view.setImage(image, for: .normal)
         return view
@@ -88,7 +95,6 @@ class MapView : BaseView {
     // MARK: - Method
     
      func setLocation() {
-        // ⭐️ locationManger.delegate = self
         locationManger.desiredAccuracy = kCLLocationAccuracyBest // 정확성
         checkDeviceLocationAuthorization()
     }
@@ -115,7 +121,7 @@ class MapView : BaseView {
     
     /// 권한 설정에 따른 메서드
     /// - Parameter status: 권한 상태
-     func checkStatuesDeviceLocationAuthorization(status: CLAuthorizationStatus) {
+    func checkStatuesDeviceLocationAuthorization(status: CLAuthorizationStatus) {
         switch status {
         case .notDetermined:
             print("아무것도 결정하지 않았다.")
@@ -123,10 +129,12 @@ class MapView : BaseView {
             locationManger.requestWhenInUseAuthorization()
         case .restricted:
             print("권한 설정 거부함")
-            showLocationSettingAlert()
+            //showLocationSettingAlert()
+            delegate?.showSettingAlert()
         case .denied:
             print("권한 설정 거부함")
-            showLocationSettingAlert()
+            //showLocationSettingAlert()
+            delegate?.showSettingAlert()
         case .authorizedAlways:
             print("항상 권한 허용")
             locationManger.startUpdatingLocation()
@@ -137,6 +145,7 @@ class MapView : BaseView {
             self.currentLocationButton.isSelected = true
         case .authorized:
             print("권한 허용 됨")
+            delegate?.showSettingAlert()
         @unknown default:
             print("어떤것이 추가 될 수 있음")
         }
@@ -156,6 +165,7 @@ class MapView : BaseView {
 //        alert.addAction(cancel)
        // present(alert, animated: true)
     }
+   
     
     /// 해당 지역에 들어왔을때 로컬 알림 메서드
     func registLocation() {

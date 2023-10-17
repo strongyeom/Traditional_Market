@@ -15,10 +15,13 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     let realm = try! Realm()
     
     private let mapView = MapView()
+    
     private let marketAPIManager = MarketAPIManager.shared
+    
     private let viewModel = TraditionalMarketViewModel()
+    
     private let realmManager = RealmManager()
-
+    
     // 사용자가 누른 index 저장
     var selectedSaveIndex: String = ""
     
@@ -34,6 +37,9 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     // mapView range 반경을 위한 변수
     var rangeFilterAnnoation: Results<TraditionalMarketRealm>!
     
+    //   var selectedCellString: String = ""
+    
+    
     override func loadView() {
         self.view = mapView
     }
@@ -46,61 +52,14 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     // MARK: - configureView
     override func configureView() {
         super.configureView()
-        setCollectionView()
+        setupDelegate()
         marketAPIManager.request()
         setSearchController()
         searchResultAnnotation()
+        myLocationBtnClicked()
+        playViewmodel()
         print("파일 경로 : \(self.realm.configuration.fileURL!)")
-        viewModel.startLocation.bind {
-            // self.setMyRegion(center: $0)
-            self.mapView.setMyRegion(center: $0)
-        }
-        
-        self.viewModel.isCurrentLocation.bind { isSelected in
-            print("isSelected",isSelected)
-            if isSelected {
-                self.mapView.locationManger.startUpdatingLocation()
-            } else {
-                self.mapView.locationManger.stopUpdatingLocation()
-                self.mapView.currentLocationButton.tintColor = .black
-            }
-        }
-        
-        mapView.locationManger.delegate = self
-        mapView.mapBaseView.delegate = self
-        
-        mapView.completion = { [weak self] isCurrent in
-            print("현재 위치로 버튼 : \(isCurrent)")
-            guard let self else { return }
-            
-            switch mapView.locationManger.authorizationStatus {
-            case .authorizedAlways:
-                if self.viewModel.isCurrentLocation.value {
-                    self.mapView.locationManger.startUpdatingLocation()
-                } else {
-                    self.mapView.locationManger.stopUpdatingLocation()
-                    self.mapView.currentLocationButton.tintColor = .black
-                }
-            case .notDetermined:
-                print("123")
-                // self.showLocationSettingAlert()
-            case .authorizedWhenInUse:
-                print("self.viewModel.isCurrentLocation.value",self.viewModel.isCurrentLocation.value)
-                self.viewModel.myLocationClickedBtnIsCurrent(isSelected: isCurrent)
-             
-            case .denied:
-                // self.showLocationSettingAlert()
-                print("123")
-            case .restricted:
-                // self.showLocationSettingAlert()
-                print("123")
-            @unknown default:
-                print("어떤것이 추가 될 수 있음")
-            }
-            
-            
-        }
-        
+     
     }
     /// Search 결과 값 어노테이션 찍기
     func searchResultAnnotation() {
@@ -108,9 +67,6 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
             print("completion : \(result.marketName)")
             
             self.searchController.searchBar.text = result.marketName
-            
-            //            print("searchController.searchBar.text", self.searchController.searchBar.text ?? "")
-            
             self.mapView.setRegionScale(center: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
             
             // 현재 위치 핀 찍기
@@ -140,7 +96,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         
         searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
         
-       // searchController.searchBar.showsCancelButton = true
+        // searchController.searchBar.showsCancelButton = true
         searchController.searchBar.placeholder = "검색어를 입력해주세요."
         self.navigationItem.searchController = searchController
         self.navigationItem.title = "시장 지도"
@@ -149,7 +105,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
     }
- 
+    
 }
 
 // MARK: - CLLocationManagerDelegate
@@ -168,13 +124,11 @@ extension MapViewController: CLLocationManagerDelegate {
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         print("위치 권한이 바뀔때 마다 호출 - ")
-        // checkDeviceLocationAuthorization()
         mapView.checkDeviceLocationAuthorization()
     }
     
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         guard let region = region as? CLCircularRegion else { return }
-        // 37.499052 , 127.150779
         print("didEnterRegion - \(region.identifier) 해당 지역에 들어왔습니다.")
         
         // toast presented with multiple options and with a completion closure
@@ -353,12 +307,57 @@ extension MapViewController: UICollectionViewDataSource {
 
 extension MapViewController {
     
+    fileprivate func playViewmodel() {
+        viewModel.startLocation.bind {
+            self.mapView.setRegionScale(center: $0)
+        }
+        
+        self.viewModel.isCurrentLocation.bind { isSelected in
+            print("isSelected",isSelected)
+            if isSelected {
+                self.mapView.locationManger.startUpdatingLocation()
+            } else {
+                self.mapView.locationManger.stopUpdatingLocation()
+                self.mapView.currentLocationButton.tintColor = .black
+            }
+        }
+    }
     
-    fileprivate func setCollectionView() {
+    fileprivate func myLocationBtnClicked() {
+        mapView.completion = { [weak self] isCurrent in
+            print("현재 위치로 버튼 : \(isCurrent)")
+            guard let self else { return }
+            
+            switch mapView.locationManger.authorizationStatus {
+            case .authorizedAlways:
+                self.viewModel.myLocationClickedBtnIsCurrent(isSelected: isCurrent)
+            case .notDetermined:
+                print("notDetermined")
+            case .authorizedWhenInUse:
+                print("self.viewModel.isCurrentLocation.value",self.viewModel.isCurrentLocation.value)
+                self.viewModel.myLocationClickedBtnIsCurrent(isSelected: isCurrent)
+            case .denied:
+                // self.showLocationSettingAlert()
+                showSettingAlert()
+                print("denied")
+            case .restricted:
+                // self.showLocationSettingAlert()
+                showSettingAlert()
+                print("restricted")
+            @unknown default:
+                print("어떤것이 추가 될 수 있음")
+            }
+        }
+    }
+    
+    fileprivate func setupDelegate() {
         mapView.collectionView.delegate = self
         mapView.collectionView.dataSource = self
+        mapView.locationManger.delegate = self
+        mapView.mapBaseView.delegate = self
+        mapView.delegate = self
     }
-
+    
 }
 
 // MARK: - UISearchBarDelegate
@@ -399,4 +398,23 @@ extension MapViewController : UISearchResultsUpdating {
             
         }
     }
+}
+
+extension MapViewController: SettingAlert {
+    
+    func showSettingAlert() {
+        let alert = UIAlertController(title: "위치 정보 설정", message: "설정>개인 정보 보호> 위치 여기로 이동해서 위치 권한 설정해주세요", preferredStyle: .alert)
+        let goSetting = UIAlertAction(title: "위치 설정하기", style: .default) { _ in
+            // iOS 설정 페이지로 이동 : openSettingURLString
+            if let appSetting = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(appSetting)
+            }
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        
+        alert.addAction(goSetting)
+        alert.addAction(cancel)
+        present(alert, animated: true)
+    }
+    
 }

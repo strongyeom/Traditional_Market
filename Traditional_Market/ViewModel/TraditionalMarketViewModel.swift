@@ -30,13 +30,9 @@ class TraditionalMarketViewModel {
     
     // 내 위치 "버튼"을 눌렀을때 Bool 값 변수, stop or start 설정
     var isCurrentLocation = Observable(false)
-    
-    
-    
-    
-    
+
     // MARK: - Method
-    
+
     // 내 위치 버튼일 눌렀을때 true, false인지 변환해주는 메서드
     func myLocationClickedBtnIsCurrent(isSelected: Bool = false) {
         isCurrentLocation.value = isSelected
