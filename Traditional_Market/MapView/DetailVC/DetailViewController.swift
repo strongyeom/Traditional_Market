@@ -83,9 +83,6 @@ extension DetailViewController : UICollectionViewDelegate, UICollectionViewDataS
             
             header.configureCell(market: selectedMarket)
             header.delegate = self
-            header.completion = {
-                self.dismiss(animated: true)
-            }
             return header
         } else {
             return UICollectionReusableView()

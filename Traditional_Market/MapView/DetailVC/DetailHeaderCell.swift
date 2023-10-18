@@ -19,10 +19,10 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
     private let bgView = {
         let view = UIView()
       //  view.backgroundColor = UIColor.bgViewColor()
-        view.layer.cornerRadius = 12
-        view.layer.borderColor = UIColor.lightGray.cgColor
-        view.layer.borderWidth = 1
-        view.clipsToBounds = true
+//        view.layer.cornerRadius = 12
+//        view.layer.borderColor = UIColor.lightGray.cgColor
+//        view.layer.borderWidth = 1
+//        view.clipsToBounds = true
         return view
     }()
 
@@ -87,6 +87,12 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
         return stack
     }()
     
+    let separateView = {
+       let view = UIView()
+        view.backgroundColor = .lightGray
+        return view
+    }()
+    
     weak var delegate: IsLikeDelegate?
     
     var completion: (() -> Void)?
@@ -98,7 +104,7 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
     
     override func configureView() {
         self.addSubview(bgView)
-        [marketTitle, isLikeButton, marketType, marketCycle, betweenLineView, stackView].forEach {
+        [marketTitle, isLikeButton, marketType, marketCycle, betweenLineView, stackView, separateView].forEach {
             bgView.addSubview($0)
         }
         isLikeButton.addTarget(self, action: #selector(isLikeBtnClicked(_:)), for: .touchUpInside)
@@ -114,7 +120,7 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
         
         marketTitle.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(10)
-            make.top.equalToSuperview().inset(10)
+            make.top.equalToSuperview().inset(3)
         }
         
         isLikeButton.snp.makeConstraints { make in
@@ -128,19 +134,25 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
         }
         
         betweenLineView.snp.makeConstraints { make in
-            make.leading.equalTo(marketType.snp.trailing).offset(5)
-            make.verticalEdges.equalTo(marketType)
+            make.leading.equalTo(marketType.snp.trailing).offset(6)
+            make.verticalEdges.equalTo(marketType).inset(9)
             make.width.equalTo(1)
         }
     
         marketCycle.snp.makeConstraints { make in
-            make.leading.equalTo(betweenLineView.snp.trailing).offset(5)
-            make.top.equalTo(marketType)
+            make.leading.equalTo(betweenLineView.snp.trailing).offset(6)
+            make.centerY.equalTo(marketType)
         }
         
         stackView.snp.makeConstraints { make in
-            make.top.equalTo(marketType.snp.bottom).offset(8)
+            make.top.equalTo(marketType.snp.bottom).offset(3)
             make.horizontalEdges.bottom.equalToSuperview().inset(10)
+        }
+        
+        separateView.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.height.equalTo(1)
+            make.horizontalEdges.equalToSuperview()
         }
         
         
