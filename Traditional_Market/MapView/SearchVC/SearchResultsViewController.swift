@@ -22,7 +22,8 @@ class SearchResultsViewController : BaseViewController {
         print("ExampleVC")
         setTableView()
         tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.horizontalEdges.equalToSuperview()
+            make.bottom.equalTo(self.view.keyboardLayoutGuide.snp.top)
         }
     }
   
