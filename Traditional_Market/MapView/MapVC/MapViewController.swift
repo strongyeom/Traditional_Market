@@ -78,6 +78,8 @@ extension MapViewController: CLLocationManagerDelegate {
         mapView.checkDeviceLocationAuthorization()
     }
     
+    
+    // TODO: - geofencing으로 시장에 들어오면 액션 메서드 업데이트 사항
     // geofencing으로 시장에 들어오면 액션 메서드
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         guard let region = region as? CLCircularRegion else { return }

@@ -25,15 +25,7 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
         view.clipsToBounds = true
         return view
     }()
-    
-    private let dismissBtn = {
-       let view = UIButton()
-        view.setTitle("닫기", for: .normal)
-        view.setTitleColor(UIColor.systemBlue, for: .normal)
-        return view
-    }()
-    
-    
+
     private let marketTitle = {
        let view = UILabel()
         view.font = .systemFont(ofSize: 25, weight: .medium)
@@ -55,7 +47,7 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
     
     private let isLikeButton = {
        let view = UIButton()
-       // view.setImage(UIImage(systemName: "star"), for: .normal)
+       
         view.tintColor = .red
         return view
     }()
@@ -106,28 +98,17 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
     
     override func configureView() {
         self.addSubview(bgView)
-        self.addSubview(dismissBtn)
         [marketTitle, isLikeButton, marketType, marketCycle, betweenLineView, stackView].forEach {
             bgView.addSubview($0)
         }
         isLikeButton.addTarget(self, action: #selector(isLikeBtnClicked(_:)), for: .touchUpInside)
-        dismissBtn.addTarget(self, action: #selector(dissmissBtn(_:)), for: .touchUpInside)
-    }
-    
-    @objc func dissmissBtn(_ sender: UIButton) {
-        completion?()
     }
     
     override func setConstraints() {
         
-        dismissBtn.snp.makeConstraints { make in
-            make.top.equalTo(self.safeAreaLayoutGuide).inset(5)
-            make.trailing.equalTo(bgView).inset(4)
-        }
-        
         bgView.snp.makeConstraints { make in
             make.horizontalEdges.bottom.equalToSuperview().inset(10)
-            make.top.equalTo(dismissBtn.snp.bottom)
+            make.top.equalTo(self.safeAreaLayoutGuide).inset(25)
         }
         
         

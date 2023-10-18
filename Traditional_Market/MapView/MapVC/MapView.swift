@@ -145,14 +145,14 @@ class MapView : BaseView {
         case .authorizedWhenInUse:
             print("한번만 권한 허용")
             locationManger.startUpdatingLocation()
-            setMyRegion(center: viewModel.startLocation.value)
+            setRegionScale(center: viewModel.startLocation.value)
             self.currentLocationButton.isSelected = true
             mapBaseView.userTrackingMode = .follow
             mapBaseView.showsUserLocation = true
         case .authorized:
             print("권한 허용 됨")
             locationManger.startUpdatingLocation()
-            setMyRegion(center: viewModel.startLocation.value)
+            setRegionScale(center: viewModel.startLocation.value)
             mapBaseView.userTrackingMode = .follow
             mapBaseView.showsUserLocation = true
         @unknown default:
@@ -160,45 +160,45 @@ class MapView : BaseView {
         }
     }
 
-    /// 해당 지역에 들어왔을때 로컬 알림 메서드
-    func registLocation() {
-        print("내 범위에 속하는 어노테이션 갯수",myRangeAnnotation.count)
-        // 내 범위에서 내 위치는 렌더링 하지 않기
-        let myLocationRangeRemoveMyLocation = myRangeAnnotation.filter { $0.title!! != "My Location"}
-        
-        // 내 위치 반경에 해당하는 어노테이션만 가져오기
-        for i in myLocationRangeRemoveMyLocation {
-            print("해당 \(i.title!!)에 들어왔습니다.",i.title!!)
-            let circleRange = CLCircularRegion(center: i.coordinate, radius: Scale.marktRange, identifier: "\(i.title! ?? "내위치")")
-            
-            circleRange.notifyOnEntry = true
-            circleRange.notifyOnExit = true
-            locationManger.startMonitoring(for: circleRange)
-        }
-        // 🧐 UNLocationNotificationTrigger 고민해보기
-    }
+//    /// 해당 지역에 들어왔을때 로컬 알림 메서드
+//    func registLocation() {
+//        print("내 범위에 속하는 어노테이션 갯수",myRangeAnnotation.count)
+//        // 내 범위에서 내 위치는 렌더링 하지 않기
+//        let myLocationRangeRemoveMyLocation = myRangeAnnotation.filter { $0.title!! != "My Location"}
+//
+//        // 내 위치 반경에 해당하는 어노테이션만 가져오기
+//        for i in myLocationRangeRemoveMyLocation {
+//            print("해당 \(i.title!!)에 들어왔습니다.",i.title!!)
+//            let circleRange = CLCircularRegion(center: i.coordinate, radius: Scale.marktRange, identifier: "\(i.title! ?? "내위치")")
+//
+//            circleRange.notifyOnEntry = true
+//            circleRange.notifyOnExit = true
+//            locationManger.startMonitoring(for: circleRange)
+//        }
+//        // 🧐 UNLocationNotificationTrigger 고민해보기
+//    }
     
-    /// 내 위치 범위 산정
-    func setMyRegion(center: CLLocationCoordinate2D) {
-        myRangeAnnotation = []
-        // MapView에 축척 m단위로 보여주기
-        let region = MKCoordinateRegion(center: center, latitudinalMeters: Scale.myLocationScale, longitudinalMeters: Scale.myLocationScale)
-        let regionRange = CLCircularRegion(center: center, radius: Scale.myRangeScale, identifier: "내 위치")
-        self.mapBaseView.setRegion(region, animated: true)
-        
-        
-        print("현재 MapView에서 보여지고 있는 어노테이션 갯수 : \(viewModel.addedAnnotation.value.count)")
-        for i in viewModel.addedAnnotation.value {
-            if regionRange.contains(i.coordinate) {
-                print("\(i.title! ?? "")가 내 위치에 포함되어 있습니다.")
-                // 범위안에 있는 것만 따로 배열에 담아서 registLocation타게 하기
-                myRangeAnnotation.append(i)
-            } else {
-                print("\(i.title! ?? "")가 내 위치에 포함되어 있지 않습니다.")
-            }
-        }
-        registLocation()
-    }
+    /// 내 위치 범위 산정 geofencing
+//    func setMyRegion(center: CLLocationCoordinate2D) {
+//        myRangeAnnotation = []
+//        // MapView에 축척 m단위로 보여주기
+//        let region = MKCoordinateRegion(center: center, latitudinalMeters: Scale.myLocationScale, longitudinalMeters: Scale.myLocationScale)
+//        let regionRange = CLCircularRegion(center: center, radius: Scale.myRangeScale, identifier: "내 위치")
+//        self.mapBaseView.setRegion(region, animated: true)
+//
+//
+//        print("현재 MapView에서 보여지고 있는 어노테이션 갯수 : \(viewModel.addedAnnotation.value.count)")
+//        for i in viewModel.addedAnnotation.value {
+//            if regionRange.contains(i.coordinate) {
+//                print("\(i.title! ?? "")가 내 위치에 포함되어 있습니다.")
+//                // 범위안에 있는 것만 따로 배열에 담아서 registLocation타게 하기
+//                myRangeAnnotation.append(i)
+//            } else {
+//                print("\(i.title! ?? "")가 내 위치에 포함되어 있지 않습니다.")
+//            }
+//        }
+//        registLocation()
+//    }
     
     func setRegionScale(center: CLLocationCoordinate2D) {
         // MapView에 축척 m단위로 보여주기
