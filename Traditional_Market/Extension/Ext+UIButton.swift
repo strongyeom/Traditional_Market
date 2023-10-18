@@ -41,5 +41,11 @@ extension UIButton {
         self.layer.cornerRadius = 12
         self.clipsToBounds = true
     }
+    
+    func configureImagebtn(title: String) {
+        self.setTitle(title, for: .normal)
+        self.tintColor = .systemBlue
+        self.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+    }
 }
 
