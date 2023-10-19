@@ -65,7 +65,10 @@ extension StampViewController {
     fileprivate func setNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(leftBtnClicked))
         navigationItem.title = "기록하기"
-        
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor(named: "stampColor")
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
         
     }
     
