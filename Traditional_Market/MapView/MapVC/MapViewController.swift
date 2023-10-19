@@ -210,7 +210,7 @@ extension MapViewController: UICollectionViewDelegate {
             }
             selectedSaveIndex = "\(indexPath.item)"
             self.mapView.selectedCell = data.localname
-            currentCell.baseView.backgroundColor = .yellow
+            currentCell.baseView.backgroundColor = UIColor(named: "selectedColor")
         }
         print("\(indexPath.item) 인덱스 상세 조건: \( self.mapView.selectedCell ?? "nil입니다.")")
         // filterCityAnnotation()
@@ -372,12 +372,16 @@ extension MapViewController : UISearchResultsUpdating {
         
         guard let text = searchController.searchBar.text else { return }
         let filterResults = realmManager.searchFilterData(text: text)
-        // 검색 결과 SearchResultsVC로 전달 및 tableView Reload하기
-        if let resultsController = searchController.searchResultsController as? SearchResultsViewController {
-            resultsController.filterData = filterResults
-            resultsController.tableView.reloadData()
-            
-        }
+         // 검색 결과 SearchResultsVC로 전달 및 tableView Reload하기
+         if let resultsController = searchController.searchResultsController as? SearchResultsViewController {
+             // 필터링 기능을 해제해주세요
+             if mapView.selectedCell != nil {
+                 showAlert(title: "필터링 해제", btnTitle: "확인", message: "필터링을 해제해주세요", style: .default, completionHander: nil)
+             } else {
+                 resultsController.filterData = filterResults
+                 resultsController.tableView.reloadData()
+             }
+         }
     }
 }
 
