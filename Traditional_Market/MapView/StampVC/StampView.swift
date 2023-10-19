@@ -30,14 +30,14 @@ class StampView : BaseView {
     let marketName = {
        let view =  UILabel()
         view.text = "둔촌시장"
-        view.font = .systemFont(ofSize: 17, weight: .medium)
+        view.font = .systemFont(ofSize: 17, weight: .heavy)
         view.textAlignment = .center
         return view
     }()
     
     let memo = {
        let view = UILabel()
-        view.text = "꿀팁 및 메모 작성"
+        view.text = "메모 작성"
         view.font = UIFont.systemFont(ofSize: 14, weight: .heavy)
         return view
     }()
@@ -98,7 +98,7 @@ class StampView : BaseView {
         }
         
         memo.snp.makeConstraints { make in
-            make.top.equalTo(marketName.snp.bottom).offset(16)
+            make.top.equalTo(marketName.snp.bottom).offset(20)
             make.horizontalEdges.equalTo(marketName)
         }
         

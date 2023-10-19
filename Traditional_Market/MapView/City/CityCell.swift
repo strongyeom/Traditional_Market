@@ -45,6 +45,7 @@ class CityCell : BaseColletionViewCell {
     override func configureView() {
         contentView.addSubview(baseView)
         baseView.addSubview(stackView)
+        
     }
     
     override func setConstraints() {

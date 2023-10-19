@@ -217,6 +217,7 @@ extension MapViewController: UICollectionViewDelegate {
             selectedSaveIndex = "\(indexPath.item)"
             self.mapView.selectedCell = data.localname
             currentCell.baseView.backgroundColor = UIColor(named: "selectedColor")
+          
         }
         print("\(indexPath.item) 인덱스 상세 조건: \( self.mapView.selectedCell ?? "nil입니다.")")
         // filterCityAnnotation()
