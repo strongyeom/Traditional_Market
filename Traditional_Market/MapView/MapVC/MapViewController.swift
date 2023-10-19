@@ -61,6 +61,16 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
 
 // MARK: - CLLocationManagerDelegate
 extension MapViewController: CLLocationManagerDelegate {
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let circleRenderer = MKCircleRenderer(overlay: overlay)
+                circleRenderer.strokeColor = .red
+                circleRenderer.fillColor = UIColor.yellow.withAlphaComponent(0.3)
+                circleRenderer.lineWidth = 1.0
+                return circleRenderer
+    }
+    
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first?.coordinate {
             viewModel.startLocationFetch(location: location)
@@ -114,7 +124,7 @@ extension MapViewController: CLLocationManagerDelegate {
             print("지역을 모니터링할 수 없으며, 실패 원인을 알 수 없습니다.")
             return
         }
-        print("식별자를 사용하여 지역을 모니터링하는 동안 오류가 발생했습니다: \(region.identifier)")
+        print("식별자를 사용하여 지역을 모니터링하는 동안 오류가 발생했습니다: \(region.identifier) \(error.localizedDescription)")
     }
 }
 
