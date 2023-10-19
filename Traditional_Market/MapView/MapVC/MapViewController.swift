@@ -72,7 +72,7 @@ extension MapViewController: CLLocationManagerDelegate {
         if let location = locations.first?.coordinate {
             viewModel.startLocationFetch(location: location)
             print("시작 위치를 받아오고 있습니다 \(location)")
-            mapView.currentLocationButton.tintColor = .systemBlue
+            mapView.currentLocationButton.tintColor = UIColor(named: "brandColor")
         }
     }
     
@@ -217,7 +217,6 @@ extension MapViewController: UICollectionViewDelegate {
             selectedSaveIndex = "\(indexPath.item)"
             self.mapView.selectedCell = data.localname
             currentCell.baseView.backgroundColor = UIColor(named: "selectedColor")
-          
         }
         print("\(indexPath.item) 인덱스 상세 조건: \( self.mapView.selectedCell ?? "nil입니다.")")
         // filterCityAnnotation()

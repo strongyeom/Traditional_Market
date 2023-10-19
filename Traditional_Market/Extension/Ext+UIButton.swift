@@ -28,10 +28,10 @@ extension UIButton {
     
     func mypageSetupButton() {
         var config = UIButton.Configuration.plain()
-        config.title = "내가 저장한 시장"
+        config.title = "시장 컬렉션"
         config.titleAlignment = .center
         config.buttonSize = .medium
-        config.image = UIImage(systemName: "arrow.forward")
+        config.image = UIImage(systemName: "chevron.forward")
         config.imagePadding = 7
         config.imagePlacement = .trailing
         config.baseForegroundColor = .black

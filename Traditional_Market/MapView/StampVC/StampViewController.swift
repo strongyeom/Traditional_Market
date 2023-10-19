@@ -197,7 +197,7 @@ extension StampViewController : PHPickerViewControllerDelegate {
 // MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
 extension StampViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[.editedImage] as? UIImage {
+        if let image = info[.originalImage] as? UIImage {
             stampView.stampImage.image = image
            // self.stampView.stampImageBgView.isOpaque = true
            // self.stampView.stampImage.backgroundColor = .clear

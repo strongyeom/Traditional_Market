@@ -31,7 +31,7 @@ class ProfileBaseView : BaseView {
     let profileNickName = {
         let view = UILabel()
         view.font = UIFont.systemFont(ofSize: 20, weight: .medium)
-        view.text = "나의 백반 기행"
+        view.text = "식도락 여행"
         return view
     }()
     
