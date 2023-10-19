@@ -670,7 +670,6 @@
 				DEVELOPMENT_TEAM = D3U7XS5ZX2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Traditional_Market/Info.plist;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 권한을 허용해주세요";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "워치 권한을 허용해주세요";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -702,7 +701,6 @@
 				DEVELOPMENT_TEAM = D3U7XS5ZX2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Traditional_Market/Info.plist;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 권한을 허용해주세요";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "워치 권한을 허용해주세요";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
