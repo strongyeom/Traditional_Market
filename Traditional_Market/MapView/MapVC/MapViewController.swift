@@ -54,7 +54,14 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         myLocationBtnClicked()
         playViewmodel()
         print("파일 경로 : \(self.realm.configuration.fileURL!)")
+        NotificationCenter.default.addObserver(self, selector: #selector(isSaveBtnClicked(_:)), name: Notification.Name("SavedStamp"), object: nil)
      
+    }
+    
+    @objc func isSaveBtnClicked(_ noti: Notification) {
+        var style = ToastStyle()
+        style.backgroundColor = UIColor(named: "brandColor")!
+        self.view.makeToast("시장 컬렉션에 저장되었습니다.", duration: 3.0, position: .top, style: style)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -392,7 +399,8 @@ extension MapViewController : UISearchResultsUpdating {
 }
 
 extension MapViewController: SettingAlert {
-    
+
+   
     func showSettingAlert() {
         let alert = UIAlertController(title: "위치 정보 설정", message: "설정>개인 정보 보호> 위치 여기로 이동해서 위치 권한 설정해주세요", preferredStyle: .alert)
         let goSetting = UIAlertAction(title: "위치 설정하기", style: .default) { _ in
@@ -407,5 +415,4 @@ extension MapViewController: SettingAlert {
         alert.addAction(cancel)
         present(alert, animated: true)
     }
-    
 }

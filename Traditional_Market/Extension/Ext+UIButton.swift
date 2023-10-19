@@ -36,10 +36,6 @@ extension UIButton {
         config.imagePlacement = .trailing
         config.baseForegroundColor = .black
         self.configuration = config
-        self.layer.borderColor = UIColor.lightGray.cgColor
-        self.layer.borderWidth = 1
-        self.layer.cornerRadius = 12
-        self.clipsToBounds = true
     }
     
     func configureImagebtn(title: String) {

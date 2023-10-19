@@ -22,12 +22,12 @@ extension UIStackView {
     
     func mypageSetupStackView() {
         self.axis = .vertical
-        self.spacing = 5
+        self.spacing = 1
         self.alignment = .center
-        self.distribution = .fillEqually
-        self.layer.borderColor = UIColor.lightGray.cgColor
-        self.layer.borderWidth = 1
-        self.layer.cornerRadius = 12
-        self.clipsToBounds = true
+        self.distribution = .fill
+//        self.layer.borderColor = UIColor.lightGray.cgColor
+//        self.layer.borderWidth = 1
+//        self.layer.cornerRadius = 12
+//        self.clipsToBounds = true
     }
 }

@@ -183,7 +183,7 @@ class RealmManager {
     }
     
     func calculateStampCountToLevelLabel() -> String {
-        let totalCount: Double = Double(allOfFavoriteRealmCount().count) / 10
+        let totalCount: Double = Double(allOfFavoriteRealmCount().count) / 3
         
         switch totalCount {
         case 0..<2:

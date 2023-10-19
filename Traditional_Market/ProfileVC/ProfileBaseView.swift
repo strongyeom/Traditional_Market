@@ -20,6 +20,15 @@ class ProfileBaseView : BaseView {
     "버전 정보"
     ]
     
+    let profileBaseView = {
+       let view = UIView()
+        view.layer.cornerRadius = 16
+        view.layer.cornerCurve = .continuous
+        view.clipsToBounds = true
+        view.backgroundColor = UIColor(named: "selectedColor")
+        return view
+    }()
+    
     let tableView = UITableView(frame: .zero, style: .plain)
     
     let profileImageView = {
@@ -31,7 +40,7 @@ class ProfileBaseView : BaseView {
     let profileNickName = {
         let view = UILabel()
         view.font = UIFont.systemFont(ofSize: 20, weight: .medium)
-        view.text = "식도락 여행"
+        view.text = "식도락 여행가"
         return view
     }()
     
@@ -40,13 +49,15 @@ class ProfileBaseView : BaseView {
     let stampLabel = {
         let view = UILabel()
         view.text = "스탬프 갯수"
-        view.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        view.font = UIFont.systemFont(ofSize: 10, weight: .medium)
+        view.textColor = .gray
         return view
     }()
     
     let stampCountLabel = {
         let view = UILabel()
         view.text = "00000000개"
+        view.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         view.adjustsFontSizeToFitWidth = true
         return view
     }()
@@ -54,13 +65,15 @@ class ProfileBaseView : BaseView {
     let levelLabel = {
         let view = UILabel()
         view.text = "레벨"
-        view.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        view.font = UIFont.systemFont(ofSize: 10, weight: .medium)
+        view.textColor = .gray
         return view
     }()
     
     let levelCountLabel = {
         let view = UILabel()
         view.text = "LV.1000"
+        view.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         return view
     }()
  
@@ -98,14 +111,15 @@ class ProfileBaseView : BaseView {
         return stack
     }()
     
-    
-    weak var levelDelegate: ActionDelegate?
-    
+   
     weak var likeBtnDelegate: ActionDelegate?
     
     override func configureView() {
-        self.addSubview(profileHorizatalStackView)
-        self.addSubview(stampInfoHorizantalStackView)
+        
+        self.addSubview(profileBaseView)
+        [profileHorizatalStackView, stampInfoHorizantalStackView].forEach {
+            profileBaseView.addSubview($0)
+        }
         self.addSubview(tableView)
         setupButtonTarget()
         setupTableView()
@@ -121,23 +135,36 @@ class ProfileBaseView : BaseView {
     }
 
     override func setConstraints() {
+        
+        profileBaseView.snp.makeConstraints { make in
+            make.top.horizontalEdges.equalTo(self.safeAreaLayoutGuide).inset(10)
+        }
    
         profileImageView.image = UIImage(named: "profileImage")
         profileImageView.snp.makeConstraints { make in
             make.size.equalTo(60)
         }
         
+        stampLabel.snp.makeConstraints { make in
+            make.height.equalTo(20)
+        }
+        
+        levelLabel.snp.makeConstraints { make in
+            make.height.equalTo(20)
+        }
+        
         profileHorizatalStackView.snp.makeConstraints { make in
-            make.top.horizontalEdges.equalTo(self.safeAreaLayoutGuide).inset(10)
+            make.top.horizontalEdges.equalTo(profileBaseView).inset(10)
         }
         
         stampInfoHorizantalStackView.snp.makeConstraints { make in
             make.top.equalTo(profileHorizatalStackView.snp.bottom).offset(10)
             make.horizontalEdges.equalTo(profileHorizatalStackView)
+            make.bottom.equalToSuperview().inset(10)
         }
         
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(stampInfoHorizantalStackView.snp.bottom).offset(10)
+            make.top.equalTo(profileBaseView.snp.bottom).offset(7)
             make.bottom.horizontalEdges.equalToSuperview().inset(10)
         }
     }

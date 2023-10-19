@@ -31,7 +31,6 @@ class ProfileViewController : BaseViewController {
     func configureTableView() {
         profileBaseView.tableView.dataSource = self
         profileBaseView.tableView.delegate = self
-        profileBaseView.levelDelegate = self
         profileBaseView.likeBtnDelegate = self
     }
     

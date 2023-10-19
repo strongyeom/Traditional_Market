@@ -7,6 +7,11 @@
 
 import UIKit
 import PhotosUI
+import Toast
+
+protocol SavedStamp: AnyObject {
+    func savedStamp()
+}
 
 final class StampViewController : BaseViewController {
     
@@ -24,6 +29,8 @@ final class StampViewController : BaseViewController {
     var selectedMarket: TraditionalMarketRealm?
     
     var enterStampMethod: EnterStampMethod = .click
+    
+    weak var delegate: SavedStamp?
     
     override func loadView() {
         self.view = stampView
@@ -46,7 +53,6 @@ final class StampViewController : BaseViewController {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // self.view.endEditing(true)
         stampView.memoTextView.resignFirstResponder()
     }
     
@@ -85,11 +91,11 @@ extension StampViewController {
 
                 switch self.enterStampMethod {
                 case .click:
-                    self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+                    self.presentingViewController?.presentingViewController?.dismiss(animated: true)
                 case .toast:
                     self.dismiss(animated: true)
                 }
-
+              
             }
             
             if self.stampView.stampImage.image != nil {
@@ -98,6 +104,9 @@ extension StampViewController {
             } else {
                 self.stampView.stampImage.image = UIImage(named: "basicStamp2")
             }
+            
+            NotificationCenter.default.post(name: Notification.Name("SavedStamp"), object: nil)
+            
         }
         
     }
@@ -184,7 +193,6 @@ extension StampViewController : PHPickerViewControllerDelegate {
             itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in // 4
                 DispatchQueue.main.async {
                     self.stampView.stampImage.image = image as? UIImage // 5
-                  //  self.stampView.stampImageBgView.isOpaque = true
                 }
             }
         } else {
@@ -199,8 +207,6 @@ extension StampViewController: UIImagePickerControllerDelegate, UINavigationCont
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.originalImage] as? UIImage {
             stampView.stampImage.image = image
-           // self.stampView.stampImageBgView.isOpaque = true
-           // self.stampView.stampImage.backgroundColor = .clear
         }
         picker.dismiss(animated: true)
     }
