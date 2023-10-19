@@ -39,7 +39,7 @@ class MapView : BaseView {
     
     var locationManger = {
         var location = CLLocationManager()
-        location.allowsBackgroundLocationUpdates = true
+      //  location.allowsBackgroundLocationUpdates = true
         location.pausesLocationUpdatesAutomatically = false
         return location
     }()
