@@ -21,8 +21,8 @@ class FullImageViewController : BaseViewController {
     let cancelBtn = {
        let view = UIButton()
         view.setImage(UIImage(systemName: "xmark"), for: .normal)
-        view.tintColor = .systemRed
-        view.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 33), forImageIn: .normal)
+        view.tintColor = .systemBlue
+        view.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 23), forImageIn: .normal)
         return view
     }()
     
@@ -52,7 +52,7 @@ class FullImageViewController : BaseViewController {
         
         cancelBtn.snp.makeConstraints { make in
             make.size.equalTo(50)
-            make.leading.top.equalTo(view.safeAreaLayoutGuide).inset(20)
+            make.leading.top.equalTo(view.safeAreaLayoutGuide).inset(10)
         }
     }
 }
