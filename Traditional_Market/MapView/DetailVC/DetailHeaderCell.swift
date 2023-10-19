@@ -45,23 +45,21 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
         return view
     }()
     
-    private let isLikeButton = {
-            let view = UIButton()
-            return view
-        }()
-    
-    let isLikeCountLabel = {
-       let view = UILabel()
-        view.text = "사진 저장"
-        //view.sizeThatFits(CGSize(width: 40, height: 40))
-        view.font = UIFont.systemFont(ofSize: 15)
-        view.isUserInteractionEnabled = true
-        view.textColor = .systemBlue
-        view.numberOfLines = 2
-        view.textAlignment = .center
+    private let isLikeImage = {
+       let view = UIImageView()
+        view.tintColor = .red
+        view.isHidden = true
         return view
     }()
     
+    private let isLikeButton = {
+        let view = UIButton()
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .light)
+        let image = UIImage(systemName: "plus", withConfiguration: imageConfig)
+        view.setImage(image, for: .normal)
+        return view
+    }()
+
     private let marketCycle = {
         let view = UILabel()
         view.font = .systemFont(ofSize: 13)
@@ -110,13 +108,11 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
     @objc func isLikeBtnClicked(_ sender: UIButton) {
         print("즐겨찾기 버튼 눌림")
         delegate?.isLikeClickedEvent()
-      //  isLikeButton.configureImagebtn(image: "savedBtn")
     }
     
     override func configureView() {
         self.addSubview(bgView)
-        isLikeButton.addSubview(isLikeCountLabel)
-        [marketTitle, isLikeButton, marketType, marketCycle, betweenLineView, stackView, separateView].forEach {
+        [marketTitle, isLikeButton, marketType, marketCycle, betweenLineView, stackView, separateView, isLikeImage].forEach {
             bgView.addSubview($0)
         }
         isLikeButton.addTarget(self, action: #selector(isLikeBtnClicked(_:)), for: .touchUpInside)
@@ -135,15 +131,17 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
             make.top.equalToSuperview().inset(3)
         }
         
+        isLikeImage.snp.makeConstraints { make in
+            make.leading.equalTo(marketTitle.snp.trailing).offset(13)
+            make.centerY.equalTo(marketTitle)
+            make.size.equalTo(25)
+        }
+        
         isLikeButton.snp.makeConstraints { make in
-            make.top.equalTo(marketTitle)
+            make.centerY.equalTo(isLikeImage)
             make.trailing.equalToSuperview().inset(10)
             make.size.equalTo(40)
             
-        }
-        
-        isLikeCountLabel.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
         }
         
         marketType.snp.makeConstraints { make in
@@ -189,13 +187,11 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
 
         if favoriteTable.contains(where: {
             $0.marketName == market.marketName
-        }) {  //  view.setImage(UIImage(systemName: "star"), for: .normal)
-            isLikeButton.setImage(UIImage(named: "savedBtn"), for: .normal)
-            isLikeCountLabel.text = ""
+        }) {
+            isLikeImage.image = UIImage(systemName: "heart.fill")
+            isLikeImage.isHidden = false
         } else {
-            //isLikeButton.setImage(UIImage(named: "basicBtn"), for: .normal)
-            isLikeButton.setImage(UIImage(named: "basicBtn"), for: .normal)
-            isLikeCountLabel.text = ""
+            isLikeImage.image = UIImage(systemName: "heart")
         }
     }
     
