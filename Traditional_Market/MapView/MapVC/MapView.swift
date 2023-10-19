@@ -90,24 +90,6 @@ class MapView : BaseView {
         configureCity()
         setLocation()
         setMapView()
-        viewModel.addedAnnotation.bind { annotations in
-            print("annotations 전체 갯수 : \(annotations.count)")
-            
-            if annotations.count < 20 {
-                print("annotations 필터링 갯수  : \(annotations.count)")
-                let _ = annotations.map {
-                    let circleRanage = CLCircularRegion(center: $0.coordinate, radius: Scale.marktRange, identifier: $0.title!!)
-//                    let regionRange = CLCircularRegion(center: center, radius: 300.0, identifier: "내 위치")
-                    let circle = MKCircle(center: circleRanage.center, radius: 50.0)
-                    self.mapBaseView.addOverlay(circle)
-                    
-                    
-                    circleRanage.notifyOnEntry = true
-                    circleRanage.notifyOnExit = true
-                    self.locationManger.startMonitoring(for: circleRanage)
-                }
-            }
-        }
     }
     
     
@@ -163,14 +145,14 @@ class MapView : BaseView {
         case .authorizedWhenInUse:
             print("한번만 권한 허용")
             locationManger.startUpdatingLocation()
-            setMyRegion(center: viewModel.startLocation.value)
+            setRegionScale(center: viewModel.startLocation.value)
             self.currentLocationButton.isSelected = true
             mapBaseView.userTrackingMode = .follow
             mapBaseView.showsUserLocation = true
         case .authorized:
             print("권한 허용 됨")
             locationManger.startUpdatingLocation()
-            setMyRegion(center: viewModel.startLocation.value)
+            setRegionScale(center: viewModel.startLocation.value)
             mapBaseView.userTrackingMode = .follow
             mapBaseView.showsUserLocation = true
         @unknown default:

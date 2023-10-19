@@ -61,16 +61,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
 
 // MARK: - CLLocationManagerDelegate
 extension MapViewController: CLLocationManagerDelegate {
-    
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        let circleRenderer = MKCircleRenderer(overlay: overlay)
-                circleRenderer.strokeColor = .red
-                circleRenderer.fillColor = UIColor.yellow.withAlphaComponent(0.3)
-                circleRenderer.lineWidth = 1.0
-                return circleRenderer
-    }
-    
-    
+   
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first?.coordinate {
             viewModel.startLocationFetch(location: location)

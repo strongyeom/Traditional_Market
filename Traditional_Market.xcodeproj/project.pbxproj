@@ -20,7 +20,6 @@
 		2633E70B2AC70955002581EB /* DetailMarketInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2633E70A2AC70955002581EB /* DetailMarketInfoCell.swift */; };
 		2633E7112AC71DC8002581EB /* DetailHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2633E7102AC71DC8002581EB /* DetailHeaderCell.swift */; };
 		26A5BB622AD7E6C300D03FC7 /* ProfileBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A5BB612AD7E6C300D03FC7 /* ProfileBaseView.swift */; };
-		26A5BB642AD8042600D03FC7 /* LevelInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A5BB632AD8042600D03FC7 /* LevelInfoViewController.swift */; };
 		26A5BB662AD8088800D03FC7 /* SaveMarketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A5BB652AD8088800D03FC7 /* SaveMarketViewController.swift */; };
 		26A5BB682AD8351C00D03FC7 /* SaveTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A5BB672AD8351C00D03FC7 /* SaveTableView.swift */; };
 		26A5BB6B2AD8456900D03FC7 /* SavedDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A5BB6A2AD8456900D03FC7 /* SavedDetailViewController.swift */; };
@@ -83,7 +82,6 @@
 		2633E70A2AC70955002581EB /* DetailMarketInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMarketInfoCell.swift; sourceTree = "<group>"; };
 		2633E7102AC71DC8002581EB /* DetailHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHeaderCell.swift; sourceTree = "<group>"; };
 		26A5BB612AD7E6C300D03FC7 /* ProfileBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBaseView.swift; sourceTree = "<group>"; };
-		26A5BB632AD8042600D03FC7 /* LevelInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelInfoViewController.swift; sourceTree = "<group>"; };
 		26A5BB652AD8088800D03FC7 /* SaveMarketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveMarketViewController.swift; sourceTree = "<group>"; };
 		26A5BB672AD8351C00D03FC7 /* SaveTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveTableView.swift; sourceTree = "<group>"; };
 		26A5BB6A2AD8456900D03FC7 /* SavedDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedDetailViewController.swift; sourceTree = "<group>"; };
@@ -159,7 +157,6 @@
 			children = (
 				26015E372ACC0CC300D25C94 /* ProfileViewController.swift */,
 				26A5BB612AD7E6C300D03FC7 /* ProfileBaseView.swift */,
-				26A5BB632AD8042600D03FC7 /* LevelInfoViewController.swift */,
 				26A5BB692AD8454000D03FC7 /* SavedMarket */,
 				26E31C542ACD3F5400392068 /* Cell */,
 			);
@@ -510,7 +507,6 @@
 				2633E7092AC6E7ED002581EB /* DetailViewController.swift in Sources */,
 				26E31C582ACD3FB400392068 /* BaseCollectionViewCell.swift in Sources */,
 				26AAD8AE2AC4559B002E5DD4 /* NetworkManager.swift in Sources */,
-				26A5BB642AD8042600D03FC7 /* LevelInfoViewController.swift in Sources */,
 				26EA75D92ACB014F00FFDFDB /* Ext+UIButton.swift in Sources */,
 				26EA75E02ACB1DCA00FFDFDB /* FavoriteTable.swift in Sources */,
 				26EA75DB2ACB07A800FFDFDB /* Ext+UITextView.swift in Sources */,

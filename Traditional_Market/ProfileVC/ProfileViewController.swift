@@ -21,6 +21,10 @@ class ProfileViewController : BaseViewController {
     override func configureView() {
         super.configureView()
         navigationItem.title = "마이페이지"
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor(named: "brandColor")
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
         configureTableView()
     }
     
