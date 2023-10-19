@@ -15,7 +15,7 @@ class StampView : BaseView {
     }()
 
     lazy var stampImage = {
-       let view = UIImageView(image: UIImage(named: "basicStamp2"))
+       let view = UIImageView(image: UIImage(named: "downloadingImage"))
         view.isUserInteractionEnabled = true
         return view
     }()
@@ -84,7 +84,7 @@ class StampView : BaseView {
       
         stampImage.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(self.safeAreaLayoutGuide)
-            make.height.equalToSuperview().multipliedBy(0.35)
+            make.height.equalTo(stampImage.snp.width)
         }
         
         marketName.snp.makeConstraints { make in
@@ -105,13 +105,13 @@ class StampView : BaseView {
         memoTextView.snp.makeConstraints { make in
             make.top.equalTo(memo.snp.bottom).offset(8)
             make.horizontalEdges.equalTo(self.safeAreaLayoutGuide).inset(11)
-            make.height.equalTo(self).multipliedBy(0.35)
+           // make.height.equalTo(self).multipliedBy(0.35)
         }
 
         saveButton.snp.makeConstraints { make in
             make.top.equalTo(memoTextView.snp.bottom).offset(15)
             make.horizontalEdges.equalTo(memoTextView)
-            make.height.equalTo(44)
+            make.bottom.equalTo(self.safeAreaLayoutGuide).inset(15)
         }
     }
 }

@@ -151,7 +151,7 @@ extension StampViewController {
                 self.present(picker, animated: true)
             }
         
-            let cancel = UIAlertAction(title: "취소", style: .destructive)
+            let cancel = UIAlertAction(title: "취소", style: .cancel)
             
             actionSheet.addAction(camera)
             actionSheet.addAction(photoLibray)

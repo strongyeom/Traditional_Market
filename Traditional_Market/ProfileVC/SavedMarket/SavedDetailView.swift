@@ -61,7 +61,10 @@ class SavedDetailView : BaseView {
     
     let memoTextView = {
        let view = UITextView()
-        view.layer.borderColor = UIColor.gray.cgColor
+        view.layer.cornerRadius = 12
+        view.layer.cornerCurve = .continuous
+        view.clipsToBounds = true
+        view.layer.borderColor = UIColor.lightGray.cgColor
         view.layer.borderWidth = 1
         view.isEditable = false
         return view
@@ -94,7 +97,7 @@ class SavedDetailView : BaseView {
         
         savedImageView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalToSuperview()
-            make.height.equalTo(300)
+            make.height.equalTo(savedImageView.snp.width)
         }
         
         marketTitle.snp.makeConstraints { make in
@@ -141,9 +144,9 @@ class SavedDetailView : BaseView {
         marketTitle.text = market.marketName
         marketType.text = market.marketType
         marketCycle.text = market.marketOpenCycle
-        loadAddress.text = market.loadNameAddress
-        famousProducts.text = market.popularProducts
-        phoneNumber.text = market.phoneNumber
+        loadAddress.text = "도로명주소 : \(market.loadNameAddress ?? "")"
+        famousProducts.text = "품목 : \(market.popularProducts ?? "")"
+        phoneNumber.text =  "전화번호 : \(market.phoneNumber ?? "")"
         memoTextView.text = market.memo ?? ""
     }
     
