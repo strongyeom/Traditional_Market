@@ -17,11 +17,18 @@ class SaveMarketCell : UITableViewCell {
         view.backgroundColor = .lightGray
         return view
     }()
-    //
+    
     let marketTitle = {
         let view = UILabel()
         view.text = "자갈치시장"
         view.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        return view
+    }()
+    
+    let createdDate = {
+       let view = UILabel()
+        view.font = UIFont.systemFont(ofSize: 13)
+        view.textColor = .lightGray
         return view
     }()
     
@@ -30,20 +37,9 @@ class SaveMarketCell : UITableViewCell {
         view.text = "여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음"
         view.font = UIFont.systemFont(ofSize: 13)
         view.numberOfLines = 0
-      //  view.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-        
         return view
     }()
-    
-//    lazy var stackView = {
-//        let stack = UIStackView(arrangedSubviews: [marketTitle, marketDescription])
-//        stack.axis = .vertical
-//        stack.spacing = 5
-//        stack.alignment = .fill
-//        stack.distribution = .fill
-//        return stack
-//    }()
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureView()
@@ -55,9 +51,9 @@ class SaveMarketCell : UITableViewCell {
     }
     
     func configureView() {
-        contentView.addSubview(saveImageView)
-        contentView.addSubview(marketTitle)
-        contentView.addSubview(marketDescription)
+        [saveImageView, marketTitle, marketDescription, createdDate].forEach {
+            contentView.addSubview($0)
+        }
     }
     
     func setConstraints() {
@@ -71,7 +67,13 @@ class SaveMarketCell : UITableViewCell {
         marketTitle.snp.makeConstraints { make in
             make.top.equalTo(saveImageView)
             make.leading.equalTo(saveImageView.snp.trailing).offset(10)
+           
+        }
+        
+        createdDate.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(10)
+            make.centerY.equalTo(marketTitle)
+            
         }
         
         marketDescription.snp.makeConstraints { make in
@@ -80,14 +82,23 @@ class SaveMarketCell : UITableViewCell {
             make.bottom.lessThanOrEqualTo(saveImageView)
            
         }
-        
-        
-//        stackView.snp.makeConstraints { make in
-//            make.leading.equalTo(saveImageView.snp.trailing).offset(5)
-//            make.verticalEdges.equalTo(saveImageView)
-//            make.trailing.equalToSuperview().inset(5)
-//        }
-        
+
     }
     
+    func configureView(data: FavoriteTable) {
+        self.selectionStyle = .none
+        self.marketTitle.text = data.marketName
+        self.marketDescription.text = data.memo
+        
+        self.createdDate.text = dateFormmeted(data: data)
+    }
+    
+}
+
+extension SaveMarketCell {
+    func dateFormmeted(data: FavoriteTable) -> Date.FormatStyle.FormatOutput {
+        let locale = Locale(identifier: "ko-KR")
+        let result = data.date.formatted(.dateTime.locale(locale).day().month(.twoDigits).year())
+        return result
+    }
 }

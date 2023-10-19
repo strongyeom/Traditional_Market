@@ -56,6 +56,12 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         print("파일 경로 : \(self.realm.configuration.fileURL!)")
      
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.mapView.locationManger.stopUpdatingLocation()
+        self.mapView.currentLocationButton.tintColor = .black
+    }
 
 }
 

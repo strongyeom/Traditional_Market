@@ -55,9 +55,7 @@ extension SaveMarketViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SaveMarketCell.identifier, for: indexPath) as? SaveMarketCell else { return UITableViewCell() }
         let data = realmManager.allOfFavoriteRealmCount()[indexPath.row]
-        cell.selectionStyle = .none
-        cell.marketTitle.text = data.marketName
-        cell.marketDescription.text = data.memo
+        cell.configureView(data: data)
         cell.saveImageView.image = loadImageFromDocument(fileName: "myPhoto_\(data._id).jpg")
         return cell
     }

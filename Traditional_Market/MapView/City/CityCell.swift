@@ -21,7 +21,7 @@ class CityCell : BaseColletionViewCell {
         view.clipsToBounds = true
         view.layer.cornerCurve = .continuous
         view.layer.borderColor = UIColor.lightGray.cgColor
-        view.layer.borderWidth = 1
+        view.layer.borderWidth = 0.5
         return view
     }()
     

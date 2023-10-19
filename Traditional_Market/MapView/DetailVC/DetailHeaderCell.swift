@@ -183,10 +183,8 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
         if favoriteTable.contains(where: {
             $0.marketName == market.marketName
         }) {
-            isLikeImage.image = UIImage(systemName: "heart.fill")
+            isLikeImage.image = UIImage(named: "savedImage")
             isLikeImage.isHidden = false
-        } else {
-            isLikeImage.image = UIImage(systemName: "heart")
         }
     }
     
