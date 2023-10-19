@@ -11,7 +11,7 @@ class StampView : BaseView {
     
     let bgView = {
        let view = UIView()
-        view.backgroundColor = UIColor.bgViewColor()
+        //view.backgroundColor = UIColor.bgViewColor()
         return view
     }()
 
@@ -21,11 +21,18 @@ class StampView : BaseView {
         return view
     }()
     
-    let marketTitle = {
-       let view = UILabel()
-        view.text = "시장 이름"
-        view.font = UIFont.systemFont(ofSize: 14, weight: .heavy)
-        return view
+//    let marketTitle = {
+//       let view = UILabel()
+//        view.text = "시장 이름"
+//        view.font = UIFont.systemFont(ofSize: 14, weight: .heavy)
+//        return view
+//    }()
+    
+    let marketType = {
+        let view = UILabel()
+        view.textColor = .lightGray
+        view.font = UIFont.systemFont(ofSize: 13)
+         return view
     }()
     
     let marketName = {
@@ -38,7 +45,7 @@ class StampView : BaseView {
     
     let memo = {
        let view = UILabel()
-        view.text = "기록하기"
+        view.text = "꿀팁 및 메모 작성"
         view.font = UIFont.systemFont(ofSize: 14, weight: .heavy)
         return view
     }()
@@ -49,45 +56,49 @@ class StampView : BaseView {
         return view
     }()
     
-    let cancelButton = {
-       let view = UIButton()
-        view.stampBtnLayout(text: "취소")
-        return view
-    }()
+//    let cancelButton = {
+//       let view = UIButton()
+//        view.stampBtnLayout(text: "취소")
+//        return view
+//    }()
     
     let saveButton = {
         let view = UIButton()
         view.stampBtnLayout(text: "저장")
+        view.layer.cornerRadius = 16
+        view.layer.cornerCurve = .continuous
+        view.clipsToBounds = true
+        view.backgroundColor = UIColor.bgViewColor()
         return view
     }()
     
-    lazy var stackView = {
-        let stack = UIStackView(arrangedSubviews: [cancelButton, saveButton])
-        stack.axis = .horizontal
-        stack.spacing = 10
-        stack.alignment = .fill
-        stack.distribution = .fillEqually
-        return stack
-    }()
-    
+//    lazy var stackView = {
+//        let stack = UIStackView(arrangedSubviews: [cancelButton, saveButton])
+//        stack.axis = .horizontal
+//        stack.spacing = 10
+//        stack.alignment = .fill
+//        stack.distribution = .fillEqually
+//        return stack
+//    }()
+//
     var cancelCompletion: (() -> Void)?
     
     var saveCompletion: (() -> Void)?
     
     override func configureView() {
         self.addSubview(bgView)
-        [stampImage, marketTitle, marketName, memo, memoTextView, stackView].forEach {
+        [stampImage, saveButton, marketName, memo, memoTextView, marketType].forEach {
             bgView.addSubview($0)
         }
         //stampImageBgView.addSubview(stampImage)
-        cancelButton.addTarget(self, action: #selector(cancelBtnClicked), for: .touchUpInside)
+       // cancelButton.addTarget(self, action: #selector(cancelBtnClicked), for: .touchUpInside)
         saveButton.addTarget(self, action: #selector(saveBtnClicked(_:)), for: .touchUpInside)
     }
     
-    @objc func cancelBtnClicked() {
-        print("StampView - 취소 버튼 눌림 ")
-        cancelCompletion?()
-    }
+//    @objc func cancelBtnClicked() {
+//        print("StampView - 취소 버튼 눌림 ")
+//        cancelCompletion?()
+//    }
     
     @objc func saveBtnClicked(_ sender: UIButton) {
         print("StampView - 저장 버튼 눌림 ")
@@ -105,15 +116,20 @@ class StampView : BaseView {
             make.height.equalToSuperview().multipliedBy(0.35)
         }
         
-        marketTitle.snp.makeConstraints { make in
-            make.top.equalTo(stampImage.snp.bottom).offset(6)
-            make.horizontalEdges.equalToSuperview().inset(10)
-           // make.height.equalTo(20)
+//        marketTitle.snp.makeConstraints { make in
+//            make.top.equalTo(stampImage.snp.bottom).offset(6)
+//            make.horizontalEdges.equalToSuperview().inset(10)
+//           // make.height.equalTo(20)
+//        }
+//
+        marketName.snp.makeConstraints { make in
+            make.top.equalTo(stampImage.snp.bottom).offset(9)
+            make.leading.equalToSuperview().inset(10)
         }
         
-        marketName.snp.makeConstraints { make in
-            make.top.equalTo(marketTitle.snp.bottom).offset(6)
-            make.leading.equalTo(marketTitle)
+        marketType.snp.makeConstraints { make in
+            make.centerY.equalTo(marketName)
+            make.leading.equalTo(marketName.snp.trailing).offset(6)
         }
         
         memo.snp.makeConstraints { make in
@@ -124,13 +140,18 @@ class StampView : BaseView {
         memoTextView.snp.makeConstraints { make in
             make.top.equalTo(memo.snp.bottom).offset(8)
             make.horizontalEdges.equalTo(self.safeAreaLayoutGuide).inset(11)
-           // make.height.equalTo(self).multipliedBy(0.3)
+            make.height.equalTo(self).multipliedBy(0.35)
         }
         
-        stackView.snp.makeConstraints { make in
-            make.top.equalTo(memoTextView.snp.bottom).offset(10)
+//        stackView.snp.makeConstraints { make in
+//            make.top.equalTo(memoTextView.snp.bottom).offset(10)
+//            make.horizontalEdges.equalTo(memoTextView)
+//            make.bottom.equalToSuperview().inset(20)
+//        }
+        saveButton.snp.makeConstraints { make in
+            make.top.equalTo(memoTextView.snp.bottom).offset(15)
             make.horizontalEdges.equalTo(memoTextView)
-            make.bottom.equalToSuperview().inset(20)
+            make.height.equalTo(44)
         }
     }
 }

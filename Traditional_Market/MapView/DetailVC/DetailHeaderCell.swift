@@ -18,11 +18,6 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
     
     private let bgView = {
         let view = UIView()
-      //  view.backgroundColor = UIColor.bgViewColor()
-//        view.layer.cornerRadius = 12
-//        view.layer.borderColor = UIColor.lightGray.cgColor
-//        view.layer.borderWidth = 1
-//        view.clipsToBounds = true
         return view
     }()
 
@@ -151,7 +146,7 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
         
         betweenLineView.snp.makeConstraints { make in
             make.leading.equalTo(marketType.snp.trailing).offset(6)
-            make.verticalEdges.equalTo(marketType).inset(9)
+            make.verticalEdges.equalTo(marketType).inset(4)
             make.width.equalTo(1)
         }
     

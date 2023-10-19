@@ -58,7 +58,7 @@ extension StampViewController {
     
     fileprivate func setNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(leftBtnClicked))
-        navigationItem.title = "스탬프 추가하기"
+        navigationItem.title = "기록하기"
         
         
     }
@@ -67,6 +67,7 @@ extension StampViewController {
         
         guard let selectedMarket else { return }
         stampView.marketName.text = selectedMarket.marketName
+        stampView.marketType.text = selectedMarket.marketType
         stampView.memoTextView.delegate = self
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(stampImageTapped))
         stampView.stampImage.addGestureRecognizer(tapGesture)

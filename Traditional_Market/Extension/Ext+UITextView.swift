@@ -9,8 +9,9 @@ import UIKit
 
 extension UITextView {
     func stampTextViewLayout() {
-        self.layer.borderColor = UIColor.red.cgColor
-        self.layer.borderWidth = 1
+        
+        self.layer.borderColor = UIColor.bgViewColor()?.cgColor
+        self.layer.borderWidth = 1.5
         self.layer.cornerRadius = 12
         self.layer.cornerCurve = .continuous
         self.clipsToBounds = true
