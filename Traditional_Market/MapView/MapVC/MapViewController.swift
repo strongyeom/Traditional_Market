@@ -323,6 +323,7 @@ extension MapViewController {
         }
     }
     
+    // 어떤 권한 설정을 했느냐에 따라서 버튼 이벤트 달라짐
     fileprivate func myLocationBtnClicked() {
         mapView.completion = { [weak self] isCurrent in
             print("현재 위치로 버튼 : \(isCurrent)")

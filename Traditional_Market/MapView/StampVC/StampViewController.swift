@@ -208,7 +208,7 @@ extension StampViewController : PHPickerViewControllerDelegate {
 // MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
 extension StampViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[.originalImage] as? UIImage {
+        if let image = info[.editedImage] as? UIImage {
             stampView.stampImage.image = image
         }
         picker.dismiss(animated: true)
@@ -217,4 +217,6 @@ extension StampViewController: UIImagePickerControllerDelegate, UINavigationCont
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
     }
+    
+    
 }

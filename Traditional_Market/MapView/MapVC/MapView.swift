@@ -142,11 +142,15 @@ class MapView : BaseView {
             locationManger.requestWhenInUseAuthorization()
         case .restricted:
             print("권한 설정 거부함")
-            //showLocationSettingAlert()
+            // 서울시청
+            let seoulCity = CLLocationCoordinate2D(latitude: 37.566713, longitude: 126.978428)
+            setRegionScale(center: seoulCity)
             delegate?.showSettingAlert()
         case .denied:
             print("권한 설정 거부함")
-            //showLocationSettingAlert()
+            // 서울시청
+            let seoulCity = CLLocationCoordinate2D(latitude: 37.566713, longitude: 126.978428)
+            setRegionScale(center: seoulCity)
             delegate?.showSettingAlert()
         case .authorizedAlways:
             print("항상 권한 허용")
