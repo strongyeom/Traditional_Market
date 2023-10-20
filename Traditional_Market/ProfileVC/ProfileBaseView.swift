@@ -17,7 +17,7 @@ class ProfileBaseView : BaseView {
     let infoList = [
     "앱 소개",
     "개인정보방침",
-    "버전 정보"
+    "버전 1.0.0"
     ]
     
     let profileBaseView = {

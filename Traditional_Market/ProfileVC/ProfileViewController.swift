@@ -52,12 +52,31 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: InfomationCell.self)) as! InfomationCell
         let infoList = profileBaseView.infoList[indexPath.row]
-        cell.configureCell(infoList: infoList)
+        
+        
+        if indexPath.row == 2 {
+            cell.infoText.text = "버전 1.0.0"
+            cell.accessoryType = .none
+            cell.selectionStyle = .none
+            cell.infoText.textColor = .lightGray
+        } else {
+            cell.configureCell(infoList: infoList)
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 해당 Cell을 눌렀을때 분기 처리해주기 -> Enum 만들기
+        
+        let webView = WebViewController()
+        switch indexPath.row {
+        case 0:
+            present(webView, animated: true)
+        case 1:
+            present(webView, animated: true)
+        default:
+            break
+        }
     }
 }
 

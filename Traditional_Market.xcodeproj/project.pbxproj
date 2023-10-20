@@ -35,6 +35,7 @@
 		26AAD8B62AC46203002E5DD4 /* TraditionalMarketViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8B52AC46203002E5DD4 /* TraditionalMarketViewModel.swift */; };
 		26AAD8B82AC46218002E5DD4 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8B72AC46218002E5DD4 /* Observable.swift */; };
 		26AAD8C12AC48574002E5DD4 /* MarketAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8C02AC48574002E5DD4 /* MarketAPIManager.swift */; };
+		26ABF67E2AE2858200F60A35 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ABF67D2AE2858200F60A35 /* WebViewController.swift */; };
 		26C92EC42AD2F622002A53D2 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C92EC32AD2F622002A53D2 /* SearchCell.swift */; };
 		26CC8E702AC843E9009ABB14 /* Ext+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC8E6F2AC843E9009ABB14 /* Ext+UIColor.swift */; };
 		26CC8E752AC87180009ABB14 /* NaverMarketImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC8E742AC87180009ABB14 /* NaverMarketImage.swift */; };
@@ -95,6 +96,7 @@
 		26AAD8B52AC46203002E5DD4 /* TraditionalMarketViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraditionalMarketViewModel.swift; sourceTree = "<group>"; };
 		26AAD8B72AC46218002E5DD4 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		26AAD8C02AC48574002E5DD4 /* MarketAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketAPIManager.swift; sourceTree = "<group>"; };
+		26ABF67D2AE2858200F60A35 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		26C92EC32AD2F622002A53D2 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		26CC8E6F2AC843E9009ABB14 /* Ext+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIColor.swift"; sourceTree = "<group>"; };
 		26CC8E742AC87180009ABB14 /* NaverMarketImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverMarketImage.swift; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 			children = (
 				26015E372ACC0CC300D25C94 /* ProfileViewController.swift */,
 				26A5BB612AD7E6C300D03FC7 /* ProfileBaseView.swift */,
+				26ABF67D2AE2858200F60A35 /* WebViewController.swift */,
 				26A5BB692AD8454000D03FC7 /* SavedMarket */,
 				26E31C542ACD3F5400392068 /* Cell */,
 			);
@@ -492,6 +495,7 @@
 				26229BA82AC5AD84002FBE59 /* BaseViewController.swift in Sources */,
 				2631736C2ADEA248003A5F12 /* NaverImageViewModel.swift in Sources */,
 				26DB1A902ADB03CD008AAC99 /* Ext+UIStackView.swift in Sources */,
+				26ABF67E2AE2858200F60A35 /* WebViewController.swift in Sources */,
 				26A5BB6B2AD8456900D03FC7 /* SavedDetailViewController.swift in Sources */,
 				2633E7042AC6AC90002581EB /* City.swift in Sources */,
 				2633E70B2AC70955002581EB /* DetailMarketInfoCell.swift in Sources */,
@@ -671,7 +675,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Traditional_Market/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "저잣거리";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "워치 권한을 허용해주세요";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "지도상에 사용자의 현재 위치를 표시합니다. 서비를 제공하기 위한 필수 권한입니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -703,7 +707,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Traditional_Market/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "저잣거리";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "워치 권한을 허용해주세요";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "지도상에 사용자의 현재 위치를 표시합니다. 서비를 제공하기 위한 필수 권한입니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
