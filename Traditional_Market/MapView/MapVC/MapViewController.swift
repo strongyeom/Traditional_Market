@@ -34,6 +34,9 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     
     // didSelect or DeSelect를 위한 변수
     var mkAnnotationSearchResult: MKAnnotation!
+    
+    //
+    var previousCell: CityCell!
    
     override func loadView() {
         self.view = mapView
@@ -204,31 +207,32 @@ extension MapViewController: MKMapViewDelegate {
 // MARK: - UICollectionViewDelegate
 extension MapViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
-        let data = mapView.cityList[indexPath.item]
-        // CollectionView에서 해당 indexPath를 사용해서 Cell 뽑아내기
-        let currentCell = mapView.collectionView.cellForItem(at: indexPath) as! CityCell
-        // Cell을 선택했다면 그 전의 Cell 배경색 white로 변경하기
-        
-        if selectedSaveIndex == "\(indexPath.item)" {
-            self.mapView.selectedCell = nil
-            selectedSaveIndex = ""
-            self.mapView.mapViewRangeInAnnotations(containRange: viewModel.rangeFilterAnnoation.value)
-            currentCell.baseView.backgroundColor = .white
-        } else {
-            if !selectedSaveIndex.isEmpty {
-                let previousCell = mapView.collectionView.cellForItem(at: IndexPath(row: Int(selectedSaveIndex)!, section: 0)) as! CityCell
-                previousCell.baseView.backgroundColor = .white
-            }
-            selectedSaveIndex = "\(indexPath.item)"
-            self.mapView.selectedCell = data.localname
-            currentCell.baseView.backgroundColor = UIColor(named: "selectedColor")
+
+            
+                mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
+                let data = mapView.cityList[indexPath.item]
+                // CollectionView에서 해당 indexPath를 사용해서 Cell 뽑아내기
+                let currentCell = mapView.collectionView.cellForItem(at: indexPath) as! CityCell
+                // Cell을 선택했다면 그 전의 Cell 배경색 white로 변경하기
+                
+                if selectedSaveIndex == "\(indexPath.item)" {
+                    self.mapView.selectedCell = nil
+                    selectedSaveIndex = ""
+                    self.mapView.mapViewRangeInAnnotations(containRange: viewModel.rangeFilterAnnoation.value)
+                    currentCell.baseView.backgroundColor = .white
+                } else {
+                    if !selectedSaveIndex.isEmpty {
+                        previousCell = mapView.collectionView.cellForItem(at: IndexPath(row: Int(selectedSaveIndex)!, section: 0)) as? CityCell
+                        previousCell.baseView.backgroundColor = .white
+                    }
+                    selectedSaveIndex = "\(indexPath.item)"
+                    self.mapView.selectedCell = data.localname
+                    currentCell.baseView.backgroundColor = UIColor(named: "selectedColor")
+                }
+                print("\(indexPath.item) 인덱스 상세 조건: \( self.mapView.selectedCell ?? "nil입니다.")")
+                // filterCityAnnotation()
+                self.mapView.filterCityAnnotation(filterMarket: viewModel.rangeFilterAnnoation.value)
         }
-        print("\(indexPath.item) 인덱스 상세 조건: \( self.mapView.selectedCell ?? "nil입니다.")")
-        // filterCityAnnotation()
-        self.mapView.filterCityAnnotation(filterMarket: viewModel.rangeFilterAnnoation.value)
-    }
 }
 
 
@@ -357,20 +361,19 @@ extension MapViewController {
 // MARK: - UISearchBarDelegate
 extension MapViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print("searchBarSearchButtonClicked")
         searchBar.resignFirstResponder()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        print("searchBarCancelButtonClicked")
         if let mkAnnotationSearchResult {
             print("어떤게 적용됐나?",mkAnnotationSearchResult.title!!)
             dismiss(animated: true)
         }
     }
-    
-    
-    
+
     func presentSearchController(_ searchController: UISearchController) {
-        print("presentSearchController")
         mapView.locationManger.stopUpdatingLocation()
         mapView.currentLocationButton.tintColor = .black
         // 검색창 실행시 DetailVC 내리기
@@ -382,19 +385,37 @@ extension MapViewController: UISearchBarDelegate {
 // MARK: - UISearchResultsUpdating
 extension MapViewController : UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
+        print("updateSearchResults")
+    
+        // 필터링 기능 해제
+        if !selectedSaveIndex.isEmpty {
+            previousCell = mapView.collectionView.cellForItem(at: IndexPath(row: Int(selectedSaveIndex)!, section: 0)) as? CityCell
+            previousCell.baseView.backgroundColor = .white
+            self.mapView.selectedCell = nil
+            selectedSaveIndex = ""
+            self.mapView.collectionView.reloadData()
+        }
+
         
         guard let text = searchController.searchBar.text else { return }
         let filterResults = realmManager.searchFilterData(text: text)
          // 검색 결과 SearchResultsVC로 전달 및 tableView Reload하기
          if let resultsController = searchController.searchResultsController as? SearchResultsViewController {
-             // 필터링 기능을 해제해주세요
-             if mapView.selectedCell != nil {
-                 showAlert(title: "필터링 해제", btnTitle: "확인", message: "필터링을 해제해주세요", style: .default, completionHander: nil)
-             } else {
-                 resultsController.filterData = filterResults
-                 resultsController.tableView.reloadData()
-             }
+
+             resultsController.filterData = filterResults
+             resultsController.tableView.reloadData()
          }
+    }
+    
+    
+    // 검색이 시작되면 Cell 클릭 막기
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.mapView.collectionView.allowsSelection = false
+    }
+    // 검색에서 focus가 해제될때 Cell 클릭 사용
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        self.mapView.collectionView.allowsSelection = true
+        return true
     }
 }
 

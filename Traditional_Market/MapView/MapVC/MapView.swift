@@ -276,7 +276,6 @@ class MapView : BaseView {
             let pin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: realItem.latitude, longitude: realItem.longitude))
             pin.title = realItem.marketName
             pin.imageName = "checkStamp"
-            print("pin : \(pin.title!)")
             return pin
         }
         
