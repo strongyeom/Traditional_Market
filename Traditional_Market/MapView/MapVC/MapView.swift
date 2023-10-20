@@ -59,10 +59,19 @@ class MapView : BaseView {
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     
+    
+    let locationButtonBgView = {
+       let view = UIView()
+        view.backgroundColor = .white
+
+        view.isUserInteractionEnabled = true
+        return view
+    }()
+    
  
     let currentLocationButton = {
        let view = UIButton()
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 50, weight: .light)
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .light)
         let image = UIImage(systemName: "scope", withConfiguration: imageConfig)
         view.setTitle("", for: .normal)
         view.setImage(image, for: .normal)
@@ -85,7 +94,9 @@ class MapView : BaseView {
     // MARK: - configureView
     override func configureView() {
         self.addSubview(mapBaseView)
-        mapBaseView.addSubview(currentLocationButton)
+        mapBaseView.addSubview(locationButtonBgView)
+        locationButtonBgView.addSubview(currentLocationButton)
+       // mapBaseView.addSubview(currentLocationButton)
         self.currentLocationButton.addTarget(self, action: #selector(currentBtnClicked), for: .touchUpInside)
         configureCity()
         setLocation()
@@ -360,13 +371,25 @@ class MapView : BaseView {
             make.height.equalTo(110)
         }
         
-        currentLocationButton.snp.makeConstraints { make in
+        locationButtonBgView.snp.makeConstraints { make in
             make.size.equalTo(50)
             make.trailing.equalToSuperview().inset(15)
             make.bottom.equalToSuperview().inset(15)
+        }
+        
+        currentLocationButton.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(5)
             
         }
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        locationButtonBgView.layer.cornerRadius = self.locationButtonBgView.frame.width / 2
+        locationButtonBgView.layer.cornerCurve = .circular
+        locationButtonBgView.clipsToBounds = true
+    }
+    
 }
 
 extension MapView {
