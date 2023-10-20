@@ -10,16 +10,24 @@ import UIKit
 
 class ClusterAnnotationView: MKAnnotationView {
     
-    let cluserImageView = {
+    let clusterImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "checkStamp")
+        return view
+    }()
+    
+    
+    let countLabelvBg = {
+       let view = UIView()
+        view.backgroundColor = UIColor(named: "brandColor")
         return view
     }()
     
     // MARK: Initialization
     private let countLabel = {
        let view = UILabel()
-        view.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        view.textColor = UIColor(named: "clusterCountColor")
+        view.font = UIFont.systemFont(ofSize: 12, weight: .bold)
         return view
     }()
     
@@ -40,19 +48,43 @@ class ClusterAnnotationView: MKAnnotationView {
     
     
     func configureView() {
-        self.addSubview(cluserImageView)
-        cluserImageView.addSubview(countLabel)
+        self.addSubview(clusterImageView)
+        self.addSubview(countLabelvBg)
+        countLabelvBg.addSubview(countLabel)
+        
+       // clusterImageView.addSubview(countLabelvBg)
     }
     
     func setConstraints() {
         
-        cluserImageView.snp.makeConstraints { make in
+        clusterImageView.snp.makeConstraints { make in
             make.size.equalTo(50)
         }
+//
+//        countLabel.snp.makeConstraints { make in
+//            make.leading.equalTo(clusterImageView.snp.trailing)
+//            make.top.equalTo(clusterImageView)
+//        }
+        
+        
         
         countLabel.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
+        
+        countLabelvBg.snp.makeConstraints { make in
+            make.leading.equalTo(clusterImageView.snp.trailing).inset(3)
+            make.top.equalTo(clusterImageView).offset(-15)
+            make.size.equalTo(30)
+        }
+        
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.countLabelvBg.layer.cornerRadius = self.countLabelvBg.frame.width / 2
+        self.countLabelvBg.layer.cornerCurve = .circular
+        self.countLabelvBg.clipsToBounds = true
     }
     
     override func prepareForDisplay() {
