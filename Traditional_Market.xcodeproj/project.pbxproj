@@ -675,7 +675,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Traditional_Market/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "저잣거리";
-				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 기능을 사용하려면 '카메라' 접근 권한을 허용해야합니다.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "카메라를 사용하여 해당 시장의 정보를 저장하려고 합니다. 카메라를 사용하려면 '카메라' 접근 권한을 허용해야 합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "지도상에 사용자의 현재 위치를 표시합니다. 서비를 제공하기 위한 필수 권한입니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -708,7 +708,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Traditional_Market/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "저잣거리";
-				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 기능을 사용하려면 '카메라' 접근 권한을 허용해야합니다.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "카메라를 사용하여 해당 시장의 정보를 저장하려고 합니다. 카메라를 사용하려면 '카메라' 접근 권한을 허용해야 합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "지도상에 사용자의 현재 위치를 표시합니다. 서비를 제공하기 위한 필수 권한입니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
