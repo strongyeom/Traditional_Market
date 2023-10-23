@@ -8,6 +8,13 @@
 		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
+			<key>New Exception Domain</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
 			<key>http://api.data.go.kr/openapi/tn_pubr_public_trdit_mrkt_api</key>
 			<string></string>
 		</dict>

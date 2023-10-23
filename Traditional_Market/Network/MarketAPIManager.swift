@@ -38,7 +38,9 @@ class MarketAPIManager {
         
         group.notify(queue: DispatchQueue.main) { [weak self] in
             guard let self else { return }
+            
             self.realmManager.addDatas(markets: self.marketList.response.body.items)
+            print("마켓 이름들 : \(self.marketList.response.body.items.map { $0.marketName})")
         }
         
     }

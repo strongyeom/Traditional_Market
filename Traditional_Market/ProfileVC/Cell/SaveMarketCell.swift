@@ -89,7 +89,6 @@ class SaveMarketCell : UITableViewCell {
         self.selectionStyle = .none
         self.marketTitle.text = data.marketName
         self.marketDescription.text = data.memo
-        
         self.createdDate.text = dateFormmeted(data: data)
     }
     

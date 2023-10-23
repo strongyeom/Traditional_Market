@@ -42,6 +42,16 @@ class ProfileViewController : BaseViewController {
         profileBaseView.levelCountLabel.text = realmManager.calculateStampCountToLevelLabel()
     }
     
+    // 버전 정보 끌어오는 코드
+    func currentAppVersion() -> String {
+      if let info: [String: Any] = Bundle.main.infoDictionary,
+          let currentVersion: String
+            = info["CFBundleShortVersionString"] as? String {
+            return currentVersion
+      }
+      return "nil"
+    }
+    
 }
 
 extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
@@ -55,7 +65,7 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
         
         
         if indexPath.row == 2 {
-            cell.infoText.text = "버전 1.0.0"
+            cell.infoText.text = "버전 " + currentAppVersion()
             cell.accessoryType = .none
             cell.selectionStyle = .none
             cell.infoText.textColor = .lightGray
