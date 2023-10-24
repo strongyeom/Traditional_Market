@@ -30,6 +30,7 @@ class CityCell : BaseColletionViewCell {
         let view = UILabel()
         view.font = UIFont.systemFont(ofSize: 10)
         view.textAlignment = .center
+        view.textColor = .black
         return view
     }()
     

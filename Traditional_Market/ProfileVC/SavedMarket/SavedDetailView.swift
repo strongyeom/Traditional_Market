@@ -67,6 +67,7 @@ class SavedDetailView : BaseView {
         view.layer.borderColor = UIColor.lightGray.cgColor
         view.layer.borderWidth = 1
         view.isEditable = false
+        view.backgroundColor = .systemGray
         return view
     }()
     
@@ -91,6 +92,7 @@ class SavedDetailView : BaseView {
         [savedImageView, marketTitle, marketCycle, betweenLineView, marketType, stackView, memoLabel, memoTextView].forEach {
             self.addSubview($0)
         }
+        self.backgroundColor = UIColor(named: "blackAndWhiteColor")
     }
     
     override func setConstraints() {
