@@ -32,14 +32,12 @@ class StampView : BaseView {
         view.text = "둔촌시장"
         view.font = .systemFont(ofSize: 17, weight: .heavy)
         view.textAlignment = .center
-        view.textColor = .black
         return view
     }()
     
     let memo = {
        let view = UILabel()
         view.text = "메모 작성"
-        view.textColor = .black
         view.font = UIFont.systemFont(ofSize: 14, weight: .heavy)
         return view
     }()
@@ -47,7 +45,6 @@ class StampView : BaseView {
     let memoTextView = {
        let view = UITextView()
         view.stampTextViewLayout()
-        view.backgroundColor = .systemGray
         return view
     }()
  

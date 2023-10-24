@@ -288,7 +288,7 @@ extension MapViewController {
         searchController.searchBar.placeholder = "검색어를 입력해주세요."
         self.navigationItem.searchController = searchController
         self.navigationItem.title = "시장 지도"
-        self.navigationController?.navigationBar.backgroundColor = UIColor(named: "brandColor")
+        self.navigationController?.navigationBar.backgroundColor = .white
         searchController.delegate = self
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self

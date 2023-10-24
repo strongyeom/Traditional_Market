@@ -15,7 +15,7 @@ class CustomAnnotationView : MKAnnotationView {
     var titleLabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 9, weight: .regular)
-        label.textColor = UIColor(named: "blackAndWhiteColor")
+        label.textColor = .black
         label.textAlignment = .center
         return label
     }()

@@ -29,13 +29,12 @@ extension UIButton {
     func mypageSetupButton() {
         var config = UIButton.Configuration.plain()
         config.title = "시장 컬렉션"
-        config.baseForegroundColor = UIColor(named: "blackAndWhiteColor")
         config.titleAlignment = .center
         config.buttonSize = .medium
         config.image = UIImage(systemName: "chevron.forward")
         config.imagePadding = 7
         config.imagePlacement = .trailing
-        config.baseForegroundColor = UIColor(named: "blackAndWhiteColor")
+        config.baseForegroundColor = .black
         self.configuration = config
     }
     
