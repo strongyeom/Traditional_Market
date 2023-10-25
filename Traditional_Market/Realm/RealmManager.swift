@@ -94,12 +94,21 @@ class RealmManager {
     /// Realm에서 해당 지역 필터하기
     /// - Parameter region: 해당 지역
     /// - Returns: 필터된 지역
-    func filterData(region: String, rangeMarket: Results<TraditionalMarketRealm>) -> Results<TraditionalMarketRealm> {
+    func filterData(region: String, rangeMarket: Results<TraditionalMarketRealm>, day: String?) -> Results<TraditionalMarketRealm> {
         if region == "상설장" || region == "5일장" {
             print("RealmManager rangeFiltetedMarket \(rangeMarket.count)")
             let result = rangeMarket.where {
                 $0.marketType.contains(region)
             }
+            if let day = day {
+                let bb = result.where {
+                    $0.marketOpenCycle.contains(day)
+                }
+               
+                print("aaaaa-----aaaa : 갯수 \(bb.count)")
+                return bb
+            }
+           
             return result
         } else {
             let result = rangeMarket.where {
@@ -109,21 +118,16 @@ class RealmManager {
         }
     }
     
-    func filterDetailData(region: String, rangeMarket: Results<TraditionalMarketRealm>, day: String) -> Results<TraditionalMarketRealm> {
-        
-        var result:  Results<TraditionalMarketRealm>?
-        if region == "5일장" {
-            print("RealmManager rangeFiltetedMarket \(rangeMarket.count)")
-            result = rangeMarket.where {
-                $0.marketType.contains(region)
-            }.where {
-                $0.marketOpenCycle.contains(day)
-            }
-        }
-        
-        return result!
-    }
-    
+//    func fiveMarketDetailDay(day: String) -> Results<TraditionalMarketRealm> {
+//
+////        let filterResult = fetch().where { $0.marketType == "5일장" && $0.marketOpenCycle.contains(day)}
+//
+//        let filterResult = filterData(region: "오일장", rangeMarket: fetch()).where {
+//            $0.marketOpenCycle.contains(day)
+//        }
+//        return filterResult
+//    }
+//
     
     /// Search결과 필터링
     func searchFilterData(text: String) -> Results<TraditionalMarketRealm> {

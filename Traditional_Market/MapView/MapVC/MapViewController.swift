@@ -34,10 +34,11 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     
     // didSelect or DeSelect를 위한 변수
     var mkAnnotationSearchResult: MKAnnotation!
-    
+  
+    var examplea: String?
     //
     var previousCell: CityCell!
-   
+    
     override func loadView() {
         self.view = mapView
     }
@@ -58,8 +59,23 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         playViewmodel()
         print("파일 경로 : \(self.realm.configuration.fileURL!)")
         NotificationCenter.default.addObserver(self, selector: #selector(isSaveBtnClicked(_:)), name: Notification.Name("SavedStamp"), object: nil)
-       
+        
+        self.mapView.detailFiveMarketCompletion = {
 
+                print("MapVC - Cell 눌림")
+                // 해당 일수를 가져오고 가져온 일수를 현재 5일장으로 필터링된 Realm데이터에 한번더 필터링 후 filterCityAnnotation 함수를 실행
+                let detailCondition = DetailConditionViewController()
+                detailCondition.modalPresentationStyle = .overFullScreen
+                detailCondition.completion = { value in
+                    self.examplea = value
+                    
+                    self.mapView.filterCityAnnotation(filterMarket: self.viewModel.rangeFilterAnnoation.value, day: self.examplea)
+                   
+                }
+                self.present(detailCondition, animated: true)
+
+        }
+        
     }
     
     func detailBtnPresent() {
@@ -68,7 +84,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
             detail.modalPresentationStyle = .overFullScreen
             detail.completion = { result in
                 print("MapViewController - :\(result)")
-               
+                
             }
             self.present(detail, animated: true)
         }
@@ -90,7 +106,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
 
 // MARK: - CLLocationManagerDelegate
 extension MapViewController: CLLocationManagerDelegate {
-   
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first?.coordinate {
             viewModel.startLocationFetch(location: location)
@@ -221,7 +237,7 @@ extension MapViewController: MKMapViewDelegate {
 extension MapViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-       
+        
         mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
         let data = mapView.cityList[indexPath.item]
         // CollectionView에서 해당 indexPath를 사용해서 Cell 뽑아내기
@@ -248,14 +264,17 @@ extension MapViewController: UICollectionViewDelegate {
         if selectedSaveIndex == "1" {
             self.mapView.detailOpenFiveMarketBtn.isHidden = false
             self.mapView.detailOpenFiveMarketButtonBgView.isHidden = false
+            
         } else {
             self.mapView.detailOpenFiveMarketBtn.isHidden = true
             self.mapView.detailOpenFiveMarketButtonBgView.isHidden = true
+            examplea = nil
         }
         
         print("\(indexPath.item) 인덱스 상세 조건: \( self.mapView.selectedCell ?? "nil입니다.")")
-        // filterCityAnnotation()
-        self.mapView.filterCityAnnotation(filterMarket: viewModel.rangeFilterAnnoation.value)
+
+        self.mapView.filterCityAnnotation(filterMarket: viewModel.rangeFilterAnnoation.value, day: examplea)
+
     }
 }
 
@@ -320,11 +339,12 @@ extension MapViewController {
     
     
     fileprivate func playViewmodel() {
-        
+       
         viewModel.rangeFilterAnnoation.bind { result in
+            print("bind 타면서 value의 갯수 : \(result.count)")
             if self.mapView.authorization != .restricted {
                 if self.mapView.selectedCell != nil {
-                    self.mapView.filterCityAnnotation(filterMarket: result)
+                    self.mapView.filterCityAnnotation(filterMarket: result,day: self.examplea)
                 } else { // selectedCell == nil 이라면
                     self.mapView.mapViewRangeInAnnotations(containRange: result)
                 }
@@ -445,8 +465,8 @@ extension MapViewController : UISearchResultsUpdating {
 }
 
 extension MapViewController: SettingAlert {
-
-   
+    
+    
     func showSettingAlert() {
         let alert = UIAlertController(title: "위치 정보 설정", message: "설정>개인 정보 보호> 위치 여기로 이동해서 위치 권한 설정해주세요", preferredStyle: .alert)
         let goSetting = UIAlertAction(title: "위치 설정하기", style: .default) { _ in

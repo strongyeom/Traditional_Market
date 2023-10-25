@@ -32,6 +32,12 @@ class TraditionalMarketViewModel {
 
     // MARK: - Method
     
+    // 5일장 + 일수 필터링 메서드
+//    func filterDetail(day: String) {
+//        rangeFilterAnnoation.value = realmManager.fiveMarketDetailDay(day: day)
+//        print("해당포함된 시장 갯수 : \(self.rangeFilterAnnoation.value.count)")
+//    }
+    
     // 축척에 보이것들만 어노테이션 가져오기
     func mapScaleFilterAnnotations(minLati: Double, maxLati: Double, minLong: Double, maxLong: Double) {
         self.rangeFilterAnnoation.value = realmManager.mapViewRangeFilterAnnotations(minLati: minLati, maxLati: maxLati, minLong: minLong, maxLong: maxLong)
