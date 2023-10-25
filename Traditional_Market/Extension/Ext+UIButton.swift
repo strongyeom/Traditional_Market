@@ -16,12 +16,12 @@ extension UIButton {
         self.configuration = config
     }
     
-    func stampBtnLayout(text: String) {
+    func stampBtnLayout(text: String, colorname: String) {
         self.setTitle(text, for: .normal)
         self.layer.cornerRadius = 8
         self.clipsToBounds = true
         self.setTitleColor(.white, for: .normal)
-        self.backgroundColor = UIColor(named: "btnColor")
+        self.backgroundColor = UIColor(named: colorname)
         self.titleLabel?.textAlignment = .center
         self.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .medium)
     }
@@ -42,6 +42,13 @@ extension UIButton {
         self.setTitle(title, for: .normal)
         self.tintColor = .systemBlue
         self.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+    }
+    
+    func detailConditionBtn(day: String) {
+        self.setTitle(day, for: .normal)
+        self.layer.borderColor = UIColor.lightGray.cgColor
+        self.layer.borderWidth = 1
+        self.setTitleColor(.black, for: .normal)
     }
 }
 

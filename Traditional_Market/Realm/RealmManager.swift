@@ -100,16 +100,28 @@ class RealmManager {
             let result = rangeMarket.where {
                 $0.marketType.contains(region)
             }
-            
             return result
         } else {
             let result = rangeMarket.where {
                 $0.address.contains(region)
             }
-            
             return result
         }
+    }
+    
+    func filterDetailData(region: String, rangeMarket: Results<TraditionalMarketRealm>, day: String) -> Results<TraditionalMarketRealm> {
         
+        var result:  Results<TraditionalMarketRealm>?
+        if region == "5일장" {
+            print("RealmManager rangeFiltetedMarket \(rangeMarket.count)")
+            result = rangeMarket.where {
+                $0.marketType.contains(region)
+            }.where {
+                $0.marketOpenCycle.contains(day)
+            }
+        }
+        
+        return result!
     }
     
     

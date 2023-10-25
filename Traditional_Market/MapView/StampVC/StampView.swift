@@ -50,7 +50,7 @@ class StampView : BaseView {
  
     let saveButton = {
         let view = UIButton()
-        view.stampBtnLayout(text: "저장")
+        view.stampBtnLayout(text: "저장", colorname: "btnColor")
         view.layer.cornerRadius = 16
         view.layer.cornerCurve = .continuous
         view.clipsToBounds = true

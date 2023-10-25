@@ -63,7 +63,6 @@ class MapView : BaseView {
     let locationButtonBgView = {
        let view = UIView()
         view.backgroundColor = .white
-
         view.isUserInteractionEnabled = true
         return view
     }()
@@ -78,8 +77,20 @@ class MapView : BaseView {
         return view
     }()
     
-    let detailOpenFiveMarket = {
+    let detailOpenFiveMarketButtonBgView = {
+       let view = UIView()
+        view.backgroundColor = .white
+        view.isHidden = true
+        view.isUserInteractionEnabled = true
+        return view
+    }()
+    
+    let detailOpenFiveMarketBtn = {
        let view = UIButton()
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .light)
+        let image = UIImage(systemName: "calendar", withConfiguration: imageConfig)
+        view.setImage(image, for: .normal)
+        view.isHidden = true
         return view
     }()
     
@@ -93,16 +104,21 @@ class MapView : BaseView {
         return view
     }()
 
-    var completion: ((Bool) -> Void)?
+    var myLocationCompletion: ((Bool) -> Void)?
  
+    var detailFiveMarketCompletion: (() -> Void)?
     
     // MARK: - configureView
     override func configureView() {
         self.addSubview(mapBaseView)
         mapBaseView.addSubview(locationButtonBgView)
+        mapBaseView.addSubview(detailOpenFiveMarketButtonBgView)
         locationButtonBgView.addSubview(currentLocationButton)
+        detailOpenFiveMarketButtonBgView.addSubview(detailOpenFiveMarketBtn)
        // mapBaseView.addSubview(currentLocationButton)
         self.currentLocationButton.addTarget(self, action: #selector(currentBtnClicked), for: .touchUpInside)
+        self.detailOpenFiveMarketBtn.addTarget(self, action: #selector(detailBtnClicked(_:)), for: .touchUpInside)
+        
         configureCity()
         setLocation()
         setMapView()
@@ -319,7 +335,7 @@ class MapView : BaseView {
     
     /// 버튼의 이벤트를 받아 start와 stop 할 수 있음
     func currentLocationBtnIsActive() {
-        self.completion = { [weak self] isCurrent in
+        self.myLocationCompletion = { [weak self] isCurrent in
             print("현재 위치로 버튼 : \(isCurrent)")
             guard let self else { return }
             viewModel.isCurrentLocation.value = isCurrent
@@ -359,13 +375,21 @@ class MapView : BaseView {
         
     }
     
+    
+    // MARK: - Action
+    @objc func detailBtnClicked(_ sender: UIButton) {
+        print("상세조건 버튼이 눌렸음 ")
+        detailFiveMarketCompletion?()
+    }
+    
     @objc func currentBtnClicked(_ sender: UIButton) {
         sender.isSelected.toggle()
         let isCurrent = sender.isSelected
-        completion?(isCurrent)
+        myLocationCompletion?(isCurrent)
         
     }
     
+    // MARK: - setConstraints
     override func setConstraints() {
         
         mapBaseView.snp.makeConstraints { make in
@@ -389,6 +413,18 @@ class MapView : BaseView {
             make.edges.equalToSuperview().inset(5)
             
         }
+        
+        detailOpenFiveMarketButtonBgView.snp.makeConstraints { make in
+            make.size.equalTo(50)
+            make.trailing.equalToSuperview().inset(15)
+            make.bottom.equalTo(self.locationButtonBgView.snp.top).offset(-20)
+        }
+        
+        detailOpenFiveMarketBtn.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(5)
+        }
+        
+        
     }
     
     override func layoutSubviews() {
@@ -396,6 +432,11 @@ class MapView : BaseView {
         locationButtonBgView.layer.cornerRadius = self.locationButtonBgView.frame.width / 2
         locationButtonBgView.layer.cornerCurve = .circular
         locationButtonBgView.clipsToBounds = true
+        
+        
+        detailOpenFiveMarketButtonBgView.layer.cornerRadius = self.detailOpenFiveMarketButtonBgView.frame.width / 2
+        detailOpenFiveMarketButtonBgView.layer.cornerCurve = .circular
+        detailOpenFiveMarketButtonBgView.clipsToBounds = true
     }
     
 }

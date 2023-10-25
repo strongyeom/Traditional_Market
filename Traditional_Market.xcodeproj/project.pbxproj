@@ -50,6 +50,9 @@
 		26E768282AD053AC0052EC4C /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E768272AD053AC0052EC4C /* SearchResultsViewController.swift */; };
 		26E7682A2AD07A820052EC4C /* Scale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E768292AD07A820052EC4C /* Scale.swift */; };
 		26E7863E2AE8FB8E00525E73 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E7863D2AE8FB8E00525E73 /* Router.swift */; };
+		26E786402AE9118F00525E73 /* DetailConditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E7863F2AE9118F00525E73 /* DetailConditionViewController.swift */; };
+		26E786422AE9149200525E73 /* DetailConditionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E786412AE9149200525E73 /* DetailConditionView.swift */; };
+		26E786442AE92B3700525E73 /* KindOfMarket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E786432AE92B3700525E73 /* KindOfMarket.swift */; };
 		26E9F3692AD443340007B7CD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26E9F3682AD443340007B7CD /* GoogleService-Info.plist */; };
 		26E9F36C2AD443CA0007B7CD /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 26E9F36B2AD443CA0007B7CD /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		26E9F36E2AD443CA0007B7CD /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 26E9F36D2AD443CA0007B7CD /* FirebaseCrashlytics */; };
@@ -111,6 +114,9 @@
 		26E768272AD053AC0052EC4C /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		26E768292AD07A820052EC4C /* Scale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scale.swift; sourceTree = "<group>"; };
 		26E7863D2AE8FB8E00525E73 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		26E7863F2AE9118F00525E73 /* DetailConditionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailConditionViewController.swift; sourceTree = "<group>"; };
+		26E786412AE9149200525E73 /* DetailConditionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailConditionView.swift; sourceTree = "<group>"; };
+		26E786432AE92B3700525E73 /* KindOfMarket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindOfMarket.swift; sourceTree = "<group>"; };
 		26E9F3682AD443340007B7CD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		26E9F3702AD518D20007B7CD /* FullImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageViewController.swift; sourceTree = "<group>"; };
 		26E9F3722AD5A9190007B7CD /* ClusterAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterAnnotationView.swift; sourceTree = "<group>"; };
@@ -202,6 +208,7 @@
 			children = (
 				2633E7062AC6C4D5002581EB /* CityIndex.swift */,
 				26E768292AD07A820052EC4C /* Scale.swift */,
+				26E786432AE92B3700525E73 /* KindOfMarket.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -367,6 +374,8 @@
 				26AAD8A32AC44B07002E5DD4 /* CustomAnnotationView.swift */,
 				26E9F3722AD5A9190007B7CD /* ClusterAnnotationView.swift */,
 				26EA66572AC2ADED00F6FE6A /* MapView.swift */,
+				26E7863F2AE9118F00525E73 /* DetailConditionViewController.swift */,
+				26E786412AE9149200525E73 /* DetailConditionView.swift */,
 			);
 			path = MapVC;
 			sourceTree = "<group>";
@@ -501,6 +510,7 @@
 				26DB1A902ADB03CD008AAC99 /* Ext+UIStackView.swift in Sources */,
 				26ABF67E2AE2858200F60A35 /* WebViewController.swift in Sources */,
 				26A5BB6B2AD8456900D03FC7 /* SavedDetailViewController.swift in Sources */,
+				26E786442AE92B3700525E73 /* KindOfMarket.swift in Sources */,
 				2633E7042AC6AC90002581EB /* City.swift in Sources */,
 				2633E70B2AC70955002581EB /* DetailMarketInfoCell.swift in Sources */,
 				26EA75D22ACAC28D00FFDFDB /* StampViewController.swift in Sources */,
@@ -512,6 +522,7 @@
 				26E31C5C2ACD418C00392068 /* SaveMarketCell.swift in Sources */,
 				26E9F3712AD518D30007B7CD /* FullImageViewController.swift in Sources */,
 				26EA66582AC2ADED00F6FE6A /* MapView.swift in Sources */,
+				26E786402AE9118F00525E73 /* DetailConditionViewController.swift in Sources */,
 				2633E7092AC6E7ED002581EB /* DetailViewController.swift in Sources */,
 				26E31C582ACD3FB400392068 /* BaseCollectionViewCell.swift in Sources */,
 				26AAD8AE2AC4559B002E5DD4 /* NetworkManager.swift in Sources */,
@@ -519,6 +530,7 @@
 				26EA75E02ACB1DCA00FFDFDB /* FavoriteTable.swift in Sources */,
 				26EA75DB2ACB07A800FFDFDB /* Ext+UITextView.swift in Sources */,
 				26015E382ACC0CC300D25C94 /* ProfileViewController.swift in Sources */,
+				26E786422AE9149200525E73 /* DetailConditionView.swift in Sources */,
 				26E7682A2AD07A820052EC4C /* Scale.swift in Sources */,
 				26015E352ACC0C7900D25C94 /* TabBarController.swift in Sources */,
 				26A5BB6D2AD8458200D03FC7 /* SavedDetailView.swift in Sources */,
