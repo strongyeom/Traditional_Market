@@ -34,7 +34,7 @@ class MapView : BaseView {
         City(imageName: "Gyeongsangnam-do", localname: "경상남도"),
         City(imageName: "Jeollabuk-do", localname: "전라북도"),
         City(imageName: "Jeollanam-do", localname: "전라남도"),
-        City(imageName: "Jeju-do", localname: "제주도")
+        City(imageName: "Jeju-do", localname: "제주")
     ]
     
     var locationManger = {
