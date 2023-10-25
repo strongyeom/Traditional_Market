@@ -16,7 +16,7 @@ class MarketAPIManager {
     let realm = try! Realm()
     
     var pageCount = Array(1...16)
-
+    
     let realmManager = RealmManager()
     
     var aa: [Item] = []
@@ -28,7 +28,7 @@ class MarketAPIManager {
     func request() {
         for page in pageCount {
             group.enter()
-            NetworkManager.shared.request(page: page) { [weak self] response in
+            NetworkManager.shared.request(api: .marketInfomation(page: "\(page)")) { [weak self] response in
                 
                 guard let self else { return }
                 marketList.response.body.items.append(contentsOf:response)
@@ -40,7 +40,7 @@ class MarketAPIManager {
             guard let self else { return }
             
             self.realmManager.addDatas(markets: self.marketList.response.body.items)
-            print("마켓 이름들 : \(self.marketList.response.body.items.map { $0.marketName})")
+            print("마켓 이름들 : \(self.marketList.response.body.items.count)")
         }
         
     }
