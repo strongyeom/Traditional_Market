@@ -49,6 +49,7 @@
 		26E31C602ACDC4C200392068 /* InfomationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E31C5F2ACDC4C200392068 /* InfomationCell.swift */; };
 		26E768282AD053AC0052EC4C /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E768272AD053AC0052EC4C /* SearchResultsViewController.swift */; };
 		26E7682A2AD07A820052EC4C /* Scale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E768292AD07A820052EC4C /* Scale.swift */; };
+		26E7863E2AE8FB8E00525E73 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E7863D2AE8FB8E00525E73 /* Router.swift */; };
 		26E9F3692AD443340007B7CD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26E9F3682AD443340007B7CD /* GoogleService-Info.plist */; };
 		26E9F36C2AD443CA0007B7CD /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 26E9F36B2AD443CA0007B7CD /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		26E9F36E2AD443CA0007B7CD /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 26E9F36D2AD443CA0007B7CD /* FirebaseCrashlytics */; };
@@ -109,6 +110,7 @@
 		26E31C5F2ACDC4C200392068 /* InfomationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfomationCell.swift; sourceTree = "<group>"; };
 		26E768272AD053AC0052EC4C /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		26E768292AD07A820052EC4C /* Scale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scale.swift; sourceTree = "<group>"; };
+		26E7863D2AE8FB8E00525E73 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		26E9F3682AD443340007B7CD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		26E9F3702AD518D20007B7CD /* FullImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageViewController.swift; sourceTree = "<group>"; };
 		26E9F3722AD5A9190007B7CD /* ClusterAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterAnnotationView.swift; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 			children = (
 				26AAD8AD2AC4559B002E5DD4 /* NetworkManager.swift */,
 				26AAD8C02AC48574002E5DD4 /* MarketAPIManager.swift */,
+				26E7863D2AE8FB8E00525E73 /* Router.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -492,6 +495,7 @@
 				26CC8E702AC843E9009ABB14 /* Ext+UIColor.swift in Sources */,
 				2633E7112AC71DC8002581EB /* DetailHeaderCell.swift in Sources */,
 				26AAD8B62AC46203002E5DD4 /* TraditionalMarketViewModel.swift in Sources */,
+				26E7863E2AE8FB8E00525E73 /* Router.swift in Sources */,
 				26229BA82AC5AD84002FBE59 /* BaseViewController.swift in Sources */,
 				2631736C2ADEA248003A5F12 /* NaverImageViewModel.swift in Sources */,
 				26DB1A902ADB03CD008AAC99 /* Ext+UIStackView.swift in Sources */,

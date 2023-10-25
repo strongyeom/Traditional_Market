@@ -47,7 +47,7 @@ class MarketAPIManager {
     
     func requestNaverImage(search: String, completionHandler: @escaping((NaverMarketImage) -> Void)) {
         
-        NetworkManager.shared.reqeustImage(search: search) { response in
+        NetworkManager.shared.reqeustImage(api: Router.naverImgae(search: search)) { response in
             guard let response else { return }
             completionHandler(response)
         }
