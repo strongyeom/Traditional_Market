@@ -81,8 +81,10 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
         let webView = WebViewController()
         switch indexPath.row {
         case 0:
+            webView.homePageurl = "https://cool-workshop-596.notion.site/4c75ddc9bc16488d853cf84cae44ad01?pvs=4"
             present(webView, animated: true)
         case 1:
+            webView.homePageurl = "https://cool-workshop-596.notion.site/1a2a3d033a0b4274a0500350982cc1d2?pvs=4"
             present(webView, animated: true)
         default:
             break

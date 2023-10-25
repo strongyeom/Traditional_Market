@@ -14,18 +14,21 @@ import WebKit
 class WebViewController: UIViewController, WKUIDelegate {
     
     var webView: WKWebView = WKWebView()
+    
+    var homePageurl : String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        guard let homePageurl else { return }
         
         view.addSubview(webView)
         
         webView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        // https://cool-workshop-596.notion.site/4c75ddc9bc16488d853cf84cae44ad01?pvs=4
         
-        let myURL = URL(string:"https://cool-workshop-596.notion.site/4c75ddc9bc16488d853cf84cae44ad01?pvs=4")
+        let myURL = URL(string:homePageurl)
         let myRequest = URLRequest(url: myURL!)
         webView.load(myRequest)
     }
