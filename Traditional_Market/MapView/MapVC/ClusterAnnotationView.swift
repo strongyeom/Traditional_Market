@@ -84,6 +84,8 @@ class ClusterAnnotationView: MKAnnotationView {
         super.layoutSubviews()
         self.countLabelvBg.layer.cornerRadius = self.countLabelvBg.frame.width / 2
         self.countLabelvBg.layer.cornerCurve = .circular
+        self.countLabelvBg.layer.borderColor = UIColor.init(red: 0.370, green: 0.425, blue: 0.855, alpha: 1.0).cgColor
+        self.countLabelvBg.layer.borderWidth = 1
         self.countLabelvBg.clipsToBounds = true
     }
     

@@ -78,6 +78,11 @@ class MapView : BaseView {
         return view
     }()
     
+    let detailOpenFiveMarket = {
+       let view = UIButton()
+        return view
+    }()
+    
     var mapBaseView = {
         let view = MKMapView()
         // 허용안함 눌렀을때 내 위치를 받아 올 수 없어서 보라색 에러 발생함
