@@ -98,7 +98,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     
     @objc func isSaveBtnClicked(_ noti: Notification) {
         var style = ToastStyle()
-        style.backgroundColor = UIColor(named: "brandColor")!
+        style.backgroundColor = UIColor(named: "clusterCountColor")!
         self.view.makeToast("시장 컬렉션에 저장되었습니다.", duration: 3.0, position: .top, style: style)
     }
     
@@ -250,19 +250,21 @@ extension MapViewController: UICollectionViewDelegate {
         
         mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
         
-        let data = mapView.cityList[indexPath.item]
         // CollectionView에서 해당 indexPath를 사용해서 Cell 뽑아내기
         let currentCell = mapView.collectionView.cellForItem(at: indexPath) as! CityCell
         // Cell을 선택했다면 그 전의 Cell 배경색 white로 변경하기
-        if selectedSaveIndex == "\(indexPath.item)" {
+        
+        
+        if self.mapView.selectedCell == locationRegion?.name {
             self.mapView.selectedCell = nil
             selectedSaveIndex = ""
             self.mapView.mapViewRangeInAnnotations(containRange: viewModel.rangeFilterAnnoation.value)
+            // 현재 Cell Bg 흰색으로 변경
             currentCell.baseView.backgroundColor = .white
+            
             self.mapView.detailOpenFiveMarketBtn.isHidden = true
             self.mapView.detailOpenFiveMarketButtonBgView.isHidden = true
         } else {
-            
             if let locationRegion {
                 if locationRegion.rawValue > 1 {
                     self.mapView.setRegionCityScale(center: locationRegion.location)
@@ -275,14 +277,12 @@ extension MapViewController: UICollectionViewDelegate {
             }
             
             selectedSaveIndex = "\(indexPath.item)"
-            self.mapView.selectedCell = data.localname
+            self.mapView.selectedCell = locationRegion?.name
             currentCell.baseView.backgroundColor = UIColor(named: "selectedColor")
-          
         }
         
-        
-        
-        if selectedSaveIndex == "1" {
+        // Cell 눌렀을때 5일장이면 버튼 보여지고 안보이지게 끔
+        if self.mapView.selectedCell == "5일장" {
             self.mapView.detailOpenFiveMarketBtn.isHidden = false
             self.mapView.detailOpenFiveMarketButtonBgView.isHidden = false
         } else {
@@ -290,7 +290,7 @@ extension MapViewController: UICollectionViewDelegate {
             self.mapView.detailOpenFiveMarketButtonBgView.isHidden = true
             detailConditionDay = nil
         }
-       
+    
         print("\(indexPath.item) 인덱스 상세 조건: \( self.mapView.selectedCell ?? "nil입니다.")")
         
         self.mapView.filterCityAnnotation(filterMarket: viewModel.rangeFilterAnnoation.value, day: detailConditionDay)
@@ -303,6 +303,7 @@ extension MapViewController: UICollectionViewDelegate {
 extension MapViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return mapView.cityList.count
+     
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -330,7 +331,7 @@ extension MapViewController {
             self.mkAnnotationSearchResult = annotation
             self.mapView.mapBaseView.addAnnotation(annotation)
             self.mapView.mapBaseView.selectAnnotation(annotation, animated: true)
-            
+
             
             
             let detailVC = DetailViewController()
@@ -459,6 +460,9 @@ extension MapViewController : UISearchResultsUpdating {
             locationRegion = nil
             self.mapView.selectedCell = nil
             selectedSaveIndex = ""
+            // 상세 조건 버튼 안보이게 하기
+            self.mapView.detailOpenFiveMarketBtn.isHidden = true
+            self.mapView.detailOpenFiveMarketButtonBgView.isHidden = true
             previousCell.baseView.backgroundColor = .white
             self.mapView.collectionView.reloadData()
         }
