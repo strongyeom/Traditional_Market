@@ -46,6 +46,9 @@ extension UIButton {
     
     func detailConditionBtn(day: String) {
         self.setTitle(day, for: .normal)
+        self.layer.cornerRadius = 16
+        self.layer.cornerCurve = .continuous
+        self.clipsToBounds = true
         self.layer.borderColor = UIColor.lightGray.cgColor
         self.layer.borderWidth = 1
         self.setTitleColor(.black, for: .normal)

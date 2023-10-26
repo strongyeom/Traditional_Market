@@ -90,6 +90,7 @@ class MapView : BaseView {
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .light)
         let image = UIImage(systemName: "calendar", withConfiguration: imageConfig)
         view.setImage(image, for: .normal)
+        view.tintColor = UIColor(named: "brandColor")
         view.isHidden = true
         return view
     }()
@@ -98,8 +99,6 @@ class MapView : BaseView {
         let view = MKMapView()
         // 허용안함 눌렀을때 내 위치를 받아 올 수 없어서 보라색 에러 발생함
         // 권한설정에 따라 추가해줬음
-//        view.showsUserLocation = true
-//        view.userTrackingMode = .follow
         view.cameraZoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: Scale.maxDistance)
         return view
     }()

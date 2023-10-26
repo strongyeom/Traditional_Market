@@ -12,9 +12,27 @@ protocol ApplyBtnAction: AnyObject {
     func applyBtnClicked()
 }
 
-class DetailConditionView : BaseView {
+final class DetailConditionView : BaseView {
     
-    let bgView = UIView()
+    let bgView = {
+       let view = UIView()
+        return view
+    }()
+    
+    let detailConditionTitleLabel = {
+       let view = UILabel()
+        view.text = "오일장 상세조건"
+        view.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        return view
+    }()
+    
+    let detailConditionDescriptionLabel = {
+       let view = UILabel()
+        view.text = "지도의 현 위치에서 해당 일자가 포함된 오일장만 표시됩니다."
+        view.font = UIFont.systemFont(ofSize: 11)
+        view.textColor = .lightGray
+        return view
+    }()
  
     let numberOneBtn = {
        let view = UIButton()
@@ -72,15 +90,17 @@ class DetailConditionView : BaseView {
     
     let cancelBtn = {
         let view = UIButton()
-        view.stampBtnLayout(text: "취소", colorname: "stampColor")
+        view.stampBtnLayout(text: "취소", colorname: "brandColor")
         return view
     }()
     
     let successBtn = {
         let view = UIButton()
-        view.stampBtnLayout(text: "적용하기", colorname: "stampColor")
+        view.stampBtnLayout(text: "적용하기", colorname: "brandColor")
         return view
     }()
+    
+    
     
     lazy var applyStackView = {
         let stack = UIStackView(arrangedSubviews: [cancelBtn, successBtn])
@@ -127,8 +147,10 @@ class DetailConditionView : BaseView {
     // MARK: - configureView
     override func configureView() {
         self.addSubview(bgView)
-        bgView.addSubview(verticalStackView)
-        bgView.addSubview(applyStackView)
+        [verticalStackView, applyStackView, detailConditionTitleLabel, detailConditionDescriptionLabel].forEach {
+            bgView.addSubview($0)
+        }
+        
         [numberOneBtn, numberTwoBtn, numberThreeBtn, numberFourBtn, numberFiveBtn, numberSixBtn, numberSevenBtn, numberEightBtn, numberNineBtn].forEach {
             BtnArray.append($0)
             $0.addTarget(self, action: #selector(dayBtnClicked(_:)), for: .touchUpInside)
@@ -156,11 +178,11 @@ class DetailConditionView : BaseView {
                     // 만약 현재 버튼이 이 함수를 호출한 버튼이라면
                     Btn.isSelected = true
                     Btn.setTitleColor(.black, for: .normal)
-                    Btn.backgroundColor = UIColor.white
+                    Btn.backgroundColor = UIColor(named: "clusterCountColor")
                 } else {
                     // 이 함수를 호출한 버튼이 아니라면
                     Btn.isSelected = false
-                    Btn.setTitleColor(.white, for: .normal)
+                  //  Btn.setTitleColor(.white, for: .normal)
                     Btn.backgroundColor = .clear
                 }
             }
@@ -170,19 +192,39 @@ class DetailConditionView : BaseView {
     
     // MARK: - setConstraints
     override func setConstraints() {
-        bgView.backgroundColor = .yellow
+        bgView.backgroundColor = .secondarySystemBackground
         bgView.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.size.equalTo(300)
         }
         
+        
+        detailConditionTitleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(17)
+            make.leading.equalToSuperview().inset(10)
+        }
+        
+        detailConditionDescriptionLabel.snp.makeConstraints { make in
+            make.leading.equalTo(detailConditionTitleLabel)
+            make.top.equalTo(detailConditionTitleLabel.snp.bottom).offset(6)
+        }
+        
         verticalStackView.snp.makeConstraints { make in
-            make.top.horizontalEdges.equalToSuperview().inset(10)
+            make.center.equalToSuperview()
+            make.leading.equalToSuperview().inset(10)
         }
         
         applyStackView.snp.makeConstraints { make in
-            make.top.equalTo(verticalStackView.snp.bottom).offset(13)
+            make.top.equalTo(verticalStackView.snp.bottom).offset(17)
             make.horizontalEdges.equalTo(verticalStackView)
+            make.height.equalTo(44)
         }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.bgView.layer.cornerRadius = 16
+        self.bgView.layer.cornerCurve = .continuous
+        self.bgView.clipsToBounds = true
     }
 }

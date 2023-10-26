@@ -112,6 +112,7 @@ class StampView : BaseView {
             make.top.equalTo(memoTextView.snp.bottom).offset(15)
             make.horizontalEdges.equalTo(memoTextView)
             make.bottom.equalTo(self.safeAreaLayoutGuide).inset(15)
+            make.height.equalTo(44)
         }
     }
 }

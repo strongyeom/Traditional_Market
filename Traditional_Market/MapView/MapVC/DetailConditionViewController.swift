@@ -31,7 +31,6 @@ class DetailConditionViewController: BaseViewController {
             print("어떤 버튼이 눌렸나? DetailConditionViewController : \(value)")
             self.detailBtnDay = value
         }
-        
         print(#function)
     }
 }
