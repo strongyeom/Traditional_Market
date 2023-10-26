@@ -28,7 +28,7 @@ final class DetailConditionView : BaseView {
     
     let detailConditionDescriptionLabel = {
        let view = UILabel()
-        view.text = "지도의 현 위치에서 해당 일자가 포함된 오일장만 표시됩니다."
+        view.text = "지도의 현 위치에서 해당 숫자가 포함된 오일장만 표시됩니다."
         view.font = UIFont.systemFont(ofSize: 11)
         view.textColor = .lightGray
         return view

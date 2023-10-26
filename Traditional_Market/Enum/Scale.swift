@@ -16,4 +16,6 @@ enum Scale {
     static let myRangeScale: CLLocationDistance = 300
     // 시장 진입 범위
     static let marktRange: CLLocationDistance = 100
+    
+    static let cityRange: CLLocationDistance = 100000
 }

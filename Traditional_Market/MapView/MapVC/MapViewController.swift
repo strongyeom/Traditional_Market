@@ -23,6 +23,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     
     private let realmManager = RealmManager()
     
+    
     // 사용자가 누른 index 저장
     var selectedSaveIndex: String = ""
     
@@ -34,10 +35,15 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     
     // didSelect or DeSelect를 위한 변수
     var mkAnnotationSearchResult: MKAnnotation!
-  
+    
     var examplea: String?
     //
     var previousCell: CityCell!
+    
+    var locationRegion: CityIndex?
+    
+    var exampleIndex: Int?
+    
     
     override func loadView() {
         self.view = mapView
@@ -61,19 +67,19 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(isSaveBtnClicked(_:)), name: Notification.Name("SavedStamp"), object: nil)
         
         self.mapView.detailFiveMarketCompletion = {
-
-                print("MapVC - Cell 눌림")
-                // 해당 일수를 가져오고 가져온 일수를 현재 5일장으로 필터링된 Realm데이터에 한번더 필터링 후 filterCityAnnotation 함수를 실행
-                let detailCondition = DetailConditionViewController()
-                detailCondition.modalPresentationStyle = .overFullScreen
-                detailCondition.completion = { value in
-                    self.examplea = value
-                    
-                    self.mapView.filterCityAnnotation(filterMarket: self.viewModel.rangeFilterAnnoation.value, day: self.examplea)
-                   
-                }
-                self.present(detailCondition, animated: true)
-
+            
+            print("MapVC - Cell 눌림")
+            // 해당 일수를 가져오고 가져온 일수를 현재 5일장으로 필터링된 Realm데이터에 한번더 필터링 후 filterCityAnnotation 함수를 실행
+            let detailCondition = DetailConditionViewController()
+            detailCondition.modalPresentationStyle = .overFullScreen
+            detailCondition.completion = { value in
+                self.examplea = value
+                
+                self.mapView.filterCityAnnotation(filterMarket: self.viewModel.rangeFilterAnnoation.value, day: self.examplea)
+                
+            }
+            self.present(detailCondition, animated: true)
+            
         }
         
     }
@@ -236,7 +242,7 @@ extension MapViewController: MKMapViewDelegate {
 // MARK: - UICollectionViewDelegate
 extension MapViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        locationRegion = .init(rawValue: indexPath.item)
         
         mapView.mapBaseView.removeAnnotations(mapView.mapBaseView.annotations)
         let data = mapView.cityList[indexPath.item]
@@ -244,40 +250,76 @@ extension MapViewController: UICollectionViewDelegate {
         let currentCell = mapView.collectionView.cellForItem(at: indexPath) as! CityCell
         // Cell을 선택했다면 그 전의 Cell 배경색 white로 변경하기
         
-        if selectedSaveIndex == "\(indexPath.item)" {
+        
+        if selectedSaveIndex == locationRegion?.name {
             self.mapView.selectedCell = nil
             selectedSaveIndex = ""
+            exampleIndex = nil
             self.mapView.mapViewRangeInAnnotations(containRange: viewModel.rangeFilterAnnoation.value)
             currentCell.baseView.backgroundColor = .white
         } else {
+            if let locationRegion {
+                if locationRegion.rawValue > 1 {
+                    self.mapView.setRegionCityScale(center: locationRegion.location)
+                }
+            }
+
             if !selectedSaveIndex.isEmpty {
-                previousCell = mapView.collectionView.cellForItem(at: IndexPath(row: Int(selectedSaveIndex)!, section: 0)) as? CityCell
+                previousCell = mapView.collectionView.cellForItem(at: IndexPath(row: exampleIndex!, section: 0)) as? CityCell
                 previousCell.baseView.backgroundColor = .white
             }
-            selectedSaveIndex = "\(indexPath.item)"
+            selectedSaveIndex = locationRegion!.name
             self.mapView.selectedCell = data.localname
             currentCell.baseView.backgroundColor = UIColor(named: "selectedColor")
-            
-            
         }
         
-        if selectedSaveIndex == "1" {
+        
+        
+        
+        
+        
+//        if selectedSaveIndex == "\(indexPath.item)" {
+//            self.mapView.selectedCell = nil
+//            selectedSaveIndex = ""
+//            self.mapView.mapViewRangeInAnnotations(containRange: viewModel.rangeFilterAnnoation.value)
+//            currentCell.baseView.backgroundColor = .white
+//        } else {
+//            if let locationRegion {
+//                if locationRegion.rawValue > 1 {
+//                    self.mapView.setRegionCityScale(center: locationRegion.location)
+//                }
+//            }
+//
+//            if !selectedSaveIndex.isEmpty {
+//                previousCell = mapView.collectionView.cellForItem(at: IndexPath(row: Int(selectedSaveIndex)!, section: 0)) as? CityCell
+//                previousCell.baseView.backgroundColor = .white
+//            }
+//            selectedSaveIndex = "\(indexPath.item)"
+//            self.mapView.selectedCell = data.localname
+//            currentCell.baseView.backgroundColor = UIColor(named: "selectedColor")
+//        }
+        
+        
+        
+        if locationRegion?.name == "5일장" {
             self.mapView.detailOpenFiveMarketBtn.isHidden = false
             self.mapView.detailOpenFiveMarketButtonBgView.isHidden = false
-            
         } else {
             self.mapView.detailOpenFiveMarketBtn.isHidden = true
             self.mapView.detailOpenFiveMarketButtonBgView.isHidden = true
             examplea = nil
         }
         
+        selectedSaveIndex = locationRegion!.name
+        exampleIndex = indexPath.item
+        
         print("\(indexPath.item) 인덱스 상세 조건: \( self.mapView.selectedCell ?? "nil입니다.")")
-
+        
         self.mapView.filterCityAnnotation(filterMarket: viewModel.rangeFilterAnnoation.value, day: examplea)
-
+        
     }
 }
-
+ // locationRegion!.rawValue
 
 // MARK: - UICollectionViewDataSource
 extension MapViewController: UICollectionViewDataSource {
@@ -339,7 +381,7 @@ extension MapViewController {
     
     
     fileprivate func playViewmodel() {
-       
+        
         viewModel.rangeFilterAnnoation.bind { result in
             print("bind 타면서 value의 갯수 : \(result.count)")
             if self.mapView.authorization != .restricted {
@@ -416,6 +458,7 @@ extension MapViewController: UISearchBarDelegate {
             print("어떤게 적용됐나?",mkAnnotationSearchResult.title!!)
             dismiss(animated: true)
         }
+        locationRegion = nil
     }
     
     func presentSearchController(_ searchController: UISearchController) {
@@ -432,15 +475,41 @@ extension MapViewController : UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         print("updateSearchResults")
         
-        // 필터링 기능 해제
-        if !selectedSaveIndex.isEmpty {
-            previousCell = mapView.collectionView.cellForItem(at: IndexPath(row: Int(selectedSaveIndex)!, section: 0)) as? CityCell
-            previousCell.baseView.backgroundColor = .white
+      //  locationRegion = nil
+       
+        
+        if locationRegion != nil {
+            
+            previousCell = mapView.collectionView.cellForItem(at: IndexPath(row: locationRegion!.rawValue, section: 0)) as? CityCell
+            locationRegion = nil
             self.mapView.selectedCell = nil
             selectedSaveIndex = ""
+            previousCell.baseView.backgroundColor = .white
             self.mapView.collectionView.reloadData()
         }
+//        previousCell = mapView.collectionView.cellForItem(at: IndexPath(row: locationRegion!.rawValue, section: 0)) as? CityCell
+//        previousCell.baseView.backgroundColor = .white
+//        self.mapView.collectionView.reloadData()
         
+//        if let locationRegion {
+//            if !locationRegion.name.isEmpty { // Cell을 클릭해서 이름이 있다면
+//
+//               // self.mapView.selectedCell = nil
+//
+//
+//                self.mapView.collectionView.reloadData()
+//            }
+//        }
+//
+        // 필터링 기능 해제
+//        if !locationRegion?.name.isEmpty {
+//            previousCell = mapView.collectionView.cellForItem(at: IndexPath(row: Int(selectedSaveIndex)!, section: 0)) as? CityCell
+//            previousCell.baseView.backgroundColor = .white
+//            self.mapView.selectedCell = nil
+//            selectedSaveIndex = ""
+//            self.mapView.collectionView.reloadData()
+//        }
+//
         
         guard let text = searchController.searchBar.text else { return }
         let filterResults = realmManager.searchFilterData(text: text)

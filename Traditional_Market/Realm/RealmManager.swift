@@ -100,6 +100,7 @@ class RealmManager {
             let result = rangeMarket.where {
                 $0.marketType.contains(region)
             }
+            
             if let day = day {
                 let bb = result.where {
                     $0.marketOpenCycle.contains(day)
@@ -111,6 +112,13 @@ class RealmManager {
            
             return result
         } else {
+            
+            if region == "강원도" {
+                let result = rangeMarket.where {
+                    $0.address.contains("강원")
+                }
+                return result
+            }
             let result = rangeMarket.where {
                 $0.address.contains(region)
             }

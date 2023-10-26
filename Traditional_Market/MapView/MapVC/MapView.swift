@@ -34,7 +34,7 @@ class MapView : BaseView {
         City(imageName: "Gyeongsangnam-do", localname: "경상남도"),
         City(imageName: "Jeollabuk-do", localname: "전라북도"),
         City(imageName: "Jeollanam-do", localname: "전라남도"),
-        City(imageName: "Jeju-do", localname: "제주")
+        City(imageName: "Jeju-do", localname: "제주도")
     ]
     
     var locationManger = {
@@ -55,7 +55,15 @@ class MapView : BaseView {
     // 상세조건 검색 ✅
     var selectedCell: String?
     
+    // VC으로 액션 전달 - 알럿띄우기
     var delegate: SettingAlert?
+    
+    // 내 위치 버튼 클릭
+    var myLocationCompletion: ((Bool) -> Void)?
+ 
+    // 오일장에서 상세조건 버튼 클릭
+    var detailFiveMarketCompletion: (() -> Void)?
+    
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     
@@ -103,10 +111,6 @@ class MapView : BaseView {
         return view
     }()
 
-    var myLocationCompletion: ((Bool) -> Void)?
- 
-    var detailFiveMarketCompletion: (() -> Void)?
-    
     // MARK: - configureView
     override func configureView() {
         self.addSubview(mapBaseView)
@@ -238,6 +242,13 @@ class MapView : BaseView {
     func setRegionScale(center: CLLocationCoordinate2D) {
         // MapView에 축척 m단위로 보여주기
         let region = MKCoordinateRegion(center: center, latitudinalMeters: Scale.myLocationScale, longitudinalMeters: Scale.myLocationScale)
+        
+        self.mapBaseView.setRegion(region, animated: true)
+    }
+    
+    func setRegionCityScale(center: CLLocationCoordinate2D) {
+        // MapView에 축척 m단위로 보여주기
+        let region = MKCoordinateRegion(center: center, latitudinalMeters: Scale.cityRange, longitudinalMeters: Scale.cityRange)
         
         self.mapBaseView.setRegion(region, animated: true)
     }
