@@ -122,7 +122,7 @@ class RealmManager {
     /// Search결과 필터링
     func searchFilterData(text: String) -> Results<TraditionalMarketRealm> {
         let searchResult = fetch().where {
-            $0.marketName.contains(text)
+            $0.marketName.contains(text.localized)
         }
         return searchResult
     }
