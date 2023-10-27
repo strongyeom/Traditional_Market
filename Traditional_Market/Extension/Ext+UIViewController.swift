@@ -52,7 +52,6 @@ extension UIViewController {
         
         // 저장할 경로 설정 ( 세부 경로, 이미지를 저장할 위치 )
         let fileURL = documentDirectory.appendingPathComponent(fileName)
-        print("\(fileName).jpg")
         // 파일명이 유효한지 검증해주는 메서드 ex) "789"이면 시스템 이미지 띄우기
         if FileManager.default.fileExists(atPath: fileURL.path) {
             return UIImage(contentsOfFile: fileURL.path)!

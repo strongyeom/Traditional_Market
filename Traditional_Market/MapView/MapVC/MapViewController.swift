@@ -362,7 +362,6 @@ extension MapViewController {
     fileprivate func playViewmodel() {
         
         viewModel.rangeFilterAnnoation.bind { result in
-            print("bind 타면서 value의 갯수 : \(result.count)")
             if self.mapView.authorization != .restricted {
                 if self.mapView.selectedCell != nil {
                     self.mapView.filterCityAnnotation(filterMarket: result,day: self.detailConditionDay)
