@@ -28,7 +28,7 @@ extension UIButton {
     
     func mypageSetupButton() {
         var config = UIButton.Configuration.plain()
-        config.title = "시장 컬렉션"
+        config.title = "시장 컬렉션".localized
         config.titleAlignment = .center
         config.buttonSize = .medium
         config.image = UIImage(systemName: "chevron.forward")
@@ -45,7 +45,7 @@ extension UIButton {
     }
     
     func detailConditionBtn(day: String) {
-        self.setTitle(day, for: .normal)
+        self.setTitle(day.localized, for: .normal)
         self.layer.cornerRadius = 16
         self.layer.cornerCurve = .continuous
         self.clipsToBounds = true

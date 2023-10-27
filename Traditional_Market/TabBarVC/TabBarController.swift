@@ -15,12 +15,12 @@ class TabBarController: UITabBarController {
         
         let mainVC = MapViewController()
         
-        mainVC.tabBarItem.title = "지도"
+        mainVC.tabBarItem.title = "지도".localized
         mainVC.tabBarItem.image = UIImage(systemName: "map")
         let mainVCHome = UINavigationController(rootViewController: mainVC)
         
         let profileVC = ProfileViewController()
-        profileVC.tabBarItem.title = "나의 시장"
+        profileVC.tabBarItem.title = "나의 시장".localized
         profileVC.tabBarItem.image = UIImage(systemName: "person.circle")
         let profileVCHome = UINavigationController(rootViewController: profileVC)
         

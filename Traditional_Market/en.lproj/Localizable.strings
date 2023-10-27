@@ -1,0 +1,58 @@
+/* 
+  Localizable.strings
+  Traditional_Market
+
+  Created by 염성필 on 2023/10/27.
+  
+*/
+
+// MapView
+"시장" = "Market";
+"지도" = "map";
+"시장 지도" = "Market Map";
+"나의 시장" = "My page";
+"검색어를 입력해주세요" = "Please enter a search word";
+"상설장" = "Everyday";
+"5일장" = "Fiveday-cycle";
+"서울" = "Seoul";
+"경기도" = "Gyeonggi Province";
+"강원도" = "Gangwon-do";
+"충청북도" = "Chungcheongbuk-do";
+"충청남도" = "Chungcheongnam-do";
+"경상북도" = "Gyeongsangbuk-do Province";
+"경상남도" = "Gyeongsangnam-do Province";
+"전라북도" = "Jeollabuk-do";
+"전라남도" = "Jeollanam-do";
+"제주도" = "Jeju Island";
+
+// 5일장 상세조건
+"오일장 상세조건" = "Fiveday-cycle Market Detailed Conditions";
+"지도의 현 위치에서 해당 숫자가 포함된 오일장만 표시됩니다." = "Fiveday-cycle Market containing the specified number will be displayed from the current location on the map.";
+"1일" = "1 day";
+"2일" = "2 days";
+"3일" = "3 days";
+"4일" = "4 days";
+"5일" = "5 days";
+"6일" = "6 days";
+"7일" = "7 days";
+"8일" = "8 days";
+"9일" = "9 days";
+"취소" = "Cancel";
+"적용하기" = "Apply";
+
+// 마이페이지
+"마이페이지" = "My Page";
+"식도락 여행가" = "a food traveler";
+" 개" = "";
+"스탬프 갯수" = "stamp count";
+"레벨" = "level";
+"시장 컬렉션" = "Market Collection";
+"앱 소개" = "App introduce";
+"개인정보방침" = "Personal information Processing Policy";
+"버전 " = "Version ";
+
+// 저장한 시장들
+
+
+
+// 어노테이션 + Search결과 -> Realm에 있는 모든 데이터 번역해야함

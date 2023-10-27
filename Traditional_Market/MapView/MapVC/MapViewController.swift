@@ -349,9 +349,9 @@ extension MapViewController {
         resultsTableController = SearchResultsViewController()
         searchController = UISearchController(searchResultsController: resultsTableController)
         searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
-        searchController.searchBar.placeholder = "검색어를 입력해주세요."
+        searchController.searchBar.placeholder = "검색어를 입력해주세요".localized
         self.navigationItem.searchController = searchController
-        self.navigationItem.title = "시장 지도"
+        self.navigationItem.title = "시장 지도".localized
         self.navigationController?.navigationBar.backgroundColor = .white
         searchController.delegate = self
         searchController.searchResultsUpdater = self

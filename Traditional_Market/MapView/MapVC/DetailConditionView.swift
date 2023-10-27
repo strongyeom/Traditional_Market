@@ -21,14 +21,16 @@ final class DetailConditionView : BaseView {
     
     let detailConditionTitleLabel = {
        let view = UILabel()
-        view.text = "오일장 상세조건"
+        view.text = "오일장 상세조건".localized
+        view.numberOfLines = 0
         view.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         return view
     }()
     
     let detailConditionDescriptionLabel = {
        let view = UILabel()
-        view.text = "지도의 현 위치에서 해당 숫자가 포함된 오일장만 표시됩니다."
+        view.text = "지도의 현 위치에서 해당 숫자가 포함된 오일장만 표시됩니다.".localized
+        view.numberOfLines = 0
         view.font = UIFont.systemFont(ofSize: 11)
         view.textColor = .lightGray
         return view
@@ -90,13 +92,13 @@ final class DetailConditionView : BaseView {
     
     let cancelBtn = {
         let view = UIButton()
-        view.stampBtnLayout(text: "취소", colorname: "brandColor")
+        view.stampBtnLayout(text: "취소".localized, colorname: "brandColor")
         return view
     }()
     
     let successBtn = {
         let view = UIButton()
-        view.stampBtnLayout(text: "적용하기", colorname: "brandColor")
+        view.stampBtnLayout(text: "적용하기".localized, colorname: "brandColor")
         return view
     }()
     
@@ -195,29 +197,33 @@ final class DetailConditionView : BaseView {
         bgView.backgroundColor = .secondarySystemBackground
         bgView.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.size.equalTo(300)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.8)
         }
         
         
         detailConditionTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(17)
-            make.leading.equalToSuperview().inset(10)
+            make.horizontalEdges.equalToSuperview().inset(10)
         }
         
         detailConditionDescriptionLabel.snp.makeConstraints { make in
-            make.leading.equalTo(detailConditionTitleLabel)
+            make.horizontalEdges.equalToSuperview().inset(10)
             make.top.equalTo(detailConditionTitleLabel.snp.bottom).offset(6)
         }
         
         verticalStackView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.leading.equalToSuperview().inset(10)
+           // make.center.equalToSuperview()
+            make.horizontalEdges.equalToSuperview().inset(10)
+            
+            //
+            make.top.equalTo(detailConditionDescriptionLabel.snp.bottom).offset(10)
         }
         
         applyStackView.snp.makeConstraints { make in
-            make.top.equalTo(verticalStackView.snp.bottom).offset(17)
+            make.top.equalTo(verticalStackView.snp.bottom).offset(13)
             make.horizontalEdges.equalTo(verticalStackView)
             make.height.equalTo(44)
+            make.bottom.equalToSuperview().inset(10)
         }
     }
     

@@ -36,6 +36,8 @@
 		26AAD8B82AC46218002E5DD4 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8B72AC46218002E5DD4 /* Observable.swift */; };
 		26AAD8C12AC48574002E5DD4 /* MarketAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8C02AC48574002E5DD4 /* MarketAPIManager.swift */; };
 		26ABF67E2AE2858200F60A35 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ABF67D2AE2858200F60A35 /* WebViewController.swift */; };
+		26BFF4F92AEB8EF30057466E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26BFF4FB2AEB8EF30057466E /* Localizable.strings */; };
+		26BFF4FE2AEB90D70057466E /* Ext+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BFF4FD2AEB90D70057466E /* Ext+String.swift */; };
 		26C92EC42AD2F622002A53D2 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C92EC32AD2F622002A53D2 /* SearchCell.swift */; };
 		26CC8E702AC843E9009ABB14 /* Ext+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC8E6F2AC843E9009ABB14 /* Ext+UIColor.swift */; };
 		26CC8E752AC87180009ABB14 /* NaverMarketImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC8E742AC87180009ABB14 /* NaverMarketImage.swift */; };
@@ -101,6 +103,9 @@
 		26AAD8B72AC46218002E5DD4 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		26AAD8C02AC48574002E5DD4 /* MarketAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketAPIManager.swift; sourceTree = "<group>"; };
 		26ABF67D2AE2858200F60A35 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		26BFF4FA2AEB8EF30057466E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		26BFF4FC2AEB8F140057466E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		26BFF4FD2AEB90D70057466E /* Ext+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+String.swift"; sourceTree = "<group>"; };
 		26C92EC32AD2F622002A53D2 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		26CC8E6F2AC843E9009ABB14 /* Ext+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIColor.swift"; sourceTree = "<group>"; };
 		26CC8E742AC87180009ABB14 /* NaverMarketImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverMarketImage.swift; sourceTree = "<group>"; };
@@ -275,6 +280,7 @@
 				26EA75DA2ACB07A800FFDFDB /* Ext+UITextView.swift */,
 				26A9C4FB2AC324EE004F955A /* Ext+UIViewController.swift */,
 				26DB1A8F2ADB03CD008AAC99 /* Ext+UIStackView.swift */,
+				26BFF4FD2AEB90D70057466E /* Ext+String.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -348,6 +354,7 @@
 				26015E362ACC0CAF00D25C94 /* ProfileVC */,
 				26EA66432AC2AB4400F6FE6A /* AppDelegate.swift */,
 				26EA66452AC2AB4400F6FE6A /* SceneDelegate.swift */,
+				26BFF4FB2AEB8EF30057466E /* Localizable.strings */,
 				26EA664C2AC2AB4700F6FE6A /* Assets.xcassets */,
 				26EA664E2AC2AB4700F6FE6A /* LaunchScreen.storyboard */,
 				26EA66512AC2AB4700F6FE6A /* Info.plist */,
@@ -432,6 +439,7 @@
 			knownRegions = (
 				ko,
 				Base,
+				en,
 			);
 			mainGroup = 26EA66372AC2AB4400F6FE6A;
 			packageReferences = (
@@ -457,6 +465,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				26E9F3692AD443340007B7CD /* GoogleService-Info.plist in Resources */,
+				26BFF4F92AEB8EF30057466E /* Localizable.strings in Resources */,
 				26EA66502AC2AB4700F6FE6A /* LaunchScreen.storyboard in Resources */,
 				26EA664D2AC2AB4700F6FE6A /* Assets.xcassets in Resources */,
 			);
@@ -542,6 +551,7 @@
 				26E31C5A2ACD40EA00392068 /* BaseHeaderReusableCollectionView.swift in Sources */,
 				26AAD8A42AC44B07002E5DD4 /* CustomAnnotationView.swift in Sources */,
 				26A9C4F72AC2E607004F955A /* CustomAnnotation.swift in Sources */,
+				26BFF4FE2AEB90D70057466E /* Ext+String.swift in Sources */,
 				26EA75D52ACAD7DF00FFDFDB /* StampView.swift in Sources */,
 				26E9F3732AD5A9190007B7CD /* ClusterAnnotationView.swift in Sources */,
 				26E768282AD053AC0052EC4C /* SearchResultsViewController.swift in Sources */,
@@ -554,6 +564,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		26BFF4FB2AEB8EF30057466E /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				26BFF4FA2AEB8EF30057466E /* ko */,
+				26BFF4FC2AEB8F140057466E /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		26EA664E2AC2AB4700F6FE6A /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -569,6 +588,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -629,6 +649,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -701,7 +722,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.present.Traditional-Market";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -734,7 +755,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.present.Traditional-Market";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
