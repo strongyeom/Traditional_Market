@@ -272,6 +272,15 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		26CABD902AEF877F006AEFA9 /* FiveDetailCondition */ = {
+			isa = PBXGroup;
+			children = (
+				26E7863F2AE9118F00525E73 /* DetailConditionViewController.swift */,
+				26E786412AE9149200525E73 /* DetailConditionView.swift */,
+			);
+			path = FiveDetailCondition;
+			sourceTree = "<group>";
+		};
 		26CC8E6E2AC843D9009ABB14 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -382,8 +391,7 @@
 				26AAD8A32AC44B07002E5DD4 /* CustomAnnotationView.swift */,
 				26E9F3722AD5A9190007B7CD /* ClusterAnnotationView.swift */,
 				26EA66572AC2ADED00F6FE6A /* MapView.swift */,
-				26E7863F2AE9118F00525E73 /* DetailConditionViewController.swift */,
-				26E786412AE9149200525E73 /* DetailConditionView.swift */,
+				26CABD902AEF877F006AEFA9 /* FiveDetailCondition */,
 			);
 			path = MapVC;
 			sourceTree = "<group>";

@@ -74,9 +74,9 @@ enum CityIndex: Int {
         case .gyeongsangnam_do:
             return "경상남도"
         case .jeollabuk_do:
-            return "전라남도"
-        case .jeollanam_do:
             return "전라북도"
+        case .jeollanam_do:
+            return "전라남도"
         case .jeju_do:
             return "제주특별시"
         

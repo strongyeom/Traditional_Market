@@ -36,7 +36,7 @@ class CityCell : BaseColletionViewCell {
     lazy var stackView = {
         let stack = UIStackView(arrangedSubviews: [imageView, localName])
         stack.axis = .vertical
-        stack.spacing = 3
+        stack.spacing = 5
         stack.alignment = .center
         stack.distribution = .fill
         return stack
@@ -52,19 +52,21 @@ class CityCell : BaseColletionViewCell {
         
         baseView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview()
-            make.verticalEdges.equalToSuperview().inset(14)
+            make.verticalEdges.equalToSuperview()
             
         }
        
         imageView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalToSuperview()
             make.height.equalTo(self.imageView.snp.width)
+            
         }
         
         stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(5)
+            make.center.equalToSuperview()
+            make.leading.equalToSuperview().inset(5)
+          //  make.top.equalToSuperview().inset(10)
         }
-
     }
     
 }
