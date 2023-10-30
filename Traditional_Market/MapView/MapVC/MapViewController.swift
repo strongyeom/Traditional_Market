@@ -356,6 +356,12 @@ extension MapViewController {
         searchController.delegate = self
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "list.bullet"), style: .plain, target: self, action: #selector(favoriteBarButtonClicked))
+    }
+    
+    @objc func favoriteBarButtonClicked() {
+        let saveMarket = SaveMarketViewController()
+        navigationController?.pushViewController(saveMarket, animated: true)
     }
     
     
