@@ -98,7 +98,7 @@ class MapView : BaseView {
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .light)
         let image = UIImage(systemName: "calendar", withConfiguration: imageConfig)
         view.setImage(image, for: .normal)
-        view.tintColor = UIColor(named: "brandColor")
+        view.tintColor = UIColor(named: "clusterCountColor")
         view.isHidden = true
         return view
     }()
