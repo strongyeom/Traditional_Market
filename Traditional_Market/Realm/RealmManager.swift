@@ -23,19 +23,17 @@ class RealmManager {
     /// - Parameter markets: 네트워크 통신으로 받아온 데이터 배열로 모은 다음에 한번에 Realm에 뿌려주기
     func addDatas(markets: [Item]) {
         let latitudeZeroFilterdMarket = markets.filter { $0.latitude != ""}
-        DispatchQueue.global().async {
-            let realm = try! Realm()
+
+        realm.writeAsync {
             let traditionalMarkets = latitudeZeroFilterdMarket.map {
                 TraditionalMarketRealm(marketName: $0.marketName, marketType: $0.marketType, loadNameAddress: $0.loadNameAddress, address: $0.address, marketOpenCycle: $0.marketOpenCycle, publicToilet: $0.publicToilet, latitude: $0.latitude, longitude: $0.longitude, popularProducts: $0.popularProducts, phoneNumber: $0.phoneNumber)
                 
             }
             
             let allOfTraditionalMarket = traditionalMarkets + self.userDirectAddMarket()
-            try! realm.write {
-                realm.add(allOfTraditionalMarket)
-            }
+            
+            self.realm.add(allOfTraditionalMarket)
         }
-        
     }
 
     
