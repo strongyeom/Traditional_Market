@@ -13,6 +13,10 @@
 		26229B9F2AC575AD002FBE59 /* TraditionalMarketRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26229B9E2AC575AD002FBE59 /* TraditionalMarketRealm.swift */; };
 		26229BA82AC5AD84002FBE59 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26229BA72AC5AD84002FBE59 /* BaseViewController.swift */; };
 		2631736C2ADEA248003A5F12 /* NaverImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2631736B2ADEA248003A5F12 /* NaverImageViewModel.swift */; };
+		263212DD2AF29AC100337610 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263212DC2AF29AC100337610 /* HomeViewController.swift */; };
+		263212DF2AF29B7800337610 /* ConferenceVideoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263212DE2AF29B7800337610 /* ConferenceVideoController.swift */; };
+		263212E12AF29BCC00337610 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263212E02AF29BCC00337610 /* EventCell.swift */; };
+		263212E32AF29BF400337610 /* TitleSupplymentaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263212E22AF29BF400337610 /* TitleSupplymentaryView.swift */; };
 		2633E7002AC6A2A4002581EB /* CityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2633E6FF2AC6A2A4002581EB /* CityCell.swift */; };
 		2633E7042AC6AC90002581EB /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2633E7032AC6AC90002581EB /* City.swift */; };
 		2633E7072AC6C4D5002581EB /* CityIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2633E7062AC6C4D5002581EB /* CityIndex.swift */; };
@@ -83,6 +87,10 @@
 		26229B9E2AC575AD002FBE59 /* TraditionalMarketRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraditionalMarketRealm.swift; sourceTree = "<group>"; };
 		26229BA72AC5AD84002FBE59 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		2631736B2ADEA248003A5F12 /* NaverImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverImageViewModel.swift; sourceTree = "<group>"; };
+		263212DC2AF29AC100337610 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		263212DE2AF29B7800337610 /* ConferenceVideoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferenceVideoController.swift; sourceTree = "<group>"; };
+		263212E02AF29BCC00337610 /* EventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
+		263212E22AF29BF400337610 /* TitleSupplymentaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSupplymentaryView.swift; sourceTree = "<group>"; };
 		2633E6FF2AC6A2A4002581EB /* CityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityCell.swift; sourceTree = "<group>"; };
 		2633E7032AC6AC90002581EB /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		2633E7062AC6C4D5002581EB /* CityIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityIndex.swift; sourceTree = "<group>"; };
@@ -198,6 +206,17 @@
 				26E31C592ACD40EA00392068 /* BaseHeaderReusableCollectionView.swift */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		263212DB2AF29AA600337610 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				263212DC2AF29AC100337610 /* HomeViewController.swift */,
+				263212DE2AF29B7800337610 /* ConferenceVideoController.swift */,
+				263212E02AF29BCC00337610 /* EventCell.swift */,
+				263212E22AF29BF400337610 /* TitleSupplymentaryView.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 		2633E6FA2AC69254002581EB /* City */ = {
@@ -360,6 +379,7 @@
 				26AAD8A72AC44DAD002E5DD4 /* Model */,
 				26AAD8A62AC44DA6002E5DD4 /* Network */,
 				26015E332ACC0C4A00D25C94 /* TabBarVC */,
+				263212DB2AF29AA600337610 /* Home */,
 				26AAD8A52AC44D9B002E5DD4 /* MapView */,
 				26015E362ACC0CAF00D25C94 /* ProfileVC */,
 				26EA66432AC2AB4400F6FE6A /* AppDelegate.swift */,
@@ -512,6 +532,7 @@
 			files = (
 				26EA75D72ACADABA00FFDFDB /* BaseView.swift in Sources */,
 				26C92EC42AD2F622002A53D2 /* SearchCell.swift in Sources */,
+				263212DD2AF29AC100337610 /* HomeViewController.swift in Sources */,
 				26229B9F2AC575AD002FBE59 /* TraditionalMarketRealm.swift in Sources */,
 				2633E7002AC6A2A4002581EB /* CityCell.swift in Sources */,
 				26AAD8C12AC48574002E5DD4 /* MarketAPIManager.swift in Sources */,
@@ -540,12 +561,14 @@
 				26EA66582AC2ADED00F6FE6A /* MapView.swift in Sources */,
 				26E786402AE9118F00525E73 /* DetailConditionViewController.swift in Sources */,
 				2633E7092AC6E7ED002581EB /* DetailViewController.swift in Sources */,
+				263212E12AF29BCC00337610 /* EventCell.swift in Sources */,
 				26E31C582ACD3FB400392068 /* BaseCollectionViewCell.swift in Sources */,
 				26AAD8AE2AC4559B002E5DD4 /* NetworkManager.swift in Sources */,
 				26EA75D92ACB014F00FFDFDB /* Ext+UIButton.swift in Sources */,
 				26EA75E02ACB1DCA00FFDFDB /* FavoriteTable.swift in Sources */,
 				26EA75DB2ACB07A800FFDFDB /* Ext+UITextView.swift in Sources */,
 				26015E382ACC0CC300D25C94 /* ProfileViewController.swift in Sources */,
+				263212DF2AF29B7800337610 /* ConferenceVideoController.swift in Sources */,
 				26E786422AE9149200525E73 /* DetailConditionView.swift in Sources */,
 				26E7682A2AD07A820052EC4C /* Scale.swift in Sources */,
 				26015E352ACC0C7900D25C94 /* TabBarController.swift in Sources */,
@@ -565,6 +588,7 @@
 				26E768282AD053AC0052EC4C /* SearchResultsViewController.swift in Sources */,
 				26A5BB662AD8088800D03FC7 /* SaveMarketViewController.swift in Sources */,
 				26E31C602ACDC4C200392068 /* InfomationCell.swift in Sources */,
+				263212E32AF29BF400337610 /* TitleSupplymentaryView.swift in Sources */,
 				26AAD8A92AC44FCD002E5DD4 /* TraditionalMarket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -729,7 +753,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.present.Traditional-Market";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -762,7 +786,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.present.Traditional-Market";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

@@ -23,18 +23,18 @@ class MapView : BaseView {
 
     // 각 City 배열
     let cityList: [City] = [
-        City(imageName: "basicStamp", localname: "상설장".localized),
-        City(imageName: "checkStamp", localname: "5일장".localized),
-        City(imageName: "Seoul", localname: "서울".localized),
-        City(imageName: "Gyeonggi-do", localname: "경기도".localized),
-        City(imageName: "Gangwon-do", localname: "강원도".localized),
-        City(imageName: "Chungcheongbuk-do", localname: "충청북도".localized),
-        City(imageName: "Chungcheongnam-do", localname: "충청남도".localized),
-        City(imageName: "Gyeongsangbuk-do", localname: "경상북도".localized),
-        City(imageName: "Gyeongsangnam-do", localname: "경상남도".localized),
-        City(imageName: "Jeollabuk-do", localname: "전라북도".localized),
-        City(imageName: "Jeollanam-do", localname: "전라남도".localized),
-        City(imageName: "Jeju-do", localname: "제주도".localized)
+        City(imageName: "basicStamp", localname: "상설장"),
+        City(imageName: "checkStamp", localname: "5일장"),
+        City(imageName: "Seoul", localname: "서울"),
+        City(imageName: "Gyeonggi-do", localname: "경기도"),
+        City(imageName: "Gangwon-do", localname: "강원도"),
+        City(imageName: "Chungcheongbuk-do", localname: "충청북도"),
+        City(imageName: "Chungcheongnam-do", localname: "충청남도"),
+        City(imageName: "Gyeongsangbuk-do", localname: "경상북도"),
+        City(imageName: "Gyeongsangnam-do", localname: "경상남도"),
+        City(imageName: "Jeollabuk-do", localname: "전라북도"),
+        City(imageName: "Jeollanam-do", localname: "전라남도"),
+        City(imageName: "Jeju-do", localname: "제주도")
     ]
     
     var locationManger = {

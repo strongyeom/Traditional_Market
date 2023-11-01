@@ -21,7 +21,7 @@ final class DetailConditionView : BaseView {
     
     let detailConditionTitleLabel = {
        let view = UILabel()
-        view.text = "오일장 상세조건".localized
+        view.text = "오일장 상세조건"
         view.numberOfLines = 0
         view.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         return view
@@ -29,7 +29,7 @@ final class DetailConditionView : BaseView {
     
     let detailConditionDescriptionLabel = {
        let view = UILabel()
-        view.text = "지도의 현 위치에서 해당 숫자가 포함된 오일장만 표시됩니다.".localized
+        view.text = "지도의 현 위치에서 해당 숫자가 포함된 오일장만 표시됩니다."
         view.numberOfLines = 0
         view.font = UIFont.systemFont(ofSize: 11)
         view.textColor = .lightGray
@@ -92,13 +92,13 @@ final class DetailConditionView : BaseView {
     
     let cancelBtn = {
         let view = UIButton()
-        view.stampBtnLayout(text: "취소".localized, colorname: "brandColor")
+        view.stampBtnLayout(text: "취소", colorname: "brandColor")
         return view
     }()
     
     let successBtn = {
         let view = UIButton()
-        view.stampBtnLayout(text: "적용하기".localized, colorname: "brandColor")
+        view.stampBtnLayout(text: "적용하기", colorname: "brandColor")
         return view
     }()
     

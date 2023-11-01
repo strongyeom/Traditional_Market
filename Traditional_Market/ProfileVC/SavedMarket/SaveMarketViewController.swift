@@ -26,7 +26,7 @@ class SaveMarketViewController : BaseViewController {
         super.configureView()
         print("SaveMarketViewController - configureView")
         settuptableView()
-        navigationItem.title = "시장 컬렉션".localized
+        navigationItem.title = "시장 컬렉션"
 
     }
     

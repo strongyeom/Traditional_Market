@@ -35,6 +35,24 @@ class RealmManager {
             self.realm.add(allOfTraditionalMarket)
         }
     }
+    
+    func firstSectionMarkets() -> Results<TraditionalMarketRealm> {
+        
+        return fetch().where {
+            $0.marketName == "서울풍물시장" || $0.popularProducts.contains("납작만두+컵막창") || $0.marketName == "신포시장" ||
+            $0.marketName == "양동시장" || $0.marketName == "남문로데오시장" || $0.marketName == "속초관광수산시장" ||
+            $0.marketName == "단양구경시장" || $0.marketName == "웃장" || $0.marketName == "안동구시장" ||
+            $0.marketName == "진주중앙시장"
+        }
+    }
+    
+    func secondSectionMarkets() -> Results<TraditionalMarketRealm> {
+        
+        return fetch().where {
+            $0.marketName == "남대문시장" || $0.marketName == "망원시장" ||
+            $0.marketName == "동대문종합시장" || $0.marketName == "예산시장"
+        }
+    }
 
     
     /// Realm 불러오기
@@ -120,7 +138,7 @@ class RealmManager {
     /// Search결과 필터링
     func searchFilterData(text: String) -> Results<TraditionalMarketRealm> {
         let searchResult = fetch().where {
-            $0.marketName.contains(text.localized)
+            $0.marketName.contains(text)
         }
         return searchResult
     }

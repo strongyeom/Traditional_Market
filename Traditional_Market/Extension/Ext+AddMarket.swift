@@ -17,7 +17,8 @@ extension RealmManager {
             TraditionalMarketRealm(marketName: "한산5일장", marketType: "5일장", loadNameAddress: "충청남도 서천군 한산면 충절로1173번길 21-1", address: "충청남도 서천군 한산면 지현리 98-9", marketOpenCycle: "1일+6일", publicToilet: "", latitude: "36.084743", longitude: "126.804484", popularProducts: "모시+채소+잡화", phoneNumber: ""),
             TraditionalMarketRealm(marketName: "담양오일장", marketType: "5일장", loadNameAddress: "전남 담양군 담양읍 담주4길 40", address: "전남 담양군 담양읍 담주리 7", marketOpenCycle: "2일+7일", publicToilet: "", latitude: "35.321886", longitude: "126.980975", popularProducts: "치킨+쑥떡+젓갈류+장아찌", phoneNumber: ""),
             TraditionalMarketRealm(marketName: "모란민속5일장", marketType: "5일장", loadNameAddress: "경기 성남시 중원구 둔촌대로 68", address: "경기 성남시 중원구 성남동 4931", marketOpenCycle: "4일+9일", publicToilet: "Y", latitude: "37.428980", longitude: "127.127193", popularProducts: "칼국수+죽류+돼지부속+잡화+원예+생활용품+의류", phoneNumber: "031-721-9905"),
-            TraditionalMarketRealm(marketName: "마석민족5일장", marketType: "5일장", loadNameAddress: "경기 남양주시 화도읍 마석중앙로37번길 4", address: "경기 남양주시 화도읍 마석우리 314-2", marketOpenCycle: "3일+8일", publicToilet: "Y", latitude: "37.653177", longitude: "127.304397", popularProducts: "등갈비+닭발+칼국수+잡화+원예+생활용품+의류", phoneNumber: "")
+            TraditionalMarketRealm(marketName: "마석민족5일장", marketType: "5일장", loadNameAddress: "경기 남양주시 화도읍 마석중앙로37번길 4", address: "경기 남양주시 화도읍 마석우리 314-2", marketOpenCycle: "3일+8일", publicToilet: "Y", latitude: "37.653177", longitude: "127.304397", popularProducts: "등갈비+닭발+칼국수+잡화+원예+생활용품+의류", phoneNumber: ""),
+            TraditionalMarketRealm(marketName: "서문시장", marketType: "상설장", loadNameAddress: "대구광역시 중구 달성로 50 서문시장", address: "대구광역시 중구 대신동 115-38", marketOpenCycle: "매일", publicToilet: "Y", latitude: "35.869098", longitude: "128.580308", popularProducts: "납작만두+컵막창+계란김밥+지역명소", phoneNumber: "053-256-6341")
         ]
         
         return userInputMarketList

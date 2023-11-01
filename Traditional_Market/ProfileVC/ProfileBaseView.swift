@@ -40,7 +40,7 @@ class ProfileBaseView : BaseView {
     let profileNickName = {
         let view = UILabel()
         view.font = UIFont.systemFont(ofSize: 20, weight: .medium)
-        view.text = "식도락 여행가".localized
+        view.text = "식도락 여행가"
         return view
     }()
     
@@ -48,7 +48,7 @@ class ProfileBaseView : BaseView {
     
     let stampLabel = {
         let view = UILabel()
-        view.text = "스탬프 갯수".localized
+        view.text = "스탬프 갯수"
         view.font = UIFont.systemFont(ofSize: 10, weight: .medium)
         view.textColor = .gray
         return view
@@ -63,7 +63,7 @@ class ProfileBaseView : BaseView {
     
     let levelLabel = {
         let view = UILabel()
-        view.text = "레벨".localized
+        view.text = "레벨"
         view.font = UIFont.systemFont(ofSize: 10, weight: .medium)
         view.textColor = .gray
         return view

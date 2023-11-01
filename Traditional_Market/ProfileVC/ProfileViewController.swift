@@ -20,7 +20,7 @@ class ProfileViewController : BaseViewController {
     
     override func configureView() {
         super.configureView()
-        navigationItem.title = "마이페이지".localized
+        navigationItem.title = "마이페이지"
         navigationItem.backButtonDisplayMode = .minimal
         // 상위 VC에 색상 설정하면 하위VC에도 적용됌
         let appearance = UINavigationBarAppearance()
@@ -38,7 +38,7 @@ class ProfileViewController : BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        profileBaseView.stampCountLabel.text = "\(realmManager.allOfFavoriteRealmCount().count)" + " 개".localized
+        profileBaseView.stampCountLabel.text = "\(realmManager.allOfFavoriteRealmCount().count)" + " 개"
         profileBaseView.levelCountLabel.text = realmManager.calculateStampCountToLevelLabel()
     }
     
@@ -65,12 +65,12 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
         
         
         if indexPath.row == 2 {
-            cell.infoText.text = "버전 ".localized + currentAppVersion()
+            cell.infoText.text = "버전 " + currentAppVersion()
             cell.accessoryType = .none
             cell.selectionStyle = .none
             cell.infoText.textColor = .lightGray
         } else {
-            cell.configureCell(infoList: infoList.localized)
+            cell.configureCell(infoList: infoList)
         }
         return cell
     }
