@@ -12,6 +12,9 @@
 		26229B9D2AC57528002FBE59 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26229B9C2AC57528002FBE59 /* RealmManager.swift */; };
 		26229B9F2AC575AD002FBE59 /* TraditionalMarketRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26229B9E2AC575AD002FBE59 /* TraditionalMarketRealm.swift */; };
 		26229BA82AC5AD84002FBE59 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26229BA72AC5AD84002FBE59 /* BaseViewController.swift */; };
+		262BBE632AF38CF700F98BF8 /* PopularMarketDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262BBE622AF38CF700F98BF8 /* PopularMarketDetailViewController.swift */; };
+		262BBE652AF38F6400F98BF8 /* TenSelectedMarketSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262BBE642AF38F6400F98BF8 /* TenSelectedMarketSection.swift */; };
+		262BBE682AF3970400F98BF8 /* PopularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262BBE672AF3970400F98BF8 /* PopularView.swift */; };
 		2631736C2ADEA248003A5F12 /* NaverImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2631736B2ADEA248003A5F12 /* NaverImageViewModel.swift */; };
 		263212DD2AF29AC100337610 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263212DC2AF29AC100337610 /* HomeViewController.swift */; };
 		263212DF2AF29B7800337610 /* ConferenceVideoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263212DE2AF29B7800337610 /* ConferenceVideoController.swift */; };
@@ -86,6 +89,9 @@
 		26229B9C2AC57528002FBE59 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		26229B9E2AC575AD002FBE59 /* TraditionalMarketRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraditionalMarketRealm.swift; sourceTree = "<group>"; };
 		26229BA72AC5AD84002FBE59 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		262BBE622AF38CF700F98BF8 /* PopularMarketDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMarketDetailViewController.swift; sourceTree = "<group>"; };
+		262BBE642AF38F6400F98BF8 /* TenSelectedMarketSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenSelectedMarketSection.swift; sourceTree = "<group>"; };
+		262BBE672AF3970400F98BF8 /* PopularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularView.swift; sourceTree = "<group>"; };
 		2631736B2ADEA248003A5F12 /* NaverImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverImageViewModel.swift; sourceTree = "<group>"; };
 		263212DC2AF29AC100337610 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		263212DE2AF29B7800337610 /* ConferenceVideoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferenceVideoController.swift; sourceTree = "<group>"; };
@@ -208,13 +214,39 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		262BBE602AF38CB700F98BF8 /* HeaderView */ = {
+			isa = PBXGroup;
+			children = (
+				263212E22AF29BF400337610 /* TitleSupplymentaryView.swift */,
+			);
+			path = HeaderView;
+			sourceTree = "<group>";
+		};
+		262BBE612AF38CC500F98BF8 /* EventCell */ = {
+			isa = PBXGroup;
+			children = (
+				263212E02AF29BCC00337610 /* EventCell.swift */,
+			);
+			path = EventCell;
+			sourceTree = "<group>";
+		};
+		262BBE662AF396EE00F98BF8 /* PopularMarket */ = {
+			isa = PBXGroup;
+			children = (
+				262BBE622AF38CF700F98BF8 /* PopularMarketDetailViewController.swift */,
+				262BBE672AF3970400F98BF8 /* PopularView.swift */,
+			);
+			path = PopularMarket;
+			sourceTree = "<group>";
+		};
 		263212DB2AF29AA600337610 /* Home */ = {
 			isa = PBXGroup;
 			children = (
 				263212DC2AF29AC100337610 /* HomeViewController.swift */,
+				262BBE662AF396EE00F98BF8 /* PopularMarket */,
 				263212DE2AF29B7800337610 /* ConferenceVideoController.swift */,
-				263212E02AF29BCC00337610 /* EventCell.swift */,
-				263212E22AF29BF400337610 /* TitleSupplymentaryView.swift */,
+				262BBE612AF38CC500F98BF8 /* EventCell */,
+				262BBE602AF38CB700F98BF8 /* HeaderView */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -233,6 +265,7 @@
 				2633E7062AC6C4D5002581EB /* CityIndex.swift */,
 				26E768292AD07A820052EC4C /* Scale.swift */,
 				26E786432AE92B3700525E73 /* KindOfMarket.swift */,
+				262BBE642AF38F6400F98BF8 /* TenSelectedMarketSection.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -536,6 +569,7 @@
 				26229B9F2AC575AD002FBE59 /* TraditionalMarketRealm.swift in Sources */,
 				2633E7002AC6A2A4002581EB /* CityCell.swift in Sources */,
 				26AAD8C12AC48574002E5DD4 /* MarketAPIManager.swift in Sources */,
+				262BBE652AF38F6400F98BF8 /* TenSelectedMarketSection.swift in Sources */,
 				26AAD8B82AC46218002E5DD4 /* Observable.swift in Sources */,
 				2633E7072AC6C4D5002581EB /* CityIndex.swift in Sources */,
 				26CC8E702AC843E9009ABB14 /* Ext+UIColor.swift in Sources */,
@@ -548,7 +582,9 @@
 				26ABF67E2AE2858200F60A35 /* WebViewController.swift in Sources */,
 				26A5BB6B2AD8456900D03FC7 /* SavedDetailViewController.swift in Sources */,
 				26E786442AE92B3700525E73 /* KindOfMarket.swift in Sources */,
+				262BBE682AF3970400F98BF8 /* PopularView.swift in Sources */,
 				2633E7042AC6AC90002581EB /* City.swift in Sources */,
+				262BBE632AF38CF700F98BF8 /* PopularMarketDetailViewController.swift in Sources */,
 				2633E70B2AC70955002581EB /* DetailMarketInfoCell.swift in Sources */,
 				26EA75D22ACAC28D00FFDFDB /* StampViewController.swift in Sources */,
 				26A5BB682AD8351C00D03FC7 /* SaveTableView.swift in Sources */,
