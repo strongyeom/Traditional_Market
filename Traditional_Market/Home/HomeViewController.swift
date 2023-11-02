@@ -5,6 +5,7 @@
 //  Created by 염성필 on 2023/11/01.
 //
 import UIKit
+import CoreLocation
 
 class HomeViewController : BaseViewController {
     
@@ -16,7 +17,9 @@ class HomeViewController : BaseViewController {
     <ExampleCollection, ExampleModel>!
     static let titleElementKind = "title-element-kind"
     
-    var cellDataURL: URL?
+    let locationManager = CLLocationManager()
+    
+    var authorization: CLAuthorizationStatus = .notDetermined
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +36,11 @@ class HomeViewController : BaseViewController {
         configureHierarchy()
         configureDataSource()
         collectionView.delegate = self
+        locationManager.delegate = self
+        checkDeviceLocationAuthorization()
     }
+    
+    
     
     
     func createLayout() -> UICollectionViewLayout {
@@ -86,13 +93,7 @@ class HomeViewController : BaseViewController {
         
         let cellRegistration = UICollectionView.CellRegistration
         <EventCell, ExampleModel> { (cell, indexPath, markets) in
-            // Populate the cell with our item description.
-//            cell.exampleText.text = markets.marketName
             cell.configureUI(data: markets)
-            cell.completion = { [weak self]url in
-                guard let self else { return }
-                self.cellDataURL = url
-            }
         }
         
         dataSource = UICollectionViewDiffableDataSource
@@ -131,6 +132,10 @@ class HomeViewController : BaseViewController {
 }
 
 extension HomeViewController : UICollectionViewDelegate {
+    
+   
+    
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         // Cell 클릭했을때 ⭐️데이터 기반으로⭐️ 가져오기
@@ -138,12 +143,75 @@ extension HomeViewController : UICollectionViewDelegate {
             return
         }
         
+        guard let cell = collectionView.cellForItem(at: indexPath) as? EventCell else { return }
+        
         let popularMarketVC = PopularMarketDetailViewController()
         popularMarketVC.marketDetailInfo = item
         popularMarketVC.marketDescription = TenSelectedMarketSection(rawValue: item.marketName)
-        popularMarketVC.imageUrl = self.cellDataURL
-        dump(item)
+        popularMarketVC.cellDataImage = cell.eventImageView.image
+        
         present(popularMarketVC, animated: true)
-        // dump(item)
+    }
+}
+
+extension HomeViewController {
+    
+    
+    /// 상태가 바뀔때 마다 권한 확인
+     func checkDeviceLocationAuthorization() {
+        DispatchQueue.global().async {
+            // 위치 서비스를 이용하고 있다면
+            if CLLocationManager.locationServicesEnabled() {
+                
+                if #available(iOS 14.0, *) {
+                    self.authorization = self.locationManager.authorizationStatus
+                } else {
+                    self.authorization = CLLocationManager.authorizationStatus()
+                }
+                
+                DispatchQueue.main.async {
+                    print("현재 권한 상태 - \(self.authorization)")
+                    self.checkStatuesDeviceLocationAuthorization(status: self.authorization)
+                }
+            }
+        }
+    }
+    
+    /// 권한 설정에 따른 메서드
+    /// - Parameter status: 권한 상태
+    func checkStatuesDeviceLocationAuthorization(status: CLAuthorizationStatus) {
+        switch status {
+        case .notDetermined:
+            print("아무것도 결정하지 않았다.")
+            // p.list 알람 띄우기
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted:
+            print("권한 설정 거부함")
+        case .denied:
+            print("권한 설정 거부함")
+        case .authorizedAlways:
+            print("항상 권한 허용")
+            locationManager.startUpdatingLocation()
+        case .authorizedWhenInUse:
+            print("한번만 권한 허용")
+            locationManager.startUpdatingLocation()
+        case .authorized:
+            print("권한 허용 됨")
+            locationManager.startUpdatingLocation()
+        @unknown default:
+            print("어떤것이 추가 될 수 있음")
+        }
+    }
+}
+
+extension HomeViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first?.coordinate {
+            
+            print("HomeViewController - 시작 위치를 받아오고 있습니다 \(location)")
+            
+            // TODO: - 직접적으로 Stop을 주면 안됨... UserDefault를 사용해야 하나? 
+           // locationManager.stopUpdatingLocation()
+        }
     }
 }

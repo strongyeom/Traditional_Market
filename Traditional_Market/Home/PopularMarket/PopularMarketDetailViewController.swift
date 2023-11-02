@@ -16,7 +16,7 @@ class PopularMarketDetailViewController : BaseViewController {
     
     let popularView = PopularView()
     
-    var imageUrl: URL? = nil
+    var cellDataImage: UIImage?
   
     override func loadView() {
         self.view = popularView
@@ -24,15 +24,9 @@ class PopularMarketDetailViewController : BaseViewController {
      
     override func configureView() {
         super.configureView()
-        print("PopularMarketDetailViewController: marketDetailInfo- \(marketDetailInfo!)")
+        print("PopularMarketDetailViewController: marketDetailInfo - \(marketDetailInfo!)")
         
-//        self.popularView.thumbnailImage.kf.setImage(with: self.imageUrl!)
-//        guard let marketDetailInfo = marketDetailInfo,
-//              let marketDescription = marketDescription else { return }
-//
-//        popularView.marketName.text = marketDetailInfo.marketName
-//        popularView.popDescription.text = marketDescription.description
-//
-        popularView.configureUI(marketInfo: marketDetailInfo, marketDescription: marketDescription, imageUrl: imageUrl)
+        popularView.thumbnailImage.image = cellDataImage
+        popularView.configureUI(marketInfo: marketDetailInfo, marketDescription: marketDescription)
     }
 }

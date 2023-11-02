@@ -11,8 +11,6 @@ class PopularView : BaseView {
     
     let thumbnailImage = {
        let view = UIImageView()
-      //  view.contentMode = .scaleAspectFill
-        view.backgroundColor = .yellow
         return view
     }()
     
@@ -23,8 +21,6 @@ class PopularView : BaseView {
     }()
     
     let marketName = UILabel()
-    
-    
     
     override func configureView() {
         [thumbnailImage, popDescription, marketName].forEach {
@@ -49,14 +45,12 @@ class PopularView : BaseView {
         }
     }
     
-    func configureUI(marketInfo: ExampleModel?, marketDescription: TenSelectedMarketSection?, imageUrl: URL?) {
+    func configureUI(marketInfo: ExampleModel?, marketDescription: TenSelectedMarketSection?) {
         
         guard let marketInfo = marketInfo,
-              let marketDescription = marketDescription,
-        let imageUrl = imageUrl
+              let marketDescription = marketDescription
         else { return }
-        
-        self.thumbnailImage.kf.setImage(with: imageUrl)
+      
         self.marketName.text = marketInfo.marketName
         self.popDescription.text = marketDescription.description
     }

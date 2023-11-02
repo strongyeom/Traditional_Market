@@ -11,12 +11,9 @@ import Kingfisher
 
 
 class EventCell: UICollectionViewCell {
-    
-//    static let identifier = "EventCell"
-    
+
     let eventImageView = UIImageView()
     
-    var completion: ((URL) -> Void)?
     let exampleText = {
        let view = UILabel()
         view.font = UIFont.systemFont(ofSize: 30, weight: .bold)
@@ -45,7 +42,6 @@ class EventCell: UICollectionViewCell {
             let aa = response.items.first?.thumbnail
             let url = URL(string: aa!)!
             self.eventImageView.kf.setImage(with: url)
-            self.completion?(url)
         }
     }
     

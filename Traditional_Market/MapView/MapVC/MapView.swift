@@ -336,32 +336,7 @@ class MapView : BaseView {
 
     }
     
-    /// 해당 지역 Annotation만 보여주기
-//    func filterCityDetailAnnotation(filterMarket: Results<TraditionalMarketRealm>, day: String) {
-//       // let currentAnnotations = self.mapBaseView.annotations
-//        guard let selectedCell else { return }
-//        // LazyMapSequence<Results<TraditionalMarketRealm>, MKAnnotation>로 나온것을 배열로 만들어주기 위해 변수 설정
-//        var mkAnnotationConvert: [MKAnnotation] = []
-//        self.mapBaseView.removeAnnotations(self.mapBaseView.annotations)
-//        // mapView에 있는 어노테이션 삭제
-//        print("filterCityAnnotation - \(selectedCell)")
-//        let realmAnnotation = realmManager.fiveMarketDetailDay(day: day)
-//            .map {
-//            (realItem) -> MKAnnotation in
-//            let pin = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: realItem.latitude, longitude: realItem.longitude))
-//            pin.title = realItem.marketName
-//            pin.imageName = "checkStamp"
-//            return pin
-//        }
-//
-//        // 반복문을 사용하여 배열 안에 담아주기
-//        for i in realmAnnotation {
-//            mkAnnotationConvert.append(i)
-//        }
-//        self.mapBaseView.addAnnotations(mkAnnotationConvert)
-//
-//    }
-    
+
     func setMapView() {
         self.mapBaseView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         
