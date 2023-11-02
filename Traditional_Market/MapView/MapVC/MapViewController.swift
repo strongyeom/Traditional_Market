@@ -22,8 +22,6 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     private let viewModel = TraditionalMarketViewModel()
     
     private let realmManager = RealmManager()
-    
-    
     // 사용자가 누른 index 저장
     var selectedSaveIndex: String = ""
     
@@ -63,6 +61,7 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
         searchResultAnnotation()
         myLocationBtnClicked()
         playViewmodel()
+
         print("파일 경로 : \(self.realm.configuration.fileURL!)")
         NotificationCenter.default.addObserver(self, selector: #selector(isSaveBtnClicked(_:)), name: Notification.Name("SavedStamp"), object: nil)
         

@@ -52,4 +52,10 @@ class MarketAPIManager {
             completionHandler(response)
         }
     }
+    // 서울 "126.9787960237", "37.5655015943"
+    func requstKoreaFestivalLocationBase(lati: Double, long: Double, completionHandler: @escaping(([FestivalItem]) -> Void)) {
+        NetworkManager.shared.requestLocationBase(api: Router.festivalInfo(longtitude: long, latitiue: lati)) { response in
+            completionHandler(response)
+        }
+    }
 }

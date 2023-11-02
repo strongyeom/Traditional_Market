@@ -14,9 +14,12 @@ enum Router: URLRequestConvertible {
     private static let marketKey = "UQybVf/BVAsYaLeP9xLFftf6XvnhuY3nWPU72kKjfSPporofcAGn6UQp+G9ftv2cI9VQxA9Fq0B/tIWxZ2lavg=="
     private static let naverKey = "myXCWsXxrg83Q4L0SAdP"
     private static let naverSecretKey = "2s8Jgd07Ij"
+
+    private static let koreaTourKey = "UQybVf/BVAsYaLeP9xLFftf6XvnhuY3nWPU72kKjfSPporofcAGn6UQp+G9ftv2cI9VQxA9Fq0B/tIWxZ2lavg=="
     
     case marketInfomation(page: String)
     case naverImgae(search: String)
+    case festivalInfo(longtitude: Double, latitiue: Double)
     
     // endPoint에서 URL로 바뀌기 때문에 String으로 설정
     // URL 타입으로 설정
@@ -27,6 +30,8 @@ enum Router: URLRequestConvertible {
             return URL(string: "http://api.data.go.kr/openapi/tn_pubr_public_trdit_mrkt_api")!
         case .naverImgae:
             return URL(string: "https://openapi.naver.com/v1/search/image.json")!
+        case .festivalInfo:
+            return URL(string: "https://apis.data.go.kr/B551011/KorService1/locationBasedList1")!
         }
         
     }
@@ -41,6 +46,8 @@ enum Router: URLRequestConvertible {
                 "X-Naver-Client-Id" : Router.naverKey,
                 "X-Naver-Client-Secret" : Router.naverSecretKey
             ]
+        case .festivalInfo:
+            return [:]
         }
     }
     
@@ -64,6 +71,22 @@ enum Router: URLRequestConvertible {
                 "display": "30",
                 "start": "1",
                 "sort": "sim"
+            ]
+            
+        case .festivalInfo(longtitude: let longtitude, latitiue: let latitiue):
+            return [
+                "serviceKey": Router.koreaTourKey,
+                "numOfRows": "10",
+                "pageNo": "1",
+                "MobileOS": "IOS",
+                "MobileApp": "%EC%A0%80%EC%9E%A3%EA%B1%B0%EB%A6%AC",
+                "_type": "json",
+                "listYN": "Y",
+                "arrange": "Q",
+                "mapX": "\(longtitude)",
+                "mapY": "\(latitiue)",
+                "radius": "10000",
+                "contentTypeId": "15"
             ]
         }
     }

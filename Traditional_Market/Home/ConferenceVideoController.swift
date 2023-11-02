@@ -33,12 +33,18 @@ class ConferenceVideoController {
     let realm = try! Realm()
     let realmManager = RealmManager()
     
+    var festivalViewModel = FestivalViewModel()
+    
     lazy var firstSection: [ExampleModel] = realmManager.firstSectionMarkets().map { ExampleModel(marketName: $0.marketName, marketType: $0.marketType, loadNameAddress: $0.loadNameAddress, address: $0.address, marketOpenCycle: $0.marketOpenCycle, publicToilet: $0.publicToilet, latitude: $0.latitude, longitude: $0.longitude, popularProducts: $0.popularProducts, phoneNumber: $0.phoneNumber)}
     
     lazy var secondSection: [ExampleModel] =
     realmManager.secondSectionMarkets().map {
         ExampleModel(marketName: $0.marketName, marketType: $0.marketType, loadNameAddress: $0.loadNameAddress, address: $0.address, marketOpenCycle: $0.marketOpenCycle, publicToilet: $0.publicToilet, latitude: $0.latitude, longitude: $0.longitude, popularProducts: $0.popularProducts, phoneNumber: $0.phoneNumber)
     }
+    
+    lazy var thirdSection: [ExampleModel] = [
+        
+    ]
 
     
     lazy var collections: [ExampleCollection] = [

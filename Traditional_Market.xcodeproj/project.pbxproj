@@ -81,6 +81,8 @@
 		26EA75D92ACB014F00FFDFDB /* Ext+UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA75D82ACB014F00FFDFDB /* Ext+UIButton.swift */; };
 		26EA75DB2ACB07A800FFDFDB /* Ext+UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA75DA2ACB07A800FFDFDB /* Ext+UITextView.swift */; };
 		26EA75E02ACB1DCA00FFDFDB /* FavoriteTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA75DF2ACB1DCA00FFDFDB /* FavoriteTable.swift */; };
+		26F62BC72AF40896002D10D5 /* LocationBaseFestival.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F62BC62AF40896002D10D5 /* LocationBaseFestival.swift */; };
+		26F62BC92AF40F3B002D10D5 /* FestivalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F62BC82AF40F3B002D10D5 /* FestivalViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -153,6 +155,8 @@
 		26EA75D82ACB014F00FFDFDB /* Ext+UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIButton.swift"; sourceTree = "<group>"; };
 		26EA75DA2ACB07A800FFDFDB /* Ext+UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UITextView.swift"; sourceTree = "<group>"; };
 		26EA75DF2ACB1DCA00FFDFDB /* FavoriteTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTable.swift; sourceTree = "<group>"; };
+		26F62BC62AF40896002D10D5 /* LocationBaseFestival.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationBaseFestival.swift; sourceTree = "<group>"; };
+		26F62BC82AF40F3B002D10D5 /* FestivalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FestivalViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -309,6 +313,7 @@
 				26AAD8A82AC44FCD002E5DD4 /* TraditionalMarket.swift */,
 				26CC8E742AC87180009ABB14 /* NaverMarketImage.swift */,
 				2633E7032AC6AC90002581EB /* City.swift */,
+				26F62BC62AF40896002D10D5 /* LocationBaseFestival.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -319,6 +324,7 @@
 				26AAD8B72AC46218002E5DD4 /* Observable.swift */,
 				26AAD8B52AC46203002E5DD4 /* TraditionalMarketViewModel.swift */,
 				2631736B2ADEA248003A5F12 /* NaverImageViewModel.swift */,
+				26F62BC82AF40F3B002D10D5 /* FestivalViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -602,8 +608,10 @@
 				26AAD8AE2AC4559B002E5DD4 /* NetworkManager.swift in Sources */,
 				26EA75D92ACB014F00FFDFDB /* Ext+UIButton.swift in Sources */,
 				26EA75E02ACB1DCA00FFDFDB /* FavoriteTable.swift in Sources */,
+				26F62BC72AF40896002D10D5 /* LocationBaseFestival.swift in Sources */,
 				26EA75DB2ACB07A800FFDFDB /* Ext+UITextView.swift in Sources */,
 				26015E382ACC0CC300D25C94 /* ProfileViewController.swift in Sources */,
+				26F62BC92AF40F3B002D10D5 /* FestivalViewModel.swift in Sources */,
 				263212DF2AF29B7800337610 /* ConferenceVideoController.swift in Sources */,
 				26E786422AE9149200525E73 /* DetailConditionView.swift in Sources */,
 				26E7682A2AD07A820052EC4C /* Scale.swift in Sources */,

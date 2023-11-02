@@ -46,6 +46,18 @@ class NetworkManager {
             }
     }
     
+    func requestLocationBase(api: Router, completionHandler: @escaping (([FestivalItem]) -> Void)) {
+        AF.request(api)
+            .responseDecodable(of: LocationBaseFestival.self) { response in
+                switch response.result {
+                case .success(let data):
+                    completionHandler(data.response.body.items.item)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+    }
+    
     
     
 }
