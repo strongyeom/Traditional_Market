@@ -7,30 +7,46 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
+
 
 class EventCell: UICollectionViewCell {
     
 //    static let identifier = "EventCell"
     
-    let view = UIView()
+    let eventImageView = UIImageView()
     
-    let exampleText = UILabel()
+    var completion: ((URL) -> Void)?
+    let exampleText = {
+       let view = UILabel()
+        view.font = UIFont.systemFont(ofSize: 30, weight: .bold)
+        return view
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.addSubview(view)
-        view.addSubview(exampleText)
+        self.addSubview(eventImageView)
+        eventImageView.addSubview(exampleText)
         
-        view.backgroundColor = .yellow
-        view.snp.makeConstraints { make in
+        eventImageView.backgroundColor = .yellow
+        eventImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        exampleText.textColor = .red
+        exampleText.textColor = .white
         exampleText.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
-        
+    }
+    
+    func configureUI(data: ExampleModel) {
+        self.exampleText.text = data.marketName
+        MarketAPIManager.shared.requestNaverImage(search: data.marketName) { response in
+            let aa = response.items.first?.thumbnail
+            let url = URL(string: aa!)!
+            self.eventImageView.kf.setImage(with: url)
+            self.completion?(url)
+        }
     }
     
     required init?(coder: NSCoder) {

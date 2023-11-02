@@ -16,7 +16,7 @@ class HomeViewController : BaseViewController {
     <ExampleCollection, ExampleModel>!
     static let titleElementKind = "title-element-kind"
     
-    var aa: String = ""
+    var cellDataURL: URL?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,8 +87,12 @@ class HomeViewController : BaseViewController {
         let cellRegistration = UICollectionView.CellRegistration
         <EventCell, ExampleModel> { (cell, indexPath, markets) in
             // Populate the cell with our item description.
-            cell.exampleText.text = markets.marketName
-            
+//            cell.exampleText.text = markets.marketName
+            cell.configureUI(data: markets)
+            cell.completion = { [weak self]url in
+                guard let self else { return }
+                self.cellDataURL = url
+            }
         }
         
         dataSource = UICollectionViewDiffableDataSource
@@ -137,6 +141,8 @@ extension HomeViewController : UICollectionViewDelegate {
         let popularMarketVC = PopularMarketDetailViewController()
         popularMarketVC.marketDetailInfo = item
         popularMarketVC.marketDescription = TenSelectedMarketSection(rawValue: item.marketName)
+        popularMarketVC.imageUrl = self.cellDataURL
+        dump(item)
         present(popularMarketVC, animated: true)
         // dump(item)
     }

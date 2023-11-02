@@ -16,6 +16,8 @@ class PopularMarketDetailViewController : BaseViewController {
     
     let popularView = PopularView()
     
+    var imageUrl: URL? = nil
+  
     override func loadView() {
         self.view = popularView
     }
@@ -23,18 +25,14 @@ class PopularMarketDetailViewController : BaseViewController {
     override func configureView() {
         super.configureView()
         print("PopularMarketDetailViewController: marketDetailInfo- \(marketDetailInfo!)")
-        print("PopularMarketDetailViewController: descrtion - \(marketDescription?.description)")
         
-//        print("PopularMarketDetailViewController: thumbnail - \(thumbnail!)")
-    
-        MarketAPIManager.shared.requestNaverImage(search: marketDetailInfo!.marketName) { response in
-            print(response.items.first?.thumbnail)
-            let aa = response.items.first?.thumbnail
-            let url = URL(string: aa!)!
-            self.popularView.thumbnailImage.kf.setImage(with: url)
-        }
-        popularView.marketName.text = marketDetailInfo?.marketName
-        popularView.popDescription.text = marketDescription?.description
-        
+//        self.popularView.thumbnailImage.kf.setImage(with: self.imageUrl!)
+//        guard let marketDetailInfo = marketDetailInfo,
+//              let marketDescription = marketDescription else { return }
+//
+//        popularView.marketName.text = marketDetailInfo.marketName
+//        popularView.popDescription.text = marketDescription.description
+//
+        popularView.configureUI(marketInfo: marketDetailInfo, marketDescription: marketDescription, imageUrl: imageUrl)
     }
 }

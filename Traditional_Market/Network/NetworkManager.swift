@@ -44,7 +44,8 @@ class NetworkManager {
                     print(error.localizedDescription)
                 }
             }
-        
     }
+    
+    
     
 }

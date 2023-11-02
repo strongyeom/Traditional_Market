@@ -48,4 +48,16 @@ class PopularView : BaseView {
             make.horizontalEdges.equalTo(thumbnailImage)
         }
     }
+    
+    func configureUI(marketInfo: ExampleModel?, marketDescription: TenSelectedMarketSection?, imageUrl: URL?) {
+        
+        guard let marketInfo = marketInfo,
+              let marketDescription = marketDescription,
+        let imageUrl = imageUrl
+        else { return }
+        
+        self.thumbnailImage.kf.setImage(with: imageUrl)
+        self.marketName.text = marketInfo.marketName
+        self.popDescription.text = marketDescription.description
+    }
 }
