@@ -9,11 +9,11 @@ import Foundation
 
 class FestivalViewModel {
     
-    var festivals = Observable<[FestivalItem]>([])
+    var festivals = Observable<[ExampleModel]>([])
     
-    func request(lati: Double, long: Double) {
+    
+    private func request(lati: Double, long: Double) {
         MarketAPIManager.shared.requstKoreaFestivalLocationBase(lati: lati, long: long) { response in
-            self.festivals.value = response
         }
     }
 }

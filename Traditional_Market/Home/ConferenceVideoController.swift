@@ -35,59 +35,44 @@ class ConferenceVideoController {
     
     var festivalViewModel = FestivalViewModel()
     
-    lazy var firstSection: [ExampleModel] = realmManager.firstSectionMarkets().map { ExampleModel(marketName: $0.marketName, marketType: $0.marketType, loadNameAddress: $0.loadNameAddress, address: $0.address, marketOpenCycle: $0.marketOpenCycle, publicToilet: $0.publicToilet, latitude: $0.latitude, longitude: $0.longitude, popularProducts: $0.popularProducts, phoneNumber: $0.phoneNumber)}
-    
-    lazy var secondSection: [ExampleModel] =
-    realmManager.secondSectionMarkets().map {
-        ExampleModel(marketName: $0.marketName, marketType: $0.marketType, loadNameAddress: $0.loadNameAddress, address: $0.address, marketOpenCycle: $0.marketOpenCycle, publicToilet: $0.publicToilet, latitude: $0.latitude, longitude: $0.longitude, popularProducts: $0.popularProducts, phoneNumber: $0.phoneNumber)
-    }
-    
-    lazy var thirdSection: [ExampleModel] = [
-        
-    ]
+    var collections: [ExampleCollection] = []
+    var thirdArray: [ExampleModel] = []
+    let group = DispatchGroup()
 
-    
-    lazy var collections: [ExampleCollection] = [
+
+    init() {
+        
+        var firstSection: [ExampleModel] = realmManager.firstSectionMarkets().map { ExampleModel(marketName: $0.marketName, marketType: $0.marketType, loadNameAddress: $0.loadNameAddress, address: $0.address, marketOpenCycle: $0.marketOpenCycle, publicToilet: $0.publicToilet, latitude: $0.latitude, longitude: $0.longitude, popularProducts: $0.popularProducts, phoneNumber: $0.phoneNumber)}
+
+        var secondSection: [ExampleModel] =
+        realmManager.secondSectionMarkets().map {
+            ExampleModel(marketName: $0.marketName, marketType: $0.marketType, loadNameAddress: $0.loadNameAddress, address: $0.address, marketOpenCycle: $0.marketOpenCycle, publicToilet: $0.publicToilet, latitude: $0.latitude, longitude: $0.longitude, popularProducts: $0.popularProducts, phoneNumber: $0.phoneNumber)}
+     
         
         
-        ExampleCollection(title: "문체부 선정 K-관광마켓 10선", markets: firstSection),
-        
-        ExampleCollection(title: "요즘 뜨는 시장들", markets: secondSection),
-        
-        ExampleCollection(title: "세번째 섹션", markets: [
             
-            ExampleModel(marketName: "세번째 섹션 - 1", marketType: "", loadNameAddress: "", address: "", marketOpenCycle: "", publicToilet: "", latitude: 0, longitude: 0, popularProducts: "", phoneNumber: ""),
+            group.enter()
+            MarketAPIManager.shared.requstKoreaFestivalLocationBase(lati: 37.5655015943, long: 126.9787960237) { response in
+                dump(response)
+                
+                let _ = response.map { fes in
+                    self.thirdArray.append(ExampleModel(marketName: fes.title, marketType: "", loadNameAddress: "", address: "", marketOpenCycle: "", publicToilet: "", latitude: Double(fes.mapy)!, longitude: Double(fes.mapx)!, popularProducts: "", phoneNumber: ""))
+                }
+                self.group.leave()
+            }
+            
+            group.notify(queue: .main) {
+                self.collections = [
+                    
+                   
+                    
+                    ExampleCollection(title: "문체부 선정 K-관광마켓 10선", markets: firstSection),
+                    
+                    ExampleCollection(title: "요즘 뜨는 시장들", markets: secondSection),
+                    
+                    ExampleCollection(title: "내 지역 문화 축제", markets: self.thirdArray)
+                ]
+            }
         
-            ExampleModel(marketName: "세번째 섹션 - 2", marketType: "", loadNameAddress: "", address: "", marketOpenCycle: "", publicToilet: "", latitude: 0, longitude: 0, popularProducts: "", phoneNumber: ""),
-        
-            ExampleModel(marketName: "세번째 섹션 - 3", marketType: "", loadNameAddress: "", address: "", marketOpenCycle: "", publicToilet: "", latitude: 0, longitude: 0, popularProducts: "", phoneNumber: ""),
-            ExampleModel(marketName: "세번째 섹션 - 3", marketType: "", loadNameAddress: "", address: "", marketOpenCycle: "", publicToilet: "", latitude: 0, longitude: 0, popularProducts: "", phoneNumber: ""),
-            ExampleModel(marketName: "세번째 섹션 - 3", marketType: "", loadNameAddress: "", address: "", marketOpenCycle: "", publicToilet: "", latitude: 0, longitude: 0, popularProducts: "", phoneNumber: "")
-        ]),
-
-        
-        
-        
-//        ExampleCollection(title: "첫번째 섹션", videos: [
-//            ExampleModel(title: "첫번째 섹션 - 1. 아이템", location: "망고"),
-//            ExampleModel(title: "첫번째 섹션 - 2. 아이템", location: "바나나"),
-//            ExampleModel(title: "첫번째 섹션 - 3. 아이템", location: "키위")
-//        ]),
-//
-//        ExampleCollection(title: "두번째 섹션", videos: [
-//            ExampleModel(title: "두번째 섹션 - 1. 아이템", location: "망고 - 2"),
-//            ExampleModel(title: "두번째 섹션 - 2. 아이템", location: "바나나 - 2"),
-//            ExampleModel(title: "두번째 섹션 - 3. 아이템", location: "키위 - 2"),
-//            ExampleModel(title: "두번째 섹션 - 4. 아이템", location: "망고 - 2"),
-//            ExampleModel(title: "두번째 섹션 - 5. 아이템", location: "바나나 - 2"),
-//            ExampleModel(title: "두번째 섹션 - 6. 아이템", location: "키위 - 2"),
-//        ]),
-//
-//        ExampleCollection(title: "세번째 섹션", videos: [
-//            ExampleModel(title: "세번째 섹션 - 1. 아이템", location: "망고 - 3"),
-//            ExampleModel(title: "세번째 섹션 - 2. 아이템", location: "바나나 - 3"),
-//            ExampleModel(title: "세번째 섹션 - 3. 아이템", location: "키위 - 3"),
-//            ExampleModel(title: "세번째 섹션 - 4. 아이템", location: "키위 - 3")
-//        ])
-    ]
+    }
 }

@@ -39,9 +39,9 @@ class HomeViewController : BaseViewController {
        // locationManager.delegate = self
         checkDeviceLocationAuthorization()
         
-        MarketAPIManager.shared.requstKoreaFestivalLocationBase(lati: 37.5655015943, long: 126.9787960237) { response in
-            dump(response)
-        }
+//        MarketAPIManager.shared.requstKoreaFestivalLocationBase(lati: 37.5655015943, long: 126.9787960237) { response in
+//            dump(response)
+//        }
         
     }
     
@@ -208,15 +208,3 @@ extension HomeViewController {
         }
     }
 }
-
-//extension HomeViewController: CLLocationManagerDelegate {
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        if let location = locations.first?.coordinate {
-//
-//            print("HomeViewController - 시작 위치를 받아오고 있습니다 \(location)")
-//
-//            // TODO: - 직접적으로 Stop을 주면 안됨... UserDefault를 사용해야 하나?
-//           // locationManager.stopUpdatingLocation()
-//        }
-//    }
-//}

@@ -47,11 +47,11 @@ class PopularView : BaseView {
     
     func configureUI(marketInfo: ExampleModel?, marketDescription: TenSelectedMarketSection?) {
         
-        guard let marketInfo = marketInfo,
-              let marketDescription = marketDescription
-        else { return }
+        guard let marketInfo = marketInfo else { return }
       
+       
         self.marketName.text = marketInfo.marketName
+        guard let marketDescription else { return }
         self.popDescription.text = marketDescription.description
     }
 }
