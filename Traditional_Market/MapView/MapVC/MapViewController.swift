@@ -117,6 +117,8 @@ extension MapViewController: CLLocationManagerDelegate {
             viewModel.startLocationFetch(location: location)
             print("MapViewController - 시작 위치를 받아오고 있습니다 \(location)")
             mapView.currentLocationButton.tintColor = UIColor(named: "brandColor")
+            UserDefaults.standard.set(location.latitude, forKey: "SavedLatitude")
+            UserDefaults.standard.set(location.longitude, forKey: "SavedLongtitude")
         }
     }
     

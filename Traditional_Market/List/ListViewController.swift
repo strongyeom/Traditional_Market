@@ -5,9 +5,8 @@
 //  Created by 염성필 on 2023/11/01.
 //
 import UIKit
-import CoreLocation
 
-class HomeViewController : BaseViewController {
+class ListViewController : BaseViewController {
     
     let conferrenceVC = ConferenceVideoController()
     var collectionView: UICollectionView! = nil
@@ -16,10 +15,6 @@ class HomeViewController : BaseViewController {
     var currentSnapshot: NSDiffableDataSourceSnapshot
     <ExampleCollection, ExampleModel>!
     static let titleElementKind = "title-element-kind"
-    
-    let locationManager = CLLocationManager()
-    
-    var authorization: CLAuthorizationStatus = .notDetermined
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,17 +27,10 @@ class HomeViewController : BaseViewController {
     
     override func configureView() {
         super.configureView()
-        navigationItem.title = "홈"
+        navigationItem.title = "리스트"
         configureHierarchy()
         configureDataSource()
         collectionView.delegate = self
-       // locationManager.delegate = self
-        checkDeviceLocationAuthorization()
-        
-//        MarketAPIManager.shared.requstKoreaFestivalLocationBase(lati: 37.5655015943, long: 126.9787960237) { response in
-//            dump(response)
-//        }
-        
     }
     
     
@@ -57,21 +45,21 @@ class HomeViewController : BaseViewController {
             
             // if we have the space, adapt and go 2-up + peeking 3rd item
             let groupFractionalWidth = CGFloat(layoutEnvironment.container.effectiveContentSize.width > 500 ?
-                                               0.425 : 0.85)
+                                               0.425 : 0.80)
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(groupFractionalWidth),
-                                                   heightDimension: .absolute(250))
+                                                   heightDimension: .fractionalWidth(0.4))
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
             
             let section = NSCollectionLayoutSection(group: group)
             section.orthogonalScrollingBehavior = .groupPagingCentered
             section.interGroupSpacing = 20
-            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
+            section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20)
             
             let titleSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                    heightDimension: .estimated(44))
             let titleSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: titleSize,
-                elementKind: HomeViewController.titleElementKind,
+                elementKind: ListViewController.titleElementKind,
                 alignment: .top)
             section.boundarySupplementaryItems = [titleSupplementary]
             return section
@@ -109,7 +97,7 @@ class HomeViewController : BaseViewController {
         }
         
         let supplementaryRegistration = UICollectionView.SupplementaryRegistration
-        <TitleSupplementaryView>(elementKind: HomeViewController.titleElementKind) {
+        <TitleSupplementaryView>(elementKind: ListViewController.titleElementKind) {
             (supplementaryView, string, indexPath) in
             if let snapshot = self.currentSnapshot {
                 // Populate the view with our section's description.
@@ -136,7 +124,7 @@ class HomeViewController : BaseViewController {
     
 }
 
-extension HomeViewController : UICollectionViewDelegate {
+extension ListViewController : UICollectionViewDelegate {
     
    
     
@@ -147,64 +135,22 @@ extension HomeViewController : UICollectionViewDelegate {
         guard let item = dataSource.itemIdentifier(for: indexPath) else {
             return
         }
-        
         guard let cell = collectionView.cellForItem(at: indexPath) as? EventCell else { return }
+       
         
         let popularMarketVC = PopularMarketDetailViewController()
+       
+        
+        if indexPath.section != 2 {
+            popularMarketVC.marketDescription = TenSelectedMarketSection(rawValue: item.marketName)
+        }
+        popularMarketVC.sectionNumber = indexPath.section
         popularMarketVC.marketDetailInfo = item
-        popularMarketVC.marketDescription = TenSelectedMarketSection(rawValue: item.marketName)
         popularMarketVC.cellDataImage = cell.eventImageView.image
         
-        present(popularMarketVC, animated: true)
-    }
-}
-
-extension HomeViewController {
-    
-    
-    /// 상태가 바뀔때 마다 권한 확인
-     func checkDeviceLocationAuthorization() {
-        DispatchQueue.global().async {
-            // 위치 서비스를 이용하고 있다면
-            if CLLocationManager.locationServicesEnabled() {
-                
-                if #available(iOS 14.0, *) {
-                    self.authorization = self.locationManager.authorizationStatus
-                } else {
-                    self.authorization = CLLocationManager.authorizationStatus()
-                }
-                
-                DispatchQueue.main.async {
-                    print("현재 권한 상태 - \(self.authorization)")
-                    self.checkStatuesDeviceLocationAuthorization(status: self.authorization)
-                }
-            }
-        }
-    }
-    
-    /// 권한 설정에 따른 메서드
-    /// - Parameter status: 권한 상태
-    func checkStatuesDeviceLocationAuthorization(status: CLAuthorizationStatus) {
-        switch status {
-        case .notDetermined:
-            print("아무것도 결정하지 않았다.")
-            // p.list 알람 띄우기
-            locationManager.requestWhenInUseAuthorization()
-        case .restricted:
-            print("권한 설정 거부함")
-        case .denied:
-            print("권한 설정 거부함")
-        case .authorizedAlways:
-            print("항상 권한 허용")
-            locationManager.startUpdatingLocation()
-        case .authorizedWhenInUse:
-            print("한번만 권한 허용")
-            locationManager.startUpdatingLocation()
-        case .authorized:
-            print("권한 허용 됨")
-            locationManager.startUpdatingLocation()
-        @unknown default:
-            print("어떤것이 추가 될 수 있음")
-        }
+        let nav = UINavigationController(rootViewController: popularMarketVC)
+        nav.modalPresentationStyle = .fullScreen
+        
+        present(nav, animated: true)
     }
 }

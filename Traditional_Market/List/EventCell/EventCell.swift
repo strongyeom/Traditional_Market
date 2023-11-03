@@ -12,7 +12,13 @@ import Kingfisher
 
 class EventCell: UICollectionViewCell {
 
-    let eventImageView = UIImageView()
+    let eventImageView = {
+       let view = UIImageView()
+        view.layer.cornerRadius = 16
+        view.layer.cornerCurve = .continuous
+        view.clipsToBounds = true
+        return view
+    }()
     
     let exampleText = {
        let view = UILabel()
@@ -24,9 +30,17 @@ class EventCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        configure()
+        setConstraints()
+      
+    }
+    
+    func configure() {
         self.addSubview(eventImageView)
         eventImageView.addSubview(exampleText)
-        
+    }
+    
+    func setConstraints() {
         eventImageView.backgroundColor = .yellow
         eventImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()

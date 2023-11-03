@@ -38,33 +38,31 @@ class ConferenceVideoController {
     var collections: [ExampleCollection] = []
     var thirdArray: [ExampleModel] = []
     let group = DispatchGroup()
-
-
+    
+    var savedLatitude: Double? = UserDefaults.standard.double(forKey: "SavedLatitude")
+    var savedLongtitude: Double? = UserDefaults.standard.double(forKey: "SavedLongtitude")
+    
     init() {
         
-        var firstSection: [ExampleModel] = realmManager.firstSectionMarkets().map { ExampleModel(marketName: $0.marketName, marketType: $0.marketType, loadNameAddress: $0.loadNameAddress, address: $0.address, marketOpenCycle: $0.marketOpenCycle, publicToilet: $0.publicToilet, latitude: $0.latitude, longitude: $0.longitude, popularProducts: $0.popularProducts, phoneNumber: $0.phoneNumber)}
+        let firstSection: [ExampleModel] = realmManager.firstSectionMarkets().map { ExampleModel(marketName: $0.marketName, marketType: $0.marketType, loadNameAddress: $0.loadNameAddress, address: $0.address, marketOpenCycle: $0.marketOpenCycle, publicToilet: $0.publicToilet, latitude: $0.latitude, longitude: $0.longitude, popularProducts: $0.popularProducts, phoneNumber: $0.phoneNumber)}
 
-        var secondSection: [ExampleModel] =
+        let secondSection: [ExampleModel] =
         realmManager.secondSectionMarkets().map {
             ExampleModel(marketName: $0.marketName, marketType: $0.marketType, loadNameAddress: $0.loadNameAddress, address: $0.address, marketOpenCycle: $0.marketOpenCycle, publicToilet: $0.publicToilet, latitude: $0.latitude, longitude: $0.longitude, popularProducts: $0.popularProducts, phoneNumber: $0.phoneNumber)}
      
-        
-        
-            
             group.enter()
-            MarketAPIManager.shared.requstKoreaFestivalLocationBase(lati: 37.5655015943, long: 126.9787960237) { response in
-                dump(response)
+  // 37.566713, 126.978428
+        MarketAPIManager.shared.requstKoreaFestivalLocationBase(lati: savedLatitude ?? 37.566713, long: savedLongtitude ?? 126.978428) { response in
+               // dump(response)
                 
                 let _ = response.map { fes in
-                    self.thirdArray.append(ExampleModel(marketName: fes.title, marketType: "", loadNameAddress: "", address: "", marketOpenCycle: "", publicToilet: "", latitude: Double(fes.mapy)!, longitude: Double(fes.mapx)!, popularProducts: "", phoneNumber: ""))
+                    self.thirdArray.append(ExampleModel(marketName: fes.title, marketType: "", loadNameAddress: fes.contenttypeid, address: fes.contentid, marketOpenCycle: "", publicToilet: "", latitude: Double(fes.mapy)!, longitude: Double(fes.mapx)!, popularProducts: "", phoneNumber: fes.tel.replacingOccurrences(of: "<br>", with: "")))
                 }
                 self.group.leave()
             }
             
             group.notify(queue: .main) {
                 self.collections = [
-                    
-                   
                     
                     ExampleCollection(title: "문체부 선정 K-관광마켓 10선", markets: firstSection),
                     

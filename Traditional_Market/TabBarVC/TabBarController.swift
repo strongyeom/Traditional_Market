@@ -13,10 +13,10 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let homeVC = HomeViewController()
-        homeVC.tabBarItem.title = "홈"
-        homeVC.tabBarItem.image = UIImage(systemName: "house")
-        let homeVCHome = UINavigationController(rootViewController: homeVC)
+        let listVC = ListViewController()
+        listVC.tabBarItem.title = "목록"
+        listVC.tabBarItem.image = UIImage(systemName: "list.bullet.clipboard")
+        let listVCHome = UINavigationController(rootViewController: listVC)
         
         let mapVC = MapViewController()
         mapVC.tabBarItem.title = "지도"
@@ -34,6 +34,7 @@ class TabBarController: UITabBarController {
         self.tabBar.isTranslucent = false // 불투명도
         self.tabBar.standardAppearance = apperance
         self.tabBar.scrollEdgeAppearance = apperance
-        setViewControllers([mapVCHome, homeVCHome, profileVCHome], animated: false)
+        
+        setViewControllers([mapVCHome, listVCHome, profileVCHome], animated: false)
     }
 }

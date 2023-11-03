@@ -17,10 +17,11 @@ enum Router: URLRequestConvertible {
 
     private static let koreaTourKey = "UQybVf/BVAsYaLeP9xLFftf6XvnhuY3nWPU72kKjfSPporofcAGn6UQp+G9ftv2cI9VQxA9Fq0B/tIWxZ2lavg=="
     
+
     case marketInfomation(page: String)
     case naverImgae(search: String)
     case festivalInfo(longtitude: Double, latitiue: Double)
-    
+    case detailFestivalInfo(contentid: Int)
     // endPoint에서 URL로 바뀌기 때문에 String으로 설정
     // URL 타입으로 설정
     private var baseURL: URL {
@@ -32,6 +33,8 @@ enum Router: URLRequestConvertible {
             return URL(string: "https://openapi.naver.com/v1/search/image.json")!
         case .festivalInfo:
             return URL(string: "https://apis.data.go.kr/B551011/KorService1/locationBasedList1")!
+        case .detailFestivalInfo:
+            return URL(string: "https://apis.data.go.kr/B551011/KorService1/detailCommon1")!
         }
         
     }
@@ -48,6 +51,8 @@ enum Router: URLRequestConvertible {
             ]
         case .festivalInfo:
             return [:]
+        case .detailFestivalInfo:
+            return [:]
         }
     }
     
@@ -55,6 +60,7 @@ enum Router: URLRequestConvertible {
         return .get
     }
     
+ 
     var query: [String: String] {
         switch self {
         case .marketInfomation(page: let page):
@@ -87,6 +93,24 @@ enum Router: URLRequestConvertible {
                 "mapY": "\(latitiue)",
                 "radius": "10000",
                 "contentTypeId": "15"
+            ]
+        case .detailFestivalInfo(contentid: let contentid):
+            return [
+                "serviceKey": Router.koreaTourKey,
+                "contentId": "\(contentid)",
+                "numOfRows": "10",
+                "pageNo": "1",
+                "MobileOS": "IOS",
+                "_type": "json",
+                "MobileApp": "%EC%A0%80%EC%9E%A3%EA%B1%B0%EB%A6%AC",
+                "contentTypeId": "15",
+                "defaultYN": "Y",
+                "firstImageYN": "N",
+                "areacodeYN": "Y",
+                "catcodeYN": "Y",
+                "addrinfoYN": "Y",
+                "mapinfoYN": "Y",
+                "overviewYN": "Y"
             ]
         }
     }

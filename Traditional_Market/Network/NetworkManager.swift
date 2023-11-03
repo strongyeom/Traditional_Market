@@ -16,6 +16,7 @@ class NetworkManager {
     
     let realm = try! Realm()
     
+    /// 전통시장 API
     func request(api: Router, completionHandler: @escaping(([Item]) -> Void)) {
         
         if !realm.isEmpty {
@@ -33,6 +34,7 @@ class NetworkManager {
         }
     }
     
+    /// NaverImage API
     func reqeustImage(api: Router, completionHandler: @escaping ((NaverMarketImage?) -> Void)) {
         
         AF.request(api)
@@ -46,6 +48,7 @@ class NetworkManager {
             }
     }
     
+    /// 지역기반 한국관광 공사 API
     func requestLocationBase(api: Router, completionHandler: @escaping (([FestivalItem]) -> Void)) {
         AF.request(api)
             .responseDecodable(of: LocationBaseFestival.self) { response in
@@ -58,6 +61,17 @@ class NetworkManager {
             }
     }
     
-    
+    /// ContentID 기반 한국관광 공사 API
+    func requestContentIDBase(api: Router, completionHandler: @escaping((ContentIDBaseItem) -> Void)) {
+        AF.request(api)
+            .responseDecodable(of: ContentIDBaseFestival.self) { response in
+                switch response.result {
+                case .success(let data):
+                    completionHandler(data.response.body.items.item.first!)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+    }
     
 }

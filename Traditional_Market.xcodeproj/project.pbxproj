@@ -16,7 +16,7 @@
 		262BBE652AF38F6400F98BF8 /* TenSelectedMarketSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262BBE642AF38F6400F98BF8 /* TenSelectedMarketSection.swift */; };
 		262BBE682AF3970400F98BF8 /* PopularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262BBE672AF3970400F98BF8 /* PopularView.swift */; };
 		2631736C2ADEA248003A5F12 /* NaverImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2631736B2ADEA248003A5F12 /* NaverImageViewModel.swift */; };
-		263212DD2AF29AC100337610 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263212DC2AF29AC100337610 /* HomeViewController.swift */; };
+		263212DD2AF29AC100337610 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263212DC2AF29AC100337610 /* ListViewController.swift */; };
 		263212DF2AF29B7800337610 /* ConferenceVideoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263212DE2AF29B7800337610 /* ConferenceVideoController.swift */; };
 		263212E12AF29BCC00337610 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263212E02AF29BCC00337610 /* EventCell.swift */; };
 		263212E32AF29BF400337610 /* TitleSupplymentaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263212E22AF29BF400337610 /* TitleSupplymentaryView.swift */; };
@@ -43,6 +43,8 @@
 		26AAD8B82AC46218002E5DD4 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8B72AC46218002E5DD4 /* Observable.swift */; };
 		26AAD8C12AC48574002E5DD4 /* MarketAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8C02AC48574002E5DD4 /* MarketAPIManager.swift */; };
 		26ABF67E2AE2858200F60A35 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ABF67D2AE2858200F60A35 /* WebViewController.swift */; };
+		26AF1DA32AF4E84A00951BA0 /* HomeEventSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AF1DA22AF4E84A00951BA0 /* HomeEventSection.swift */; };
+		26AF1DA52AF4F08500951BA0 /* ContentIdBaseFestival.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AF1DA42AF4F08500951BA0 /* ContentIdBaseFestival.swift */; };
 		26BFF4F92AEB8EF30057466E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26BFF4FB2AEB8EF30057466E /* Localizable.strings */; };
 		26BFF4FE2AEB90D70057466E /* Ext+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BFF4FD2AEB90D70057466E /* Ext+String.swift */; };
 		26BFF5002AEBA2460057466E /* Ext+AddMarket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BFF4FF2AEBA2460057466E /* Ext+AddMarket.swift */; };
@@ -95,7 +97,7 @@
 		262BBE642AF38F6400F98BF8 /* TenSelectedMarketSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenSelectedMarketSection.swift; sourceTree = "<group>"; };
 		262BBE672AF3970400F98BF8 /* PopularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularView.swift; sourceTree = "<group>"; };
 		2631736B2ADEA248003A5F12 /* NaverImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverImageViewModel.swift; sourceTree = "<group>"; };
-		263212DC2AF29AC100337610 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		263212DC2AF29AC100337610 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		263212DE2AF29B7800337610 /* ConferenceVideoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferenceVideoController.swift; sourceTree = "<group>"; };
 		263212E02AF29BCC00337610 /* EventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
 		263212E22AF29BF400337610 /* TitleSupplymentaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSupplymentaryView.swift; sourceTree = "<group>"; };
@@ -119,6 +121,8 @@
 		26AAD8B72AC46218002E5DD4 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		26AAD8C02AC48574002E5DD4 /* MarketAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketAPIManager.swift; sourceTree = "<group>"; };
 		26ABF67D2AE2858200F60A35 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		26AF1DA22AF4E84A00951BA0 /* HomeEventSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEventSection.swift; sourceTree = "<group>"; };
+		26AF1DA42AF4F08500951BA0 /* ContentIdBaseFestival.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentIdBaseFestival.swift; sourceTree = "<group>"; };
 		26BFF4FA2AEB8EF30057466E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		26BFF4FD2AEB90D70057466E /* Ext+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+String.swift"; sourceTree = "<group>"; };
 		26BFF4FF2AEBA2460057466E /* Ext+AddMarket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+AddMarket.swift"; sourceTree = "<group>"; };
@@ -243,16 +247,16 @@
 			path = PopularMarket;
 			sourceTree = "<group>";
 		};
-		263212DB2AF29AA600337610 /* Home */ = {
+		263212DB2AF29AA600337610 /* List */ = {
 			isa = PBXGroup;
 			children = (
-				263212DC2AF29AC100337610 /* HomeViewController.swift */,
+				263212DC2AF29AC100337610 /* ListViewController.swift */,
 				262BBE662AF396EE00F98BF8 /* PopularMarket */,
 				263212DE2AF29B7800337610 /* ConferenceVideoController.swift */,
 				262BBE612AF38CC500F98BF8 /* EventCell */,
 				262BBE602AF38CB700F98BF8 /* HeaderView */,
 			);
-			path = Home;
+			path = List;
 			sourceTree = "<group>";
 		};
 		2633E6FA2AC69254002581EB /* City */ = {
@@ -270,6 +274,7 @@
 				26E768292AD07A820052EC4C /* Scale.swift */,
 				26E786432AE92B3700525E73 /* KindOfMarket.swift */,
 				262BBE642AF38F6400F98BF8 /* TenSelectedMarketSection.swift */,
+				26AF1DA22AF4E84A00951BA0 /* HomeEventSection.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -314,6 +319,7 @@
 				26CC8E742AC87180009ABB14 /* NaverMarketImage.swift */,
 				2633E7032AC6AC90002581EB /* City.swift */,
 				26F62BC62AF40896002D10D5 /* LocationBaseFestival.swift */,
+				26AF1DA42AF4F08500951BA0 /* ContentIdBaseFestival.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -418,7 +424,7 @@
 				26AAD8A72AC44DAD002E5DD4 /* Model */,
 				26AAD8A62AC44DA6002E5DD4 /* Network */,
 				26015E332ACC0C4A00D25C94 /* TabBarVC */,
-				263212DB2AF29AA600337610 /* Home */,
+				263212DB2AF29AA600337610 /* List */,
 				26AAD8A52AC44D9B002E5DD4 /* MapView */,
 				26015E362ACC0CAF00D25C94 /* ProfileVC */,
 				26EA66432AC2AB4400F6FE6A /* AppDelegate.swift */,
@@ -571,7 +577,7 @@
 			files = (
 				26EA75D72ACADABA00FFDFDB /* BaseView.swift in Sources */,
 				26C92EC42AD2F622002A53D2 /* SearchCell.swift in Sources */,
-				263212DD2AF29AC100337610 /* HomeViewController.swift in Sources */,
+				263212DD2AF29AC100337610 /* ListViewController.swift in Sources */,
 				26229B9F2AC575AD002FBE59 /* TraditionalMarketRealm.swift in Sources */,
 				2633E7002AC6A2A4002581EB /* CityCell.swift in Sources */,
 				26AAD8C12AC48574002E5DD4 /* MarketAPIManager.swift in Sources */,
@@ -620,7 +626,9 @@
 				26A5BB6D2AD8458200D03FC7 /* SavedDetailView.swift in Sources */,
 				26229B9D2AC57528002FBE59 /* RealmManager.swift in Sources */,
 				26EA66442AC2AB4400F6FE6A /* AppDelegate.swift in Sources */,
+				26AF1DA32AF4E84A00951BA0 /* HomeEventSection.swift in Sources */,
 				26EA66462AC2AB4400F6FE6A /* SceneDelegate.swift in Sources */,
+				26AF1DA52AF4F08500951BA0 /* ContentIdBaseFestival.swift in Sources */,
 				26A5BB622AD7E6C300D03FC7 /* ProfileBaseView.swift in Sources */,
 				26A9C4FC2AC324EE004F955A /* Ext+UIViewController.swift in Sources */,
 				26E31C5A2ACD40EA00392068 /* BaseHeaderReusableCollectionView.swift in Sources */,

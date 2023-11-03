@@ -25,6 +25,7 @@ class MarketAPIManager {
     
     let group = DispatchGroup()
     
+    /// 전통시장 API
     func request() {
         for page in pageCount {
             group.enter()
@@ -45,6 +46,7 @@ class MarketAPIManager {
         
     }
     
+    /// 네이버 이미지 API
     func requestNaverImage(search: String, completionHandler: @escaping((NaverMarketImage) -> Void)) {
         
         NetworkManager.shared.reqeustImage(api: Router.naverImgae(search: search)) { response in
@@ -52,9 +54,16 @@ class MarketAPIManager {
             completionHandler(response)
         }
     }
-    // 서울 "126.9787960237", "37.5655015943"
+    /// 지역기반 한국관광공사 API
     func requstKoreaFestivalLocationBase(lati: Double, long: Double, completionHandler: @escaping(([FestivalItem]) -> Void)) {
         NetworkManager.shared.requestLocationBase(api: Router.festivalInfo(longtitude: long, latitiue: lati)) { response in
+            completionHandler(response)
+        }
+    }
+    
+    /// ContentID 기반 한국관광공사 API
+    func requestKoreFestivalContentIdBase(contentId: Int, completionHandler: @escaping((ContentIDBaseItem) -> Void)) {
+        NetworkManager.shared.requestContentIDBase(api: Router.detailFestivalInfo(contentid: contentId)) { response in
             completionHandler(response)
         }
     }
