@@ -45,14 +45,15 @@ class ConferenceVideoController {
     init() {
         
         let firstSection: [ExampleModel] = realmManager.firstSectionMarkets().map { ExampleModel(marketName: $0.marketName, marketType: $0.marketType, loadNameAddress: $0.loadNameAddress, address: $0.address, marketOpenCycle: $0.marketOpenCycle, publicToilet: $0.publicToilet, latitude: $0.latitude, longitude: $0.longitude, popularProducts: $0.popularProducts, phoneNumber: $0.phoneNumber)}
-
+        print("최초 좌표: savedLatitude - \(savedLatitude)")
+        print("최초 좌표: savedLongtitude - \(savedLongtitude)")
         let secondSection: [ExampleModel] =
         realmManager.secondSectionMarkets().map {
             ExampleModel(marketName: $0.marketName, marketType: $0.marketType, loadNameAddress: $0.loadNameAddress, address: $0.address, marketOpenCycle: $0.marketOpenCycle, publicToilet: $0.publicToilet, latitude: $0.latitude, longitude: $0.longitude, popularProducts: $0.popularProducts, phoneNumber: $0.phoneNumber)}
      
             group.enter()
   // 37.566713, 126.978428
-        MarketAPIManager.shared.requstKoreaFestivalLocationBase(lati: savedLatitude ?? 37.566713, long: savedLongtitude ?? 126.978428) { response in
+        MarketAPIManager.shared.requstKoreaFestivalLocationBase(lati: 37.566713, long: savedLongtitude ?? 126.978428) { response in
                // dump(response)
                 
                 let _ = response.map { fes in
