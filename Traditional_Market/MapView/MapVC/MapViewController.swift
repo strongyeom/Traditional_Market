@@ -56,8 +56,8 @@ final class MapViewController: BaseViewController, UISearchControllerDelegate {
     override func configureView() {
         super.configureView()
         setupDelegate()
-        marketAPIManager.request()
         setSearchController()
+        marketAPIManager.request()
         searchResultAnnotation()
         myLocationBtnClicked()
         playViewmodel()

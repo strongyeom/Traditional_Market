@@ -9,19 +9,20 @@ import UIKit
 
 class TabBarController: UITabBarController {
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let mapVC = MapViewController()
+        mapVC.tabBarItem.title = "지도"
+        mapVC.tabBarItem.image = UIImage(systemName: "map")
+        let mapVCHome = UINavigationController(rootViewController: mapVC)
         
         let listVC = ListViewController()
         listVC.tabBarItem.title = "목록"
         listVC.tabBarItem.image = UIImage(systemName: "list.bullet.clipboard")
         let listVCHome = UINavigationController(rootViewController: listVC)
         
-        let mapVC = MapViewController()
-        mapVC.tabBarItem.title = "지도"
-        mapVC.tabBarItem.image = UIImage(systemName: "map")
-        let mapVCHome = UINavigationController(rootViewController: mapVC)
+        
         
         let profileVC = ProfileViewController()
         profileVC.tabBarItem.title = "나의 시장"

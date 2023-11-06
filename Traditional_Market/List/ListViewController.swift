@@ -8,13 +8,17 @@ import UIKit
 
 class ListViewController : BaseViewController {
     
-    let conferrenceVC = ConferenceVideoController()
     var collectionView: UICollectionView! = nil
     var dataSource: UICollectionViewDiffableDataSource
     <ExampleCollection, ExampleModel>!
     var currentSnapshot: NSDiffableDataSourceSnapshot
     <ExampleCollection, ExampleModel>!
     static let titleElementKind = "title-element-kind"
+    
+    lazy var collections: [ExampleCollection] = []
+    let realmManager = RealmManager()
+    let group = DispatchGroup()
+    var thirdArray: [ExampleModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,18 +27,53 @@ class ListViewController : BaseViewController {
         navAppearance.backgroundColor = UIColor(named: "brandColor")
         self.navigationController?.navigationBar.standardAppearance = navAppearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = navAppearance
+       
     }
+    
+    func bind() {
+        
+        let firstSection: [ExampleModel] = realmManager.firstSectionMarkets().map { ExampleModel(marketName: $0.marketName, marketType: $0.marketType, loadNameAddress: $0.loadNameAddress, address: $0.address, marketOpenCycle: $0.marketOpenCycle, publicToilet: $0.publicToilet, latitude: $0.latitude, longitude: $0.longitude, popularProducts: $0.popularProducts, phoneNumber: $0.phoneNumber)}
+
+        let secondSection: [ExampleModel] =
+        realmManager.secondSectionMarkets().map {
+            ExampleModel(marketName: $0.marketName, marketType: $0.marketType, loadNameAddress: $0.loadNameAddress, address: $0.address, marketOpenCycle: $0.marketOpenCycle, publicToilet: $0.publicToilet, latitude: $0.latitude, longitude: $0.longitude, popularProducts: $0.popularProducts, phoneNumber: $0.phoneNumber)}
+        
+        collections = [
+            ExampleCollection(title: "문체부 선정 K-관광마켓 10선", markets: firstSection),
+            
+            ExampleCollection(title: "요즘 뜨는 시장들", markets: secondSection)
+        ]
+        
+        
+        group.enter()
+        MarketAPIManager.shared.requstKoreaFestivalLocationBase(lati: 37.566713, long: 126.978428) { response in
+            dump(response)
+                
+                let _ = response.map { fes in
+                    self.thirdArray.append(ExampleModel(marketName: fes.title, marketType: "", loadNameAddress: fes.contenttypeid, address: fes.contentid, marketOpenCycle: "", publicToilet: "", latitude: Double(fes.mapy)!, longitude: Double(fes.mapx)!, popularProducts: "", phoneNumber: fes.tel.replacingOccurrences(of: "<br>", with: "")))
+                }
+                self.group.leave()
+            }
+            
+            group.notify(queue: .main) {
+                self.collections.append(ExampleCollection(title: "내 지역 문화 축제", markets: self.thirdArray))
+                print("collections2", self.collections)
+                self.configureDataSource()
+            }
+        
+        
+        
+    }
+    
     
     override func configureView() {
         super.configureView()
         navigationItem.title = "리스트"
         configureHierarchy()
-        configureDataSource()
+        
         collectionView.delegate = self
+        bind()
     }
-    
-    
-    
     
     func createLayout() -> UICollectionViewLayout {
         let sectionProvider = { (sectionIndex: Int,
@@ -111,9 +150,11 @@ class ListViewController : BaseViewController {
                 using: supplementaryRegistration, for: index)
         }
         
+        
+      
         currentSnapshot = NSDiffableDataSourceSnapshot
         <ExampleCollection, ExampleModel>()
-        conferrenceVC.collections.forEach {
+        collections.forEach {
             let collection = $0
             currentSnapshot.appendSections([collection])
             currentSnapshot.appendItems(collection.markets)
