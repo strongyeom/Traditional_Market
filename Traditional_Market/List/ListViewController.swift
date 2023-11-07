@@ -27,7 +27,7 @@ class ListViewController : BaseViewController {
         navAppearance.backgroundColor = UIColor(named: "brandColor")
         self.navigationController?.navigationBar.standardAppearance = navAppearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = navAppearance
-       
+       configureDataSource()
     }
     
     func bind() {
@@ -58,7 +58,16 @@ class ListViewController : BaseViewController {
             group.notify(queue: .main) {
                 self.collections.append(ExampleCollection(title: "내 지역 문화 축제", markets: self.thirdArray))
                 print("collections2", self.collections)
-                self.configureDataSource()
+                
+                self.currentSnapshot = NSDiffableDataSourceSnapshot
+                  <ExampleCollection, ExampleModel>()
+                self.collections.forEach {
+                      let collection = $0
+                    self.currentSnapshot.appendSections([collection])
+                    self.currentSnapshot.appendItems(collection.markets)
+                  }
+                  
+                self.dataSource.apply(self.currentSnapshot, animatingDifferences: true)
             }
         
         
@@ -149,18 +158,6 @@ class ListViewController : BaseViewController {
             return self.collectionView.dequeueConfiguredReusableSupplementary(
                 using: supplementaryRegistration, for: index)
         }
-        
-        
-      
-        currentSnapshot = NSDiffableDataSourceSnapshot
-        <ExampleCollection, ExampleModel>()
-        collections.forEach {
-            let collection = $0
-            currentSnapshot.appendSections([collection])
-            currentSnapshot.appendItems(collection.markets)
-        }
-        
-        dataSource.apply(currentSnapshot, animatingDifferences: false)
     }
     
 }
