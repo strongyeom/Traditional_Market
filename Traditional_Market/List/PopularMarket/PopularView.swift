@@ -90,8 +90,9 @@ class PopularView : BaseView {
     }
     
     func detailFestivalConfigureUI(data: ContentIDBaseItem?) {
-        print("PopularView - \(data!)")
+       
         guard let data else { return }
+        print("PopularView - \(data)")
         self.marketName.text = data.title
         self.address.text = "주소 : " + (data.addr1 ?? "")
         self.telePhone.text = "전화번호 : " + (data.tel ?? "")
