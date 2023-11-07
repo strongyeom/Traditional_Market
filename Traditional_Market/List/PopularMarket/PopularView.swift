@@ -93,8 +93,8 @@ class PopularView : BaseView {
         print("PopularView - \(data!)")
         guard let data else { return }
         self.marketName.text = data.title
-        self.address.text = "주소 : " + data.addr1
-        self.telePhone.text = "전화번호 : " + data.tel
-        self.popDescription.text = "상세 설명 : " + data.overview.replacingOccurrences(of: "<br>", with: "")
+        self.address.text = "주소 : " + (data.addr1 ?? "")
+        self.telePhone.text = "전화번호 : " + (data.tel ?? "")
+        self.popDescription.text = "상세 설명 : " + (data.overview ?? "").replacingOccurrences(of: "<br>", with: "")
     }
 }

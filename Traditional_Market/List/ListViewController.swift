@@ -92,14 +92,14 @@ class ListViewController : BaseViewController {
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
             // if we have the space, adapt and go 2-up + peeking 3rd item
-            let groupFractionalWidth = CGFloat(layoutEnvironment.container.effectiveContentSize.width > 500 ?
-                                               0.425 : 0.80)
+            let groupFractionalWidth = sectionIndex == 0 ? 0.4 : CGFloat(layoutEnvironment.container.effectiveContentSize.width > 500 ?
+                                                                   0.425 : 0.80)
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(groupFractionalWidth),
                                                    heightDimension: .fractionalWidth(0.4))
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
             
             let section = NSCollectionLayoutSection(group: group)
-            section.orthogonalScrollingBehavior = .groupPagingCentered
+            section.orthogonalScrollingBehavior = sectionIndex == 0 ? .continuous : .groupPagingCentered
             section.interGroupSpacing = 20
             section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20)
             

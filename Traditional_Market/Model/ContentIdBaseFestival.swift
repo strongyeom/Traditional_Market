@@ -26,9 +26,9 @@ struct ContentIDBaseItems: Decodable {
 
 // MARK: - Item
 struct ContentIDBaseItem: Decodable {
-    let contentid, contenttypeid, title : String
-    let tel, telname, homepage: String
-    let addr1: String
-    let mapx, mapy: String
-    let overview: String
+    let contentid, contenttypeid, title : String?
+    let tel, telname, homepage: String?
+    let addr1: String?
+    let mapx, mapy: String?
+    let overview: String?
 }
