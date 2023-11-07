@@ -27,7 +27,7 @@ class ListViewController : BaseViewController {
         navAppearance.backgroundColor = UIColor(named: "brandColor")
         self.navigationController?.navigationBar.standardAppearance = navAppearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = navAppearance
-       configureDataSource()
+      
     }
     
     func bind() {
@@ -79,7 +79,7 @@ class ListViewController : BaseViewController {
         super.configureView()
         navigationItem.title = "리스트"
         configureHierarchy()
-        
+        configureDataSource()
         collectionView.delegate = self
         bind()
     }
