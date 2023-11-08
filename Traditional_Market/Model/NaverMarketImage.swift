@@ -8,15 +8,15 @@ import Foundation
 
 // MARK: - NaverMarketImage
 struct NaverMarketImage: Decodable {
-    let lastBuildDate: String
-    let total, start, display: Int
+//    let lastBuildDate: String
+//    let total, start, display: Int
     var items: [NaverItem]
 }
 
 // MARK: - Item
 struct NaverItem: Decodable {
-    let title: String
+   // let title: String
     let link: String
     let thumbnail: String
-    let sizeheight, sizewidth: String
+   // let sizeheight, sizewidth: String
 }

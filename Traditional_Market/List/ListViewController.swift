@@ -126,7 +126,8 @@ class ListViewController : BaseViewController {
         collectionView.backgroundColor = .systemBackground
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(13)
+            make.horizontalEdges.bottom.edges.equalToSuperview()
         }
     }
     
@@ -151,6 +152,7 @@ class ListViewController : BaseViewController {
                 // Populate the view with our section's description.
                 let videoCategory = snapshot.sectionIdentifiers[indexPath.section]
                 supplementaryView.label.text = videoCategory.title
+                supplementaryView.backgroundColor = .green
             }
         }
         
