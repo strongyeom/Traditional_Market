@@ -32,8 +32,9 @@ class MarketAPIManager {
             NetworkManager.shared.request(api: .marketInfomation(page: "\(page)")) { [weak self] response in
                 
                 guard let self else { return }
-                marketList.response.body.items.append(contentsOf:response)
-                group.leave()
+                self.marketList.response.body.items.append(contentsOf:response)
+                print("marketList.response.body.items : \(marketList.response.body.items.count)")
+                self.group.leave()
             }
         }
         
