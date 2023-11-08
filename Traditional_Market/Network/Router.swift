@@ -126,7 +126,6 @@ enum Router: URLRequestConvertible {
         
         // 내부에서 만들어 놓은 url : endPoint 사용
         // var request = URLRequest(url: url)
-        
         return request
     }
 }

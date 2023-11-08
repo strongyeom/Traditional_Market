@@ -99,7 +99,7 @@ class ListViewController : BaseViewController {
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
             
             let section = NSCollectionLayoutSection(group: group)
-            section.orthogonalScrollingBehavior = sectionIndex == 0 ? .continuous : .groupPagingCentered
+            section.orthogonalScrollingBehavior = sectionIndex == 0 ? .continuous : .groupPaging
             section.interGroupSpacing = 20
             section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20)
             
