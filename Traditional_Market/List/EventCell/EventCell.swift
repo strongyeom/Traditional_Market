@@ -43,6 +43,7 @@ class EventCell: UICollectionViewCell {
         
         
         isSkeletonable = true
+        // contentView 의 하위 뷰에 적용 
         contentView.isSkeletonable = true
     }
     

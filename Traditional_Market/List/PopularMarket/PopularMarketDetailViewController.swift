@@ -24,11 +24,11 @@ class PopularMarketDetailViewController : BaseViewController {
     
     let group = DispatchGroup()
     
-    let loadingView = {
-        let view = UIActivityIndicatorView()
-        view.style = .medium
-        return view
-    }()
+//    let loadingView = {
+//        let view = UIActivityIndicatorView()
+//        view.style = .medium
+//        return view
+//    }()
   
     override func loadView() {
         self.view = popularView
@@ -37,10 +37,10 @@ class PopularMarketDetailViewController : BaseViewController {
     override func configureView() {
         super.configureView()
         setNavigation()
-        self.view.addSubview(loadingView)
-        loadingView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-        }
+//        self.view.addSubview(loadingView)
+//        loadingView.snp.makeConstraints { make in
+//            make.center.equalToSuperview()
+//        }
         guard let marketDetailInfo = marketDetailInfo else { return }
         
         if sectionNumber != 2 {
@@ -49,7 +49,7 @@ class PopularMarketDetailViewController : BaseViewController {
         } else {
             // 넘어온 item의 id를 기반으로 네트워크 통신 다시 하기
             // 필요한 리소스 제목, 내용, 전화번호, 좌표
-            self.loadingView.startAnimating()
+            //self.loadingView.startAnimating()
             group.enter()
             MarketAPIManager.shared.requestKoreFestivalContentIdBase(contentId: Int(marketDetailInfo.address!)!) { result in
                 self.festivalDetailInfomation = result
@@ -58,7 +58,7 @@ class PopularMarketDetailViewController : BaseViewController {
             }
             
             group.notify(queue: .main) {
-                self.loadingView.stopAnimating()
+               // self.loadingView.stopAnimating()
                 self.popularView.thumbnailImage.image = self.cellDataImage
                 self.popularView.detailFestivalConfigureUI(data: self.festivalDetailInfomation)
             }

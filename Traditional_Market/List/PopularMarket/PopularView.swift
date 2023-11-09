@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 class PopularView : BaseView {
     
@@ -13,6 +14,7 @@ class PopularView : BaseView {
        let view = UIImageView()
         view.layer.cornerRadius = 16
         view.layer.cornerCurve = .continuous
+        view.isSkeletonable = true
         view.clipsToBounds = true
         return view
     }()
@@ -20,6 +22,7 @@ class PopularView : BaseView {
     let marketName = {
        let view = UILabel()
         view.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        view.isSkeletonable = true
         return view
     }()
     
@@ -27,12 +30,14 @@ class PopularView : BaseView {
        let view = UILabel()
         view.textColor = .lightGray
         view.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        view.isSkeletonable = true
         return view
     }()
     
     let telePhone = {
        let view = UILabel()
         view.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        view.isSkeletonable = true
         return view
     }()
     
@@ -41,7 +46,7 @@ class PopularView : BaseView {
     let popDescription = {
         let view = UILabel()
         view.numberOfLines = 0
-        
+        view.isSkeletonable = true
         return view
     }()
     
@@ -51,6 +56,7 @@ class PopularView : BaseView {
         [thumbnailImage, marketName, address, telePhone, popDescription].forEach {
             self.addSubview($0)
         }
+        isSkeletonable = true
     }
     
     override func setConstraints() {
@@ -90,12 +96,18 @@ class PopularView : BaseView {
     }
     
     func detailFestivalConfigureUI(data: ContentIDBaseItem?) {
-       
         guard let data else { return }
-        print("PopularView - \(data)")
-        self.marketName.text = data.title
-        self.address.text = "주소 : " + (data.addr1 ?? "")
-        self.telePhone.text = "전화번호 : " + (data.tel ?? "")
-        self.popDescription.text = "상세 설명 : " + (data.overview ?? "").replacingOccurrences(of: "<br>", with: "")
+        showAnimatedGradientSkeleton()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
+            self.hideSkeleton()
+            print("PopularView - \(data)")
+            self.marketName.text = data.title
+            self.address.text = "주소 : " + (data.addr1 ?? "")
+            self.telePhone.text = "전화번호 : " + (data.tel ?? "")
+            self.popDescription.text = "상세 설명 : " + (data.overview ?? "").replacingOccurrences(of: "<br>", with: "")
+        }
+        
+      
     }
 }
