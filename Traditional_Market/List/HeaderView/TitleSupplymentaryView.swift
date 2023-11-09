@@ -1,4 +1,5 @@
 import UIKit
+import SkeletonView
 
 class TitleSupplementaryView: UICollectionReusableView {
     let label = {
@@ -6,7 +7,7 @@ class TitleSupplementaryView: UICollectionReusableView {
         view.adjustsFontForContentSizeCategory = true
         view.font = UIFont.preferredFont(forTextStyle: .headline)
         view.textAlignment = .left
-        view.backgroundColor = .yellow
+        view.isSkeletonable = true
         return view
     }()
     
@@ -14,7 +15,16 @@ class TitleSupplementaryView: UICollectionReusableView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configure()
+        isSkeletonable = true
+        showAnimatedSkeleton()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
+            self.hideSkeleton()
+            self.configure()
+        }
+        
+        
+       
+        
     }
     required init?(coder: NSCoder) {
         fatalError()
@@ -22,11 +32,14 @@ class TitleSupplementaryView: UICollectionReusableView {
 }
 
 extension TitleSupplementaryView {
+    
+    
     func configure() {
         addSubview(label)
-        
+        //showAnimatedSkeleton()
         label.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(10)
+            
+            make.edges.equalToSuperview()
         }
     }
 }

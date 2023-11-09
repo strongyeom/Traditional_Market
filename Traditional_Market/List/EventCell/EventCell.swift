@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 import Kingfisher
-
+import SkeletonView
 
 class EventCell: UICollectionViewCell {
 
@@ -16,6 +16,7 @@ class EventCell: UICollectionViewCell {
        let view = UIImageView()
         view.layer.cornerRadius = 16
         view.layer.cornerCurve = .continuous
+        view.isSkeletonable = true
         view.clipsToBounds = true
         return view
     }()
@@ -25,23 +26,34 @@ class EventCell: UICollectionViewCell {
         view.numberOfLines = 0
         view.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         view.textAlignment = .center
+        view.isSkeletonable = true
         return view
     }()
+//
+    var data: ExampleModel? {
+        didSet {
+            configureUI(data: data)
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
         setConstraints()
-      
+        
+        
+        isSkeletonable = true
+        contentView.isSkeletonable = true
     }
     
     func configure() {
         self.addSubview(eventImageView)
         eventImageView.addSubview(exampleText)
+        startSkeletonAnimation()
     }
     
     func setConstraints() {
-        eventImageView.backgroundColor = .yellow
+       // eventImageView.backgroundColor = .yellow
         eventImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -52,19 +64,23 @@ class EventCell: UICollectionViewCell {
         }
     }
     
-    func configureUI(data: ExampleModel) {
-        self.exampleText.text = data.marketName
+    func configureUI(data: ExampleModel?) {
+        guard let data else {
+            return
+        }
+        showAnimatedGradientSkeleton()
+        
         MarketAPIManager.shared.requestNaverImage(search: data.marketName) { response in
             print("resonse.items : \(response.items)")
-//            let aa = response.items.first?.thumbnail
-//            let url = URL(string: aa ?? "https://images.unsplash.com/photo-1682686580036-b5e25932ce9a?auto=format&fit=crop&q=80&w=2875&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")!
-//            self.eventImageView.kf.setImage(with: url)
             
             let _ = response.items.map {
                 let url = URL(string: $0.link)!
                 self.eventImageView.kf.setImage(with: url)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
+                    self.hideSkeleton()
+                    self.exampleText.text = data.marketName
+                }
             }
-
         }
     }
     

@@ -61,9 +61,12 @@ class ListViewController : BaseViewController {
                 
                 self.currentSnapshot = NSDiffableDataSourceSnapshot
                   <ExampleCollection, ExampleModel>()
+                
+                
                 self.collections.forEach {
-                      let collection = $0
+                      let collection = $0 // collections [ 0, 1 , 2]
                     self.currentSnapshot.appendSections([collection])
+                    print("---- collection.markets :\(collection.markets)")
                     self.currentSnapshot.appendItems(collection.markets)
                   }
                   
@@ -135,13 +138,16 @@ class ListViewController : BaseViewController {
         
         let cellRegistration = UICollectionView.CellRegistration
         <EventCell, ExampleModel> { (cell, indexPath, markets) in
-            cell.configureUI(data: markets)
+           // cell.configureUI(data: markets)
+            cell.data = markets
+           
         }
         
         dataSource = UICollectionViewDiffableDataSource
         <ExampleCollection, ExampleModel>(collectionView: collectionView) {
             (collectionView: UICollectionView, indexPath: IndexPath, markets: ExampleModel) -> UICollectionViewCell? in
             // Return the cell.
+            print("-- indexPath : \(indexPath)")
             return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: markets)
         }
         
@@ -152,7 +158,6 @@ class ListViewController : BaseViewController {
                 // Populate the view with our section's description.
                 let videoCategory = snapshot.sectionIdentifiers[indexPath.section]
                 supplementaryView.label.text = videoCategory.title
-                supplementaryView.backgroundColor = .green
             }
         }
         
