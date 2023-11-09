@@ -87,6 +87,7 @@ class EventCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.eventImageView.image = nil
+        self.exampleText.text = nil
     }
     
     required init?(coder: NSCoder) {
