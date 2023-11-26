@@ -28,6 +28,7 @@ class SaveMarketCell : UITableViewCell {
     let createdDate = {
        let view = UILabel()
         view.font = UIFont.systemFont(ofSize: 13)
+        view.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         view.textColor = .lightGray
         return view
     }()
@@ -36,7 +37,8 @@ class SaveMarketCell : UITableViewCell {
        let view = UILabel()
         view.text = "여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음여기 진짜 맛있음"
         view.font = UIFont.systemFont(ofSize: 13)
-        view.numberOfLines = 0
+        view.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        view.numberOfLines = 2
         return view
     }()
 
@@ -78,7 +80,8 @@ class SaveMarketCell : UITableViewCell {
         
         marketDescription.snp.makeConstraints { make in
             make.top.equalTo(marketTitle.snp.bottom).offset(5)
-            make.horizontalEdges.equalTo(marketTitle)
+            make.leading.equalTo(marketTitle)
+            make.trailing.equalTo(createdDate.snp.leading).offset(-10)
             make.bottom.lessThanOrEqualTo(saveImageView)
            
         }
