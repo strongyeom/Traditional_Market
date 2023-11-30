@@ -27,22 +27,20 @@
 ------
  ``
 # 기능 구현 
-- `CoreLocation`을 이용하여 현재 사용자의 위치를 활용해서 인근 전통시장을 나타내고, `Custom Annotations` 을 클릭시 전통시장에 대해 기록할 수 있습니다. 
-- 상단의 필터링 기능을 사용하여 간편하게 원하는 지역의 전통시장을 볼 수 있어요
-- 오일장의 경우 일자 별로 상세 필터링이 가능합니다
-- 시장 클릭시 `UISheetPresentation` 을 띄어 Map을 보면서 간략히 시장 정보를 확인 및 기록 할 수 있어요
+- `CoreLocation`을 이용하여 현재 사용자의 위치를 활용해서 인근 전통시장을 나타내고, `Custom Annotations` 을 클릭시 전통시장에 대해 기록할 수 있습니다.
+   - `UISheetPresentation`의 cutsom Detent를 사용하여 `MapView`와 전통시장에 대한 간략한 정보를 한눈에 확인 할 수 있습니다.
+- `MapView` 에 오버레이로 `CollectionViewCell` 을 활용하여 지역을 나타내고 Cell 클릭시 `setRegion` 을 사용하여 해당 지역의 전통시장 보여줍니다.
+- 네트워크 통신의 과호출을 방지하기 위해 Realm에 전통시장 API 데이터를 저장합니다.
+  - Realm의 `writeAsync` 사용하여 비동기로 저장하여 저장 속도를 향상 시켰습니다.
+- `DiffableDataSource`를 활용한 data 기반 CollectionView 핸들링했습니다.
+    -  DispatchGroup을 사용하여 네트워크 및 Realm의 데이터를 받아온 후 snapshot update 시나리오 구성했습니다.
+- Alamofire의 `URLRequestConvertible`을 사용하여 유지 비용 감소 및 재사용성을 증가시켰습니다.
+- `FCM` 및 `Push Notifications Console` 활용 remote Push 기능 구현했습니다.
+- `Realm` DB Table 스키마 구성
+    - `EmbeddedObject` 활용한 Subset Pattern 
+    - 전통시장에 대해 기록들을 관리하고 저장할 수 있습니다.
 
-## 리스트 화면 
-- 현재 뜨고있는 시장 정보를 한눈에 볼 수 있고, 현재 위치 기반 문화 축제 정보를 확인 할 수 있어요
-- `DiffableDataSource` 를 활용하여 사용자 친화적인 UI로 구성했어요
 
-## 마이페이지 화면
-- 시장별로 기록한 메모를 확인 할 수 있어요
-- 
-
-# 주요 기능
-
-------
 
 # Trouble Shooting
 ## 네트워크 통신 후 Realm에 저장할때 오래걸리는 속도 개선 
