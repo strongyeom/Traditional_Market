@@ -119,7 +119,7 @@ Realm 공식문서를 확인해보니 지원해주는 메서드가 있어 리팩
     }
 ```
 
-## 현재 디바이스 화면에 보여지는 부분의 영역만 필터링하여 메모리 최적화
+### B. 현재 디바이스 화면에 보여지는 부분의 영역만 필터링하여 메모리 최적화
 Map의 보여지는 영역에 대해서만 Annotations을 보여주기 위해 Map의 regionDidChangeAnimated을 사용했고 span 값을 
 이용해서 최대, 최소 값을 구하고 
 ```swift
@@ -161,4 +161,27 @@ Map의 보여지는 영역에 대해서만 Annotations을 보여주기 위해 Ma
     }
 ```
 
-## Realm 데이터와 API 통신으로 받아온 데이터 DiffableDataSource를 사용하여 섹션별로 나눠서 UI에 적용
+### C. Custom Annotations를 클릭하여 정보 및 기록을 할때 연속적으로 누르거나 다른 Annotations을 클릭하면 present가 되지 않는 이슈 해결
+Map에서 Custom Annotations을 눌러 시장 정보를 확인하거나 기록 저장을 하려고 할때 연속적으로 누르거나 Map에서 다른 전통시장을 누르면 present로 해당 정보가 나타나지 않았음 
+해결방법으로는 Map에서 Custom Annotations에 대한 클릭이 일어났을때 dismiss를 시키고 다시 present해주는 방식으로 문제를 해결함
+```swift
+    // 어노테이션을 클릭했을때 액션 메서드
+    func mapView(_ mapView: MKMapView, didSelect annotation: MKAnnotation) {
+        print("찍힌 어노테이션 : \(annotation.title!!)")
+        
+        // 내 위치 클릭했을때 DetailVC 띄우지 않기
+        // 클러스터가 됐을때는 didSelect 허용하지 않기
+        guard !annotation.isKind(of: MKUserLocation.self),
+              !annotation.isKind(of: MKClusterAnnotation.self)
+        else { return }
+        
+        let detailVC = DetailViewController()
+        // Realm 필터를 사용해서 Item 하나만 던져주기
+        detailVC.selectedMarket = viewModel.selectedMarketInfomation(location: annotation.coordinate)
+        detailVC.isLikeClickedEvent() // + 버튼을 눌렀을때 기록View로 넘어가기
+        self.dismiss(animated: true) {
+            self.present(detailVC, animated: true)
+            self.mapView.setAnnotationSelectedRegionScale(center: annotation.coordinate)
+        }
+    }
+```
