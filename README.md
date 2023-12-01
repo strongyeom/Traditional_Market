@@ -1,8 +1,6 @@
 # 저잣거리
 #### 전국 전통시장을 돌아다니며 한국의 정과 지역 특색의 전통시장을 경험하고 기록하는 앱 입니다.
-
-<image src="https://github.com/strongyeom/UiKit_Example/assets/101084872/f1f29624-0a19-4af8-acef-65edc73dae07" width="100%" height="450"/>
-
+![‎AppStoreImage ‎002](https://github.com/strongyeom/UiKit_Example/assets/101084872/95908401-d935-4c74-a2fe-8cf85e47dd3b)
 # Link
 
 [저잣거리 앱스토어 링크](https://apps.apple.com/kr/app/%EC%A0%80%EC%9E%A3%EA%B1%B0%EB%A6%AC/id6470018379)
