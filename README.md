@@ -16,7 +16,7 @@
 - 1인 개발
 
 # 사용 기술
-- **MapKit, CoreLocation, Clustering, CustomAnnotation**
+- **MapKit, CoreLocation, Clustering, CustomAnnotation, Clustering**
 - **UIKit, WebKit, SPM, Push Notifications Console**
 - **Alamofire, Realm, Kingfisher, SnapKit, SkeletonView, FirebaseAnalyticsWithoutAdid, FirebaseCrashlytics, FirebaseMessaging**
 - **MVVM, Router, Singleton, Repository**
@@ -28,7 +28,7 @@
  ``
 # 기능 구현 
 - `CoreLocation`을 이용하여 현재 사용자의 위치를 활용해서 인근 전통시장을 나타내고, `Custom Annotations` 을 클릭시 전통시장에 대해 기록
-   - `UISheetPresentation`의 cutsom Detent를 사용하여 `MapView`와 전통시장에 대한 간략한 정보를 한눈에 확인
+  - `UISheetPresentation`의 cutsom Detent를 사용하여 `MapView`와 전통시장에 대한 간략한 정보를 한눈에 확인
 - `MapView` 에 오버레이로 `CollectionViewCell` 을 활용하여 지역을 나타내고 Cell 클릭시 `setRegion` 을 사용하여 해당 지역의 전통시장 보여줌
 - 네트워크 통신의 과호출을 방지하기 위해 Realm에 전통시장 API 데이터를 저장
   - Realm의 `writeAsync` 사용하여 비동기로 저장하여 저장 속도를 향상
@@ -38,9 +38,7 @@
 - `FCM` 및 `Push Notifications Console` 활용 remote Push 기능 구현
 - `Realm` DB Table 스키마 구성
   - `EmbeddedObject` 활용한 Subset Pattern
-- Realm의 `fiter` 를 사용하여 Map의 x,y축의 최대, 최소 값을 구하고 해당 영역에 속하는 모든 Annotations 필터링
-  - MKMapViewDelegate 의 `regionDidChangeAnimated` 메서드를 통해 span 값을 활용하여 x축, y축 최대 최솟값 연산
-  - Realm의 filter에서 `BETWEEN AND` 를 활용하여 DB에서 x축, y축 최대 최소에 속하는 값 필터링 
+- Realm의 `filter` 와 MKMapViewDelegate 의 `regionDidChangeAnimated` 메서드를 사용하여 Map의 x,y축의 최대, 최소 값을 구하고 해당 Map 영역에 속하는 모든 Annotations만 필터링
 
 
 
@@ -122,4 +120,45 @@ Realm 공식문서를 확인해보니 지원해주는 메서드가 있어 리팩
 ```
 
 ## 현재 디바이스 화면에 보여지는 부분의 영역만 필터링하여 메모리 최적화
-## DiffableDataSource를 사용할때 섹션에 따른 데이터 모듈화
+Map의 보여지는 영역에 대해서만 Annotations을 보여주기 위해 Map의 regionDidChangeAnimated을 사용했고 span 값을 
+이용해서 최대, 최소 값을 구하고 
+```swift
+    // MapView Zoom의 거리 확인
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        
+        let span = mapView.region.span
+        let center = mapView.region.center
+        
+        let farSouth = CLLocation(latitude: center.latitude - span.latitudeDelta * 0.5, longitude: center.longitude)
+        let farNorth = CLLocation(latitude: center.latitude + span.latitudeDelta * 0.5, longitude: center.longitude)
+        let farEast = CLLocation(latitude: center.latitude, longitude: center.longitude + span.longitudeDelta * 0.5)
+        let farWest = CLLocation(latitude: center.latitude, longitude: center.longitude - span.longitudeDelta * 0.5)
+        
+        let minimumLatitude: Double = farSouth.coordinate.latitude as Double
+        let maximumLatitude: Double = farNorth.coordinate.latitude as Double
+        let minimumlongtitude: Double = farWest.coordinate.longitude as Double
+        let maximumLongitude: Double = farEast.coordinate.longitude as Double
+        
+        
+        viewModel.mapScaleFilterAnnotations(minLati: minimumLatitude, maxLati: maximumLatitude, minLong: minimumlongtitude, maxLong: maximumLongitude)
+        print("MapView 반경에 있는 총 갯수:",viewModel.rangeFilterAnnoation.value.count)
+    }
+```
+
+구해진 최대 최소 값을 다시 Realm의 filter 중 `BETWEEN AND`을 사용하여 x,y축의 최대 최소값에 속하는 것만 필터링을 진행했습니다.
+```swift
+    func mapViewRangeFilterAnnotations(minLati: Double, maxLati: Double, minLong: Double, maxLong: Double) -> Results<TraditionalMarketRealm> {
+        // Realm에 있는 좌표중에 매개변수로 들어오는 Double 값 범위 안에 있다면 FilterRealm에 담아라
+        let convertToStringMinLati = String(minLati)
+        let convertToStringMaxLati = String(maxLati)
+        let convertToStringMinLong = String(minLong)
+        let convertToStringMaxLong = String(maxLong)
+        
+        
+        
+        rangeFiltetedMarket = realm.objects(TraditionalMarketRealm.self).filter("latitude BETWEEN {\(convertToStringMinLati), \(convertToStringMaxLati)} AND longitude BETWEEN {\(convertToStringMinLong), \(convertToStringMaxLong)}")
+        return rangeFiltetedMarket
+    }
+```
+
+## Realm 데이터와 API 통신으로 받아온 데이터 DiffableDataSource를 사용하여 섹션별로 나눠서 UI에 적용
