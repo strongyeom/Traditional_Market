@@ -23,7 +23,7 @@
 - **API: 한국관광공사 API, Naver Image API, 전통시장 API**
 
 ------
- ``
+ 
 # 기능 구현 
 - `CoreLocation`을 이용하여 현재 사용자의 위치를 활용해서 인근 전통시장을 나타내고, `Custom Annotations` 을 클릭시 전통시장에 대해 기록
   - `UISheetPresentation`의 cutsom Detent를 사용하여 `MapView`와 전통시장에 대한 간략한 정보를 한눈에 확인
@@ -38,7 +38,7 @@
   - `EmbeddedObject` 활용한 Subset Pattern
 - Realm의 `filter` 와 MKMapViewDelegate 의 `regionDidChangeAnimated` 메서드를 사용하여 Map의 x,y축의 최대, 최소 값을 구하고 해당 Map 영역에 속하는 모든 Annotations만 필터링
 
-
+------
 
 # Trouble Shooting
 ### A. 네트워크 통신 후 Realm에 저장할때 오래걸리는 속도 개선 - Realm writeAsync 사용
