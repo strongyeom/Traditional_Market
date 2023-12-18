@@ -47,7 +47,7 @@ class ListViewController : BaseViewController {
         
         group.enter()
         MarketAPIManager.shared.requstKoreaFestivalLocationBase(lati: 37.566713, long: 126.978428) { response in
-            dump(response)
+//            dump(response)
                 
                 let _ = response.map { fes in
                     self.thirdArray.append(ExampleModel(marketName: fes.title, marketType: "", loadNameAddress: fes.contenttypeid, address: fes.contentid, marketOpenCycle: "", publicToilet: "", latitude: Double(fes.mapy)!, longitude: Double(fes.mapx)!, popularProducts: "", phoneNumber: fes.tel.replacingOccurrences(of: "<br>", with: "")))
@@ -57,7 +57,7 @@ class ListViewController : BaseViewController {
             
             group.notify(queue: .main) {
                 self.collections.append(ExampleCollection(title: "내 지역 문화 축제", markets: self.thirdArray))
-                print("collections2", self.collections)
+//                print("collections2", self.collections)
                 
                 self.currentSnapshot = NSDiffableDataSourceSnapshot
                   <ExampleCollection, ExampleModel>()
@@ -66,7 +66,7 @@ class ListViewController : BaseViewController {
                 self.collections.forEach {
                       let collection = $0 // collections [ 0, 1 , 2]
                     self.currentSnapshot.appendSections([collection])
-                    print("---- collection.markets :\(collection.markets)")
+//                    print("---- collection.markets :\(collection.markets)")
                     self.currentSnapshot.appendItems(collection.markets)
                   }
                   
@@ -104,10 +104,10 @@ class ListViewController : BaseViewController {
             let section = NSCollectionLayoutSection(group: group)
             section.orthogonalScrollingBehavior = sectionIndex == 0 ? .continuous : .groupPaging
             section.interGroupSpacing = 20
-            section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20)
+            section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 40, trailing: 20)
             
             let titleSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                   heightDimension: .estimated(44))
+                                                   heightDimension: .estimated(34))
             let titleSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: titleSize,
                 elementKind: ListViewController.titleElementKind,
@@ -117,8 +117,7 @@ class ListViewController : BaseViewController {
         }
         
         let config = UICollectionViewCompositionalLayoutConfiguration()
-        config.interSectionSpacing = 20
-        
+        config.interSectionSpacing = 0
         let layout = UICollectionViewCompositionalLayout(
             sectionProvider: sectionProvider, configuration: config)
         return layout
@@ -129,8 +128,8 @@ class ListViewController : BaseViewController {
         collectionView.backgroundColor = .systemBackground
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(13)
-            make.horizontalEdges.bottom.edges.equalToSuperview()
+            make.verticalEdges.equalTo(view.safeAreaLayoutGuide).inset(13)
+            make.horizontalEdges.equalToSuperview()
         }
     }
     

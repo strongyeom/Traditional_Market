@@ -72,7 +72,7 @@ class EventCell: UICollectionViewCell {
         showAnimatedGradientSkeleton()
         
         MarketAPIManager.shared.requestNaverImage(search: data.marketName) { response in
-            print("resonse.items : \(response.items)")
+//            print("resonse.items : \(response.items)")
             
             let _ = response.items.map {
                 let url = URL(string: $0.link)!

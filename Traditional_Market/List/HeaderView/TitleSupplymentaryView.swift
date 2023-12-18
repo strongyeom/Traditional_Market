@@ -38,7 +38,6 @@ extension TitleSupplementaryView {
         addSubview(label)
         //showAnimatedSkeleton()
         label.snp.makeConstraints { make in
-            
             make.edges.equalToSuperview()
         }
     }
