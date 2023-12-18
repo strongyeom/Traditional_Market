@@ -21,7 +21,7 @@ class EventCell: UICollectionViewCell {
         return view
     }()
     
-    let exampleText = {
+    let marketName = {
        let view = UILabel()
         view.numberOfLines = 0
         view.font = UIFont.systemFont(ofSize: 30, weight: .bold)
@@ -49,7 +49,7 @@ class EventCell: UICollectionViewCell {
     
     func configure() {
         self.addSubview(eventImageView)
-        eventImageView.addSubview(exampleText)
+        eventImageView.addSubview(marketName)
         startSkeletonAnimation()
     }
     
@@ -59,8 +59,8 @@ class EventCell: UICollectionViewCell {
             make.edges.equalToSuperview()
         }
         
-        exampleText.textColor = .white
-        exampleText.snp.makeConstraints { make in
+        marketName.textColor = .white
+        marketName.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(10)
         }
     }
@@ -79,7 +79,7 @@ class EventCell: UICollectionViewCell {
                 self.eventImageView.kf.setImage(with: url)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
                     self.hideSkeleton()
-                    self.exampleText.text = data.marketName
+                    self.marketName.text = data.marketName
                 }
             }
         }
@@ -88,7 +88,7 @@ class EventCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.eventImageView.image = nil
-        self.exampleText.text = nil
+        self.marketName.text = nil
     }
     
     required init?(coder: NSCoder) {

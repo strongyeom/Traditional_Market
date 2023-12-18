@@ -109,6 +109,21 @@
                   endingLineNumber = "322"
                   offsetFromSymbolStart = "45">
                </Location>
+               <Location
+                  uuid = "0F40AE32-0DF7-41B3-99C5-23391F32518F - 41aca9749d0221cd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Traditional_Market.MapView.filterCityAnnotation(filterMarket: RealmSwift.Results&lt;Traditional_Market.TraditionalMarketRealm&gt;, day: Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
+                  moduleName = "Traditional_Market"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yeomseongpil/Desktop/%E1%84%89%E1%85%A2%E1%84%8A%E1%85%A1%E1%86%A8/%E1%84%89%E1%85%B5.%E1%84%8E%E1%85%A1%E1%86%BD.%E1%84%89%E1%85%A1%20%E1%84%8B%E1%85%A2%E1%86%B8%20%E1%84%8E%E1%85%AE%E1%86%AF%E1%84%89%E1%85%B5/Traditional_Market/Traditional_Market/MapView/MapVC/MapView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "322"
+                  endingLineNumber = "322"
+                  offsetFromSymbolStart = "2279">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>

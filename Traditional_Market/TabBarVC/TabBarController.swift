@@ -19,7 +19,7 @@ class TabBarController: UITabBarController {
         
         let listVC = ListViewController()
         listVC.tabBarItem.title = "목록"
-        listVC.tabBarItem.image = UIImage(systemName: "list.bullet.clipboard")
+        listVC.tabBarItem.image = UIImage(systemName: "list.bullet")
         let listVCHome = UINavigationController(rootViewController: listVC)
         
         
