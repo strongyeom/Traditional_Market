@@ -46,12 +46,17 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
         view.isHidden = true
         return view
     }()
-    
-    private let isLikeButton = {
-        let view = UIButton()
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .light)
-        let image = UIImage(systemName: "plus", withConfiguration: imageConfig)
-        view.setImage(image, for: .normal)
+ 
+    let isLikeButton = {
+       let view = UIButton()
+        var config = UIButton.Configuration.bordered()
+        config.title = "장터\n기록"
+
+        config.baseBackgroundColor = .clear
+        config.background.strokeColor = .systemBlue
+        config.background.strokeWidth = 1.0
+        config.buttonSize = .medium
+        view.configuration = config
         return view
     }()
 
@@ -135,7 +140,7 @@ final class DetailHeaderCell : BaseHeaderReusableCollectionView {
         isLikeButton.snp.makeConstraints { make in
             make.centerY.equalTo(isLikeImage)
             make.trailing.equalToSuperview().inset(10)
-            make.size.equalTo(40)
+//            make.size.equalTo(40)
             
         }
         
