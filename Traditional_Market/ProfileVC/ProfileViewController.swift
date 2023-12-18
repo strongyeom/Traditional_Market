@@ -21,7 +21,10 @@ class ProfileViewController : BaseViewController {
     override func configureView() {
         super.configureView()
         navigationItem.title = "마이페이지"
+        // backButton 타이틀 제거 후 < 설정
         navigationItem.backButtonDisplayMode = .minimal
+        // backButton Color 설정
+        self.navigationController?.navigationBar.tintColor = .black
         // 상위 VC에 색상 설정하면 하위VC에도 적용됌
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = UIColor(named: "brandColor")

@@ -22,13 +22,15 @@ class SaveMarketCell : UITableViewCell {
         let view = UILabel()
         view.text = "자갈치시장"
         view.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        view.textAlignment = .left
+        view.numberOfLines = 1
         return view
     }()
     
     let createdDate = {
        let view = UILabel()
         view.font = UIFont.systemFont(ofSize: 13)
-        view.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        view.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         view.textColor = .lightGray
         return view
     }()
@@ -69,13 +71,13 @@ class SaveMarketCell : UITableViewCell {
         marketTitle.snp.makeConstraints { make in
             make.top.equalTo(saveImageView)
             make.leading.equalTo(saveImageView.snp.trailing).offset(10)
-           
+            
         }
         
         createdDate.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(10)
             make.centerY.equalTo(marketTitle)
-            
+            make.leading.equalTo(marketTitle.snp.trailing).offset(10)
         }
         
         marketDescription.snp.makeConstraints { make in
