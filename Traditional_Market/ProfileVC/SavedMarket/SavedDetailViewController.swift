@@ -41,6 +41,11 @@ class SavedDetailViewController : BaseViewController {
     
     func settupNavigationBar() {
         navigationItem.title = "상세 페이지"
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor(named: "brandColor")
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationController?.navigationBar.tintColor = .black
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(cancelBtnClicked))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveBtnClicked(_:)))
     }

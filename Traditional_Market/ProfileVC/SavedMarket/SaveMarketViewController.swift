@@ -27,6 +27,7 @@ class SaveMarketViewController : BaseViewController {
         print("SaveMarketViewController - configureView")
         settuptableView()
         navigationItem.title = "시장 컬렉션"
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
