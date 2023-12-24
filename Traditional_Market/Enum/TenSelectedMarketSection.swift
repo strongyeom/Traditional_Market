@@ -54,13 +54,4 @@ enum TenSelectedMarketSection: String {
             return "망원시장은 한강시민공원 망원지구 관할의 쾌적한 환경 여건을 구비하고 있으며 강변도로 및 도심지역으로 연결되는 교통의 관문이다. 또한 안정된 주거지역으로 생활여건 및 수준 양호한 시장 기반을 가진 2002년 월드컵이 개최된 경기장 인접지역의 대표적인 전통시장이다. 근래에는 망원동에 거주하는 신혼부부 및 싱글족을 겨냥한 신메뉴와 변화를 추구하여 젊은 소비자들이 증가하였다."
         }
     }
-    
-//    var thumbnail: String {
-//        switch self {
-//        case .seoul:
-//            return ""
-//        case .daego:
-//            return ""
-//        }
-//    }
 }

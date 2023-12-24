@@ -43,7 +43,6 @@
 		26AAD8B82AC46218002E5DD4 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8B72AC46218002E5DD4 /* Observable.swift */; };
 		26AAD8C12AC48574002E5DD4 /* MarketAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8C02AC48574002E5DD4 /* MarketAPIManager.swift */; };
 		26ABF67E2AE2858200F60A35 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ABF67D2AE2858200F60A35 /* WebViewController.swift */; };
-		26AF1DA32AF4E84A00951BA0 /* HomeEventSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AF1DA22AF4E84A00951BA0 /* HomeEventSection.swift */; };
 		26AF1DA52AF4F08500951BA0 /* ContentIdBaseFestival.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AF1DA42AF4F08500951BA0 /* ContentIdBaseFestival.swift */; };
 		26BFF4F92AEB8EF30057466E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26BFF4FB2AEB8EF30057466E /* Localizable.strings */; };
 		26BFF4FE2AEB90D70057466E /* Ext+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BFF4FD2AEB90D70057466E /* Ext+String.swift */; };
@@ -123,7 +122,6 @@
 		26AAD8B72AC46218002E5DD4 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		26AAD8C02AC48574002E5DD4 /* MarketAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketAPIManager.swift; sourceTree = "<group>"; };
 		26ABF67D2AE2858200F60A35 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
-		26AF1DA22AF4E84A00951BA0 /* HomeEventSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEventSection.swift; sourceTree = "<group>"; };
 		26AF1DA42AF4F08500951BA0 /* ContentIdBaseFestival.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentIdBaseFestival.swift; sourceTree = "<group>"; };
 		26BFF4FA2AEB8EF30057466E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		26BFF4FD2AEB90D70057466E /* Ext+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+String.swift"; sourceTree = "<group>"; };
@@ -277,7 +275,6 @@
 				26E768292AD07A820052EC4C /* Scale.swift */,
 				26E786432AE92B3700525E73 /* KindOfMarket.swift */,
 				262BBE642AF38F6400F98BF8 /* TenSelectedMarketSection.swift */,
-				26AF1DA22AF4E84A00951BA0 /* HomeEventSection.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -632,7 +629,6 @@
 				26A5BB6D2AD8458200D03FC7 /* SavedDetailView.swift in Sources */,
 				26229B9D2AC57528002FBE59 /* RealmManager.swift in Sources */,
 				26EA66442AC2AB4400F6FE6A /* AppDelegate.swift in Sources */,
-				26AF1DA32AF4E84A00951BA0 /* HomeEventSection.swift in Sources */,
 				26EA66462AC2AB4400F6FE6A /* SceneDelegate.swift in Sources */,
 				26AF1DA52AF4F08500951BA0 /* ContentIdBaseFestival.swift in Sources */,
 				26A5BB622AD7E6C300D03FC7 /* ProfileBaseView.swift in Sources */,
@@ -813,7 +809,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.3;
+				MARKETING_VERSION = 1.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.present.Traditional-Market";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -848,7 +844,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.3;
+				MARKETING_VERSION = 1.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.present.Traditional-Market";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
