@@ -12,6 +12,7 @@
 		26229B9D2AC57528002FBE59 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26229B9C2AC57528002FBE59 /* RealmManager.swift */; };
 		26229B9F2AC575AD002FBE59 /* TraditionalMarketRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26229B9E2AC575AD002FBE59 /* TraditionalMarketRealm.swift */; };
 		26229BA82AC5AD84002FBE59 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26229BA72AC5AD84002FBE59 /* BaseViewController.swift */; };
+		262418F42B380AAD0036413D /* ServiceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262418F32B380AAD0036413D /* ServiceKey.swift */; };
 		262BBE632AF38CF700F98BF8 /* PopularMarketDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262BBE622AF38CF700F98BF8 /* PopularMarketDetailViewController.swift */; };
 		262BBE652AF38F6400F98BF8 /* TenSelectedMarketSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262BBE642AF38F6400F98BF8 /* TenSelectedMarketSection.swift */; };
 		262BBE682AF3970400F98BF8 /* PopularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262BBE672AF3970400F98BF8 /* PopularView.swift */; };
@@ -93,6 +94,7 @@
 		26229B9C2AC57528002FBE59 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		26229B9E2AC575AD002FBE59 /* TraditionalMarketRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraditionalMarketRealm.swift; sourceTree = "<group>"; };
 		26229BA72AC5AD84002FBE59 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		262418F32B380AAD0036413D /* ServiceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceKey.swift; sourceTree = "<group>"; };
 		262BBE622AF38CF700F98BF8 /* PopularMarketDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMarketDetailViewController.swift; sourceTree = "<group>"; };
 		262BBE642AF38F6400F98BF8 /* TenSelectedMarketSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenSelectedMarketSection.swift; sourceTree = "<group>"; };
 		262BBE672AF3970400F98BF8 /* PopularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularView.swift; sourceTree = "<group>"; };
@@ -429,6 +431,7 @@
 				26AAD8A52AC44D9B002E5DD4 /* MapView */,
 				26015E362ACC0CAF00D25C94 /* ProfileVC */,
 				26EA66432AC2AB4400F6FE6A /* AppDelegate.swift */,
+				262418F32B380AAD0036413D /* ServiceKey.swift */,
 				26EA66452AC2AB4400F6FE6A /* SceneDelegate.swift */,
 				26BFF4FB2AEB8EF30057466E /* Localizable.strings */,
 				26EA664C2AC2AB4700F6FE6A /* Assets.xcassets */,
@@ -604,6 +607,7 @@
 				26EA75D22ACAC28D00FFDFDB /* StampViewController.swift in Sources */,
 				26A5BB682AD8351C00D03FC7 /* SaveTableView.swift in Sources */,
 				26DB1A922ADB0890008AAC99 /* Ext+UIImageView.swift in Sources */,
+				262418F42B380AAD0036413D /* ServiceKey.swift in Sources */,
 				26E31C532ACD3E0D00392068 /* ReusableIdentifier.swift in Sources */,
 				26CC8E752AC87180009ABB14 /* NaverMarketImage.swift in Sources */,
 				26EA66482AC2AB4400F6FE6A /* MapViewController.swift in Sources */,
