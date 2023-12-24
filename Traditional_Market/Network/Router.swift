@@ -10,12 +10,7 @@ import Alamofire
 
 enum Router: URLRequestConvertible {
     
-    // 공공데이터 포털 디코딩 키
-    private static let marketKey = "UQybVf/BVAsYaLeP9xLFftf6XvnhuY3nWPU72kKjfSPporofcAGn6UQp+G9ftv2cI9VQxA9Fq0B/tIWxZ2lavg=="
-    private static let naverKey = "myXCWsXxrg83Q4L0SAdP"
-    private static let naverSecretKey = "2s8Jgd07Ij"
-
-    private static let koreaTourKey = "UQybVf/BVAsYaLeP9xLFftf6XvnhuY3nWPU72kKjfSPporofcAGn6UQp+G9ftv2cI9VQxA9Fq0B/tIWxZ2lavg=="
+   
     
 
     case marketInfomation(page: String)
@@ -46,8 +41,8 @@ enum Router: URLRequestConvertible {
             return [:]
         case .naverImgae:
             return [
-                "X-Naver-Client-Id" : Router.naverKey,
-                "X-Naver-Client-Secret" : Router.naverSecretKey
+                "X-Naver-Client-Id" : ServiceKey.naverKey,
+                "X-Naver-Client-Secret" : ServiceKey.naverSecretKey
             ]
         case .festivalInfo:
             return [:]
@@ -65,7 +60,7 @@ enum Router: URLRequestConvertible {
         switch self {
         case .marketInfomation(page: let page):
             return [
-                "serviceKey": Router.marketKey,
+                "serviceKey": ServiceKey.marketKey,
                 "pageNo": page,
                 "numOfRows": "100",
                 "type": "json"
@@ -81,7 +76,7 @@ enum Router: URLRequestConvertible {
             
         case .festivalInfo(longtitude: let longtitude, latitiue: let latitiue):
             return [
-                "serviceKey": Router.koreaTourKey,
+                "serviceKey": ServiceKey.koreaTourKey,
                 "numOfRows": "10",
                 "pageNo": "1",
                 "MobileOS": "IOS",
@@ -96,7 +91,7 @@ enum Router: URLRequestConvertible {
             ]
         case .detailFestivalInfo(contentid: let contentid):
             return [
-                "serviceKey": Router.koreaTourKey,
+                "serviceKey": ServiceKey.koreaTourKey,
                 "contentId": "\(contentid)",
                 "numOfRows": "10",
                 "pageNo": "1",
