@@ -55,7 +55,12 @@ struct Traditional_Widget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            Traditional_WidgetEntryView(entry: entry)
+            if #available(iOS 17.0, *) {
+                Traditional_WidgetEntryView(entry: entry)
+                    .containerBackground(.white, for: .widget)
+            } else {
+                Traditional_WidgetEntryView(entry: entry)
+            }            
         }
         .configurationDisplayName("My Widget")
         .description("This is an example widget.")

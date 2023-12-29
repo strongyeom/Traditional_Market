@@ -39,25 +39,30 @@
 		26A5BB6B2AD8456900D03FC7 /* SavedDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A5BB6A2AD8456900D03FC7 /* SavedDetailViewController.swift */; };
 		26A5BB6D2AD8458200D03FC7 /* SavedDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A5BB6C2AD8458200D03FC7 /* SavedDetailView.swift */; };
 		26A9C4F72AC2E607004F955A /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A9C4F62AC2E607004F955A /* CustomAnnotation.swift */; };
-		26A9C4FA2AC2E77D004F955A /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 26A9C4F92AC2E77D004F955A /* Toast */; };
 		26A9C4FC2AC324EE004F955A /* Ext+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A9C4FB2AC324EE004F955A /* Ext+UIViewController.swift */; };
 		26AAD8A42AC44B07002E5DD4 /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8A32AC44B07002E5DD4 /* CustomAnnotationView.swift */; };
 		26AAD8A92AC44FCD002E5DD4 /* TraditionalMarket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8A82AC44FCD002E5DD4 /* TraditionalMarket.swift */; };
-		26AAD8AC2AC4554C002E5DD4 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 26AAD8AB2AC4554C002E5DD4 /* RealmSwift */; };
 		26AAD8AE2AC4559B002E5DD4 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8AD2AC4559B002E5DD4 /* NetworkManager.swift */; };
-		26AAD8B12AC4560D002E5DD4 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 26AAD8B02AC4560D002E5DD4 /* Alamofire */; };
 		26AAD8B62AC46203002E5DD4 /* TraditionalMarketViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8B52AC46203002E5DD4 /* TraditionalMarketViewModel.swift */; };
 		26AAD8B82AC46218002E5DD4 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8B72AC46218002E5DD4 /* Observable.swift */; };
 		26AAD8C12AC48574002E5DD4 /* MarketAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AAD8C02AC48574002E5DD4 /* MarketAPIManager.swift */; };
 		26ABF67E2AE2858200F60A35 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ABF67D2AE2858200F60A35 /* WebViewController.swift */; };
 		26AF1DA52AF4F08500951BA0 /* ContentIdBaseFestival.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AF1DA42AF4F08500951BA0 /* ContentIdBaseFestival.swift */; };
+		26B535932B3EA471005C39C5 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 26B535922B3EA471005C39C5 /* SnapKit */; };
+		26B535962B3EA494005C39C5 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 26B535952B3EA494005C39C5 /* RealmSwift */; };
+		26B535992B3EA4B4005C39C5 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 26B535982B3EA4B4005C39C5 /* Alamofire */; };
+		26B5359C2B3EA4CC005C39C5 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 26B5359B2B3EA4CC005C39C5 /* Kingfisher */; };
+		26B5359F2B3EA508005C39C5 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 26B5359E2B3EA508005C39C5 /* FirebaseAnalytics */; };
+		26B535A12B3EA508005C39C5 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 26B535A02B3EA508005C39C5 /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		26B535A32B3EA508005C39C5 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 26B535A22B3EA508005C39C5 /* FirebaseCrashlytics */; };
+		26B535A62B3EA528005C39C5 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 26B535A52B3EA528005C39C5 /* SkeletonView */; };
+		26B535A92B3EA85B005C39C5 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 26B535A82B3EA85B005C39C5 /* Toast */; };
 		26BFF4F92AEB8EF30057466E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26BFF4FB2AEB8EF30057466E /* Localizable.strings */; };
 		26BFF4FE2AEB90D70057466E /* Ext+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BFF4FD2AEB90D70057466E /* Ext+String.swift */; };
 		26BFF5002AEBA2460057466E /* Ext+AddMarket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BFF4FF2AEBA2460057466E /* Ext+AddMarket.swift */; };
 		26C92EC42AD2F622002A53D2 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C92EC32AD2F622002A53D2 /* SearchCell.swift */; };
 		26CC8E702AC843E9009ABB14 /* Ext+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC8E6F2AC843E9009ABB14 /* Ext+UIColor.swift */; };
 		26CC8E752AC87180009ABB14 /* NaverMarketImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC8E742AC87180009ABB14 /* NaverMarketImage.swift */; };
-		26CC8E7B2AC87DDC009ABB14 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 26CC8E7A2AC87DDC009ABB14 /* Kingfisher */; };
 		26DB1A902ADB03CD008AAC99 /* Ext+UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DB1A8F2ADB03CD008AAC99 /* Ext+UIStackView.swift */; };
 		26DB1A922ADB0890008AAC99 /* Ext+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DB1A912ADB0890008AAC99 /* Ext+UIImageView.swift */; };
 		26E31C532ACD3E0D00392068 /* ReusableIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E31C522ACD3E0D00392068 /* ReusableIdentifier.swift */; };
@@ -72,8 +77,6 @@
 		26E786422AE9149200525E73 /* DetailConditionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E786412AE9149200525E73 /* DetailConditionView.swift */; };
 		26E786442AE92B3700525E73 /* KindOfMarket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E786432AE92B3700525E73 /* KindOfMarket.swift */; };
 		26E9F3692AD443340007B7CD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26E9F3682AD443340007B7CD /* GoogleService-Info.plist */; };
-		26E9F36C2AD443CA0007B7CD /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 26E9F36B2AD443CA0007B7CD /* FirebaseAnalyticsWithoutAdIdSupport */; };
-		26E9F36E2AD443CA0007B7CD /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 26E9F36D2AD443CA0007B7CD /* FirebaseCrashlytics */; };
 		26E9F3712AD518D30007B7CD /* FullImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E9F3702AD518D20007B7CD /* FullImageViewController.swift */; };
 		26E9F3732AD5A9190007B7CD /* ClusterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E9F3722AD5A9190007B7CD /* ClusterAnnotationView.swift */; };
 		26EA66442AC2AB4400F6FE6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA66432AC2AB4400F6FE6A /* AppDelegate.swift */; };
@@ -82,7 +85,6 @@
 		26EA664D2AC2AB4700F6FE6A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 26EA664C2AC2AB4700F6FE6A /* Assets.xcassets */; };
 		26EA66502AC2AB4700F6FE6A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26EA664E2AC2AB4700F6FE6A /* LaunchScreen.storyboard */; };
 		26EA66582AC2ADED00F6FE6A /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA66572AC2ADED00F6FE6A /* MapView.swift */; };
-		26EA665B2AC2AE0F00F6FE6A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 26EA665A2AC2AE0F00F6FE6A /* SnapKit */; };
 		26EA75D22ACAC28D00FFDFDB /* StampViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA75D12ACAC28D00FFDFDB /* StampViewController.swift */; };
 		26EA75D52ACAD7DF00FFDFDB /* StampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA75D42ACAD7DF00FFDFDB /* StampView.swift */; };
 		26EA75D72ACADABA00FFDFDB /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA75D62ACADABA00FFDFDB /* BaseView.swift */; };
@@ -91,7 +93,6 @@
 		26EA75E02ACB1DCA00FFDFDB /* FavoriteTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26EA75DF2ACB1DCA00FFDFDB /* FavoriteTable.swift */; };
 		26F62BC72AF40896002D10D5 /* LocationBaseFestival.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F62BC62AF40896002D10D5 /* LocationBaseFestival.swift */; };
 		26F62BC92AF40F3B002D10D5 /* FestivalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F62BC82AF40F3B002D10D5 /* FestivalViewModel.swift */; };
-		26F9159C2AFB65F2003B5123 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 26F9159B2AFB65F2003B5123 /* SkeletonView */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -216,14 +217,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				26AAD8AC2AC4554C002E5DD4 /* RealmSwift in Frameworks */,
-				26E9F36C2AD443CA0007B7CD /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
-				26AAD8B12AC4560D002E5DD4 /* Alamofire in Frameworks */,
-				26E9F36E2AD443CA0007B7CD /* FirebaseCrashlytics in Frameworks */,
-				26F9159C2AFB65F2003B5123 /* SkeletonView in Frameworks */,
-				26A9C4FA2AC2E77D004F955A /* Toast in Frameworks */,
-				26EA665B2AC2AE0F00F6FE6A /* SnapKit in Frameworks */,
-				26CC8E7B2AC87DDC009ABB14 /* Kingfisher in Frameworks */,
+				26B535932B3EA471005C39C5 /* SnapKit in Frameworks */,
+				26B535992B3EA4B4005C39C5 /* Alamofire in Frameworks */,
+				26B5359F2B3EA508005C39C5 /* FirebaseAnalytics in Frameworks */,
+				26B535A92B3EA85B005C39C5 /* Toast in Frameworks */,
+				26B5359C2B3EA4CC005C39C5 /* Kingfisher in Frameworks */,
+				26B535A62B3EA528005C39C5 /* SkeletonView in Frameworks */,
+				26B535A12B3EA508005C39C5 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				26B535A32B3EA508005C39C5 /* FirebaseCrashlytics in Frameworks */,
+				26B535962B3EA494005C39C5 /* RealmSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -560,8 +562,8 @@
 				26EA663C2AC2AB4400F6FE6A /* Sources */,
 				26EA663D2AC2AB4400F6FE6A /* Frameworks */,
 				26EA663E2AC2AB4400F6FE6A /* Resources */,
-				26E9F36F2AD444860007B7CD /* ShellScript */,
 				26938A822B39702C00B39F90 /* Embed Foundation Extensions */,
+				26E9F36F2AD444860007B7CD /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -570,14 +572,15 @@
 			);
 			name = Traditional_Market;
 			packageProductDependencies = (
-				26EA665A2AC2AE0F00F6FE6A /* SnapKit */,
-				26A9C4F92AC2E77D004F955A /* Toast */,
-				26AAD8AB2AC4554C002E5DD4 /* RealmSwift */,
-				26AAD8B02AC4560D002E5DD4 /* Alamofire */,
-				26CC8E7A2AC87DDC009ABB14 /* Kingfisher */,
-				26E9F36B2AD443CA0007B7CD /* FirebaseAnalyticsWithoutAdIdSupport */,
-				26E9F36D2AD443CA0007B7CD /* FirebaseCrashlytics */,
-				26F9159B2AFB65F2003B5123 /* SkeletonView */,
+				26B535922B3EA471005C39C5 /* SnapKit */,
+				26B535952B3EA494005C39C5 /* RealmSwift */,
+				26B535982B3EA4B4005C39C5 /* Alamofire */,
+				26B5359B2B3EA4CC005C39C5 /* Kingfisher */,
+				26B5359E2B3EA508005C39C5 /* FirebaseAnalytics */,
+				26B535A02B3EA508005C39C5 /* FirebaseAnalyticsWithoutAdIdSupport */,
+				26B535A22B3EA508005C39C5 /* FirebaseCrashlytics */,
+				26B535A52B3EA528005C39C5 /* SkeletonView */,
+				26B535A82B3EA85B005C39C5 /* Toast */,
 			);
 			productName = Traditional_Market;
 			productReference = 26EA66402AC2AB4400F6FE6A /* Traditional_Market.app */;
@@ -611,13 +614,13 @@
 			);
 			mainGroup = 26EA66372AC2AB4400F6FE6A;
 			packageReferences = (
-				26EA66592AC2AE0F00F6FE6A /* XCRemoteSwiftPackageReference "SnapKit" */,
-				26A9C4F82AC2E77D004F955A /* XCRemoteSwiftPackageReference "Toast-Swift" */,
-				26AAD8AA2AC4554C002E5DD4 /* XCRemoteSwiftPackageReference "realm-swift" */,
-				26AAD8AF2AC4560D002E5DD4 /* XCRemoteSwiftPackageReference "Alamofire" */,
-				26CC8E792AC87DDC009ABB14 /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				26E9F36A2AD443CA0007B7CD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				26F9159A2AFB65F2003B5123 /* XCRemoteSwiftPackageReference "SkeletonView" */,
+				26B535912B3EA471005C39C5 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				26B535942B3EA494005C39C5 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				26B535972B3EA4B4005C39C5 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				26B5359A2B3EA4CC005C39C5 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				26B5359D2B3EA508005C39C5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				26B535A42B3EA528005C39C5 /* XCRemoteSwiftPackageReference "SkeletonView" */,
+				26B535A72B3EA85B005C39C5 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 			);
 			productRefGroup = 26EA66412AC2AB4400F6FE6A /* Products */;
 			projectDirPath = "";
@@ -1066,15 +1069,15 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		26A9C4F82AC2E77D004F955A /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+		26B535912B3EA471005C39C5 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
+				minimumVersion = 5.6.0;
 			};
 		};
-		26AAD8AA2AC4554C002E5DD4 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+		26B535942B3EA494005C39C5 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift.git";
 			requirement = {
@@ -1082,7 +1085,7 @@
 				kind = branch;
 			};
 		};
-		26AAD8AF2AC4560D002E5DD4 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+		26B535972B3EA4B4005C39C5 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
 			requirement = {
@@ -1090,7 +1093,7 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		26CC8E792AC87DDC009ABB14 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+		26B5359A2B3EA4CC005C39C5 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
@@ -1098,7 +1101,7 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		26E9F36A2AD443CA0007B7CD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		26B5359D2B3EA508005C39C5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
@@ -1106,64 +1109,69 @@
 				minimumVersion = 10.0.0;
 			};
 		};
-		26EA66592AC2AE0F00F6FE6A /* XCRemoteSwiftPackageReference "SnapKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
-			};
-		};
-		26F9159A2AFB65F2003B5123 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+		26B535A42B3EA528005C39C5 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 1.30.4;
+			};
+		};
+		26B535A72B3EA85B005C39C5 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		26A9C4F92AC2E77D004F955A /* Toast */ = {
+		26B535922B3EA471005C39C5 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 26A9C4F82AC2E77D004F955A /* XCRemoteSwiftPackageReference "Toast-Swift" */;
-			productName = Toast;
-		};
-		26AAD8AB2AC4554C002E5DD4 /* RealmSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 26AAD8AA2AC4554C002E5DD4 /* XCRemoteSwiftPackageReference "realm-swift" */;
-			productName = RealmSwift;
-		};
-		26AAD8B02AC4560D002E5DD4 /* Alamofire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 26AAD8AF2AC4560D002E5DD4 /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
-		26CC8E7A2AC87DDC009ABB14 /* Kingfisher */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 26CC8E792AC87DDC009ABB14 /* XCRemoteSwiftPackageReference "Kingfisher" */;
-			productName = Kingfisher;
-		};
-		26E9F36B2AD443CA0007B7CD /* FirebaseAnalyticsWithoutAdIdSupport */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 26E9F36A2AD443CA0007B7CD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsWithoutAdIdSupport;
-		};
-		26E9F36D2AD443CA0007B7CD /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 26E9F36A2AD443CA0007B7CD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
-		};
-		26EA665A2AC2AE0F00F6FE6A /* SnapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 26EA66592AC2AE0F00F6FE6A /* XCRemoteSwiftPackageReference "SnapKit" */;
+			package = 26B535912B3EA471005C39C5 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
-		26F9159B2AFB65F2003B5123 /* SkeletonView */ = {
+		26B535952B3EA494005C39C5 /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 26F9159A2AFB65F2003B5123 /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			package = 26B535942B3EA494005C39C5 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+		26B535982B3EA4B4005C39C5 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 26B535972B3EA4B4005C39C5 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		26B5359B2B3EA4CC005C39C5 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 26B5359A2B3EA4CC005C39C5 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		26B5359E2B3EA508005C39C5 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 26B5359D2B3EA508005C39C5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		26B535A02B3EA508005C39C5 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 26B5359D2B3EA508005C39C5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
+		};
+		26B535A22B3EA508005C39C5 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 26B5359D2B3EA508005C39C5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		26B535A52B3EA528005C39C5 /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 26B535A42B3EA528005C39C5 /* XCRemoteSwiftPackageReference "SkeletonView" */;
 			productName = SkeletonView;
+		};
+		26B535A82B3EA85B005C39C5 /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 26B535A72B3EA85B005C39C5 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
